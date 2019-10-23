@@ -1,14 +1,14 @@
 'use strict';
 
 import { connect } from 'react-redux';
-import Content from '../views/content';
+import Section from '../views/section';
 import * as actions from '../../actions/actions';
 
 const mapStateToProps = function(state) {
-    //debugger;
+    debugger;
     return {
-        sections: state.get('sections')
+        data: state.get('currentSection')
     };
 }
 
-export default connect(mapStateToProps, actions)(Content);
+export default connect(mapStateToProps, actions)(Section);

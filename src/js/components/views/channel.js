@@ -1,27 +1,27 @@
 'use strict';
 
 import React, { Component } from 'react';
-import Channel from './channel';
+import Message from './message';
 
-// Подраздел
-export default class SubSection extends Component {
+// Канал
+export default class Channel extends Component {
 
     render() {
-        console.log('render subSection');
-        const className = 'sub-section ' + (this.props.className ? this.props.className : '');
+        console.log('render channel');
+        const className = 'channel ' + (this.props.className ? this.props.className : '');
 
-        const channels = [];
+        const messages = [];
 
-        //debugger;
+        debugger;
         let key = 0;
 
         if (this.props.data) {
-            this.props.data.channels.forEach(function(item) {
-                const channel = <Channel
+            this.props.data.messages.forEach(function(item) {
+                const message = <Message
                                     key={key}
                                     data = {item}
                                 />;
-                channels.push(channel);
+                messages.push(message);
                 key++;
             });
         }
@@ -31,7 +31,7 @@ export default class SubSection extends Component {
                 <div>{this.props.data.name}</div>
                 <div>{this.props.data.description}</div>
 
-                {channels}
+                {messages}
             </div>
         )
     }

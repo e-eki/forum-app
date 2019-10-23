@@ -9,3 +9,10 @@ export function setSections(sections) {
 	};
 }
 
+export function setCurrentSection(section) {
+	return {
+	  type: actionTypes.SET_CURRENT_SECTION,
+	  section
+	};
+}
+

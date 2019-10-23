@@ -1,20 +1,22 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route } from 'react-router';
+const createBrowserHistory = require("history").createBrowserHistory;    //?? import
 import ContentContainer from './containers/contentContainer';
+import SectionContainer from './containers/sectionContainer';
 
 export default class App extends Component {
 
     render() {
 
+        const history = createBrowserHistory();
+
         return (
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/" component={ContentContainer} />  
-                    <Route component={ContentContainer} />              
-                </Switch>
-            </BrowserRouter>
+            <Router history={history}>
+                <Route path="/" component={ContentContainer} />
+                <Route path="/sections/:id" component={SectionContainer} />
+            </Router>
         )
     }
 }
