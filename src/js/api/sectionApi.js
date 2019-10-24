@@ -1,5 +1,5 @@
 import axios from 'axios';
-import store from '../store';
+import store from '../store/store';
 import * as actions from '../actions/actions';
 import apiConst from '../constants/apiConst';
 import testData from '../../../test/storeData';
@@ -14,6 +14,8 @@ export function getSectionById(id) {
 
 	debugger;
 	store.dispatch(actions.setCurrentSection(testData.currentSection));
+
+	return true;
 }
 
 export function getAllSections() {
@@ -23,6 +25,7 @@ export function getAllSections() {
 	// 	return response;
 	// 	});
 
-	debugger;
 	store.dispatch(actions.setSections(testData.sections));
+
+	return true;
 }

@@ -1,10 +1,13 @@
 'use strict';
 
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Content from '../views/content';
 import { getAllSections } from '../../api/sectionApi';
+import * as actions from '../../actions/actions';
 
 // const mapStateToProps = function(state) {
+//     debugger;
 //     return {
 //         sections: state.get('sections')
 //     };
@@ -22,7 +25,7 @@ class ContentContainer extends Component {
     
     render() {
         return (
-          <Content {...this.props.section} />
+          <Content sections = {this.props.sections} />
         );
     }
 }

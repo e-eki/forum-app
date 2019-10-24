@@ -8,18 +8,6 @@ export default class Section extends Component {
 
     constructor(props) {
         super(props);
-
-        this.isCurrent = false;
-    }
-
-    componentWillMount() {
-        debugger;
-
-        if (this.props.match && this.props.match.params) {
-            const id = this.props.match.params.id;
-            getSectionById(id);
-            this.isCurrent = true;
-        }
     }
 
     render() {
@@ -32,7 +20,7 @@ export default class Section extends Component {
 
         let key = 0;
 
-        if (this.isCurrent && this.props.data) {
+        if (this.props.isCurrent && this.props.data) {
             this.props.data.subSections.forEach(function(item) {
                 const subSection = <SubSection
                                         key={key}

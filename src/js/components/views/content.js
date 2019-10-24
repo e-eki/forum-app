@@ -13,6 +13,7 @@ export default class Content extends Component {
     // }
 
     render() {
+        debugger;
         console.log('render content');
         
         const className = 'content ' + (this.props.className ? this.props.className : '');

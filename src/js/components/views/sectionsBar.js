@@ -6,6 +6,7 @@ import Section from './section';
 export default class SectionsBar extends Component {
 
     render() {
+        debugger;
         console.log('render sectionsBar');
         const className = 'sections-bar ' + (this.props.className ? this.props.className : '');
 

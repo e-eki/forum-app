@@ -10,9 +10,9 @@ export default class Main extends Component {
     constructor(props) {
         super(props);
     }
-
     
     render() {
+        debugger;
         console.log('render main');
         const className = 'main ' + (this.props.className ? this.props.className : '');
         
