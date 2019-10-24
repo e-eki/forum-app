@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import SubSection from './subSection';
+import { getSectionById } from '../../api/sectionApi';
 
 export default class Section extends Component {
 
@@ -16,13 +17,10 @@ export default class Section extends Component {
 
         if (this.props.match && this.props.match.params) {
             const id = this.props.match.params.id;
-            //getSectionById(id);
+            getSectionById(id);
             this.isCurrent = true;
         }
     }
-
-    // getSectionById() {
-    // }
 
     render() {
         console.log('render section');

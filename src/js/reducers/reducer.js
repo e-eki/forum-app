@@ -3,6 +3,13 @@
 import {Map, List} from 'immutable';
 import * as actionTypes from '../actions/actionTypes';
 
+// const initialState = {
+//   users: [],
+//   userProfile: {
+//     repos: []
+//   }
+// };
+
 export default function Reducer(state = Map(), action) {
   switch (action.type) {
     case actionTypes.SET_SECTIONS:
