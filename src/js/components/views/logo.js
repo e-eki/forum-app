@@ -1,8 +1,8 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-export default class Logo extends Component {
+export default class Logo extends PureComponent {
 
     render() {
         console.log('render logo');

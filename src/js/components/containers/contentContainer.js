@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Content from '../views/content';
 import { getAllSections } from '../../api/sectionApi';
@@ -15,11 +15,10 @@ import * as actions from '../../actions/actions';
 
 // export default connect(mapStateToProps, actions)(Content);
 
-class ContentContainer extends Component {
+class ContentContainer extends PureComponent {
 
     componentDidMount() {
-        debugger;
-        
+        debugger;       
         getAllSections();
     }
     
@@ -31,6 +30,7 @@ class ContentContainer extends Component {
 }
 
 const mapStateToProps = function(state) {
+    debugger;
     return {
         sections: state.get('sections')
     };

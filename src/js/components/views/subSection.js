@@ -1,10 +1,10 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Channel from './channel';
 
 // Подраздел
-export default class SubSection extends Component {
+export default class SubSection extends PureComponent {
 
     render() {
         console.log('render subSection');

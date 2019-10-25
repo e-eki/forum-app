@@ -1,10 +1,10 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Message from './message';
 
 // Канал
-export default class Channel extends Component {
+export default class Channel extends PureComponent {
 
     render() {
         console.log('render channel');

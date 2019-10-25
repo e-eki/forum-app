@@ -1,8 +1,8 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-export default class QuotesBar extends Component {
+export default class QuotesBar extends PureComponent {
 
     render() {
         console.log('render quotesBar');

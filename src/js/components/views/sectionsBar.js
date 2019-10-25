@@ -1,9 +1,9 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Section from './section';
 
-export default class SectionsBar extends Component {
+export default class SectionsBar extends PureComponent {
 
     render() {
         debugger;

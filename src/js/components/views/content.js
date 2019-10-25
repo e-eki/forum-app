@@ -1,12 +1,12 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './header';
 import Main from './main';
 import Footer from './footer';
 
-export default class Content extends Component {
+export default class Content extends PureComponent {
 
     // constructor(props) {
     //     super(props);

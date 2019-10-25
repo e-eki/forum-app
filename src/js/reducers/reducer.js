@@ -17,7 +17,7 @@ export default function reducer(state = Map(), action) {
       return state.set('sections', List(action.sections));
 
     case actionTypes.SET_CURRENT_SECTION:
-      return state.set('section', List(action.section));
+      return state.set('currentSection', action.section);
     
     default:
       return state;

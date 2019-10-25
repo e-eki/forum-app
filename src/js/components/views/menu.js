@@ -1,8 +1,8 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-export default class Menu extends Component {
+export default class Menu extends PureComponent {
 
     render() {
         console.log('render menu');

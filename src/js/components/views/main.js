@@ -1,11 +1,11 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Menu from './menu';
 import QuotesBar from './quotesBar';
 import SectionsBar from './sectionsBar';
 
-export default class Main extends Component {
+export default class Main extends PureComponent {
 
     constructor(props) {
         super(props);

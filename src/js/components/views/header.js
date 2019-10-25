@@ -1,9 +1,9 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Logo from './logo';
 
-export default class Header extends Component {
+export default class Header extends PureComponent {
 
     constructor(props) {
         super(props);

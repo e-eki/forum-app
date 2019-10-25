@@ -1,9 +1,9 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 // Сообщение
-export default class Message extends Component {
+export default class Message extends PureComponent {
 
     render() {
         console.log('render message');
