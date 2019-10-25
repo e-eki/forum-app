@@ -1,6 +1,9 @@
 'use strict';
 
 export const SET_SECTIONS = 'SET_SECTIONS';
-
 export const SET_CURRENT_SECTION = 'SET_CURRENT_SECTION';
+
+export const SET_CURRENT_SUBSECTION = 'SET_CURRENT_SUBSECTION';
+
+export const SET_CURRENT_CHANNEL = 'SET_CURRENT_CHANNEL';
 

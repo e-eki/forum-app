@@ -1,8 +1,8 @@
 'use strict';
 
 import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 import SubSection from './subSection';
-import { getSectionById } from '../../api/sectionApi';
 
 export default class Section extends PureComponent {
 
@@ -22,7 +22,7 @@ export default class Section extends PureComponent {
 
         if (this.props.data) {
 
-            if (this.props.isCurrent && this.props.data.subSections) {
+            if (this.props.data.subSections) {
                 this.props.data.subSections.forEach(function(item) {
                     const subSection = <SubSection
                                             key={key}
@@ -34,9 +34,15 @@ export default class Section extends PureComponent {
             }
 
             section = <div>
-                        <div>{this.props.data.name}</div>
+                        {this.props.isCurrent 
+                            ?
+                            this.props.data.name
+                            :
+                            <Link to={`/sections/${this.props.data.id}`}>{this.props.data.name}</Link>
+                        }
+                        
                         {this.props.isCurrent ? <div>{this.props.data.description}</div> : null}
-                        {this.props.isCurrent ? subSections : null}
+                        {subSections}
                     </div>;
         }
         

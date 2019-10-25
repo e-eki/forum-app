@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 import Message from './message';
 
 // Канал
@@ -10,28 +11,41 @@ export default class Channel extends PureComponent {
         console.log('render channel');
         const className = 'channel ' + (this.props.className ? this.props.className : '');
 
-        const messages = [];
-
         debugger;
+
+        let channel = <div></div>;
+        const messages = [];
         let key = 0;
 
         if (this.props.data) {
-            this.props.data.messages.forEach(function(item) {
-                const message = <Message
-                                    key={key}
-                                    data = {item}
-                                />;
-                messages.push(message);
-                key++;
-            });
+
+            if (this.props.isCurrent && this.props.data.messages) {
+                this.props.data.messages.forEach(function(item) {
+                    const message = <Message
+                                        key={key}
+                                        data = {item}
+                                    />;
+                    messages.push(message);
+                    key++;
+                });
+            }
+
+            channel = <div>
+                            {this.props.isCurrent
+                                ?
+                                this.props.data.name
+                                :
+                                <Link to={`/channels/${this.props.data.id}`}>{this.props.data.name}</Link> 
+                            }
+                            {/* <div>{this.props.data.description}</div> */}
+                            <div>{this.props.isCurrent ? this.props.data.firstMessage : null}</div>
+                            {this.props.isCurrent ? messages : null}
+                        </div>;
         }
         
         return (
             <div className = {className}>
-                <div>{this.props.data.name}</div>
-                <div>{this.props.data.description}</div>
-
-                {messages}
+                {channel}
             </div>
         )
     }

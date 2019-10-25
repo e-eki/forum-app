@@ -5,6 +5,16 @@ import apiConst from '../constants/apiConst';
 import testData from '../../../test/storeData';
 
 
+export function getAllSections() {
+	// return axios.get(`${apiConst.sectionApi}`)
+	// 	.then(response => {
+	// 	store.dispatch(actions.setSections(response.data));
+	// 	return response;
+	// 	});
+
+	store.dispatch(actions.setSections(testData.sections));
+}
+
 export function getSectionById(id) {
 	// return axios.get(`${apiConst.sectionApi/id}`)
 	// 	.then(response => {
@@ -14,18 +24,4 @@ export function getSectionById(id) {
 
 	debugger;
 	store.dispatch(actions.setCurrentSection(testData.currentSection));
-
-	return true;
-}
-
-export function getAllSections() {
-	// return axios.get(`${apiConst.sectionApi}`)
-	// 	.then(response => {
-	// 	store.dispatch(actions.setSections(response.data));
-	// 	return response;
-	// 	});
-
-	store.dispatch(actions.setSections(testData.sections));
-
-	return true;
 }

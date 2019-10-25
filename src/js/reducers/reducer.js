@@ -18,6 +18,12 @@ export default function reducer(state = Map(), action) {
 
     case actionTypes.SET_CURRENT_SECTION:
       return state.set('currentSection', action.section);
+
+    case actionTypes.SET_CURRENT_SUBSECTION:
+      return state.set('currentSubSection', action.subSection);
+
+    case actionTypes.SET_CURRENT_CHANNEL:
+        return state.set('currentChannel', action.channel);
     
     default:
       return state;

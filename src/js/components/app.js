@@ -2,9 +2,11 @@
 
 import React, { Component } from 'react';
 import { Router, Route } from 'react-router';
-const createBrowserHistory = require("history").createBrowserHistory;    //?? import
+const createBrowserHistory = require("history").createBrowserHistory;    //?? через import
 import ContentContainer from './containers/contentContainer';
 import SectionContainer from './containers/sectionContainer';
+import SubSectionContainer from './containers/subSectionContainer';
+import ChannelContainer from './containers/channelContainer';
 
 export default class App extends Component {
 
@@ -16,6 +18,8 @@ export default class App extends Component {
             <Router history={history}>
                 <Route exact path="/" component={ContentContainer} />
                 <Route path="/sections/:id" component={SectionContainer} />
+                <Route path="/subsections/:id" component={SubSectionContainer} />
+                <Route path="/channels/:id" component={ChannelContainer} />
             </Router>
         )
     }

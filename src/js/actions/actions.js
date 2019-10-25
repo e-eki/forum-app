@@ -16,3 +16,17 @@ export function setCurrentSection(section) {
 	};
 }
 
+export function setCurrentSubSection(subSection) {
+	return {
+	  type: actionTypes.SET_CURRENT_SUBSECTION,
+	  subSection
+	};
+}
+
+export function setCurrentChannel(channel) {
+	return {
+	  type: actionTypes.SET_CURRENT_CHANNEL,
+	  channel
+	};
+}
+

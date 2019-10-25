@@ -23,6 +23,7 @@ class ContentContainer extends PureComponent {
     }
     
     render() {
+        console.log('render ContentContainer');
         return (
           <Content sections = {this.props.sections} />
         );

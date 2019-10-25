@@ -23,7 +23,7 @@ class SectionContainer extends PureComponent {
     }
     
     render() {
-        debugger;
+        console.log('render SectionContainer');
         return (
           <Section data = {this.props.data} isCurrent = {true} />
         );
