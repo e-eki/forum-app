@@ -25,7 +25,7 @@ class ContentContainer extends PureComponent {
     render() {
         console.log('render ContentContainer');
         return (
-          <Content sections = {this.props.sections} />
+          <Content userInfo = {this.props.userInfo} sections = {this.props.sections} />
         );
     }
 }
@@ -33,6 +33,7 @@ class ContentContainer extends PureComponent {
 const mapStateToProps = function(state) {
     debugger;
     return {
+        userInfo: state.get('userInfo'),
         sections: state.get('sections')
     };
 }

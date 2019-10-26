@@ -2,31 +2,38 @@
 
 import * as actionTypes from './actionTypes';
 
-export function setSections(sections) {
+export function setSections(data) {
 	return {
 	  type: actionTypes.SET_SECTIONS,
-	  sections
+	  data
 	};
 }
 
-export function setCurrentSection(section) {
+export function setCurrentSection(data) {
 	return {
 	  type: actionTypes.SET_CURRENT_SECTION,
-	  section
+	  data
 	};
 }
 
-export function setCurrentSubSection(subSection) {
+export function setCurrentSubSection(data) {
 	return {
 	  type: actionTypes.SET_CURRENT_SUBSECTION,
-	  subSection
+	  data
 	};
 }
 
-export function setCurrentChannel(channel) {
+export function setCurrentChannel(data) {
 	return {
 	  type: actionTypes.SET_CURRENT_CHANNEL,
-	  channel
+	  data
+	};
+}
+
+export function setUserInfo(data) {
+	return {
+	  type: actionTypes.SET_USER_INFO,
+	  data
 	};
 }
 

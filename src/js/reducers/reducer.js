@@ -24,6 +24,9 @@ export default function reducer(state = Map(), action) {
 
     case actionTypes.SET_CURRENT_CHANNEL:
         return state.set('currentChannel', action.channel);
+
+    case actionTypes.SET_USER_INFO:
+      return state.set('userInfo', action.userInfo);
     
     default:
       return state;

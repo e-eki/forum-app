@@ -115,5 +115,17 @@ module.exports = {
 				text: '1111111111 11111 111111',
 			}
 		]
+	},
+
+	userInfo: {
+		id: 0,
+		nickName: 'First_User',
+		name: 'Qwerty Asdf',
+		birthDate: new Date(),
+		age: 20,
+		city: 'Moscow',
+		profession: 'engineer',
+		hobby: 'swimming',
+		citation: 'eee vvvv ssss xxxx!',
 	}
 }
