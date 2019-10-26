@@ -3,8 +3,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Channel from '../views/channel';
-import * as actions from '../../actions/actions';
+import { setUserInfo } from '../../actions/channelActions';
 import { getChannelById } from '../../api/channelApi';
+import UserInfoForm from '../views/forms/userInfoForm';
 
 class ChannelContainer extends PureComponent {
 
@@ -18,8 +19,24 @@ class ChannelContainer extends PureComponent {
     
     render() {
         console.log('render ChannelContainer');
+        debugger;
+
         return (
-          <Channel data = {this.props.data} isCurrent = {true} />
+            <div>
+                {this.props.userInfo
+                    ?
+                    <UserInfoForm
+                        userInfo = {this.props.userInfo}
+                        hideUserInfo = {this.props.hideUserInfo}>
+                    </UserInfoForm>
+                    : null
+                }
+                <Channel 
+                    data = {this.props.data}
+                    isCurrent = {true}
+                    userInfo = {this.props.userInfo} 
+                />
+            </div>           
         );
     }
 }
@@ -27,8 +44,17 @@ class ChannelContainer extends PureComponent {
 const mapStateToProps = function(state) {
     debugger;
     return {
-        data: state.get('currentChannel')
+        data: state.get('currentChannel'),
+        userInfo: state.get('userInfo'),
     };
-}
+};
 
-export default connect(mapStateToProps, actions)(ChannelContainer);
+const mapDispatchToProps = function(dispatch) {
+    return {
+        hideUserInfo: function() {
+            dispatch(setUserInfo(null));
+        }
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChannelContainer);

@@ -1,9 +1,23 @@
 'use strict';
 
 import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
+import { getUserInfoById } from '../../api/userInfoApi';
 
 // Сообщение
 export default class Message extends PureComponent {
+
+    constructor(props) {
+        super(props);
+
+        this.getUserInfo = this.getUserInfo.bind(this);
+    }
+
+    getUserInfo(event) {
+        debugger;
+        event.preventDefault();
+        getUserInfoById(this.props.data.senderId);
+    }
 
     render() {
         console.log('render message');
@@ -11,10 +25,13 @@ export default class Message extends PureComponent {
         
         return (
             <div className = {className}>
-                <div>sender</div>
+                <Link to="/" onClick = {this.getUserInfo}>Sender</Link> 
+
                 <div>{this.props.data.date.toLocaleTimeString()}</div>
                 <div>{this.props.data.text}</div>
             </div>
         )
     }
 }
+
+getUserInfoById

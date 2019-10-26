@@ -16,16 +16,13 @@ export default class Content extends PureComponent {
         console.log('render content');
         
         const className = 'content ' + (this.props.className ? this.props.className : '');
-        let mainClassName = '';
-
-        if (this.props.userInfo) {
-            mainClassName = ''
-        }
         
         return (
             <div className = {className}>
                 <Header className = 'content__header '/>
-                <Main userInfo = {this.props.userInfo} sections = {this.props.sections}/>
+                <Main  
+                    sections = {this.props.sections}
+                />
                 <Footer />
             </div>
         )

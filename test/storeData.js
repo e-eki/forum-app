@@ -98,9 +98,10 @@ module.exports = {
 	currentChannel:{
 
 		id: 0,
+		senderId: '0',
 		name: 'subSection00 - channel0',
 		info: '',
-		firstMessage: 'Hello World - 0!',
+		descriptionMessage: 'Hello World - 0!',
 		messages: [
 			{
 				id: 0,
@@ -122,7 +123,6 @@ module.exports = {
 		nickName: 'First_User',
 		name: 'Qwerty Asdf',
 		birthDate: new Date(),
-		age: 20,
 		city: 'Moscow',
 		profession: 'engineer',
 		hobby: 'swimming',

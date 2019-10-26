@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Content from '../views/content';
 import { getAllSections } from '../../api/sectionApi';
-import * as actions from '../../actions/actions';
+import * as actions from '../../actions/channelActions';
 
 // const mapStateToProps = function(state) {
 //     debugger;
@@ -25,7 +25,7 @@ class ContentContainer extends PureComponent {
     render() {
         console.log('render ContentContainer');
         return (
-          <Content userInfo = {this.props.userInfo} sections = {this.props.sections} />
+          <Content sections = {this.props.sections} />
         );
     }
 }
@@ -33,7 +33,6 @@ class ContentContainer extends PureComponent {
 const mapStateToProps = function(state) {
     debugger;
     return {
-        userInfo: state.get('userInfo'),
         sections: state.get('sections')
     };
 }

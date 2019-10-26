@@ -9,7 +9,11 @@ export default class Channel extends PureComponent {
 
     render() {
         console.log('render channel');
-        const className = 'channel ' + (this.props.className ? this.props.className : '');
+        let className = 'channel ' + (this.props.className ? this.props.className : '');
+
+        if (this.props.userInfo) {
+            className += 'channel_transparent ';
+        }
 
         debugger;
 
@@ -38,7 +42,7 @@ export default class Channel extends PureComponent {
                                 <Link to={`/channels/${this.props.data.id}`}>{this.props.data.name}</Link> 
                             }
                             {/* <div>{this.props.data.description}</div> */}
-                            <div>{this.props.isCurrent ? this.props.data.firstMessage : null}</div>
+                            <div>{this.props.isCurrent ? this.props.data.descriptionMessage : null}</div>
                             {this.props.isCurrent ? messages : null}
                         </div>;
         }

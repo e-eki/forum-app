@@ -3,7 +3,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Section from '../views/section';
-import * as actions from '../../actions/actions';
 import { getSectionById } from '../../api/sectionApi';
 
 class SectionContainer extends PureComponent {
@@ -37,4 +36,4 @@ const mapStateToProps = function(state) {
     };
 }
 
-export default connect(mapStateToProps, actions)(SectionContainer);
+export default connect(mapStateToProps)(SectionContainer);
