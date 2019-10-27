@@ -23,7 +23,10 @@ export default function reducer(state = Map(), action) {
       return state.set('currentSubSection', action.data);
 
     case actionTypes.SET_CURRENT_CHANNEL:
-        return state.set('currentChannel', action.data);
+      return state.set('currentChannel', action.data);
+
+    case actionTypes.SET_CURRENT_USER_CHANNEL:
+      return state.set('currentUserChannel', action.data);
 
     case actionTypes.SET_USER_INFO:
       return state.set('userInfo', action.data);

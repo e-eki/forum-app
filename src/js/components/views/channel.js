@@ -21,31 +21,52 @@ export default class Channel extends PureComponent {
         const messages = [];
         let key = 0;
 
-        if (this.props.data) {
+        const data = this.props.currentChannel || this.props.currentUserChannel;
+        let channelName = null;
+        let channelId = null;
 
-            if (this.props.isCurrent && this.props.data.messages) {
-                this.props.data.messages.forEach(function(item) {
+        if (data) {
+            if (this.props.currentChannel) {
+                channelName = data.name;
+                channelId = data.id;
+            }
+            else if (this.props.currentUserChannel) {
+                channelName = data.userName;
+                channelId = data.userId;
+            }
+
+            if (this.props.isCurrent && data.messages) {
+                data.messages.forEach(function(item) {
                     const message = <Message
                                         key={key}
                                         data = {item}
+                                        getUserInfo = {this.props.getUserInfo}
                                     />;
                     messages.push(message);
                     key++;
-                });
+                }.bind(this));
             }
-
-            channel = <div>
-                            {this.props.isCurrent
-                                ?
-                                this.props.data.name
-                                :
-                                <Link to={`/channels/${this.props.data.id}`}>{this.props.data.name}</Link> 
-                            }
-                            {/* <div>{this.props.data.description}</div> */}
-                            <div>{this.props.isCurrent ? this.props.data.descriptionMessage : null}</div>
-                            {this.props.isCurrent ? messages : null}
-                        </div>;
         }
+
+        channel = <div>
+                    {this.props.isCurrent
+                        ?
+                        channelName
+                        :
+                        <Link to={`/channels/${channelId}`}>{channelName}</Link> 
+                    }
+
+                    <div>
+                        {this.props.isCurrent 
+                            ? 
+                            ((data && data.descriptionMessage) || null)
+                            :
+                            null
+                        }
+                    </div>
+
+                    {this.props.isCurrent ? messages : null}
+                </div>;
         
         return (
             <div className = {className}>

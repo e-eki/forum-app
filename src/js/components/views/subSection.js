@@ -21,7 +21,7 @@ export default class SubSection extends PureComponent {
                 this.props.data.channels.forEach(function(item) {
                     const channel = <Channel
                                         key={key}
-                                        data = {item}
+                                        currentChannel = {item}
                                     />;
                     channels.push(channel);
                     key++;

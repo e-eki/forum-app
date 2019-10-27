@@ -10,22 +10,7 @@ module.exports = {
 					id: 0,
 					name: 'sub-section00',
 					description: 'subsection-descriprion0',
-					channels: [
-						{
-	
-							id: 0,
-							name: 'subSection00 - channel0',
-							description: 'subSection00 - channel0 - descriprion',
-							messages: [
-								{
-									id: 0,
-									senderId: '0',
-									date: new Date(),
-									text: '1111111111 11111 111111',
-								}
-							]
-						}
-					]
+					channels: []
 				}
 			]
 		},
@@ -53,22 +38,7 @@ module.exports = {
                 id: 0,
                 name: 'sub-section00',
                 description: 'subsection-descriprion0',
-                channels: [
-                    {
-
-                        id: 0,
-                        name: 'subSection00 - channel0',
-                        description: 'subSection00 - channel0 - descriprion',
-                        messages: [
-                            {
-                                id: 0,
-                                senderId: '0',
-                                date: new Date(),
-                                text: '1111111111 11111 111111',
-                            }
-                        ]
-                    }
-                ]
+                channels: []
             }
         ]
 	},
@@ -83,20 +53,12 @@ module.exports = {
 				id: 0,
 				name: 'subSection00 - channel0',
 				description: 'subSection00 - channel0 - descriprion',
-				messages: [
-					{
-						id: 0,
-						senderId: '0',
-						date: new Date(),
-						text: '1111111111 11111 111111',
-					}
-				]
+				messages: []
 			}
 		]
 	},
 
 	currentChannel:{
-
 		id: 0,
 		senderId: '0',
 		name: 'subSection00 - channel0',
@@ -106,12 +68,39 @@ module.exports = {
 			{
 				id: 0,
 				senderId: '0',
+				recipientId: null,
+				channelId: '0',
 				date: new Date(),
 				text: '0000000000000000000000000',
 			},
 			{
 				id: 1,
 				senderId: '1',
+				recipientId: null,
+				channelId: '0',
+				date: new Date(),
+				text: '1111111111 11111 111111',
+			}
+		]
+	},
+
+	currentUserChannel: {
+		userId: 0,
+		userName: 'First_User',
+		messages: [
+			{
+				id: 0,
+				senderId: '0',
+				recipientId: '1',
+				channelId: null,
+				date: new Date(),
+				text: '0000000000000000000000000',
+			},
+			{
+				id: 1,
+				senderId: '1',
+				recipientId: '0',
+				channelId: null,
 				date: new Date(),
 				text: '1111111111 11111 111111',
 			}

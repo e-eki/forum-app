@@ -6,6 +6,7 @@ module.exports = {
 	sectionApi: `${api_url}/section/`,
 	subSectionApi: `${api_url}/subsection/`,
 	channelApi: `${api_url}/channel/`,
+	userChannelApi: `${api_url}/user-channel/`,
 	userInfoApi: `${api_url}/userinfo/`,
 
 	// emailConfirmApi: `${api_url}/emailconfirm/`,

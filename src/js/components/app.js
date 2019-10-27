@@ -20,6 +20,7 @@ export default class App extends Component {
                 <Route path="/sections/:id" component={SectionContainer} />
                 <Route path="/subsections/:id" component={SubSectionContainer} />
                 <Route path="/channels/:id" component={ChannelContainer} />
+                <Route path="/userChannels/:userId" component={ChannelContainer} />
             </Router>
         )
     }

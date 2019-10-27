@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 
 // Форма с информацией о юзере
 export default class UserInfoForm extends PureComponent {
@@ -22,11 +23,16 @@ export default class UserInfoForm extends PureComponent {
                 {this.props.userInfo.hobby ? <div>{this.props.userInfo.hobby}</div> : null}
                 {this.props.userInfo.citation ? <div>{this.props.userInfo.citation}</div> : null}
                 
-                {/* <Link to="/login">
-					<button className = 'bar__button button button_login'>Вход</button>
-				</Link> */}
+                {this.props.currentUserChannel
+                    ?
+                    null
+                    :
+                    <Link to={`/userChannels/${this.props.userInfo.id}`}>
+                        <button className = ''>Написать личное сообщение</button>
+                    </Link>
+                }
 
-                <button className = '' onClick = {this.props.hideUserInfo}>
+                <button className = '' onClick = {this.props.resetUserInfo}>
                     Закрыть
                 </button>
             </div>

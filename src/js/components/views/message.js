@@ -2,7 +2,6 @@
 
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { getUserInfoById } from '../../api/userInfoApi';
 
 // Сообщение
 export default class Message extends PureComponent {
@@ -16,7 +15,7 @@ export default class Message extends PureComponent {
     getUserInfo(event) {
         debugger;
         event.preventDefault();
-        getUserInfoById(this.props.data.senderId);
+        this.props.getUserInfo(this.props.data.senderId);
     }
 
     render() {
@@ -33,5 +32,3 @@ export default class Message extends PureComponent {
         )
     }
 }
-
-getUserInfoById
