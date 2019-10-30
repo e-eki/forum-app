@@ -5,6 +5,10 @@ import Section from './section';
 
 export default class SectionsBar extends PureComponent {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         debugger;
         console.log('render sectionsBar');

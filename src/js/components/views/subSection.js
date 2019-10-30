@@ -7,6 +7,10 @@ import Channel from './channel';
 // Подраздел
 export default class SubSection extends PureComponent {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         console.log('render subSection');
         const className = 'sub-section ' + (this.props.className ? this.props.className : '');

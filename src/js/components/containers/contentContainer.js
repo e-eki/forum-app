@@ -17,6 +17,10 @@ import * as actions from '../../actions/channelActions';
 
 class ContentContainer extends PureComponent {
 
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
         debugger;       
         getAllSections();

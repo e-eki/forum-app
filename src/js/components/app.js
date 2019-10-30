@@ -11,7 +11,6 @@ import ChannelContainer from './containers/channelContainer';
 export default class App extends Component {
 
     render() {
-
         const history = createBrowserHistory();
 
         return (

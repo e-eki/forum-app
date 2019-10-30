@@ -7,6 +7,10 @@ import { getSubSectionById } from '../../api/subSectionApi';
 
 class SubSectionContainer extends PureComponent {
 
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
         debugger;
         if (this.props.match && this.props.match.params) {

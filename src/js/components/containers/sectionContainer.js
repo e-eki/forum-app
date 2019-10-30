@@ -7,11 +7,9 @@ import { getSectionById } from '../../api/sectionApi';
 
 class SectionContainer extends PureComponent {
 
-    // constructor(props) {
-    //     super(props);
-
-    //     //this.isCurrent = true;
-    // }
+    constructor(props) {
+        super(props);
+    }
 
     componentDidMount() {
         debugger;

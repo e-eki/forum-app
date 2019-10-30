@@ -13,6 +13,10 @@ import UserInfoForm from '../views/forms/userInfoForm';
 
 class ChannelContainer extends PureComponent {
 
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
         debugger;
         if (this.props.match && this.props.match.params) {

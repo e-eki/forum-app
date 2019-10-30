@@ -6,6 +6,10 @@ import { Link } from 'react-router-dom';
 // Форма с информацией о юзере
 export default class UserInfoForm extends PureComponent {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         console.log('render UserInfoForm');
         const className = 'user-info ' + (this.props.className ? this.props.className : '');
@@ -39,14 +43,3 @@ export default class UserInfoForm extends PureComponent {
         )
     }
 }
-
-// userInfo: {
-//     id: 0,
-//     nickName: 'First_User',
-//     name: 'Qwerty Asdf',
-//     birthDate: new Date(),
-//     city: 'Moscow',
-//     profession: 'engineer',
-//     hobby: 'swimming',
-//     citation: 'eee vvvv ssss xxxx!',
-// }

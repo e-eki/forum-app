@@ -7,6 +7,10 @@ import Message from './message';
 // Канал
 export default class Channel extends PureComponent {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         console.log('render channel');
         let className = 'channel ' + (this.props.className ? this.props.className : '');
