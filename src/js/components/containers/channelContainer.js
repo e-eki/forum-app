@@ -90,6 +90,6 @@ const mapDispatchToProps = function(dispatch) {
             dispatch(setCurrentUserChannel(null));
         },
     }
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChannelContainer);

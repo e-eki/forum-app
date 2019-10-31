@@ -8,6 +8,13 @@ export default class Section extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.editSection = this.editSection.bind(this);
+    }
+
+    editSection() {
+        debugger;
+        this.props.setModifiableSection(this.props.section);
     }
 
     render() {
@@ -20,28 +27,28 @@ export default class Section extends PureComponent {
         const subSections = [];
         let key = 0;
 
-        if (this.props.data) {
+        if (this.props.section) {
 
-            if (this.props.data.subSections) {
-                this.props.data.subSections.forEach(function(item) {
+            if (this.props.section.subSections) {
+                this.props.section.subSections.forEach(function(item) {
                     const subSection = <SubSection
                                             key={key}
-                                            data = {item}
+                                            subSection = {item}
                                         />;
                     subSections.push(subSection);
                     key++;
-                });
+                }.bind(this));
             }
 
             section = <div>
                         {this.props.isCurrent 
                             ?
-                            this.props.data.name
+                            this.props.section.name
                             :
-                            <Link to={`/sections/${this.props.data.id}`}>{this.props.data.name}</Link>
+                            <Link to={`/sections/${this.props.section.id}`}>{this.props.section.name}</Link>
                         }
                         
-                        {this.props.isCurrent ? <div>{this.props.data.description}</div> : null}
+                        {this.props.isCurrent ? <div>{this.props.section.description}</div> : null}
                         {subSections}
                     </div>;
         }
@@ -49,6 +56,10 @@ export default class Section extends PureComponent {
         return (
             <div className = {className}>
                 {section}
+
+                <button className = '' onClick = {this.editSection}>
+                    Редактировать раздел
+                </button>
             </div>
         )
     }

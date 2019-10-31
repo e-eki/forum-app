@@ -22,6 +22,9 @@ export default class Content extends PureComponent {
                 <Header className = 'content__header '/>
                 <Main  
                     sections = {this.props.sections}
+                    modifiableSection = {this.props.modifiableSection}
+                    setModifiableSection = {this.props.setModifiableSection}
+                    modifySection = {this.props.modifySection}
                 />
                 <Footer />
             </div>

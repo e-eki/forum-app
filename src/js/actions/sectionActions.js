@@ -15,3 +15,10 @@ export function setCurrentSection(data) {
 	  data
 	};
 }
+
+export function setModifiableSection(data) {
+	return {
+	  type: actionTypes.SET_MODIFIABLE_SECTION,
+	  data
+	};
+}

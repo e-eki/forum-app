@@ -22,7 +22,7 @@ class SubSectionContainer extends PureComponent {
     render() {
         console.log('render SubSectionContainer');
         return (
-          <SubSection data = {this.props.data} isCurrent = {true} />
+          <SubSection subSection = {this.props.data} isCurrent = {true} />
         );
     }
 }

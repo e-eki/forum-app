@@ -19,6 +19,9 @@ export default function reducer(state = Map(), action) {
     case actionTypes.SET_CURRENT_SECTION:
       return state.set('currentSection', action.data);
 
+    case actionTypes.SET_MODIFIABLE_SECTION:
+      return state.set('modifiableSection', action.data);
+
     case actionTypes.SET_CURRENT_SUBSECTION:
       return state.set('currentSubSection', action.data);
 

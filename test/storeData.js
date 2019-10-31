@@ -42,6 +42,11 @@ module.exports = {
             }
         ]
 	},
+
+	modifiableSection: {
+		name: '',
+		description: '',
+	},
 	
 	currentSubSection: {
 		id: 0,

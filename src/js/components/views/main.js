@@ -22,7 +22,12 @@ export default class Main extends PureComponent {
 
                 <QuotesBar/>
 
-                <SectionsBar sections = {this.props.sections}/>
+                <SectionsBar
+                    sections = {this.props.sections}
+                    modifiableSection = {this.props.modifiableSection}
+                    setModifiableSection = {this.props.setModifiableSection}
+                    modifySection = {this.props.modifySection}
+                />
             </div>
         )
     }

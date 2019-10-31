@@ -19,27 +19,27 @@ export default class SubSection extends PureComponent {
         const channels = [];
         let key = 0;
 
-        if (this.props.data) {
+        if (this.props.subSection) {
 
-            if (this.props.isCurrent && this.props.data.channels) {
-                this.props.data.channels.forEach(function(item) {
+            if (this.props.isCurrent && this.props.subSection.channels) {
+                this.props.subSection.channels.forEach(function(item) {
                     const channel = <Channel
                                         key={key}
                                         currentChannel = {item}
                                     />;
-                    channels.push(channel);
+                    channels.push(channel);  //todo: currentChannel -> channel
                     key++;
-                });
+                }.bind(this));
             }
 
             subSection = <div>
                             {this.props.isCurrent
                                 ?
-                                this.props.data.name
+                                this.props.subSection.name
                                 :
-                                <Link to={`/subsections/${this.props.data.id}`}>{this.props.data.name}</Link> 
+                                <Link to={`/subsections/${this.props.subSection.id}`}>{this.props.subSection.name}</Link> 
                             }
-                            <div>{this.props.data.description}</div>
+                            <div>{this.props.subSection.description}</div>
                             {this.props.isCurrent ? channels : null}
                         </div>;
         }

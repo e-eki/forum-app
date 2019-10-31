@@ -3,7 +3,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Content from '../views/content';
-import { getAllSections } from '../../api/sectionApi';
+import { getAllSections, modifySection } from '../../api/sectionApi';
+import { setModifiableSection } from '../../actions/sectionActions';
 import * as actions from '../../actions/channelActions';
 
 // const mapStateToProps = function(state) {
@@ -29,7 +30,12 @@ class ContentContainer extends PureComponent {
     render() {
         console.log('render ContentContainer');
         return (
-          <Content sections = {this.props.sections} />
+            <Content
+                sections = {this.props.sections}
+                modifiableSection = {this.props.modifiableSection}
+                setModifiableSection = {this.props.setModifiableSection}
+                modifySection = {this.props.modifySection}
+            />
         );
     }
 }
@@ -37,8 +43,20 @@ class ContentContainer extends PureComponent {
 const mapStateToProps = function(state) {
     debugger;
     return {
-        sections: state.get('sections')
+        sections: state.get('sections'),
+        modifiableSection: state.get('modifiableSection'),  //??
     };
+};
+
+const mapDispatchToProps = function(dispatch) {
+    return {
+        modifySection: function(section) {
+            modifySection(section);
+        },
+        setModifiableSection: function(section) {
+            dispatch(setModifiableSection(section));
+        },
+    }
 }
 
-export default connect(mapStateToProps, actions)(ContentContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ContentContainer);
