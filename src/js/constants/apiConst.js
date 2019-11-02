@@ -1,8 +1,11 @@
 'use strict';
 
-const api_url = 'http://localhost:3000/api';
+const server_url = 'http://localhost:3000';
+const api_url = `${server_url}/api`;
 
 module.exports = {
+	serverUrl: `${server_url}`,
+
 	sectionApi: `${api_url}/section`,
 	subSectionApi: `${api_url}/subsection`,
 	channelApi: `${api_url}/channel`,
