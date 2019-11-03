@@ -22,3 +22,10 @@ export function setModifiableSection(data) {
 	  data
 	};
 }
+
+export function updateSections() {
+	return {
+	  type: actionTypes.UPDATE_SECTIONS,
+	  meta: {remote: true},
+	};
+}

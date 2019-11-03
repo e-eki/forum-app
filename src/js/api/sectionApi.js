@@ -46,7 +46,10 @@ export function modifySection(section) {
 			debugger;
 			store.dispatch(actions.setModifiableSection(null));
 
-			return getAllSections();
+			store.dispatch(actions.updateSections());
+
+			//return getAllSections();
+			return true;
 		})
 }
 

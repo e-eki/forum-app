@@ -24,7 +24,7 @@ export default class SectionModifyForm extends Component {
         return true; //??
     }
 
-    // ввод данных юзером
+    // ввод данных
 	changeData(event) {
         debugger;
 		const dataName = event.target.name;
