@@ -24,4 +24,7 @@ export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 
 
+export const JOIN_ROOM = 'JOIN_ROOM';
+
+
 

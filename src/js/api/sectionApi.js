@@ -4,6 +4,7 @@ import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
 import * as actions from '../actions/sectionActions';
+import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 import testData from '../../../test/storeData';
 
@@ -42,11 +43,13 @@ export function modifySection(section) {
 	}
 	
 	return Promise.all(tasks)
-		.then((response) => {
+		.spread((response) => {
 			debugger;
 			store.dispatch(actions.setModifiableSection(null));
 
-			store.dispatch(actions.updateSections());
+			store.dispatch(remoteActions.joinRoom('1'));
+
+			store.dispatch(remoteActions.updateSections());
 
 			//return getAllSections();
 			return true;
