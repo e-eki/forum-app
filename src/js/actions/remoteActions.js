@@ -9,6 +9,15 @@ export function updateSections() {
 	};
 }
 
+export function updateSubSections(sectionId) {
+	return {
+	  type: actionTypes.UPDATE_SUBSECTIONS,
+	  sectionId: sectionId,
+	  meta: {remote: true},
+	};
+}
+
+
 export function joinRoom(id) {
 	return {
 	  type: actionTypes.JOIN_ROOM,

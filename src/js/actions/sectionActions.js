@@ -16,6 +16,13 @@ export function setCurrentSection(data) {
 	};
 }
 
+export function setCurrentInfoSection(data) {
+	return {
+	  type: actionTypes.SET_CURRENT_INFO_SECTION,
+	  data
+	};
+}
+
 export function setModifiableSection(data) {
 	return {
 	  type: actionTypes.SET_MODIFIABLE_SECTION,

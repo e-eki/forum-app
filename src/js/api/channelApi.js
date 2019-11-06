@@ -2,7 +2,6 @@ import axios from 'axios';
 import store from '../store/store';
 import * as actions from '../actions/channelActions';
 import apiConst from '../constants/apiConst';
-import testData from '../../../test/storeData';
 
 
 export function getChannelById(id) {

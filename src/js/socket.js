@@ -15,7 +15,10 @@ socket.on('action', action => {
 		switch (action.type) {
 
 			case actionTypes.UPDATE_SECTIONS:
-					console.log('-----------updated');
+				store.dispatch(setSections(action.data));
+				break;
+
+			case actionTypes.UPDATE_SUBSECTIONS:
 				store.dispatch(setSections(action.data));
 				break;
 			
@@ -28,7 +31,6 @@ socket.on('action', action => {
 
 socket.on('join', action => {
 	debugger;
-	console.log('-----------joined');
 	
 	socket.emit('JOINED');
 });

@@ -6,7 +6,6 @@ import store from '../store/store';
 import * as actions from '../actions/sectionActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
-import testData from '../../../test/storeData';
 
 
 export function getAllSections() {
@@ -16,30 +15,40 @@ export function getAllSections() {
 		    store.dispatch(actions.setSections(response.data));
             return response;
 		});
-	//store.dispatch(actions.setSections(testData.sections));
 }
 
 export function getSectionById(id) {
 	return axios.get(`${apiConst.sectionApi}/${id}`)
 		.then(response => {
 			debugger;
-		    store.dispatch(actions.setCurrentSection(response.data[0]));  //??
+			store.dispatch(actions.setCurrentSection(response.data));
+			
+			store.dispatch(remoteActions.joinRoom(response.data.id));  //todo: сделать выход при уходе со страницы
+
 		    return response;
 		});
-
-	//store.dispatch(actions.setCurrentSection(testData.currentSection));
 }
 
-export function modifySection(section) {
+export function deleteSection(id) {
+	return axios.delete(`${apiConst.sectionApi}/${id}`)  //??
+		.then(response => {
+			debugger;
+		    store.dispatch(actions.setCurrentInfoSection(null));
+
+			store.dispatch(remoteActions.updateSections());
+		});
+}
+
+export function modifySection(item) {
 	debugger;
 
 	const tasks = [];
 
-	if (section.id) {
-		tasks.push(updateSection(section));
+	if (item.id) {
+		tasks.push(updateSection(item));
 	}
 	else {
-		tasks.push(createSection(section));
+		tasks.push(createSection(item));
 	}
 	
 	return Promise.all(tasks)
@@ -47,27 +56,26 @@ export function modifySection(section) {
 			debugger;
 			store.dispatch(actions.setModifiableSection(null));
 
-			store.dispatch(remoteActions.joinRoom('1'));
+			store.dispatch(remoteActions.joinRoom('1'));  //todo
 
 			store.dispatch(remoteActions.updateSections());
 
-			//return getAllSections();
 			return true;
 		})
 }
 
 
 
-function createSection(section) {
+function createSection(item) {
 	return axios.post(`${apiConst.sectionApi}`, {
-		name: section.name,
-		description: section.description,
+		name: item.name,
+		description: item.description,
 	})
 }
 
-function updateSection(section) {
-	return axios.put(`${apiConst.sectionApi}/${section.id}`, {
-		name: section.name,
-		description: section.description,
+function updateSection(item) {
+	return axios.put(`${apiConst.sectionApi}/${item.id}`, {
+		name: item.name,
+		description: item.description,
 	})
 }

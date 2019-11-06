@@ -3,24 +3,23 @@
 import React, { Component } from 'react';
 
 // Форма для создания/редактирования раздела
-export default class SectionModifyForm extends Component {
+export default class modifyForm extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            name: this.props.modifiableSection.name,
-            description: this.props.modifiableSection.description,
+            name: this.props.modifiableItem.name,
+            description: this.props.modifiableItem.description,
         }
 
         this.changeData = this.changeData.bind(this);
-        this.modifySection = this.modifySection.bind(this);
-        this.resetModifiableSection = this.resetModifiableSection.bind(this);
+        this.modifyItem = this.modifyItem.bind(this);
+        this.resetModifiableItem = this.resetModifiableItem.bind(this);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         debugger;
-
         return true; //??
     }
 
@@ -33,30 +32,30 @@ export default class SectionModifyForm extends Component {
 		this.setState({});
     }
     
-    modifySection() {
+    modifyItem() {
         debugger;
-        this.props.modifiableSection.name = this.state.name;
-        this.props.modifiableSection.description = this.state.description;
+        this.props.modifiableItem.name = this.state.name;
+        this.props.modifiableItem.description = this.state.description;
 
-        this.props.modifySection(this.props.modifiableSection);
+        this.props.modifyItem(this.props.modifiableItem);
     }
 
-    resetModifiableSection() {
+    resetModifiableItem() {
         debugger;
-        this.props.setModifiableSection(null);
+        this.props.setModifiableItem(null);
     }
 
     render() {
-        console.log('render SectionControlForm');
-        const className = 'section ' + (this.props.className ? this.props.className : '');
+        console.log('render modifyForm');
+        const className = 'modify-form ' + (this.props.className ? this.props.className : '');
 
         debugger;
 
-        const modifyingHeader = this.props.modifiableSection.id
+        const modifyingHeader = this.props.modifiableItem.id
                                 ?
-                                <div>Редактирование раздела</div>
+                                <div>Редактирование</div>
                                 :
-                                <div>Создание нового раздела</div>;
+                                <div>Добавление</div>;
         
         return (
             <div className = {className}>
@@ -80,11 +79,11 @@ export default class SectionModifyForm extends Component {
 					onChange = {this.changeData}
 				/>
 
-                <button className = '' onClick = {this.modifySection}>
+                <button className = '' onClick = {this.modifyItem}>
                     Ок
                 </button>
 
-                <button className = '' onClick = {this.resetModifiableSection}>
+                <button className = '' onClick = {this.resetModifiableItem}>
                     Закрыть
                 </button>
             </div>

@@ -3,18 +3,19 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import SubSection from './subSection';
+import ListForm from './forms/listForm';
 
 export default class Section extends PureComponent {
 
     constructor(props) {
         super(props);
 
-        this.editSection = this.editSection.bind(this);
+        this.showInfoSection = this.showInfoSection.bind(this);
     }
 
-    editSection() {
+    showInfoSection() {
         debugger;
-        this.props.setModifiableSection(this.props.section);
+        this.props.setCurrentInfoSection(this.props.section);
     }
 
     render() {
@@ -24,6 +25,7 @@ export default class Section extends PureComponent {
         debugger;
 
         let section = <div></div>;
+
         const subSections = [];
         let key = 0;
 
@@ -49,17 +51,39 @@ export default class Section extends PureComponent {
                         }
                         
                         {this.props.isCurrent ? <div>{this.props.section.description}</div> : null}
-                        {subSections}
+
+                        {/* {subSections} */}
+
+                        {this.props.isCurrent
+                        ?
+                        <ListForm
+                            parentItemId = {this.props.section.id}
+                            items = {subSections}
+                            currentInfoItem = {this.props.currentInfoSubSection}
+                            setCurrentInfoItem = {this.props.setCurrentInfoSubSection}
+                            modifiableItem = {this.props.modifiableSubSection}
+                            setModifiableItem = {this.props.setModifiableSubSection}
+                            modifyItem = {this.props.modifySubSection}
+                            deleteItem = {this.props.deleteSubSection}
+                        />
+                        :
+                        subSections}
                     </div>;
+        }
+
+        let sectionInfoBlock = null;
+
+        if (!this.props.isCurrent) {
+            sectionInfoBlock = <button className = '' onClick = {this.showInfoSection}>
+                                    Информация
+                                </button>;
         }
         
         return (
             <div className = {className}>
                 {section}
 
-                <button className = '' onClick = {this.editSection}>
-                    Редактировать раздел
-                </button>
+                {sectionInfoBlock}
             </div>
         )
     }

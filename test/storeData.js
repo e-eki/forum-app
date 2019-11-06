@@ -43,6 +43,11 @@ module.exports = {
         ]
 	},
 
+	currentInfoSection: {
+		name: '',
+		description: '',
+	},
+
 	modifiableSection: {
 		name: '',
 		description: '',

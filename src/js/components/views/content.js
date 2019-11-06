@@ -22,9 +22,12 @@ export default class Content extends PureComponent {
                 <Header className = 'content__header '/>
                 <Main  
                     sections = {this.props.sections}
+                    currentInfoSection = {this.props.currentInfoSection}
+                    setCurrentInfoSection = {this.props.setCurrentInfoSection}
                     modifiableSection = {this.props.modifiableSection}
                     setModifiableSection = {this.props.setModifiableSection}
                     modifySection = {this.props.modifySection}
+                    deleteSection = {this.props.deleteSection}
                 />
                 <Footer />
             </div>

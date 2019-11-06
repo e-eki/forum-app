@@ -25,9 +25,9 @@ export default class SubSection extends PureComponent {
                 this.props.subSection.channels.forEach(function(item) {
                     const channel = <Channel
                                         key={key}
-                                        currentChannel = {item}
+                                        channel = {item}
                                     />;
-                    channels.push(channel);  //todo: currentChannel -> channel
+                    channels.push(channel);
                     key++;
                 }.bind(this));
             }
@@ -40,7 +40,7 @@ export default class SubSection extends PureComponent {
                                 <Link to={`/subsections/${this.props.subSection.id}`}>{this.props.subSection.name}</Link> 
                             }
                             <div>{this.props.subSection.description}</div>
-                            {this.props.isCurrent ? channels : null}
+                            {channels}
                         </div>;
         }
         

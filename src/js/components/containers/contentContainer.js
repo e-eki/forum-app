@@ -3,9 +3,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Content from '../views/content';
-import { getAllSections, modifySection } from '../../api/sectionApi';
-import { setModifiableSection } from '../../actions/sectionActions';
-import * as actions from '../../actions/channelActions';
+import * as sectionApi from '../../api/sectionApi';
+import { setModifiableSection, setCurrentInfoSection } from '../../actions/sectionActions';
 
 // const mapStateToProps = function(state) {
 //     debugger;
@@ -24,7 +23,7 @@ class ContentContainer extends PureComponent {
 
     componentDidMount() {
         debugger;       
-        getAllSections();
+        sectionApi.getAllSections();
     }
     
     render() {
@@ -32,9 +31,12 @@ class ContentContainer extends PureComponent {
         return (
             <Content
                 sections = {this.props.sections}
+                currentInfoSection = {this.props.currentInfoSection}
                 modifiableSection = {this.props.modifiableSection}
+                setCurrentInfoSection = {this.props.setCurrentInfoSection}
                 setModifiableSection = {this.props.setModifiableSection}
                 modifySection = {this.props.modifySection}
+                deleteSection = {this.props.deleteSection}
             />
         );
     }
@@ -44,17 +46,24 @@ const mapStateToProps = function(state) {
     debugger;
     return {
         sections: state.get('sections'),
-        modifiableSection: state.get('modifiableSection'),  //??
+        currentInfoSection: state.get('currentInfoSection'),
+        modifiableSection: state.get('modifiableSection'),
     };
 };
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        modifySection: function(section) {
-            modifySection(section);
+        modifySection: function(item) {
+            sectionApi.modifySection(item);
         },
-        setModifiableSection: function(section) {
-            dispatch(setModifiableSection(section));
+        deleteSection: function(item) {
+            sectionApi.deleteSection(item);
+        },
+        setModifiableSection: function(item) {
+            dispatch(setModifiableSection(item));
+        },
+        setCurrentInfoSection: function(item) {
+            dispatch(setCurrentInfoSection(item));
         },
     }
 }

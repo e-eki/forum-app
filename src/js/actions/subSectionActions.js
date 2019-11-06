@@ -8,3 +8,17 @@ export function setCurrentSubSection(data) {
 	  data
 	};
 }
+
+export function setCurrentInfoSubSection(data) {
+	return {
+	  type: actionTypes.SET_CURRENT_INFO_SUBSECTION,
+	  data
+	};
+}
+
+export function setModifiableSubSection(data) {
+	return {
+	  type: actionTypes.SET_MODIFIABLE_SUBSECTION,
+	  data
+	};
+}
