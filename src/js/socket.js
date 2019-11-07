@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import apiConst from './constants/apiConst';
 import * as actionTypes from './actions/actionTypes';
 import store from './store/store';
-import { setSections } from './actions/sectionActions';
+import * as sectionActions from './actions/sectionActions';
 
 const socket = io(`${apiConst.serverUrl}`);
 
@@ -18,8 +18,19 @@ socket.on('action', action => {
 				store.dispatch(setSections(action.data));
 				break;
 
-			case actionTypes.UPDATE_SUBSECTIONS:
-				store.dispatch(setSections(action.data));
+			case actionTypes.UPDATE_SECTION_BY_ID:
+
+				const currentSection = store.getState().get('currentSection');
+				
+				if (currentSection &&
+					action.sectionId &&
+					(currentSection === action.sectionId)) {
+						let data = action.data;
+						data.subSections = currentSection.subSections;
+
+						store.dispatch(sectionActions.setCurrentSection(data));
+				}
+				
 				break;
 			
 			default:
@@ -29,10 +40,10 @@ socket.on('action', action => {
 	}
 });
 
-socket.on('join', action => {
-	debugger;
+// socket.on('join', action => {
+// 	debugger;
 	
-	socket.emit('JOINED');
-});
+// 	socket.emit('JOINED');
+// });
 
 export default socket;

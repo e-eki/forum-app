@@ -23,19 +23,24 @@ export function getSectionById(id) {
 			debugger;
 			store.dispatch(actions.setCurrentSection(response.data));
 			
-			store.dispatch(remoteActions.joinRoom(response.data.id));  //todo: сделать выход при уходе со страницы
+			//store.dispatch(remoteActions.joinRoom(response.data.id));  //todo: сделать выход при уходе со страницы
 
 		    return response;
 		});
 }
 
-export function deleteSection(id) {
-	return axios.delete(`${apiConst.sectionApi}/${id}`)  //??
-		.then(response => {
+export function deleteSection(item) {
+	const tasks = [];
+
+	tasks.push(item.id);
+	tasks.push(axios.delete(`${apiConst.sectionApi}/${item.id}`));
+
+	return Promise.all(tasks)
+		.spread((sectionId, response) => {
 			debugger;
 		    store.dispatch(actions.setCurrentInfoSection(null));
 
-			store.dispatch(remoteActions.updateSections());
+			store.dispatch(remoteActions.deleteSectionById(sectionId));
 		});
 }
 
@@ -43,6 +48,8 @@ export function modifySection(item) {
 	debugger;
 
 	const tasks = [];
+
+	tasks.push(item.sectionId);
 
 	if (item.id) {
 		tasks.push(updateSection(item));
@@ -52,13 +59,13 @@ export function modifySection(item) {
 	}
 	
 	return Promise.all(tasks)
-		.spread((response) => {
+		.spread((sectionId, response) => {
 			debugger;
 			store.dispatch(actions.setModifiableSection(null));
 
-			store.dispatch(remoteActions.joinRoom('1'));  //todo
+			//store.dispatch(remoteActions.joinRoom('1'));  //todo
 
-			store.dispatch(remoteActions.updateSections());
+			store.dispatch(remoteActions.updateSectionById(sectionId));
 
 			return true;
 		})

@@ -20,7 +20,7 @@ export default class infoForm extends PureComponent {
 
     deleteItem() {
         debugger;
-        this.props.deleteItem(this.props.currentInfoItem.id);
+        this.props.deleteItem(this.props.currentInfoItem);
     }
 
     editItem() {

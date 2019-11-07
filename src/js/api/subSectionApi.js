@@ -17,13 +17,19 @@ export function getSubSectionById(id) {
 		});
 }
 
-export function deleteSubSection(id) {
-	return axios.delete(`${apiConst.subSectionApi}/${id}`)  //??
-		.then(response => {
-			debugger;
-		    store.dispatch(actions.setCurrentInfoSubSection(null));
+export function deleteSubSection(item) {
+	const tasks = [];
 
-			store.dispatch(remoteActions.updateSubSections());
+	tasks.push(item.id);
+	tasks.push(item.sectionId);
+	tasks.push(axios.delete(`${apiConst.subSectionApi}/${item.id}`));
+
+	return Promise.all(tasks)
+		.spread((subSectionId, sectionId, response) => {
+			debugger;
+		    store.dispatch(actions.setCurrentInfoSection(null));
+
+			store.dispatch(remoteActions.deleteSubSectionById(subSectionId, sectionId));
 		});
 }
 
@@ -32,6 +38,7 @@ export function modifySubSection(item) {
 
 	const tasks = [];
 
+	tasks.push(item.id);
 	tasks.push(item.sectionId);
 
 	if (item.id) {
@@ -45,13 +52,13 @@ export function modifySubSection(item) {
 	}
 	
 	return Promise.all(tasks)
-		.spread((sectionId, response) => {
+		.spread((subSectionId, sectionId, response) => {
 			debugger;
 			store.dispatch(actions.setModifiableSubSection(null));
 
-			//store.dispatch(remoteActions.joinRoom('1'));  //todo
+			//store.dispatch(remoteActions.joinRoom(sectionId));  //??
 
-			store.dispatch(remoteActions.updateSubSections(sectionId));
+			store.dispatch(remoteActions.updateSubSectionById(subSectionId, sectionId));
 
 			return true;
 		})
