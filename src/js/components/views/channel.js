@@ -19,8 +19,6 @@ export default class Channel extends PureComponent {
             className += 'channel_transparent ';
         }
 
-        debugger;
-
         let channel = <div></div>;
         const messages = [];
         let key = 0;

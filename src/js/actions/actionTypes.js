@@ -32,6 +32,7 @@ export const DELETE_CHANNEL_BY_ID = 'DELETE_CHANNEL_BY_ID';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 
 export const JOIN_ROOM = 'JOIN_ROOM';
+export const LEAVE_ROOM = 'LEAVE_ROOM';
 
 
 

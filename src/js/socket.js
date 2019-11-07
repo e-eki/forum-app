@@ -15,7 +15,7 @@ socket.on('action', action => {
 		switch (action.type) {
 
 			case actionTypes.UPDATE_SECTIONS:
-				store.dispatch(setSections(action.data));
+				store.dispatch(sectionActions.setSections(action.data));
 				break;
 
 			case actionTypes.UPDATE_SECTION_BY_ID:

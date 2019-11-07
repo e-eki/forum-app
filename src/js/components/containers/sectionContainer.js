@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import Section from '../views/section';
 import { getSectionById } from '../../api/sectionApi';
 import * as subSectionApi from '../../api/subSectionApi';
-import { setModifiableSubSection, setCurrentInfoSubSection } from '../../actions/subSectionActions';
+import { setModifiableSubSection, setCurrentInfoSubSection, setCurrentSubSection } from '../../actions/subSectionActions';
+import { joinRoom, leaveRoom } from '../../actions/remoteActions';
+import { setCurrentSection } from '../../actions/sectionActions';
 
 class SectionContainer extends PureComponent {
 
@@ -17,8 +19,20 @@ class SectionContainer extends PureComponent {
         debugger;
         if (this.props.match && this.props.match.params) {
             const id = this.props.match.params.id;
-            getSectionById(id);
+            return getSectionById(id)
+                .then(section => {
+                    debugger;
+                    //this.props.setCurrentSection(section);
+                    this.props.joinRoom(section.id);
+
+                    return true;
+                });
         }
+    }
+
+    componentWillUnmount() {
+        debugger;
+        this.props.leaveRoom(this.props.currentSection.id);
     }
     
     render() {
@@ -40,7 +54,6 @@ class SectionContainer extends PureComponent {
 }
 
 const mapStateToProps = function(state) {
-    debugger;
     return {
         currentSection: state.get('currentSection'),
         currentInfoSubSection: state.get('currentInfoSubSection'),
@@ -61,6 +74,15 @@ const mapDispatchToProps = function(dispatch) {
         },
         setCurrentInfoSubSection: function(item) {
             dispatch(setCurrentInfoSubSection(item));
+        },
+        // setCurrentSection: function(item) {
+        //     dispatch(setCurrentSection(item));
+        // },
+        joinRoom: function(id) {
+            dispatch(joinRoom(id));
+        },
+        leaveRoom: function(id) {
+            dispatch(leaveRoom(id));
         },
     }
 }

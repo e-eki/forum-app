@@ -12,6 +12,8 @@ module.exports = {
 	userChannelApi: `${api_url}/user-channel`,
 	userInfoApi: `${api_url}/userinfo`,
 
+	defaultRoomId: '0',
+
 	// emailConfirmApi: `${api_url}/emailconfirm/`,
 	// getLkDataApi: `${api_url}/lkUserData/`,
 	// login: `${api_url}/login/`,

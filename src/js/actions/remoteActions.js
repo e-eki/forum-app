@@ -74,3 +74,11 @@ export function joinRoom(id) {
 	  meta: {remote: true},
 	};
 }
+
+export function leaveRoom(id) {
+	return {
+	  type: actionTypes.LEAVE_ROOM,
+	  roomId: id,
+	  meta: {remote: true},
+	};
+}

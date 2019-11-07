@@ -12,8 +12,8 @@ export function getAllSections() {
 	return axios.get(`${apiConst.sectionApi}`)
 		.then(response => {
 			debugger;
-		    store.dispatch(actions.setSections(response.data));
-            return response;
+		    store.dispatch(actions.setSections(response.data));  //todo: где лучше - здесь или в contentContainer?
+            return response.data;
 		});
 }
 
@@ -23,9 +23,9 @@ export function getSectionById(id) {
 			debugger;
 			store.dispatch(actions.setCurrentSection(response.data));
 			
-			//store.dispatch(remoteActions.joinRoom(response.data.id));  //todo: сделать выход при уходе со страницы
+			//store.dispatch(remoteActions.joinRoom(response.data.id));
 
-		    return response;
+		    return response.data;
 		});
 }
 
@@ -49,7 +49,7 @@ export function modifySection(item) {
 
 	const tasks = [];
 
-	tasks.push(item.sectionId);
+	tasks.push(item.id);
 
 	if (item.id) {
 		tasks.push(updateSection(item));

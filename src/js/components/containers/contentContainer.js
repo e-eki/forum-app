@@ -4,7 +4,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Content from '../views/content';
 import * as sectionApi from '../../api/sectionApi';
-import { setModifiableSection, setCurrentInfoSection } from '../../actions/sectionActions';
+import * as sectionActions from '../../actions/sectionActions';
+import { joinRoom, leaveRoom } from '../../actions/remoteActions';
+import apiConst from '../../constants/apiConst';
 
 // const mapStateToProps = function(state) {
 //     debugger;
@@ -23,7 +25,19 @@ class ContentContainer extends PureComponent {
 
     componentDidMount() {
         debugger;       
-        sectionApi.getAllSections();
+        return sectionApi.getAllSections()
+            .then(sections => {
+                debugger;
+                //this.props.setSections(sections);
+
+                this.props.joinRoom(apiConst.defaultRoomId);
+                return true;
+            });
+    }
+
+    componentWillUnmount() {
+        debugger;
+        this.props.leaveRoom(apiConst.defaultRoomId);
     }
     
     render() {
@@ -60,10 +74,19 @@ const mapDispatchToProps = function(dispatch) {
             sectionApi.deleteSection(item);
         },
         setModifiableSection: function(item) {
-            dispatch(setModifiableSection(item));
+            dispatch(sectionActions.setModifiableSection(item));
         },
         setCurrentInfoSection: function(item) {
-            dispatch(setCurrentInfoSection(item));
+            dispatch(sectionActions.setCurrentInfoSection(item));
+        },
+        // setSections: function(items) {
+        //     dispatch(sectionActions.setSections(items));
+        // },
+        joinRoom: function(id) {
+            dispatch(joinRoom(id));
+        },
+        leaveRoom: function(id) {
+            dispatch(leaveRoom(id));
         },
     }
 }
