@@ -8,3 +8,17 @@ export function setCurrentChannel(data) {
 	  data
 	};
 }
+
+export function setCurrentInfoChannel(data) {
+	return {
+	  type: actionTypes.SET_CURRENT_INFO_CHANNEL,
+	  data
+	};
+}
+
+export function setModifiableChannel(data) {
+	return {
+	  type: actionTypes.SET_MODIFIABLE_CHANNEL,
+	  data
+	};
+}

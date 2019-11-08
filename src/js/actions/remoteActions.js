@@ -2,6 +2,26 @@
 
 import * as actionTypes from './actionTypes';
 
+//---ROOM
+
+export function joinRoom(id) {
+	return {
+	  type: actionTypes.JOIN_ROOM,
+	  roomId: id,
+	  meta: {remote: true},
+	};
+}
+
+export function leaveRoom(id) {
+	return {
+	  type: actionTypes.LEAVE_ROOM,
+	  roomId: id,
+	  meta: {remote: true},
+	};
+}
+
+//---SECTION
+
 // export function updateSections() {
 // 	return {
 // 	  type: actionTypes.UPDATE_SECTIONS,
@@ -25,7 +45,7 @@ export function deleteSectionById(sectionId) {
 	};
 }
 
-//-----
+//---SUBSECTION
 
 export function updateSubSectionById(subSectionId, sectionId) {
 	return {
@@ -45,7 +65,7 @@ export function deleteSubSectionById(subSectionId, sectionId) {
 	};
 }
 
-//------
+//---CHANNEL
 
 export function updateChannelById(channelId, subSectionId) {
 	return {
@@ -65,20 +85,22 @@ export function deleteChannelById(channelId, subSectionId) {
 	};
 }
 
-//--------
+//---MESSAGE
 
-export function joinRoom(id) {
+export function updateMessageById(messageId, channelId) {
 	return {
-	  type: actionTypes.JOIN_ROOM,
-	  roomId: id,
+	  type: actionTypes.UPDATE_MESSAGE_BY_ID,
+	  messageId: messageId,
+	  channelId: channelId,
 	  meta: {remote: true},
 	};
 }
 
-export function leaveRoom(id) {
+export function deleteMessageById(messageId, channelId) {
 	return {
-	  type: actionTypes.LEAVE_ROOM,
-	  roomId: id,
+	  type: actionTypes.DELETE_MESSAGE_BY_ID,
+	  messageId: messageId,
+	  channelId: channelId,
 	  meta: {remote: true},
 	};
 }

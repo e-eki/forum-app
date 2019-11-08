@@ -19,24 +19,38 @@ class ChannelContainer extends PureComponent {
 
     componentDidMount() {
         debugger;
-        if (this.props.match && this.props.match.params) {
-            this.props.resetUserInfo();
+        // if (this.props.match && this.props.match.params) {
+        //     this.props.resetUserInfo();
 
-            if (this.props.match.params.id) {
-                this.props.resetCurrentUserChannel();
-                const id = this.props.match.params.id;
-                getChannelById(id);
-            }
-            else if (this.props.match.params.userId) {
-                this.props.resetCurrentChannel();
-                const id = this.props.match.params.userId;
-                getUserChannelById(id);
-            }
+        //     if (this.props.match.params.id) {
+        //         this.props.resetCurrentUserChannel();
+        //         const id = this.props.match.params.id;
+        //         getChannelById(id);
+        //     }
+        //     else if (this.props.match.params.userId) {
+        //         this.props.resetCurrentChannel();
+        //         const id = this.props.match.params.userId;
+        //         getUserChannelById(id);
+        //     }
+        // }
+
+        if (this.props.match && this.props.match.params) {
+            const id = this.props.match.params.id;
+            return getChannelById(id)
+                .then(channel => {
+                    debugger;
+                    //this.props.setCurrentSection(section);
+                    this.props.joinRoom(channel.id);
+
+                    return true;
+                });
         }
     }
 
     componentWillUnmount() {
-        this.props.resetUserInfo();
+        //this.props.resetUserInfo();
+
+        this.props.leaveRoom(this.props.currentSubSection.id);
     }
     
     render() {
@@ -44,24 +58,36 @@ class ChannelContainer extends PureComponent {
         debugger;
 
         return (
-            <div>
-                {this.props.userInfo
-                    ?
-                    <UserInfoForm
-                        userInfo = {this.props.userInfo}
-                        currentUserChannel = {this.props.currentUserChannel}
-                        resetUserInfo = {this.props.resetUserInfo}>
-                    </UserInfoForm>
-                    : null
-                }
-                <Channel 
-                    currentChannel = {this.props.currentChannel}
-                    currentUserChannel = {this.props.currentUserChannel}
-                    isCurrent = {true}
-                    userInfo = {this.props.userInfo} 
-                    getUserInfo = {this.props.getUserInfo}
-                />
-            </div>           
+            // <div>
+            //     {this.props.userInfo
+            //         ?
+            //         <UserInfoForm
+            //             userInfo = {this.props.userInfo}
+            //             currentUserChannel = {this.props.currentUserChannel}
+            //             resetUserInfo = {this.props.resetUserInfo}>
+            //         </UserInfoForm>
+            //         : null
+            //     }
+            //     <Channel 
+            //         currentChannel = {this.props.currentChannel}
+            //         currentUserChannel = {this.props.currentUserChannel}
+            //         isCurrent = {true}
+            //         userInfo = {this.props.userInfo} 
+            //         getUserInfo = {this.props.getUserInfo}
+            //     />
+            // </div>   
+            
+            <Channel
+                channel = {this.props.currentChannel}
+                isCurrent = {true}
+
+                currentInfoMessage = {this.props.currentInfoMessage}
+                modifiableMessage = {this.props.modifiableMessage}
+                setCurrentInfoMessage = {this.props.setCurrentInfoMessage}
+                setModifiableMessage = {this.props.setModifiableMessage}
+                modifyMessage = {this.props.modifyMessage}
+                deleteMessage = {this.props.deleteMessage}
+            />
         );
     }
 }
@@ -69,26 +95,30 @@ class ChannelContainer extends PureComponent {
 const mapStateToProps = function(state) {
     debugger;
     return {
+        // currentChannel: state.get('currentChannel'),
+        // currentUserChannel: state.get('currentUserChannel'),
+        // userInfo: state.get('userInfo'),
+
         currentChannel: state.get('currentChannel'),
-        currentUserChannel: state.get('currentUserChannel'),
-        userInfo: state.get('userInfo'),
+        currentInfoMessage: state.get('currentInfoMessage'),
+        modifiableMessage: state.get('modifiableMessage'),
     };
 };
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        getUserInfo: function(id) {
-            getUserInfoById(id);
-        },
-        resetUserInfo: function() {
-            dispatch(setUserInfo(null));
-        },
-        resetCurrentChannel: function() {
-            dispatch(setCurrentChannel(null));
-        },
-        resetCurrentUserChannel: function() {
-            dispatch(setCurrentUserChannel(null));
-        },
+        // getUserInfo: function(id) {
+        //     getUserInfoById(id);
+        // },
+        // resetUserInfo: function() {
+        //     dispatch(setUserInfo(null));
+        // },
+        // resetCurrentChannel: function() {
+        //     dispatch(setCurrentChannel(null));
+        // },
+        // resetCurrentUserChannel: function() {
+        //     dispatch(setCurrentUserChannel(null));
+        // },
     }
 }
 

@@ -39,6 +39,13 @@ export default function reducer(state = Map(), action) {
     case actionTypes.SET_CURRENT_CHANNEL:
       return state.set('currentChannel', action.data);
 
+    case actionTypes.SET_CURRENT_INFO_CHANNEL:
+      return state.set('currentInfoChannel', action.data);
+
+    case actionTypes.SET_MODIFIABLE_CHANNEL:
+      return state.set('modifiableChannel', action.data);
+
+
     case actionTypes.SET_CURRENT_USER_CHANNEL:
       return state.set('currentUserChannel', action.data);  //todo??
 

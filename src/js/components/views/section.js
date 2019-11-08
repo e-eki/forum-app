@@ -10,10 +10,10 @@ export default class Section extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.showInfoSection = this.showInfoSection.bind(this);
+        this.showInfo = this.showInfo.bind(this);
     }
 
-    showInfoSection() {
+    showInfo() {
         debugger;
         this.props.setCurrentInfoSection(this.props.section);
     }
@@ -55,26 +55,27 @@ export default class Section extends PureComponent {
                         {/* {subSections} */}
 
                         {this.props.isCurrent
-                        ?
-                        <ListForm
-                            parentItemId = {this.props.section.id}
-                            items = {subSections}
-                            currentInfoItem = {this.props.currentInfoSubSection}
-                            setCurrentInfoItem = {this.props.setCurrentInfoSubSection}
-                            modifiableItem = {this.props.modifiableSubSection}
-                            setModifiableItem = {this.props.setModifiableSubSection}
-                            modifyItem = {this.props.modifySubSection}
-                            deleteItem = {this.props.deleteSubSection}
-                        />
-                        :
-                        subSections}
+                            ?
+                            <ListForm
+                                parentItemId = {this.props.section.id}
+                                items = {subSections}
+                                currentInfoItem = {this.props.currentInfoSubSection}
+                                setCurrentInfoItem = {this.props.setCurrentInfoSubSection}
+                                modifiableItem = {this.props.modifiableSubSection}
+                                setModifiableItem = {this.props.setModifiableSubSection}
+                                modifyItem = {this.props.modifySubSection}
+                                deleteItem = {this.props.deleteSubSection}
+                            />
+                            :
+                            subSections
+                        }
                     </div>;
         }
 
         let sectionInfoBlock = null;
 
         if (!this.props.isCurrent) {
-            sectionInfoBlock = <button className = '' onClick = {this.showInfoSection}>
+            sectionInfoBlock = <button className = '' onClick = {this.showInfo}>
                                     Информация
                                 </button>;
         }

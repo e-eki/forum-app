@@ -45,8 +45,10 @@ export function modifySubSection(item) {
 		tasks.push(updateSubSection(item));
 	}
 	else {
+		debugger;
+
 		item.sectionId = item.parentItemId;
-		delete item.parentItemId;
+		delete item.parentItemId;  //??
 
 		tasks.push(createSubSection(item));
 	}
@@ -70,6 +72,7 @@ function createSubSection(item) {
 	return axios.post(`${apiConst.subSectionApi}`, {
 		name: item.name,
 		description: item.description,
+		sectionId: item.sectionId,
 	})
 }
 
@@ -77,5 +80,6 @@ function updateSubSection(item) {
 	return axios.put(`${apiConst.subSectionApi}/${item.id}`, {
 		name: item.name,
 		description: item.description,
+		sectionId: item.sectionId,
 	})
 }

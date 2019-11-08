@@ -29,9 +29,22 @@ socket.on('action', action => {
 						data.subSections = currentSection.subSections;
 
 						store.dispatch(sectionActions.setCurrentSection(data));
-				}
-				
+				}				
 				break;
+
+				case actionTypes.DELETE_SECTION_BY_ID:
+
+					const currentSection = store.getState().get('currentSection');
+					
+					if (currentSection &&
+						action.sectionId &&
+						(currentSection === action.sectionId)) {
+							let data = action.data;
+							data.subSections = currentSection.subSections;
+	
+							store.dispatch(sectionActions.setCurrentSection(null));  //todo: alert message 'section deleted'
+					}
+					break;
 			
 			default:
 				debugger;
