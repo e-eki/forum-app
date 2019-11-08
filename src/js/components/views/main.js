@@ -23,10 +23,10 @@ export default class Main extends PureComponent {
         if (this.props.sections) {
             this.props.sections.forEach(function(item) {
                 const section = <Section
-                                        key={key}
-                                        section = {item}
-                                        setCurrentInfoSection = {this.props.setCurrentInfoSection}
-                                    />;
+                                    key={key}
+                                    section = {item}
+                                    setCurrentInfoSection = {this.props.setCurrentInfoSection}
+                                />;
                 sections.push(section);
                 key++;
             }.bind(this));

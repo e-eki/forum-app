@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import Section from '../views/section';
 import { getSectionById } from '../../api/sectionApi';
 import * as subSectionApi from '../../api/subSectionApi';
-import { setModifiableSubSection, setCurrentInfoSubSection, setCurrentSubSection } from '../../actions/subSectionActions';
+import * as subSectionActions from '../../actions/subSectionActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
-import { setCurrentSection } from '../../actions/sectionActions';
+import { setCurrentInfoSection } from '../../actions/sectionActions';
 
 class SectionContainer extends PureComponent {
 
@@ -41,6 +41,7 @@ class SectionContainer extends PureComponent {
             <Section
                 section = {this.props.currentSection}
                 isCurrent = {true}
+                setCurrentInfoSection = {this.props.setCurrentInfoSection}
 
                 currentInfoSubSection = {this.props.currentInfoSubSection}
                 modifiableSubSection = {this.props.modifiableSubSection}
@@ -63,6 +64,9 @@ const mapStateToProps = function(state) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
+        setCurrentInfoSection: function(item) {
+            dispatch(setCurrentInfoSection(item));
+        },
         modifySubSection: function(item) {
             subSectionApi.modifySubSection(item);
         },
@@ -70,10 +74,10 @@ const mapDispatchToProps = function(dispatch) {
             subSectionApi.deleteSubSection(item);
         },
         setModifiableSubSection: function(item) {
-            dispatch(setModifiableSubSection(item));
+            dispatch(subSectionActions.setModifiableSubSection(item));
         },
         setCurrentInfoSubSection: function(item) {
-            dispatch(setCurrentInfoSubSection(item));
+            dispatch(subSectionActions.setCurrentInfoSubSection(item));
         },
         // setCurrentSection: function(item) {
         //     dispatch(setCurrentSection(item));

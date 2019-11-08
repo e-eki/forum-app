@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import SubSection from '../views/subSection';
 import { getSubSectionById } from '../../api/subSectionApi';
 import * as channelApi from '../../api/channelApi';
+import { setCurrentInfoSubSection } from '../../actions/subSectionActions';
 import { setModifiableChannel, setCurrentInfoChannel } from '../../actions/channelActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 
@@ -40,6 +41,7 @@ class SubSectionContainer extends PureComponent {
             <SubSection
                 subSection = {this.props.currentSubSection}
                 isCurrent = {true}
+                setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
 
                 currentInfoChannel = {this.props.currentInfoChannel}
                 modifiableChannel = {this.props.modifiableChannel}
@@ -62,10 +64,13 @@ const mapStateToProps = function(state) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
+        setCurrentInfoSubSection: function(item) {
+            dispatch(setCurrentInfoSubSection(item));
+        },
         modifyChannel: function(item) {
             channelApi.modifyChannel(item);
         },
-        deleteSubSection: function(item) {
+        deleteChannel: function(item) {
             channelApi.deleteChannel(item);
         },
         setModifiableChannel: function(item) {

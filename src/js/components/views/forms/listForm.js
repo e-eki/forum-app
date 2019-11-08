@@ -37,22 +37,22 @@ export default class ListForm extends PureComponent {
 
         if (this.props.currentInfoItem) {
             itemInfoBlock = <InfoForm
-                                    currentInfoItem = {this.props.currentInfoItem}
-                                    setCurrentInfoItem = {this.props.setCurrentInfoItem}
-                                    deleteItem = {this.props.deleteItem}
+                                currentInfoItem = {this.props.currentInfoItem}
+                                setCurrentInfoItem = {this.props.setCurrentInfoItem}
+                                deleteItem = {this.props.deleteItem}
 
-                                    modifiableItem = {this.props.modifiableItem}
-                                    setModifiableItem = {this.props.setModifiableItem}
-                                    modifyItem = {this.props.modifyItem}
-                                />;
+                                modifiableItem = {this.props.modifiableItem}
+                                setModifiableItem = {this.props.setModifiableItem}
+                                modifyItem = {this.props.modifyItem}
+                            />;
         }
 
         else if (this.props.modifiableItem) {
             modifyingItemBlock = <ModifyForm
-                                        modifiableItem = {this.props.modifiableItem}
-                                        setModifiableItem = {this.props.setModifiableItem}
-                                        modifyItem = {this.props.modifyItem}
-                                    />;
+                                    modifiableItem = {this.props.modifiableItem}
+                                    setModifiableItem = {this.props.setModifiableItem}
+                                    modifyItem = {this.props.modifyItem}
+                                />;
         }
 
         return (

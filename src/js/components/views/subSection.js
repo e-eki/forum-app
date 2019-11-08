@@ -51,12 +51,13 @@ export default class SubSection extends PureComponent {
             //                 {channels}
             //             </div>;
 
-                if (this.props.subSection.channel) {
-                    this.props.subSection.channel.forEach(function(item) {
+                if (this.props.subSection.channels) {
+                    this.props.subSection.channels.forEach(function(item) {
                         const channel = <Channel
-                                                key={key}
-                                                channel = {item}
-                                            />;
+                                            key={key}
+                                            channel = {item}
+                                            setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
+                                        />;
                         channels.push(channel);
                         key++;
                     }.bind(this));

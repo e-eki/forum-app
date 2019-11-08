@@ -14,7 +14,7 @@ export default function reducer(state = Map(), action) {
   debugger;
   switch (action.type) {
     case actionTypes.SET_SECTIONS:
-      return state.set('sections', List(action.data));
+      return state.set('sections', action.data);  //?? если это будет просто массив?  было List(action.data)
 
     case actionTypes.SET_CURRENT_SECTION:
       return state.set('currentSection', action.data);

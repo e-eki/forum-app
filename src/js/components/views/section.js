@@ -36,6 +36,7 @@ export default class Section extends PureComponent {
                     const subSection = <SubSection
                                             key={key}
                                             subSection = {item}
+                                            setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
                                         />;
                     subSections.push(subSection);
                     key++;

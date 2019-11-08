@@ -15,7 +15,7 @@ export default class Message extends PureComponent {
     getUserInfo(event) {
         debugger;
         event.preventDefault();
-        this.props.getUserInfo(this.props.data.senderId);
+        //this.props.getUserInfo(this.props.data.senderId);
     }
 
     render() {

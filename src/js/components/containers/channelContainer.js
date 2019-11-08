@@ -11,6 +11,11 @@ import { getUserChannelById } from '../../api/userChannelApi';
 import { getUserInfoById } from '../../api/userInfoApi';
 import UserInfoForm from '../views/forms/userInfoForm';
 
+import * as messageApi from '../../api/messageApi';
+import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
+import { joinRoom, leaveRoom } from '../../actions/remoteActions';
+import { setCurrentInfoChannel } from '../../actions/channelActions';
+
 class ChannelContainer extends PureComponent {
 
     constructor(props) {
@@ -80,6 +85,7 @@ class ChannelContainer extends PureComponent {
             <Channel
                 channel = {this.props.currentChannel}
                 isCurrent = {true}
+                setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
 
                 currentInfoMessage = {this.props.currentInfoMessage}
                 modifiableMessage = {this.props.modifiableMessage}
@@ -119,6 +125,27 @@ const mapDispatchToProps = function(dispatch) {
         // resetCurrentUserChannel: function() {
         //     dispatch(setCurrentUserChannel(null));
         // },
+        setCurrentInfoChannel: function(item) {
+            dispatch(setCurrentInfoChannel(item));
+        },
+        modifyMessage: function(item) {
+            messageApi.modifyMessage(item);
+        },
+        deleteMessage: function(item) {
+            messageApi.deleteMessage(item);
+        },
+        setModifiableMessage: function(item) {
+            dispatch(setModifiableMessage(item));
+        },
+        setCurrentInfoMessage: function(item) {
+            dispatch(setCurrentInfoMessage(item));
+        },
+        joinRoom: function(id) {
+            dispatch(joinRoom(id));
+        },
+        leaveRoom: function(id) {
+            dispatch(leaveRoom(id));
+        },
     }
 }
 
