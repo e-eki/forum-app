@@ -7,7 +7,7 @@ import store from './store/store';
 import { setSections, setCurrentSection } from './actions/sectionActions';
 import { setCurrentSubSection } from './actions/subSectionActions';
 import { setCurrentChannel } from './actions/channelActions';
-import { copyUtils } from './lib/copyUtils';
+import * as copyUtils from './lib/copyUtils';
 
 const socket = io(`${apiConst.serverUrl}`);
 
@@ -42,9 +42,10 @@ socket.on('action', action => {
 							const index = sections.indexOf(section);
 
 							sections[index] = copyUtils.copySection(action.data, section);
-						}
+							const newSections = sections.slice();
 
-						store.dispatch(setSections(sections));  //изменяется или новое состояние?
+							store.dispatch(setSections(newSections));  //изменяется или новое состояние?
+						}
 					}			
 				}
 
