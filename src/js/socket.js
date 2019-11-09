@@ -7,13 +7,14 @@ import store from './store/store';
 import { setSections, setCurrentSection } from './actions/sectionActions';
 import { setCurrentSubSection } from './actions/subSectionActions';
 import { setCurrentChannel } from './actions/channelActions';
+import { copyUtils } from './lib/copyUtils';
 
 const socket = io(`${apiConst.serverUrl}`);
 
 socket.on('action', action => {
 	debugger;
 	
-	if (action && action.type && action.data) {
+	if (action && action.type) {
 		switch (action.type) {
 
 			// case actionTypes.UPDATE_SECTIONS:
@@ -22,162 +23,169 @@ socket.on('action', action => {
 
 			case actionTypes.UPDATE_SECTION_BY_ID:
 
-				let sections = store.getState().get('sections');
-				let currentSection = store.getState().get('currentSection');
-				
-				if (currentSection &&
-					action.sectionId &&
-					(currentSection.id === action.sectionId)) {
-						let data = action.data;
-						data.subSections = currentSection.subSections;
+				if (action.sectionId && action.data) {
+					const sections = store.getState().get('sections');
+					const currentSection = store.getState().get('currentSection');
+					
+					if (currentSection &&
+						(currentSection.id === action.sectionId)) {
+							let data = action.data;
+							data.subSections = currentSection.subSections;
 
-						store.dispatch(setCurrentSection(data));
-				}	
-				else if (sections) {
-					//todo?? copySection
-					let section = sections.find(item => item.id === action.sectionId);
-					section = action.data;
+							store.dispatch(setCurrentSection(data));
+					}	
+					else if (sections) {
+						debugger; //??
+						const section = sections.find(item => item.id === action.sectionId);
+						
+						if (section) {
+							const index = sections.indexOf(section);
 
-					store.dispatch(setSections(sections));  //изменяется или новое состояние?
-				}			
+							sections[index] = copyUtils.copySection(action.data, section);
+						}
+
+						store.dispatch(setSections(sections));  //изменяется или новое состояние?
+					}			
+				}
+
 				break;
 
 			case actionTypes.DELETE_SECTION_BY_ID:
 
-				sections = store.getState().get('sections');
-				currentSection = store.getState().get('currentSection');
+				if (action.sectionId) {
+					sections = store.getState().get('sections');
+					currentSection = store.getState().get('currentSection');
+					
+					if (currentSection &&
+						(currentSection.id === action.sectionId)) {
+							store.dispatch(setCurrentSection(null));  //todo: alert message 'section deleted'
+					}
+					else if (sections) {
+						//??
+						const newSections = sections.filter(item => item.id !== action.sectionId);
+
+						store.dispatch(setSections(newSections));
+					}
+				}
 				
-				if (currentSection &&
-					action.sectionId &&
-					(currentSection.id === action.sectionId)) {
-						// let data = action.data;
-						// data.subSections = currentSection.subSections;
-
-						store.dispatch(setCurrentSection(null));  //todo: alert message 'section deleted'
-				}
-				else if (sections) {
-					//todo??
-					let newSections = sections.filter(item => item.id !== action.sectionId);
-
-					store.dispatch(setSections(newSections));
-				}
 				break;
 
 			case actionTypes.UPDATE_SUBSECTION_BY_ID:
 
-				sections = store.getState().get('sections');
-				currentSection = store.getState().get('currentSection');
-				let currentSubSection = store.getState().get('currentSubSection');
+				if (action.subSectionId && action.sectionId && action.data) {
+					const sections = store.getState().get('sections');
+					const currentSection = store.getState().get('currentSection');
+					const currentSubSection = store.getState().get('currentSubSection');
 
-				if (currentSection &&
-					action.sectionId &&
-					(currentSection.id === action.sectionId) &&
-					action.subSectionId) {
-						let data = currentSection;
-						let subSection = currentSection.subSections.find(item => item.id === action.subSectionId); //todo??
+					if (currentSection &&
+						(currentSection.id === action.sectionId)) {
+							const subSection = currentSection.subSections.find(item => item.id === action.subSectionId);
 						
-						if (subSection) {
-							subSection = action.data;  //????
-						}
+							if (subSection) {
+								const index = currentSection.subSections.indexOf(subSection);
+								currentSection.subSections[index] = copyUtils.copySubSection(action.data, subSection);
+							}
 
-						store.dispatch(setCurrentSection(data));
+							store.dispatch(setCurrentSection(currentSection));
+					}
+					else if (currentSubSection &&
+						(currentSubSection.id === action.subSectionId)) {
+							const data = action.data;   //??let
+							data.channels = currentSubSection.channels;
+
+							store.dispatch(setCurrentSubSection(data));
+					}	
+					else if (sections) {
+						//??
+						const section = sections.find(item => item.id === action.sectionId);
+						const subSection = section.subSections.find(item => item.id === action.subSectionId);
+						
+						const index = section.subSections.indexOf(subSection);
+						section.subSections[index] = copyUtils.copySubSection(action.data, subSection);
+
+						store.dispatch(setSections(sections));  //??
+					}
 				}
-				else if (currentSubSection &&
-					action.subSectionId &&
-					(currentSubSection.id === action.subSectionId)) {
-						let data = action.data;
-						data.channels = currentSubSection.channels;
 
-						store.dispatch(setCurrentSubSection(data));
-				}	
-				else if (sections) {
-					//todo?? copySubSection
-					let section = sections.find(item => item.id === action.sectionId);
-					let subSection = section.subSections.find(item => item.id === action.subSectionId);
-					subSection = action.data;
-
-					store.dispatch(setSections(sections));
-				}			
 				break;
 
 			case actionTypes.DELETE_SUBSECTION_BY_ID:
 
-				sections = store.getState().get('sections');
-				currentSection = store.getState().get('currentSection');
-				let currentSubSection = store.getState().get('currentSubSection');
-				
-				if (currentSection &&
-					action.sectionId &&
-					(currentSection.id === action.sectionId)) {
-						let data = action.data;
-						data.subSections = currentSection.subSections;
+				if (action.subSectionId && action.sectionId) {
+					const sections = store.getState().get('sections');
+					const currentSection = store.getState().get('currentSection');
+					const currentSubSection = store.getState().get('currentSubSection');
+					
+					if (currentSection &&
+						(currentSection.id === action.sectionId)) {
+							const newSubSections = currentSection.subSections.filter(item => item.id !== action.subSectionId);
+							currentSection.subSections = newSubSections;
 
-						store.dispatch(setCurrentSection(data));  
+							store.dispatch(setCurrentSection(currentSection));  
+					}
+					else if (currentSubSection &&
+						(currentSubSection.id === action.subSectionId)) {
+							store.dispatch(setCurrentSubSection(null));  //todo: alert message 'subSection deleted'
+					}	
+					else if (sections) {
+						//??
+						const section = sections.find(item => item.id === action.sectionId);
+						const newSubSections = section.subSections.filter(item => item.id !== action.subSectionId);
+						section.subSections = newSubSections;
+
+						store.dispatch(setSections(sections));  //??
+					}
 				}
-				else if (currentSubSection &&
-					action.subSectionId &&
-					(currentSubSection.id === action.subSectionId)) {
-
-						store.dispatch(setCurrentSubSection(null));  //todo: alert message 'subSection deleted'
-				}	
-				else if (sections) {
-					//todo??
-					let section = sections.find(item => item.id === action.sectionId);
-					let newSubSections = section.subSections.filter(item => item.id !== action.subSectionId);
-					section.subSections = newSubSections;
-
-					store.dispatch(setSections(sections));
-				}	
+					
 				break;
 
-			case actionTypes.UPDATE_CHANNEL_BY_ID:
+			// case actionTypes.UPDATE_CHANNEL_BY_ID:
 
-				let currentSubSection = store.getState().get('currentSubSection');
-				let currentChannel = store.getState().get('currentChannel');
+			// 	let currentSubSection = store.getState().get('currentSubSection');
+			// 	let currentChannel = store.getState().get('currentChannel');
 
-				if (currentSubSection &&
-					action.subSectionId &&
-					(currentSubSection.id === action.subSectionId)) {
-						//todo?? copyChannel
-						let currentChannel = currentSubSection.channels.find(item => item.id === action.channelId);
+			// 	if (currentSubSection &&
+			// 		action.subSectionId &&
+			// 		(currentSubSection.id === action.subSectionId)) {
+			// 			let currentChannel = currentSubSection.channels.find(item => item.id === action.channelId);
 
-						currentChannel = action.data;
+			// 			currentChannel = action.data;
 
-						store.dispatch(setCurrentSubSection(currentSubSection));
-				}	
-				else if (currentChannel &&
-					action.channelId &&
-					(currentChannel.id === action.channelId)) {
+			// 			store.dispatch(setCurrentSubSection(currentSubSection));
+			// 	}	
+			// 	else if (currentChannel &&
+			// 		action.channelId &&
+			// 		(currentChannel.id === action.channelId)) {
 						
-						let data = action.data;
-						data.messages = currentChannel.messages;
+			// 			let data = action.data;
+			// 			data.messages = currentChannel.messages;
 
-						store.dispatch(setCurrentChannel(data));
-				}			
-				break;
+			// 			store.dispatch(setCurrentChannel(data));
+			// 	}			
+			// 	break;
 
-			case actionTypes.DELETE_CHANNEL_BY_ID:
+			// case actionTypes.DELETE_CHANNEL_BY_ID:
 
-				currentSubSection = store.getState().get('currentSubSection');
-				currentChannel = store.getState().get('currentChannel');
+			// 	currentSubSection = store.getState().get('currentSubSection');
+			// 	currentChannel = store.getState().get('currentChannel');
 				
-				if (currentSubSection &&
-					action.subSectionId &&
-					(currentSubSection.id === action.subSectionId)) {
-						//todo?? copyChannel
-						let newChannels = currentSubSection.channels.filter(item => item.id !== action.channelId);
+			// 	if (currentSubSection &&
+			// 		action.subSectionId &&
+			// 		(currentSubSection.id === action.subSectionId)) {
+			// 			//todo?? copyChannel
+			// 			let newChannels = currentSubSection.channels.filter(item => item.id !== action.channelId);
 
-						currentSubSection.channels = newChannels;
+			// 			currentSubSection.channels = newChannels;
 
-						store.dispatch(setCurrentSubSection(currentSubSection));
-				}	
-				else if (currentChannel &&
-					action.channelId &&
-					(currentChannel.id === action.channelId)) {
+			// 			store.dispatch(setCurrentSubSection(currentSubSection));
+			// 	}	
+			// 	else if (currentChannel &&
+			// 		action.channelId &&
+			// 		(currentChannel.id === action.channelId)) {
 
-						store.dispatch(setCurrentChannel(null));  //todo: alert message 'channel deleted'
-				}	
-				break;
+			// 			store.dispatch(setCurrentChannel(null));  //todo: alert message 'channel deleted'
+			// 	}	
+			// 	break;
 
 				//TODO: message
 				
