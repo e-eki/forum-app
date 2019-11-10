@@ -1,7 +1,6 @@
 'use strict';
 
 export function copySection(sourse, result) {
-	debugger;
 	result.name = sourse.name;
 	result.description = sourse.description;
 	//result.senderId = sourse.senderId;
@@ -10,7 +9,6 @@ export function copySection(sourse, result) {
 };
 
 export function copySubSection(sourse, result) {
-	debugger;
 	result.name = sourse.name;
 	result.description = sourse.description;
 	result.sectionId = sourse.sectionId;
@@ -20,7 +18,6 @@ export function copySubSection(sourse, result) {
 };
 
 export function copyChannel(sourse, result) {
-	debugger;
 	result.name = sourse.name;
 	result.description = sourse.description;
 	result.subSectionId = sourse.subSectionId;
@@ -31,7 +28,6 @@ export function copyChannel(sourse, result) {
 };
 
 export function copyMessage(sourse, result) {
-	debugger;
 	result.text = sourse.text;
 	result.date = sourse.date;
 	result.channelId = sourse.channelId;

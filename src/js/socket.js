@@ -41,11 +41,15 @@ socket.on('action', action => {
 						if (section) {
 							const index = sections.indexOf(section);
 
-							sections[index] = copyUtils.copySection(action.data, section);
-							const newSections = sections.slice();
-
-							store.dispatch(setSections(newSections));  //изменяется или новое состояние?
+							sections[index] = copyUtils.copySection(action.data, section);	
 						}
+						else {
+							sections.push(action.data);
+						}
+
+						const newSections = sections.slice();
+
+						store.dispatch(setSections(newSections));
 					}			
 				}
 
@@ -54,8 +58,8 @@ socket.on('action', action => {
 			case actionTypes.DELETE_SECTION_BY_ID:
 
 				if (action.sectionId) {
-					sections = store.getState().get('sections');
-					currentSection = store.getState().get('currentSection');
+					const sections = store.getState().get('sections');
+					const currentSection = store.getState().get('currentSection');
 					
 					if (currentSection &&
 						(currentSection.id === action.sectionId)) {

@@ -61,10 +61,15 @@ export function modifySection(item) {
 	return Promise.all(tasks)
 		.spread((sectionId, response) => {
 			debugger;
+			if (!sectionId && response.data && response.data.id) {
+				sectionId = response.data.id;
+			}
+
 			store.dispatch(actions.setModifiableSection(null));
 
 			//store.dispatch(remoteActions.joinRoom('1'));  //todo
 
+			//todo: нужна ли проверка, обработка ошибки, если нет id?
 			store.dispatch(remoteActions.updateSectionById(sectionId));
 
 			return true;

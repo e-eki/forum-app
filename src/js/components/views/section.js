@@ -1,16 +1,21 @@
 'use strict';
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import SubSection from './subSection';
 import ListForm from './forms/listForm';
 
-export default class Section extends PureComponent {
+export default class Section extends Component {
 
     constructor(props) {
         super(props);
 
         this.showInfo = this.showInfo.bind(this);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        debugger;
+        return true; //??
     }
 
     showInfo() {

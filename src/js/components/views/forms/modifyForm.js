@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 
 // Форма для создания/редактирования раздела
-export default class modifyForm extends Component {
+export default class ModifyForm extends Component {
 
     constructor(props) {
         super(props);
