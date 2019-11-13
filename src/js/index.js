@@ -4,7 +4,7 @@ import '../less/template.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import App from './app';
+import AppRouter from './router';
 import store from './store/store';
 
 //const store = createStore(reducer);
@@ -19,7 +19,7 @@ import store from './store/store';
 ReactDOM.render(
     (
         <Provider store={store}>
-            <App/>
+            <AppRouter/>
         </Provider>  
     ),
     document.getElementById("root")

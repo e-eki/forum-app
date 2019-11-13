@@ -1,8 +1,6 @@
 'use strict';
 
 import React, { PureComponent } from 'react';
-import Menu from './menu';
-import QuotesBar from './quotesBar';
 import ListForm from './forms/listForm';
 import Section from './section';
 
@@ -34,9 +32,6 @@ export default class Main extends PureComponent {
         
         return (
             <div className = {className}>
-                <Menu/>
-
-                <QuotesBar/>
 
                 <ListForm
                     items = {sections}

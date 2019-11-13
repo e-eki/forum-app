@@ -1,9 +1,7 @@
 'use strict';
 
 import React, { PureComponent } from 'react';
-import Header from './header';
 import Main from './main';
-import Footer from './footer';
 
 export default class Content extends PureComponent {
 
@@ -19,7 +17,7 @@ export default class Content extends PureComponent {
         
         return (
             <div className = {className}>
-                <Header className = 'content__header '/>
+                
                 <Main  
                     sections = {this.props.sections}
                     currentInfoSection = {this.props.currentInfoSection}
@@ -29,7 +27,7 @@ export default class Content extends PureComponent {
                     modifySection = {this.props.modifySection}
                     deleteSection = {this.props.deleteSection}
                 />
-                <Footer />
+                
             </div>
         )
     }
