@@ -59,6 +59,7 @@ export default class Channel extends PureComponent {
                         {this.props.isCurrent
                             ?
                             <ListForm
+                                type = 'message'
                                 parentItemId = {this.props.channel.id}
                                 items = {messages}
                                 currentInfoItem = {this.props.currentInfoMessage}
@@ -78,7 +79,7 @@ export default class Channel extends PureComponent {
 
     if (!this.props.isCurrent) {
         channelInfoBlock = <button className = '' onClick = {this.showInfo}>
-                                Информация
+                                Информация {this.props.channel.name ? this.props.channel.name : null}
                             </button>;
     }
     

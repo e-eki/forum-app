@@ -26,6 +26,13 @@ export default class Content extends PureComponent {
                     setModifiableSection = {this.props.setModifiableSection}
                     modifySection = {this.props.modifySection}
                     deleteSection = {this.props.deleteSection}
+
+                    currentInfoSubSection = {this.props.currentInfoSubSection}
+                    modifiableSubSection = {this.props.modifiableSubSection}
+                    setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
+                    setModifiableSubSection = {this.props.setModifiableSubSection}
+                    modifySubSection = {this.props.modifySubSection}
+                    deleteSubSection = {this.props.deleteSubSection}
                 />
                 
             </div>

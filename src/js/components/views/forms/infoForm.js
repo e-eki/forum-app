@@ -3,7 +3,7 @@
 import React, { PureComponent } from 'react';
 import ModifyForm from './modifyForm';
 
-export default class infoForm extends PureComponent {
+export default class InfoForm extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -49,16 +49,15 @@ export default class infoForm extends PureComponent {
 
             {modifyingBlock}
 
-                {/* <div>SECTION</div> */}
                 <div>{this.props.currentInfoItem.name}</div>
                 <div>{this.props.currentInfoItem.description}</div>
 
                 <button className = '' onClick = {this.editItem}>
-                    Редактировать
+                    Редактировать {this.props.type ? this.props.type : null}
                 </button>
 
                 <button className = '' onClick = {this.deleteItem}>
-                    Удалить
+                    Удалить {this.props.type ? this.props.type : null}
                 </button>
 
                 <button className = '' onClick = {this.resetInfoItem}>

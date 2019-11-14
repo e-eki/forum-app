@@ -44,6 +44,7 @@ export default class ListForm extends PureComponent {
                                 modifiableItem = {this.props.modifiableItem}
                                 setModifiableItem = {this.props.setModifiableItem}
                                 modifyItem = {this.props.modifyItem}
+                                type = {this.props.type}
                             />;
         }
 
@@ -52,6 +53,7 @@ export default class ListForm extends PureComponent {
                                     modifiableItem = {this.props.modifiableItem}
                                     setModifiableItem = {this.props.setModifiableItem}
                                     modifyItem = {this.props.modifyItem}
+                                    type = {this.props.type}
                                 />;
         }
 
@@ -63,7 +65,7 @@ export default class ListForm extends PureComponent {
                 {itemInfoBlock}
 
                 <button className = '' onClick = {this.addItem}>
-                    Добавить
+                    Добавить {this.props.type ? this.props.type : null}
                 </button>
 
                 {this.props.items || null}

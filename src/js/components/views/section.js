@@ -58,9 +58,7 @@ export default class Section extends Component {
                         
                         {this.props.isCurrent ? <div>{this.props.section.description}</div> : null}
 
-                        {/* {subSections} */}
-
-                        {this.props.isCurrent
+                        {/* {this.props.isCurrent
                             ?
                             <ListForm
                                 parentItemId = {this.props.section.id}
@@ -74,7 +72,19 @@ export default class Section extends Component {
                             />
                             :
                             subSections
-                        }
+                        } */}
+
+                        <ListForm
+                            type = 'subSection'
+                            parentItemId = {this.props.section.id}
+                            items = {subSections}
+                            currentInfoItem = {this.props.currentInfoSubSection}
+                            setCurrentInfoItem = {this.props.setCurrentInfoSubSection}
+                            modifiableItem = {this.props.modifiableSubSection}
+                            setModifiableItem = {this.props.setModifiableSubSection}
+                            modifyItem = {this.props.modifySubSection}
+                            deleteItem = {this.props.deleteSubSection}
+                        />
                     </div>;
         }
 
@@ -82,7 +92,7 @@ export default class Section extends Component {
 
         if (!this.props.isCurrent) {
             sectionInfoBlock = <button className = '' onClick = {this.showInfo}>
-                                    Информация
+                                    Информация {this.props.section.name ? this.props.section.name : null}
                                 </button>;
         }
         

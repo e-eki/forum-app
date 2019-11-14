@@ -20,10 +20,34 @@ export default class Main extends PureComponent {
 
         if (this.props.sections) {
             this.props.sections.forEach(function(item) {
+                let modifiableSubSection = null;
+                let currentInfoSubSection = null;
+
+                if (item.id) {
+                    if (this.props.modifiableSubSection &&
+                        this.props.modifiableSubSection.sectionId &&
+                        (this.props.modifiableSubSection.sectionId === item.id)) {
+                            modifiableSubSection = this.props.modifiableSubSection;
+                        }
+
+                    if (this.props.currentInfoSubSection &&
+                        this.props.currentInfoSubSection.sectionId &&
+                        (this.props.currentInfoSubSection.sectionId === item.id)) {
+                            currentInfoSubSection = this.props.currentInfoSubSection;
+                        }
+                }
+
                 const section = <Section
                                     key={key}
                                     section = {item}
                                     setCurrentInfoSection = {this.props.setCurrentInfoSection}
+
+                                    currentInfoSubSection = {currentInfoSubSection}
+                                    modifiableSubSection = {modifiableSubSection}
+                                    setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
+                                    setModifiableSubSection = {this.props.setModifiableSubSection}
+                                    modifySubSection = {this.props.modifySubSection}
+                                    deleteSubSection = {this.props.deleteSubSection}
                                 />;
                 sections.push(section);
                 key++;
@@ -34,6 +58,7 @@ export default class Main extends PureComponent {
             <div className = {className}>
 
                 <ListForm
+                    type = 'section'
                     items = {sections}
                     currentInfoItem = {this.props.currentInfoSection}
                     setCurrentInfoItem = {this.props.setCurrentInfoSection}

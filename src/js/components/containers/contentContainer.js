@@ -4,7 +4,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Content from '../views/content';
 import * as sectionApi from '../../api/sectionApi';
+import * as subSectionApi from '../../api/subSectionApi';
 import * as sectionActions from '../../actions/sectionActions';
+import * as subSectionActions from '../../actions/subSectionActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import apiConst from '../../constants/apiConst';
 
@@ -51,6 +53,13 @@ class ContentContainer extends PureComponent {
                 setModifiableSection = {this.props.setModifiableSection}
                 modifySection = {this.props.modifySection}
                 deleteSection = {this.props.deleteSection}
+
+                currentInfoSubSection = {this.props.currentInfoSubSection}
+                modifiableSubSection = {this.props.modifiableSubSection}
+                setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
+                setModifiableSubSection = {this.props.setModifiableSubSection}
+                modifySubSection = {this.props.modifySubSection}
+                deleteSubSection = {this.props.deleteSubSection}
             />
         );
     }
@@ -62,6 +71,8 @@ const mapStateToProps = function(state) {
         sections: state.get('sections'),
         currentInfoSection: state.get('currentInfoSection'),
         modifiableSection: state.get('modifiableSection'),
+        currentInfoSubSection: state.get('currentInfoSubSection'),
+        modifiableSubSection: state.get('modifiableSubSection'),
     };
 };
 
@@ -79,6 +90,20 @@ const mapDispatchToProps = function(dispatch) {
         setCurrentInfoSection: function(item) {
             dispatch(sectionActions.setCurrentInfoSection(item));
         },
+
+        modifySubSection: function(item) {
+            subSectionApi.modifySubSection(item);
+        },
+        deleteSubSection: function(item) {
+            subSectionApi.deleteSubSection(item);
+        },
+        setModifiableSubSection: function(item) {
+            dispatch(subSectionActions.setModifiableSubSection(item));
+        },
+        setCurrentInfoSubSection: function(item) {
+            dispatch(subSectionActions.setCurrentInfoSubSection(item));
+        },
+
         // setSections: function(items) {
         //     dispatch(sectionActions.setSections(items));
         // },

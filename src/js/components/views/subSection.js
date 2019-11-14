@@ -71,11 +71,12 @@ export default class SubSection extends PureComponent {
                                 <Link to={`/subsections/${this.props.subSection.id}`}>{this.props.subSection.name}</Link>
                             }
                             
-                            {this.props.isCurrent ? <div>{this.props.subSection.description}</div> : null}
+                            {this.props.isCurrent ? null : <div>{this.props.subSection.description}</div>}
 
                             {this.props.isCurrent
                                 ?
                                 <ListForm
+                                    type = 'channel'
                                     parentItemId = {this.props.subSection.id}
                                     items = {channels}
                                     currentInfoItem = {this.props.currentInfoChannel}
@@ -95,7 +96,7 @@ export default class SubSection extends PureComponent {
 
         if (!this.props.isCurrent) {
             subSectionInfoBlock = <button className = '' onClick = {this.showInfo}>
-                                    Информация
+                                    Информация {this.props.subSection.name ? this.props.subSection.name : null}
                                 </button>;
         }
         
