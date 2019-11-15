@@ -18,6 +18,12 @@ import apiConst from '../constants/apiConst';
 // }
 
 export function deleteMessage(item) {
+	debugger;
+	if (item.parentItemId) {
+		item.channelId = item.parentItemId;
+		delete item.parentItemId;
+	}
+
 	const tasks = [];
 
 	tasks.push(item.id);
@@ -35,6 +41,10 @@ export function deleteMessage(item) {
 
 export function modifyMessage(item) {
 	debugger;
+	if (item.parentItemId) {
+		item.channelId = item.parentItemId;
+		delete item.parentItemId;
+	}
 
 	const tasks = [];
 
@@ -45,11 +55,6 @@ export function modifyMessage(item) {
 		tasks.push(updateMessage(item));
 	}
 	else {
-		debugger;
-		
-		item.channelId = item.parentItemId;
-		delete item.parentItemId;  //??
-
 		tasks.push(createMessage(item));
 	}
 	
@@ -57,8 +62,6 @@ export function modifyMessage(item) {
 		.spread((messageId, channelId, response) => {
 			debugger;
 			store.dispatch(actions.setModifiableMessage(null));
-
-			//store.dispatch(remoteActions.joinRoom(sectionId));  //??
 
 			store.dispatch(remoteActions.updateMessageById(messageId, channelId));
 

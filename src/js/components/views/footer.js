@@ -9,7 +9,7 @@ export default class Footer extends PureComponent {
     }
 
     render() {
-        console.log('render footer');
+        //console.log('render footer');
         const className = 'footer ' + (this.props.className ? this.props.className : '');
         
         return (

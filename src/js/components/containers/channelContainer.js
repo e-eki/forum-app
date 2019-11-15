@@ -59,7 +59,7 @@ class ChannelContainer extends PureComponent {
     }
     
     render() {
-        console.log('render ChannelContainer');
+        //console.log('render ChannelContainer');
         debugger;
 
         return (

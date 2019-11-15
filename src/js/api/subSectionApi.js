@@ -3,7 +3,9 @@
 import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
-import * as actions from '../actions/subSectionActions';
+import * as sectionActions from '../actions/sectionActions';
+import * as subSectionActions from '../actions/subSectionActions';
+import * as channelActions from '../actions/channelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 
@@ -12,12 +14,24 @@ export function getSubSectionById(id) {
 	return axios.get(`${apiConst.subSectionApi}/${id}`)
 		.then(response => {
 			debugger;
-		    store.dispatch(actions.setCurrentSubSection(response));  //??
+
+			store.dispatch(sectionActions.setCurrentSection(null));
+			store.dispatch(channelActions.setCurrentChannel(null));
+			store.dispatch(sectionActions.setSections(null));
+
+		    store.dispatch(subSectionActions.setCurrentSubSection(response));  //??
 		    return response;
 		});
 }
 
 export function deleteSubSection(item) {
+	debugger;
+
+	if (item.parentItemId) {
+		item.sectionId = item.parentItemId;
+		delete item.parentItemId;
+	}
+
 	const tasks = [];
 
 	tasks.push(item.id);
@@ -27,7 +41,7 @@ export function deleteSubSection(item) {
 	return Promise.all(tasks)
 		.spread((subSectionId, sectionId, response) => {
 			debugger;
-		    store.dispatch(actions.setCurrentInfoSection(null));
+		    store.dispatch(subSectionActions.setCurrentInfoSection(null));
 
 			store.dispatch(remoteActions.deleteSubSectionById(subSectionId, sectionId));
 		});
@@ -35,6 +49,11 @@ export function deleteSubSection(item) {
 
 export function modifySubSection(item) {
 	debugger;
+
+	if (item.parentItemId) {
+		item.sectionId = item.parentItemId;
+		delete item.parentItemId;
+	}
 
 	const tasks = [];
 
@@ -45,20 +64,13 @@ export function modifySubSection(item) {
 		tasks.push(updateSubSection(item));
 	}
 	else {
-		debugger;
-
-		item.sectionId = item.parentItemId;
-		delete item.parentItemId;  //??
-
 		tasks.push(createSubSection(item));
 	}
 	
 	return Promise.all(tasks)
 		.spread((subSectionId, sectionId, response) => {
 			debugger;
-			store.dispatch(actions.setModifiableSubSection(null));
-
-			//store.dispatch(remoteActions.joinRoom(sectionId));  //??
+			store.dispatch(subSectionActions.setModifiableSubSection(null));
 
 			store.dispatch(remoteActions.updateSubSectionById(subSectionId, sectionId));
 

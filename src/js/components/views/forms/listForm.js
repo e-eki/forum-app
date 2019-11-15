@@ -29,7 +29,7 @@ export default class ListForm extends PureComponent {
 
     render() {
         debugger;
-        console.log('render ListForm');
+        //console.log('render ListForm');
         const className = 'list-form ' + (this.props.className ? this.props.className : '');
 
         let itemInfoBlock = null;       

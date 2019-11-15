@@ -46,7 +46,7 @@ export default class ModifyForm extends Component {
     }
 
     render() {
-        console.log('render modifyForm');
+        //console.log('render modifyForm');
         const className = 'modify-form ' + (this.props.className ? this.props.className : '');
 
         debugger;

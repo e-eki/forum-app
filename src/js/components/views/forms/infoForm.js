@@ -29,7 +29,7 @@ export default class InfoForm extends PureComponent {
     }
 
     render() {
-        console.log('render infoForm');
+        //console.log('render infoForm');
         const className = 'info-form ' + (this.props.className ? this.props.className : '');
 
         let modifyingBlock = null;

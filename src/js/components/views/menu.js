@@ -9,7 +9,7 @@ export default class Menu extends PureComponent {
     }
 
     render() {
-        console.log('render menu');
+        //console.log('render menu');
         const className = 'menu ' + (this.props.className ? this.props.className : '');
         
         return (

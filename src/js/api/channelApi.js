@@ -3,7 +3,9 @@
 import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
-import * as actions from '../actions/channelActions';
+import * as sectionActions from '../actions/sectionActions';
+import * as subSectionActions from '../actions/subSectionActions';
+import * as channelActions from '../actions/channelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 
@@ -12,12 +14,22 @@ export function getChannelById(id) {
 	return axios.get(`${apiConst.channelApi}/${id}`)
 		.then(response => {
 			debugger;
-		    store.dispatch(actions.setCurrentChannel(response));  //??
+
+			store.dispatch(sectionActions.setCurrentSection(null));
+			store.dispatch(subSectionActions.setCurrentSubSection(null));
+			store.dispatch(sectionActions.setSections(null));
+		    store.dispatch(channelActions.setCurrentChannel(response));  //??
 		    return response;
 		});
 }
 
 export function deleteChannel(item) {
+	debugger;
+	if (item.parentItemId) {
+		item.subSectionId = item.parentItemId;
+		delete item.parentItemId;
+	}
+
 	const tasks = [];
 
 	tasks.push(item.id);
@@ -27,7 +39,7 @@ export function deleteChannel(item) {
 	return Promise.all(tasks)
 		.spread((channelId, subSectionId, response) => {
 			debugger;
-		    store.dispatch(actions.setCurrentInfoChannel(null));
+		    store.dispatch(channelActions.setCurrentInfoChannel(null));
 
 			store.dispatch(remoteActions.deleteChannelById(channelId, subSectionId));
 		});
@@ -35,6 +47,10 @@ export function deleteChannel(item) {
 
 export function modifyChannel(item) {
 	debugger;
+	if (item.parentItemId) {
+		item.subSectionId = item.parentItemId;
+		delete item.parentItemId;
+	}
 
 	const tasks = [];
 
@@ -45,20 +61,13 @@ export function modifyChannel(item) {
 		tasks.push(updateChannel(item));
 	}
 	else {
-		debugger;
-		
-		item.subSectionId = item.parentItemId;
-		delete item.parentItemId;  //??
-
 		tasks.push(createChannel(item));
 	}
 	
 	return Promise.all(tasks)
 		.spread((channelId, subSectionId, response) => {
 			debugger;
-			store.dispatch(actions.setModifiableChannel(null));
-
-			//store.dispatch(remoteActions.joinRoom(sectionId));  //??
+			store.dispatch(channelActions.setModifiableChannel(null));
 
 			store.dispatch(remoteActions.updateChannelById(channelId, subSectionId));
 

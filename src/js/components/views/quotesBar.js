@@ -9,7 +9,7 @@ export default class QuotesBar extends PureComponent {
     }
 
     render() {
-        console.log('render quotesBar');
+        //console.log('render quotesBar');
         const className = 'quotes-bar ' + (this.props.className ? this.props.className : '');
         
         return (

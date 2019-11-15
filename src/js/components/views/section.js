@@ -14,7 +14,6 @@ export default class Section extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        debugger;
         return true; //??
     }
 
@@ -24,7 +23,7 @@ export default class Section extends Component {
     }
 
     render() {
-        console.log('render section');
+        //console.log('render section');
         const className = 'section ' + (this.props.className ? this.props.className : '');
         
         debugger;

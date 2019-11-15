@@ -3,7 +3,9 @@
 import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
-import * as actions from '../actions/sectionActions';
+import * as sectionActions from '../actions/sectionActions';
+import * as subSectionActions from '../actions/subSectionActions';
+import * as channelActions from '../actions/channelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 
@@ -12,7 +14,13 @@ export function getAllSections() {
 	return axios.get(`${apiConst.sectionApi}`)
 		.then(response => {
 			debugger;
-		    store.dispatch(actions.setSections(response.data));  //todo: где лучше - здесь или в contentContainer?
+
+			store.dispatch(sectionActions.setCurrentSection(null));
+			store.dispatch(subSectionActions.setCurrentSubSection(null));
+			store.dispatch(channelActions.setCurrentChannel(null));
+			store.dispatch(sectionActions.setSections(response.data));  //?? где лучше - здесь или в contentContainer?
+			
+
             return response.data;
 		});
 }
@@ -21,7 +29,11 @@ export function getSectionById(id) {
 	return axios.get(`${apiConst.sectionApi}/${id}`)
 		.then(response => {
 			debugger;
-			store.dispatch(actions.setCurrentSection(response.data));
+
+			store.dispatch(subSectionActions.setCurrentSubSection(null));
+			store.dispatch(channelActions.setCurrentChannel(null));
+			store.dispatch(sectionActions.setSections(null));
+			store.dispatch(sectionActions.setCurrentSection(response.data));
 			
 			//store.dispatch(remoteActions.joinRoom(response.data.id));
 
@@ -38,9 +50,11 @@ export function deleteSection(item) {
 	return Promise.all(tasks)
 		.spread((sectionId, response) => {
 			debugger;
-		    store.dispatch(actions.setCurrentInfoSection(null));
+		    store.dispatch(sectionActions.setCurrentInfoSection(null));
 
 			store.dispatch(remoteActions.deleteSectionById(sectionId));
+
+			return true;
 		});
 }
 
@@ -65,9 +79,7 @@ export function modifySection(item) {
 				sectionId = response.data.id;
 			}
 
-			store.dispatch(actions.setModifiableSection(null));
-
-			//store.dispatch(remoteActions.joinRoom('1'));  //todo
+			store.dispatch(sectionActions.setModifiableSection(null));
 
 			//todo: нужна ли проверка, обработка ошибки, если нет id?
 			store.dispatch(remoteActions.updateSectionById(sectionId));

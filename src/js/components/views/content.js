@@ -11,7 +11,7 @@ export default class Content extends PureComponent {
 
     render() {
         debugger;
-        console.log('render content');
+        //console.log('render content');
         
         const className = 'content ' + (this.props.className ? this.props.className : '');
         

@@ -12,7 +12,7 @@ export default class Main extends PureComponent {
     
     render() {
         debugger;
-        console.log('render main');
+        //console.log('render main');
         const className = 'main ' + (this.props.className ? this.props.className : '');
 
         const sections = [];
@@ -24,17 +24,21 @@ export default class Main extends PureComponent {
                 let currentInfoSubSection = null;
 
                 if (item.id) {
-                    if (this.props.modifiableSubSection &&
-                        this.props.modifiableSubSection.sectionId &&
-                        (this.props.modifiableSubSection.sectionId === item.id)) {
+                    if (this.props.modifiableSubSection) {
+                        const parentId = this.props.modifiableSubSection.parentItemId || this.props.modifiableSubSection.sectionId;
+
+                        if (parentId && parentId === item.id) {
                             modifiableSubSection = this.props.modifiableSubSection;
                         }
+                    }
 
-                    if (this.props.currentInfoSubSection &&
-                        this.props.currentInfoSubSection.sectionId &&
-                        (this.props.currentInfoSubSection.sectionId === item.id)) {
+                    if (this.props.currentInfoSubSection) {
+                        const parentId = this.props.currentInfoSubSection.parentItemId || this.props.currentInfoSubSection.sectionId;
+
+                        if (parentId && parentId === item.id) {
                             currentInfoSubSection = this.props.currentInfoSubSection;
                         }
+                    }
                 }
 
                 const section = <Section
