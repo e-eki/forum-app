@@ -70,6 +70,10 @@ export function modifySubSection(item) {
 	return Promise.all(tasks)
 		.spread((subSectionId, sectionId, response) => {
 			debugger;
+			if (!subSectionId && response.data && response.data.id) {
+				subSectionId = response.data.id;
+			}
+
 			store.dispatch(subSectionActions.setModifiableSubSection(null));
 
 			store.dispatch(remoteActions.updateSubSectionById(subSectionId, sectionId));

@@ -59,14 +59,13 @@ socket.on('action', action => {
 
 				if (action.sectionId) {
 					const sections = store.getState().get('sections');
-					const currentSection = store.getState().get('currentSection');
+					const currentSection = store.getState().get('currentSection');  //todo!!!!!!! for subSection/channel
 					
 					if (currentSection &&
 						(currentSection.id === action.sectionId)) {
-							store.dispatch(setCurrentSection(null));  //todo: alert message 'section deleted'
+							store.dispatch(setCurrentSection(null));  //todo: alert message
 					}
 					else if (sections) {
-						//??
 						const newSections = sections.filter(item => item.id !== action.sectionId);
 
 						store.dispatch(setSections(newSections));
@@ -90,8 +89,14 @@ socket.on('action', action => {
 								const index = currentSection.subSections.indexOf(subSection);
 								currentSection.subSections[index] = copyUtils.copySubSection(action.data, subSection);
 							}
+							else {
+								currentSection.subSections.push(action.data);
+							}
 
-							store.dispatch(setCurrentSection(currentSection));
+							const newSubSections = currentSection.subSections.slice();
+							currentSection.subSections = newSubSections;
+
+							store.dispatch(setCurrentSection(currentSection));   //??
 					}
 					else if (currentSubSection &&
 						(currentSubSection.id === action.subSectionId)) {
@@ -101,14 +106,21 @@ socket.on('action', action => {
 							store.dispatch(setCurrentSubSection(data));
 					}	
 					else if (sections) {
-						//??
 						const section = sections.find(item => item.id === action.sectionId);
 						const subSection = section.subSections.find(item => item.id === action.subSectionId);
-						
-						const index = section.subSections.indexOf(subSection);
-						section.subSections[index] = copyUtils.copySubSection(action.data, subSection);
 
-						store.dispatch(setSections(sections));  //??
+						if (subSection) {
+							const index = sections.indexOf(subSection);
+
+							sections[index] = copyUtils.copySubSection(action.data, subSection);	
+						}
+						else {
+							section.subSections.push(action.data);
+						}
+
+						const newSections = sections.slice();
+
+						store.dispatch(setSections(newSections));
 					}
 				}
 
@@ -119,7 +131,7 @@ socket.on('action', action => {
 				if (action.subSectionId && action.sectionId) {
 					const sections = store.getState().get('sections');
 					const currentSection = store.getState().get('currentSection');
-					const currentSubSection = store.getState().get('currentSubSection');
+					const currentSubSection = store.getState().get('currentSubSection');  //todo!!!!!!! for channel
 					
 					if (currentSection &&
 						(currentSection.id === action.sectionId)) {
@@ -138,59 +150,82 @@ socket.on('action', action => {
 						const newSubSections = section.subSections.filter(item => item.id !== action.subSectionId);
 						section.subSections = newSubSections;
 
-						store.dispatch(setSections(sections));  //??
+						const newSections = sections.slice();
+
+						store.dispatch(setSections(newSections));
 					}
 				}
 					
 				break;
 
-			// case actionTypes.UPDATE_CHANNEL_BY_ID:
+			case actionTypes.UPDATE_CHANNEL_BY_ID: //---todo
 
-			// 	let currentSubSection = store.getState().get('currentSubSection');
-			// 	let currentChannel = store.getState().get('currentChannel');
+				if (action.subSectionId && action.channelId && action.data) {
+					const currentSubSection = store.getState().get('currentSubSection');
+					const currentChannel = store.getState().get('currentChannel');
 
-			// 	if (currentSubSection &&
-			// 		action.subSectionId &&
-			// 		(currentSubSection.id === action.subSectionId)) {
-			// 			let currentChannel = currentSubSection.channels.find(item => item.id === action.channelId);
+					if (currentSubSection &&
+						(currentSubSection.id === action.subSectionId)) {
+							const channel = currentSubSection.channels.find(item => item.id === action.channelId);
 
-			// 			currentChannel = action.data;
+							if (channel) {
+								const index = currentSubSection.channels.sections.indexOf(channel);
 
-			// 			store.dispatch(setCurrentSubSection(currentSubSection));
-			// 	}	
-			// 	else if (currentChannel &&
-			// 		action.channelId &&
-			// 		(currentChannel.id === action.channelId)) {
-						
-			// 			let data = action.data;
-			// 			data.messages = currentChannel.messages;
+								currentSubSection.channels[index] = copyUtils.copyChannel(action.data, channel);	
+							}
+							else {
+								currentSubSection.channels.push(action.data);
+							}
 
-			// 			store.dispatch(setCurrentChannel(data));
-			// 	}			
-			// 	break;
+							const newChannels = currentSubSection.channels.slice();
 
-			// case actionTypes.DELETE_CHANNEL_BY_ID:
+							store.dispatch(setSections(newSections));
+					}
 
-			// 	currentSubSection = store.getState().get('currentSubSection');
-			// 	currentChannel = store.getState().get('currentChannel');
+					if (currentSubSection &&
+						action.subSectionId &&
+						(currentSubSection.id === action.subSectionId)) {
+							let currentChannel = currentSubSection.channels.find(item => item.id === action.channelId);
+
+							currentChannel = action.data;
+
+							store.dispatch(setCurrentSubSection(currentSubSection));
+					}	
+					else if (currentChannel &&
+						action.channelId &&
+						(currentChannel.id === action.channelId)) {
+							
+							let data = action.data;
+							data.messages = currentChannel.messages;
+
+							store.dispatch(setCurrentChannel(data));
+					}
+				}
 				
-			// 	if (currentSubSection &&
-			// 		action.subSectionId &&
-			// 		(currentSubSection.id === action.subSectionId)) {
-			// 			//todo?? copyChannel
-			// 			let newChannels = currentSubSection.channels.filter(item => item.id !== action.channelId);
+				break;
 
-			// 			currentSubSection.channels = newChannels;
+			case actionTypes.DELETE_CHANNEL_BY_ID:
 
-			// 			store.dispatch(setCurrentSubSection(currentSubSection));
-			// 	}	
-			// 	else if (currentChannel &&
-			// 		action.channelId &&
-			// 		(currentChannel.id === action.channelId)) {
+				currentSubSection = store.getState().get('currentSubSection');
+				currentChannel = store.getState().get('currentChannel');
+				
+				if (currentSubSection &&
+					action.subSectionId &&
+					(currentSubSection.id === action.subSectionId)) {
+						//todo?? copyChannel
+						let newChannels = currentSubSection.channels.filter(item => item.id !== action.channelId);
 
-			// 			store.dispatch(setCurrentChannel(null));  //todo: alert message 'channel deleted'
-			// 	}	
-			// 	break;
+						currentSubSection.channels = newChannels;
+
+						store.dispatch(setCurrentSubSection(currentSubSection));
+				}	
+				else if (currentChannel &&
+					action.channelId &&
+					(currentChannel.id === action.channelId)) {
+
+						store.dispatch(setCurrentChannel(null));  //todo: alert message 'channel deleted'
+				}	
+				break;
 
 				//TODO: message
 				

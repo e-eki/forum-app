@@ -61,6 +61,10 @@ export function modifyMessage(item) {
 	return Promise.all(tasks)
 		.spread((messageId, channelId, response) => {
 			debugger;
+			if (!messageId && response.data && response.data.id) {
+				messageId = response.data.id;
+			}
+
 			store.dispatch(actions.setModifiableMessage(null));
 
 			store.dispatch(remoteActions.updateMessageById(messageId, channelId));

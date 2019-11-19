@@ -39,6 +39,7 @@ export function deleteChannel(item) {
 	return Promise.all(tasks)
 		.spread((channelId, subSectionId, response) => {
 			debugger;
+
 		    store.dispatch(channelActions.setCurrentInfoChannel(null));
 
 			store.dispatch(remoteActions.deleteChannelById(channelId, subSectionId));
@@ -67,6 +68,10 @@ export function modifyChannel(item) {
 	return Promise.all(tasks)
 		.spread((channelId, subSectionId, response) => {
 			debugger;
+			if (!channelId && response.data && response.data.id) {
+				channelId = response.data.id;
+			}
+			
 			store.dispatch(channelActions.setModifiableChannel(null));
 
 			store.dispatch(remoteActions.updateChannelById(channelId, subSectionId));
