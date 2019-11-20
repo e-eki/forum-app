@@ -14,6 +14,10 @@ export default class SubSection extends PureComponent {
         this.showInfo = this.showInfo.bind(this);
     }
 
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return true; //todo??
+    // }
+
     showInfo() {
         debugger;
         this.props.setCurrentInfoSubSection(this.props.subSection);
@@ -22,6 +26,8 @@ export default class SubSection extends PureComponent {
     render() {
         //console.log('render subSection');
         const className = 'subsection ' + (this.props.className ? this.props.className : '');
+
+        debugger;
 
         let subSection = <div></div>;
         const channels = [];

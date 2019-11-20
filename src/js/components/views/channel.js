@@ -23,6 +23,8 @@ export default class Channel extends PureComponent {
         //console.log('render channel');
         let className = 'channel ' + (this.props.className ? this.props.className : '');
 
+        debugger;
+
         if (this.props.userInfo) {
             className += 'channel_transparent ';  //todo
         }

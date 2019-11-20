@@ -41,7 +41,7 @@ export function deleteSubSection(item) {
 	return Promise.all(tasks)
 		.spread((subSectionId, sectionId, response) => {
 			debugger;
-		    store.dispatch(subSectionActions.setCurrentInfoSection(null));
+		    store.dispatch(subSectionActions.setCurrentInfoSubSection(null));
 
 			store.dispatch(remoteActions.deleteSubSectionById(subSectionId, sectionId));
 		});

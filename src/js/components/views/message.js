@@ -21,6 +21,8 @@ export default class Message extends PureComponent {
     render() {
         //console.log('render message');
         const className = 'message ' + (this.props.className ? this.props.className : '');
+
+        debugger;
         
         return (
             <div className = {className}>

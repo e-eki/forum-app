@@ -19,7 +19,6 @@ export default class ModifyForm extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        debugger;
         return true; //??
     }
 

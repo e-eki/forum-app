@@ -1,6 +1,6 @@
 'use strict';
 
-export function copySection(sourse, result) {
+export function copySection(sourse, result = new Object()) {
 	result.name = sourse.name;
 	result.description = sourse.description;
 	//result.senderId = sourse.senderId;

@@ -46,6 +46,13 @@ export default function reducer(state = Map(), action) {
       return state.set('modifiableChannel', action.data);
 
 
+    case actionTypes.SET_CURRENT_INFO_MESSAGE:
+      return state.set('currentInfoMessage', action.data);
+
+    case actionTypes.SET_MODIFIABLE_MESSAGE:
+      return state.set('modifiableMessage', action.data);
+
+
     case actionTypes.SET_CURRENT_USER_CHANNEL:
       return state.set('currentUserChannel', action.data);  //todo??
 

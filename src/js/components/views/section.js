@@ -1,11 +1,11 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import SubSection from './subSection';
 import ListForm from './forms/listForm';
 
-export default class Section extends Component {
+export default class Section extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -13,9 +13,9 @@ export default class Section extends Component {
         this.showInfo = this.showInfo.bind(this);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return true; //??
-    }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return true; //todo??
+    // }
 
     showInfo() {
         debugger;
