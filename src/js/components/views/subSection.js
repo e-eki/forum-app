@@ -77,7 +77,7 @@ export default class SubSection extends PureComponent {
                                 <Link to={`/subsections/${this.props.subSection.id}`}>{this.props.subSection.name}</Link>
                             }
                             
-                            {this.props.isCurrent ? null : <div>{this.props.subSection.description}</div>}
+                            <div>{this.props.subSection.description}</div>
 
                             {this.props.isCurrent
                                 ?

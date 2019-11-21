@@ -20,6 +20,8 @@ class ChannelContainer extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.channelId = null;
     }
 
     componentDidMount() {
@@ -46,6 +48,7 @@ class ChannelContainer extends PureComponent {
                     debugger;
                     //this.props.setCurrentSection(section);
                     this.props.joinRoom(channel.id);
+                    this.channelId = channel.id;
 
                     return true;
                 });
@@ -55,7 +58,9 @@ class ChannelContainer extends PureComponent {
     componentWillUnmount() {
         //this.props.resetUserInfo();
 
-        this.props.leaveRoom(this.props.currentSubSection.id);
+        if (this.channelId) {
+            this.props.leaveRoom(this.channelId);
+        }
     }
     
     render() {

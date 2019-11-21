@@ -69,7 +69,7 @@ export function deleteSubSectionById(subSectionId, sectionId) {
 
 export function updateChannelById(channelId, subSectionId) {
 	return {
-	  type: actionTypes.UPDATE_SUBSECTION_BY_ID,
+	  type: actionTypes.UPDATE_CHANNEL_BY_ID,
 	  channelId: channelId,
 	  subSectionId: subSectionId,
 	  meta: {remote: true},
@@ -78,7 +78,7 @@ export function updateChannelById(channelId, subSectionId) {
 
 export function deleteChannelById(channelId, subSectionId) {
 	return {
-	  type: actionTypes.DELETE_SUBSECTION_BY_ID,
+	  type: actionTypes.DELETE_CHANNEL_BY_ID,
 	  channelId: channelId,
 	  subSectionId: subSectionId,
 	  meta: {remote: true},

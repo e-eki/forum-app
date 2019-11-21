@@ -12,8 +12,8 @@ import apiConst from '../constants/apiConst';
 // 	return axios.get(`${apiConst.messageApi}/${id}`)  //??
 // 		.then(response => {
 // 			debugger;
-// 		    store.dispatch(actions.setCurrentChannel(response));  //??
-// 		    return response;
+// 		    store.dispatch(actions.setCurrentChannel(response.data));  //??
+// 		    return response.data;
 // 		});
 // }
 

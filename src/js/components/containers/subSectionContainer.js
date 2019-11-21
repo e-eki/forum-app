@@ -13,6 +13,8 @@ class SubSectionContainer extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.subSectionId = null;
     }
 
     componentDidMount() {
@@ -24,6 +26,7 @@ class SubSectionContainer extends PureComponent {
                     debugger;
                     //this.props.setCurrentSection(section);
                     this.props.joinRoom(subSection.id);
+                    this.subSectionId = subSection.id;
 
                     return true;
                 });
@@ -32,7 +35,10 @@ class SubSectionContainer extends PureComponent {
 
     componentWillUnmount() {
         debugger;
-        this.props.leaveRoom(this.props.currentSubSection.id);
+
+        if (this.subSectionId) {
+            this.props.leaveRoom(this.subSectionId);
+        }
     }
     
     render() {

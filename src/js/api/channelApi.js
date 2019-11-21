@@ -18,8 +18,9 @@ export function getChannelById(id) {
 			store.dispatch(sectionActions.setCurrentSection(null));
 			store.dispatch(subSectionActions.setCurrentSubSection(null));
 			store.dispatch(sectionActions.setSections(null));
-		    store.dispatch(channelActions.setCurrentChannel(response));  //??
-		    return response;
+			store.dispatch(channelActions.setCurrentChannel(response.data));
+			
+		    return response.data;
 		});
 }
 

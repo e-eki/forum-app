@@ -50,8 +50,7 @@ socket.on('action', action => {
 							sections.push(action.data);
 						}
 
-						const newSections = sections.slice();
-
+						const newSections = sections.slice();   //! immutable
 						store.dispatch(setSections(newSections));
 					}			
 				}
@@ -81,7 +80,6 @@ socket.on('action', action => {
 					}
 					else if (sections) {
 						const newSections = sections.filter(item => item.id !== action.sectionId);
-
 						store.dispatch(setSections(newSections));
 					}
 				}
@@ -98,10 +96,10 @@ socket.on('action', action => {
 
 					if (currentSubSection &&
 						(currentSubSection.id === action.subSectionId)) {
-							const data = action.data;   //??let
-							data.channels = currentSubSection.channels;
+							const newSubSection = copyUtils.copySubSection(action.data);
+							newSubSection.channels = currentSubSection.channels;
 
-							store.dispatch(setCurrentSubSection(data));
+							store.dispatch(setCurrentSubSection(newSubSection));
 					}
 					else if (currentSection &&
 						(currentSection.id === action.sectionId)) {
@@ -119,30 +117,35 @@ socket.on('action', action => {
 							}
 
 
-							const newSection = copyUtils.copySection(currentSection);  //??
-							newSection.subSections = currentSection.subSections;
-
-							// const newSubSections = currentSection.subSections.slice();
-							// currentSection.subSections = newSubSections;
+							const newSection = copyUtils.copySection(currentSection);  
 
 							store.dispatch(setCurrentSection(newSection));   //immutable!!!
 					}
 					else if (sections) {
 						const section = sections.find(item => item.id === action.sectionId);
-						const subSection = section.subSections.find(item => item.id === action.subSectionId);
 
-						if (subSection) {
-							const index = section.subSections.indexOf(subSection);
+						if (section) {
+							const subSection = section.subSections.find(item => item.id === action.subSectionId);
 
-							section.subSections[index] = copyUtils.copySubSection(action.data, subSection);	
+							if (subSection) {
+								const newSubSection = copyUtils.copySubSection(action.data);
+								newSubSection.channels = subSection.channels;
+
+								const index = section.subSections.indexOf(subSection);
+								section.subSections[index] = newSubSection;	
+							}
+							else {
+								section.subSections.push(action.data);
+							}
+
+							const newSection = copyUtils.copySection(section);
+
+							const index = sections.indexOf(section);
+							sections[index] = newSection;
+
+							const newSections = sections.slice();
+							store.dispatch(setSections(newSections));
 						}
-						else {
-							section.subSections.push(action.data);
-						}
-
-						const newSections = sections.slice();
-
-						store.dispatch(setSections(newSections));
 					}
 				}
 
@@ -168,18 +171,28 @@ socket.on('action', action => {
 					else if (currentSection &&
 						(currentSection.id === action.sectionId)) {
 							const newSubSections = currentSection.subSections.filter(item => item.id !== action.subSectionId);
-							currentSection.subSections = newSubSections;
 
-							store.dispatch(setCurrentSection(currentSection));  
+							const newCurrentSection = copyUtils.copySection(currentSection);
+							newCurrentSection.subSections = newSubSections;
+
+							store.dispatch(setCurrentSection(newCurrentSection));
 					}
 					else if (sections) {
 						const section = sections.find(item => item.id === action.sectionId);
-						const newSubSections = section.subSections.filter(item => item.id !== action.subSectionId);
-						section.subSections = newSubSections;
 
-						const newSections = sections.slice();
+						if (section) {
+							const newSubSections = section.subSections.filter(item => item.id !== action.subSectionId);
+							
+							const newSection = copyUtils.copySection(section);
+							newSection.subSections = newSubSections;
 
-						store.dispatch(setSections(newSections));
+							const index = sections.indexOf(section);
+							sections[index] = newSection;
+
+							const newSections = sections.slice();
+
+							store.dispatch(setSections(newSections));
+						}
 					}
 				}
 					
@@ -194,27 +207,29 @@ socket.on('action', action => {
 
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
-							const data = action.data;   //??let
-							data.messages = currentChannel.messages;
+							const newCurrentChannel = copyUtils.copyChannel(action.data);
+							newCurrentChannel.messages = currentChannel.messages;
 
-							store.dispatch(setCurrentChannel(data));
+							store.dispatch(setCurrentChannel(newCurrentChannel));
 					}
 					else if (currentSubSection &&
 						(currentSubSection.id === action.subSectionId)) {
 							const channel = currentSubSection.channels.find(item => item.id === action.channelId);
 						
 							if (channel) {
+								const newChannel = copyUtils.copyChannel(action.data);
+								newChannel.messages = channel.messages;
+
 								const index = currentSubSection.channels.indexOf(channel);
-								currentSubSection.channels[index] = copyUtils.copyChannel(action.data, channel);
+								currentSubSection.channels[index] = newChannel;
 							}
 							else {
 								currentSubSection.channels.push(action.data);
 							}
 
-							const newChannels = currentSubSection.channels.slice();
-							currentSubSection.channels = newChannels;
+							const newCurrentSubSection = copyUtils.copySubSection(currentSubSection);
 
-							store.dispatch(setCurrentSubSection(currentSubSection));   //immutable??
+							store.dispatch(setCurrentSubSection(newCurrentSubSection));
 					}
 				}
 				
@@ -234,9 +249,11 @@ socket.on('action', action => {
 					else if (currentSubSection &&
 						(currentSubSection.id === action.subSectionId)) {
 							const newChannels = currentSubSection.channels.filter(item => item.id !== action.channelId);
-							currentSubSection.channels = newChannels;
 
-							store.dispatch(setCurrentSubSection(currentSubSection));  //??immutable
+							const newCurrentSubSection = copyUtils.copySubSection(currentSubSection);
+							newCurrentSubSection.channels = newChannels;
+
+							store.dispatch(setCurrentSubSection(newCurrentSubSection));
 					}
 				}
 					
@@ -255,25 +272,32 @@ socket.on('action', action => {
 							const message = currentChannel.messages.find(item => item.id === action.messageId);
 						
 							if (message) {
+								const newMessage = copyUtils.copyMessage(action.data);
+
 								const index = currentChannel.messages.indexOf(message);
-								currentChannel.messages[index] = copyUtils.copyMessage(action.data, message);
+								currentChannel.messages[index] = newMessage;
 							}
 							else {
 								currentChannel.messages.push(action.data);
 							}
 
-							const newMessages = currentChannel.messages.slice();
+							const newMessages = currentChannel.messages.slice();  //?
 							currentChannel.messages = newMessages;
 
-							store.dispatch(setCurrentChannel(currentChannel));   //immutable??
+							// const newCurrentChannel = copyUtils.copyChannel(currentChannel);
+							// newCurrentChannel.messages = newMessages;  //?
+
+							store.dispatch(setCurrentChannel(currentChannel));   //?
 					}
 					else if (currentInfoMessage &&
 							currentInfoMessage.id === action.messageId) {
-								store.dispatch(setCurrentInfoMessage(action.data));   //todo: alert message 'was edit'
+								const newMessage = copyUtils.copyMessage(action.data);
+								store.dispatch(setCurrentInfoMessage(newMessage));   //todo: alert message 'was edit'
 							}
 					else if (modifiableMessage &&
 							modifiableMessage.id === action.messageId) {
-								store.dispatch(setModifiableMessage(action.data));   //todo: alert message 'was edit'
+								const newMessage = copyUtils.copyMessage(action.data);
+								store.dispatch(setModifiableMessage(newMessage));   //todo: alert message 'was edit'
 							}
 				}
 				
@@ -290,9 +314,11 @@ socket.on('action', action => {
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
 							const newMessages = currentChannel.messages.filter(item => item.id !== action.messageId)
-							currentChannel.messages = newMessages;
+							
+							const newCurrentChannel = copyUtils.copyChannel(currentChannel);
+							newCurrentChannel.messages = newMessages;
 
-							store.dispatch(setCurrentChannel(currentChannel));   //immutable??
+							store.dispatch(setCurrentChannel(newCurrentChannel));   //?
 					}
 					else if (currentInfoMessage &&
 							currentInfoMessage.id === action.messageId) {

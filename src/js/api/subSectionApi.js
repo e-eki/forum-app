@@ -19,8 +19,9 @@ export function getSubSectionById(id) {
 			store.dispatch(channelActions.setCurrentChannel(null));
 			store.dispatch(sectionActions.setSections(null));
 
-		    store.dispatch(subSectionActions.setCurrentSubSection(response));  //??
-		    return response;
+			store.dispatch(subSectionActions.setCurrentSubSection(response.data));
+			
+		    return response.data;
 		});
 }
 
