@@ -8,6 +8,7 @@ import { setSections, setCurrentSection } from './actions/sectionActions';
 import { setCurrentSubSection } from './actions/subSectionActions';
 import { setCurrentChannel } from './actions/channelActions';
 import { setCurrentInfoMessage, setModifiableMessage } from './actions/messageActions';
+import { setAlertData } from './actions/alertDataActions';
 import * as copyUtils from './lib/copyUtils';
 
 const socket = io(`${apiConst.serverUrl}`);
@@ -26,8 +27,8 @@ socket.on('action', action => {
 				debugger;
 
 				if (action.sectionId && action.data) {
-					const sections = store.getState().get('sections');
-					const currentSection = store.getState().get('currentSection');
+					const sections = store.getState().sectionState.get('sections');
+					const currentSection = store.getState().sectionState.get('currentSection');
 					
 					if (currentSection &&
 						(currentSection.id === action.sectionId)) {
@@ -61,8 +62,8 @@ socket.on('action', action => {
 				debugger;
 
 				if (action.sectionId) {
-					const sections = store.getState().get('sections');
-					const currentSection = store.getState().get('currentSection');
+					const sections = store.getState().sectionState.get('sections');
+					const currentSection = store.getState().sectionState.get('currentSection');
 					// const currentSubSection = store.getState().get('currentSubSection');
 					// const currentChannel = store.getState().get('currentChannel');
 
@@ -77,6 +78,9 @@ socket.on('action', action => {
 					if (currentSection &&
 						(currentSection.id === action.sectionId)) {
 							store.dispatch(setCurrentSection(null));  //todo: alert message
+							store.dispatch(setAlertData({
+								message: 'was deleted',
+							}));
 					}
 					else if (sections) {
 						const newSections = sections.filter(item => item.id !== action.sectionId);
@@ -90,9 +94,9 @@ socket.on('action', action => {
 				debugger;
 
 				if (action.subSectionId && action.sectionId && action.data) {
-					const sections = store.getState().get('sections');
-					const currentSection = store.getState().get('currentSection');
-					const currentSubSection = store.getState().get('currentSubSection');
+					const sections = store.getState().sectionState.get('sections');
+					const currentSection = store.getState().sectionState.get('currentSection');
+					const currentSubSection = store.getState().subSectionState.get('currentSubSection');
 
 					if (currentSubSection &&
 						(currentSubSection.id === action.subSectionId)) {
@@ -155,9 +159,9 @@ socket.on('action', action => {
 				debugger;
 
 				if (action.subSectionId && action.sectionId) {
-					const sections = store.getState().get('sections');
-					const currentSection = store.getState().get('currentSection');
-					const currentSubSection = store.getState().get('currentSubSection');
+					const sections = store.getState().sectionState.get('sections');
+					const currentSection = store.getState().sectionState.get('currentSection');
+					const currentSubSection = store.getState().subSectionState.get('currentSubSection');
 					// const currentChannel = store.getState().get('currentChannel');
 					
 					// if (currentChannel && action.channelId &&
@@ -167,6 +171,9 @@ socket.on('action', action => {
 					if (currentSubSection &&
 						(currentSubSection.id === action.subSectionId)) {
 							store.dispatch(setCurrentSubSection(null));  //todo: alert message
+							store.dispatch(setAlertData({  //?
+								message: 'was deleted',
+							}));
 					}
 					else if (currentSection &&
 						(currentSection.id === action.sectionId)) {
@@ -202,8 +209,8 @@ socket.on('action', action => {
 				debugger;
 
 				if (action.subSectionId && action.channelId && action.data) {
-					const currentSubSection = store.getState().get('currentSubSection');
-					const currentChannel = store.getState().get('currentChannel');
+					const currentSubSection = store.getState().subSectionState.get('currentSubSection');
+					const currentChannel = store.getState().channelState.get('currentChannel');
 
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
@@ -239,8 +246,8 @@ socket.on('action', action => {
 				debugger;
 
 				if (action.channelId && action.subSectionId) {
-					const currentSubSection = store.getState().get('currentSubSection');
-					const currentChannel = store.getState().get('currentChannel');
+					const currentSubSection = store.getState().subSectionState.get('currentSubSection');
+					const currentChannel = store.getState().channelState.get('currentChannel');
 					
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
@@ -263,9 +270,9 @@ socket.on('action', action => {
 				debugger;
 
 				if (action.messageId && action.channelId && action.data) {
-					const currentChannel = store.getState().get('currentChannel');
-					const currentInfoMessage = store.getState().get('currentInfoMessage');
-					const modifiableMessage = store.getState().get('modifiableMessage');
+					const currentChannel = store.getState().channelState.get('currentChannel');
+					const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');
+					const modifiableMessage = store.getState().messageState.get('modifiableMessage');
 
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
@@ -307,9 +314,9 @@ socket.on('action', action => {
 				debugger;
 
 				if (action.messageId && action.channelId) {
-					const currentChannel = store.getState().get('currentChannel');
-					const currentInfoMessage = store.getState().get('currentInfoMessage');  //todo: то же для section,subsection,channel
-					const modifiableMessage = store.getState().get('modifiableMessage');
+					const currentChannel = store.getState().channelState.get('currentChannel');
+					const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');  //todo: то же для section,subsection,channel
+					const modifiableMessage = store.getState().messageState.get('modifiableMessage');
 
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {

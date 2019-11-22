@@ -60,11 +60,11 @@ class SubSectionContainer extends PureComponent {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function(store) {
     return {
-        currentSubSection: state.get('currentSubSection'),
-        currentInfoChannel: state.get('currentInfoChannel'),
-        modifiableChannel: state.get('modifiableChannel'),
+        currentSubSection: store.subSectionState.get('currentSubSection'),
+        currentInfoChannel: store.channelState.get('currentInfoChannel'),
+        modifiableChannel: store.channelState.get('modifiableChannel'),
     };
 };
 

@@ -60,11 +60,11 @@ class SectionContainer extends PureComponent {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function(store) {
     return {
-        currentSection: state.get('currentSection'),
-        currentInfoSubSection: state.get('currentInfoSubSection'),
-        modifiableSubSection: state.get('modifiableSubSection'),
+        currentSection: store.sectionState.get('currentSection'),
+        currentInfoSubSection: store.subSectionState.get('currentInfoSubSection'),
+        modifiableSubSection: store.subSectionState.get('modifiableSubSection'),
     };
 };
 

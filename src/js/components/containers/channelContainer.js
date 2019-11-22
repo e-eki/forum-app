@@ -103,16 +103,16 @@ class ChannelContainer extends PureComponent {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function(store) {
     debugger;
     return {
-        // currentChannel: state.get('currentChannel'),
-        // currentUserChannel: state.get('currentUserChannel'),
-        // userInfo: state.get('userInfo'),
-
-        currentChannel: state.get('currentChannel'),
-        currentInfoMessage: state.get('currentInfoMessage'),
-        modifiableMessage: state.get('modifiableMessage'),
+        // // currentChannel: state.get('currentChannel'),
+        // // currentUserChannel: state.get('currentUserChannel'),
+        // // userInfo: state.get('userInfo'),
+        
+        currentChannel: store.channelState.get('currentChannel'),
+        currentInfoMessage: store.messageState.get('currentInfoMessage'),
+        modifiableMessage: store.messageState.get('modifiableMessage'),
     };
 };
 

@@ -2,9 +2,9 @@
 
 import * as actionTypes from './actionTypes';
 
-export function setAlertMessage(data) {
+export function setAlertData(data) {
 	return {
-	  type: actionTypes.SET_ALERT_MESSAGE,
+	  type: actionTypes.SET_ALERT_DATA,
 	  data
 	};
 }
