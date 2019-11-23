@@ -46,6 +46,8 @@ export default class App extends Component {
         //     </Switch>
         // )
 
+        //todo: <Route exact path="/sections" component={ContentContainer} />
+        //todo: <Redirect to="/sections" />
         return (
           <div className="app">
             <Header className = 'content__header '/>
@@ -53,8 +55,10 @@ export default class App extends Component {
 
             <div className = 'content'>
               <Router history={history}>
+                <AlertFormContainer/>
+
                 <Switch>
-                  <Route exact path="/sections" component={ContentContainer} />
+                  <Route exact path="/" component={ContentContainer} />
 
                   <Route exact path="/sections/:id" component={SectionContainer} />
                   <Route exact path="/subsections/:id" component={SubSectionContainer} />
@@ -62,7 +66,7 @@ export default class App extends Component {
 
                   <Route exact path="/userChannels/:userId" component={ChannelContainer} />
 
-                  <Redirect to="/sections" />
+                  <Redirect to="/" />
                 </Switch>
               </Router>
             </div>

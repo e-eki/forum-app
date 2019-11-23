@@ -25,7 +25,6 @@ class ChannelContainer extends PureComponent {
     }
 
     componentDidMount() {
-        debugger;
         // if (this.props.match && this.props.match.params) {
         //     this.props.resetUserInfo();
 
@@ -45,7 +44,6 @@ class ChannelContainer extends PureComponent {
             const id = this.props.match.params.id;
             return getChannelById(id)
                 .then(channel => {
-                    debugger;
                     //this.props.setCurrentSection(section);
                     this.props.joinRoom(channel.id);
                     this.channelId = channel.id;
@@ -104,7 +102,6 @@ class ChannelContainer extends PureComponent {
 }
 
 const mapStateToProps = function(store) {
-    debugger;
     return {
         // // currentChannel: state.get('currentChannel'),
         // // currentUserChannel: state.get('currentUserChannel'),

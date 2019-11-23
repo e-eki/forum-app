@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import Message from './message';
 import ListForm from './forms/listForm';
+import forumConst from '../../constants/forumConst';
 
 // Канал
 export default class Channel extends PureComponent {
@@ -61,7 +62,7 @@ export default class Channel extends PureComponent {
                         {this.props.isCurrent
                             ?
                             <ListForm
-                                type = 'message'
+                                type = {forumConst.itemTypes.message}
                                 parentItemId = {this.props.channel.id}
                                 items = {messages}
                                 currentInfoItem = {this.props.currentInfoMessage}

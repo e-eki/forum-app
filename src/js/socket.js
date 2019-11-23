@@ -13,6 +13,8 @@ import * as copyUtils from './lib/copyUtils';
 
 const socket = io(`${apiConst.serverUrl}`);
 
+const defaultLink = '/';
+
 socket.on('action', action => {
 	debugger;
 	
@@ -77,9 +79,11 @@ socket.on('action', action => {
 					// }
 					if (currentSection &&
 						(currentSection.id === action.sectionId)) {
-							store.dispatch(setCurrentSection(null));  //todo: alert message
-							store.dispatch(setAlertData({
-								message: 'was deleted',
+							store.dispatch(setCurrentSection(null));
+
+							store.dispatch(setAlertData({  //?
+								message: 'Этот раздел был удалён.',
+								link: defaultLink,
 							}));
 					}
 					else if (sections) {
@@ -119,7 +123,6 @@ socket.on('action', action => {
 							else {
 								currentSection.subSections.push(action.data);
 							}
-
 
 							const newSection = copyUtils.copySection(currentSection);  
 
@@ -170,9 +173,11 @@ socket.on('action', action => {
 					// }
 					if (currentSubSection &&
 						(currentSubSection.id === action.subSectionId)) {
-							store.dispatch(setCurrentSubSection(null));  //todo: alert message
+							store.dispatch(setCurrentSubSection(null));
+
 							store.dispatch(setAlertData({  //?
-								message: 'was deleted',
+								message: 'Этот подраздел был удалён.',
+								link: defaultLink,
 							}));
 					}
 					else if (currentSection &&
@@ -251,7 +256,11 @@ socket.on('action', action => {
 					
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
-							store.dispatch(setCurrentChannel(null));  //todo: alert message
+
+							store.dispatch(setAlertData({  //?
+								message: 'Этот чат был удалён.',
+								link: defaultLink,
+							}));
 					}
 					else if (currentSubSection &&
 						(currentSubSection.id === action.subSectionId)) {
@@ -288,23 +297,31 @@ socket.on('action', action => {
 								currentChannel.messages.push(action.data);
 							}
 
-							const newMessages = currentChannel.messages.slice();  //?
-							currentChannel.messages = newMessages;
+							//const newMessages = currentChannel.messages.slice();  //?
+							const newCurrentChannel = copyUtils.copyChannel(currentChannel);
+							//newCurrentChannel.messages = newMessages;
 
-							// const newCurrentChannel = copyUtils.copyChannel(currentChannel);
-							// newCurrentChannel.messages = newMessages;  //?
-
-							store.dispatch(setCurrentChannel(currentChannel));   //?
+							store.dispatch(setCurrentChannel(newCurrentChannel));   //?
 					}
 					else if (currentInfoMessage &&
 							currentInfoMessage.id === action.messageId) {
 								const newMessage = copyUtils.copyMessage(action.data);
-								store.dispatch(setCurrentInfoMessage(newMessage));   //todo: alert message 'was edit'
+								store.dispatch(setCurrentInfoMessage(newMessage));
+
+								store.dispatch(setAlertData({  //?
+									message: 'Это сообщение было отредактировано.',
+									link: defaultLink,
+								}));
 							}
 					else if (modifiableMessage &&
 							modifiableMessage.id === action.messageId) {
 								const newMessage = copyUtils.copyMessage(action.data);
-								store.dispatch(setModifiableMessage(newMessage));   //todo: alert message 'was edit'
+								store.dispatch(setModifiableMessage(newMessage));
+
+								store.dispatch(setAlertData({  //?
+									message: 'Это сообщение было отредактировано.',
+									link: defaultLink,
+								}));
 							}
 				}
 				
@@ -329,11 +346,21 @@ socket.on('action', action => {
 					}
 					else if (currentInfoMessage &&
 							currentInfoMessage.id === action.messageId) {
-								store.dispatch(setCurrentInfoMessage(null));   //todo: alert message 'was delete'
+								store.dispatch(setCurrentInfoMessage(null));
+
+								store.dispatch(setAlertData({  //?
+									message: 'Это сообщение было удалено.',
+									link: defaultLink,
+								}));
 							}
 					else if (modifiableMessage &&
 							modifiableMessage.id === action.messageId) {
-								store.dispatch(setModifiableMessage(null));   //todo: alert message 'was delete'
+								store.dispatch(setModifiableMessage(null));
+
+								store.dispatch(setAlertData({  //?
+									message: 'Это сообщение было удалено.',
+									link: defaultLink,
+								}));
 							}
 				}
 				

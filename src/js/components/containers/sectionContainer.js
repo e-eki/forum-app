@@ -18,12 +18,10 @@ class SectionContainer extends PureComponent {
     }
 
     componentDidMount() {
-        debugger;
         if (this.props.match && this.props.match.params) {
             const id = this.props.match.params.id;
             return getSectionById(id)
                 .then(section => {
-                    debugger;
                     //this.props.setCurrentSection(section);
                     this.props.joinRoom(section.id);
                     this.sectionId = section.id;
@@ -34,8 +32,6 @@ class SectionContainer extends PureComponent {
     }
 
     componentWillUnmount() {
-        debugger;
-
         if (this.sectionId) {
             this.props.leaveRoom(this.sectionId);
         }
@@ -43,6 +39,7 @@ class SectionContainer extends PureComponent {
     
     render() {
         //console.log('render SectionContainer');
+        debugger;
         return (
             <Section
                 section = {this.props.currentSection}

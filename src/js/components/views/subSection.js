@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import Channel from './channel';
 import ListForm from './forms/listForm';
+import forumConst from '../../constants/forumConst';
 
 // Подраздел
 export default class SubSection extends PureComponent {
@@ -82,7 +83,7 @@ export default class SubSection extends PureComponent {
                             {this.props.isCurrent
                                 ?
                                 <ListForm
-                                    type = 'channel'
+                                    type = {forumConst.itemTypes.channel}
                                     parentItemId = {this.props.subSection.id}
                                     items = {channels}
                                     currentInfoItem = {this.props.currentInfoChannel}

@@ -15,7 +15,7 @@ export default class Message extends PureComponent {
     getUserInfo(event) {
         debugger;
         event.preventDefault();
-        //this.props.getUserInfo(this.props.data.senderId);
+        //this.props.getUserInfo(this.props.message.senderId);
     }
 
     render() {
@@ -23,13 +23,15 @@ export default class Message extends PureComponent {
         const className = 'message ' + (this.props.className ? this.props.className : '');
 
         debugger;
+
+        //const date = this.props.message.date ? this.props.message.date.toLocaleTimeString() : null;
         
         return (
             <div className = {className}>
                 <Link to="/" onClick = {this.getUserInfo}>Sender</Link> 
 
-                <div>{this.props.data.date.toLocaleTimeString()}</div>
-                <div>{this.props.data.text}</div>
+                {/* <div>{date}</div> */}
+                <div>{this.props.message.text}</div>
             </div>
         )
     }

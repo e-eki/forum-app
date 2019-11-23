@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import SubSection from './subSection';
 import ListForm from './forms/listForm';
+import forumConst from '../../constants/forumConst';
 
 export default class Section extends PureComponent {
 
@@ -74,7 +75,7 @@ export default class Section extends PureComponent {
                         } */}
 
                         <ListForm
-                            type = 'subSection'
+                            type = {forumConst.itemTypes.subSection}
                             parentItemId = {this.props.section.id}
                             items = {subSections}
                             currentInfoItem = {this.props.currentInfoSubSection}

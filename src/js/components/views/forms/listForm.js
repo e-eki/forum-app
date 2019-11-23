@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react';
 import InfoForm from './infoForm';
 import ModifyForm from './modifyForm';
+import forumConst from '../../../constants/forumConst';
 
 export default class ListForm extends PureComponent {
 
@@ -10,21 +11,47 @@ export default class ListForm extends PureComponent {
         super(props);
 
         this.addItem = this.addItem.bind(this);
+        this.initNewItem = this.initNewItem.bind(this);
+    }
+
+    initNewItem() {
+        debugger;
+
+        let newItem;
+
+        if (this.props.type) {
+            switch (this.props.type) {
+
+                case forumConst.itemTypes.message:
+                    newItem = {
+                        text: ''
+                    };
+                    break;
+                    
+                default:
+                    newItem = {
+                        name: '',
+                        description: '',
+                    };
+                    break;
+            }
+        }
+
+        return newItem;
     }
 
     addItem() {
         debugger;
 
-        const newItem = {   //??
-            name: '',
-            description: '',
-        };
+        const newItem = this.initNewItem();
 
-        if (this.props.parentItemId) {
-            newItem.parentItemId = this.props.parentItemId;
+        if (newItem) {
+            if (this.props.parentItemId) {
+                newItem.parentItemId = this.props.parentItemId;
+            }
+
+            this.props.setModifiableItem(newItem);
         }
-
-        this.props.setModifiableItem(newItem);
     }
 
     render() {
@@ -48,6 +75,7 @@ export default class ListForm extends PureComponent {
                             />;
         }
 
+        // добавление нового элемента
         else if (this.props.modifiableItem) {
             modifyingItemBlock = <ModifyForm
                                     modifiableItem = {this.props.modifiableItem}

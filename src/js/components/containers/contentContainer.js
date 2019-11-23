@@ -25,11 +25,9 @@ class ContentContainer extends PureComponent {
         super(props);
     }
 
-    componentDidMount() {
-        debugger;       
+    componentDidMount() {      
         return sectionApi.getAllSections()
             .then(sections => {
-                debugger;
                 //this.props.setSections(sections);
 
                 this.props.joinRoom(apiConst.defaultRoomId);
@@ -38,7 +36,6 @@ class ContentContainer extends PureComponent {
     }
 
     componentWillUnmount() {
-        debugger;
         this.props.leaveRoom(apiConst.defaultRoomId);
     }
     

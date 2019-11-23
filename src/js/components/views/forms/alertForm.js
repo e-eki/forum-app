@@ -23,9 +23,9 @@ export default class AlertForm extends PureComponent {
 
 									
 
-									<button className = '' onClick = {this.resetAlertData}>
+									<button className = '' >
 										Ok
-									</button>;
+									</button>
 								</div>;
 
 			if (this.props.alertData.link) {
@@ -41,7 +41,7 @@ export default class AlertForm extends PureComponent {
 		
 
 		return (
-			<div className = {className}>
+			<div className = {className} onClick = {this.props.resetAlertData}>
 
 				{alertBlock}
 
