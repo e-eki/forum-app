@@ -2,9 +2,16 @@
 
 import * as actionTypes from './actionTypes';
 
-export function setUserInfo(data) {
+export function setCurrentUserInfo(data) {
 	return {
-	  type: actionTypes.SET_USER_INFO,
+	  type: actionTypes.SET_CURRENT_USER_INFO,
+	  data
+	};
+}
+
+export function setModifiableUserInfo(data) {
+	return {
+	  type: actionTypes.SET_MODIFIABLE_USER_INFO,
 	  data
 	};
 }

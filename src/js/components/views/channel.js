@@ -41,6 +41,9 @@ export default class Channel extends PureComponent {
                     const message = <Message
                                         key={key}
                                         message = {item}
+                                        userInfo = {this.props.userInfo}
+                                        showUserInfoById = {this.props.showUserInfoById}
+                                        resetUserInfo = {this.props.resetUserInfo}
                                     />;
                     messages.push(message);
                     key++;

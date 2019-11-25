@@ -22,6 +22,8 @@ class ChannelContainer extends PureComponent {
         super(props);
 
         this.channelId = null;
+
+        this.showUserInfoById = this.showUserInfoById.bind(this);
     }
 
     componentDidMount() {
@@ -44,7 +46,6 @@ class ChannelContainer extends PureComponent {
             const id = this.props.match.params.id;
             return getChannelById(id)
                 .then(channel => {
-                    //this.props.setCurrentSection(section);
                     this.props.joinRoom(channel.id);
                     this.channelId = channel.id;
 
@@ -54,11 +55,20 @@ class ChannelContainer extends PureComponent {
     }
 
     componentWillUnmount() {
-        //this.props.resetUserInfo();
+        this.props.resetUserInfo();   //?
 
         if (this.channelId) {
             this.props.leaveRoom(this.channelId);
         }
+    }
+
+    showUserInfoById(id) {  //???
+        debugger;
+        return getUserInfoById(id)
+            .then(data => {
+                debugger;
+                this.props.setCurrentUserInfo(response.data);
+            })
     }
     
     render() {
@@ -96,6 +106,10 @@ class ChannelContainer extends PureComponent {
                 setModifiableMessage = {this.props.setModifiableMessage}
                 modifyMessage = {this.props.modifyMessage}
                 deleteMessage = {this.props.deleteMessage}
+
+                showUserInfoById = {this.props.showUserInfoById}
+                userInfo = {this.props.userInfo}
+                resetUserInfo = {this.props.resetUserInfo}
             />
         );
     }
@@ -105,7 +119,7 @@ const mapStateToProps = function(store) {
     return {
         // // currentChannel: state.get('currentChannel'),
         // // currentUserChannel: state.get('currentUserChannel'),
-        // // userInfo: state.get('userInfo'),
+        userInfo: store.userInfo.get('currentUserInfo'),
         
         currentChannel: store.channelState.get('currentChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
@@ -115,12 +129,15 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        // getUserInfo: function(id) {
-        //     getUserInfoById(id);
-        // },
-        // resetUserInfo: function() {
-        //     dispatch(setUserInfo(null));
-        // },
+        showUserInfoById: function(id) {    //??todo: вынести в отдельные методы в контейнерах - методы апи и следующие за ними действия?
+            this.showUserInfoById(id);
+        },
+        setUserInfo: function(item) {
+            dispatch(setUserInfo(item));
+        },
+        resetUserInfo: function() {  //?
+            dispatch(setUserInfo(null));
+        },
         // resetCurrentChannel: function() {
         //     dispatch(setCurrentChannel(null));
         // },

@@ -46,6 +46,9 @@ export function modifyMessage(item) {
 		delete item.parentItemId;
 	}
 
+	//todo!!!
+	item.senderId = '1';
+
 	const tasks = [];
 
 	tasks.push(item.id);
@@ -79,7 +82,7 @@ function createMessage(item) {
 	return axios.post(`${apiConst.messageApi}`, {
 		date: item.date,
 		text: item.text,
-		//senderId: data.senderId,
+		senderId: '1',   //item.senderId   //todo!!!!
 		recipientId: item.recipientId,
 		channelId: item.channelId,
 	})
@@ -89,7 +92,7 @@ function updateMessage(item) {
 	return axios.put(`${apiConst.messageApi}/${item.id}`, {
 		date: item.date,
 		text: item.text,
-		//senderId: data.senderId,
+		senderId: item.senderId,
 		recipientId: item.recipientId,
 		channelId: item.channelId,
 	})

@@ -8,6 +8,7 @@ import subSectionReducer from './subSectionReducer';
 import channelReducer from './channelReducer';
 import messageReducer from './messageReducer';
 import alertDataReducer from './alertDataReducer';
+import userInfoReducer from './userInfoReducer';
 
 
 const reducer = combineReducers({
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   channelState: channelReducer,
   messageState: messageReducer,
   alertDataState: alertDataReducer,
+  userInfo: userInfoReducer,
 });
 
 export default reducer;
