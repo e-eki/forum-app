@@ -8,6 +8,7 @@ import { setSections, setCurrentSection } from './actions/sectionActions';
 import { setCurrentSubSection } from './actions/subSectionActions';
 import { setCurrentChannel } from './actions/channelActions';
 import { setCurrentInfoMessage, setModifiableMessage } from './actions/messageActions';
+import { setCurrentPrivateChannel } from './actions/privateChannelActions';
 import { setAlertData } from './actions/alertDataActions';
 import * as copyUtils from './lib/copyUtils';
 
@@ -256,6 +257,7 @@ socket.on('action', action => {
 					
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
+							store.dispatch(setCurrentChannel(null));
 
 							store.dispatch(setAlertData({  //?
 								message: 'Этот чат был удалён.',
@@ -365,8 +367,45 @@ socket.on('action', action => {
 				}
 				
 				break;
+
+			case actionTypes.UPDATE_PRIVATE_CHANNEL_BY_ID:
+				debugger;
+
+				if (action.privateChannelId && action.data) {
+					const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
+
+					if (currentPrivateChannel &&
+						(currentPrivateChannel.id === action.privateChannelId)) {
+							const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(action.data);
+							newCurrentChannel.messages = currentPrivateChannel.messages;
+
+							store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));
+					}
+				}
 				
-			
+				break;
+
+			case actionTypes.DELETE_PRIVATE_CHANNEL_BY_ID:
+				debugger;
+
+				if (action.privateChannelId) {
+					const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
+
+					if (currentPrivateChannel &&
+						(currentPrivateChannel.id === action.privateChannelId)) {
+							store.dispatch(setCurrentPrivateChannel(null));     //?
+
+							store.dispatch(setAlertData({
+								message: 'Этот чат был удалён.',
+								link: defaultLink,
+							}));
+					}
+				}
+
+				//todo: и в списке личных чатов юзера
+				
+				break;
+
 			default:
 				debugger;
 				break;

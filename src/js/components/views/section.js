@@ -14,10 +14,6 @@ export default class Section extends PureComponent {
         this.showInfo = this.showInfo.bind(this);
     }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return true; //todo??
-    // }
-
     showInfo() {
         debugger;
         this.props.setCurrentInfoSection(this.props.section);

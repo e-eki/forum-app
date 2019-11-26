@@ -3,14 +3,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Channel from '../views/channel';
-import { setUserInfo } from '../../actions/userInfoActions';
-import { setCurrentChannel } from '../../actions/channelActions';
-import { setCurrentUserChannel } from '../../actions/userChannelActions';
+import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { getChannelById } from '../../api/channelApi';
-import { getUserChannelById } from '../../api/userChannelApi';
 import { getUserInfoById } from '../../api/userInfoApi';
 import UserInfoForm from '../views/forms/userInfoForm';
-
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
@@ -55,19 +51,20 @@ class ChannelContainer extends PureComponent {
     }
 
     componentWillUnmount() {
-        this.props.resetUserInfo();   //?
+        this.props.resetCurrentUserInfo();
 
         if (this.channelId) {
             this.props.leaveRoom(this.channelId);
         }
     }
 
-    showUserInfoById(id) {  //???
+    //??todo: вынести в отдельные методы в контейнерах - методы апи и следующие за ними действия?
+    showUserInfoById(id) {
         debugger;
         return getUserInfoById(id)
             .then(data => {
                 debugger;
-                this.props.setCurrentUserInfo(response.data);
+                this.props.setCurrentUserInfo(data);
             })
     }
     
@@ -75,51 +72,42 @@ class ChannelContainer extends PureComponent {
         //console.log('render ChannelContainer');
         debugger;
 
+        let userInfoBlock;
+
+            if (this.props.currentUserInfo) {
+                userInfoBlock = <UserInfoForm
+                                    currentUserInfo = {this.props.currentUserInfo}
+                                    resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
+                                />;
+            }
+
         return (
-            // <div>
-            //     {this.props.userInfo
-            //         ?
-            //         <UserInfoForm
-            //             userInfo = {this.props.userInfo}
-            //             currentUserChannel = {this.props.currentUserChannel}
-            //             resetUserInfo = {this.props.resetUserInfo}>
-            //         </UserInfoForm>
-            //         : null
-            //     }
-            //     <Channel 
-            //         currentChannel = {this.props.currentChannel}
-            //         currentUserChannel = {this.props.currentUserChannel}
-            //         isCurrent = {true}
-            //         userInfo = {this.props.userInfo} 
-            //         getUserInfo = {this.props.getUserInfo}
-            //     />
-            // </div>   
+            <div>
+                {userInfoBlock}
             
-            <Channel
-                channel = {this.props.currentChannel}
-                isCurrent = {true}
-                setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
+                <Channel
+                    channel = {this.props.currentChannel}
+                    isCurrent = {true}
+                    setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
 
-                currentInfoMessage = {this.props.currentInfoMessage}
-                modifiableMessage = {this.props.modifiableMessage}
-                setCurrentInfoMessage = {this.props.setCurrentInfoMessage}
-                setModifiableMessage = {this.props.setModifiableMessage}
-                modifyMessage = {this.props.modifyMessage}
-                deleteMessage = {this.props.deleteMessage}
+                    currentInfoMessage = {this.props.currentInfoMessage}
+                    modifiableMessage = {this.props.modifiableMessage}
+                    setCurrentInfoMessage = {this.props.setCurrentInfoMessage}
+                    setModifiableMessage = {this.props.setModifiableMessage}
+                    modifyMessage = {this.props.modifyMessage}
+                    deleteMessage = {this.props.deleteMessage}
 
-                showUserInfoById = {this.props.showUserInfoById}
-                userInfo = {this.props.userInfo}
-                resetUserInfo = {this.props.resetUserInfo}
-            />
+                    showUserInfoById = {this.showUserInfoById}
+                />
+            </div>
         );
     }
 }
 
 const mapStateToProps = function(store) {
     return {
-        // // currentChannel: state.get('currentChannel'),
         // // currentUserChannel: state.get('currentUserChannel'),
-        userInfo: store.userInfo.get('currentUserInfo'),
+        currentUserInfo: store.userInfo.get('currentUserInfo'),
         
         currentChannel: store.channelState.get('currentChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
@@ -129,18 +117,12 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        showUserInfoById: function(id) {    //??todo: вынести в отдельные методы в контейнерах - методы апи и следующие за ними действия?
-            this.showUserInfoById(id);
+        setCurrentUserInfo: function(item) {
+            dispatch(setCurrentUserInfo(item));
         },
-        setUserInfo: function(item) {
-            dispatch(setUserInfo(item));
+        resetCurrentUserInfo: function() {  //?
+            dispatch(setCurrentUserInfo(null));
         },
-        resetUserInfo: function() {  //?
-            dispatch(setUserInfo(null));
-        },
-        // resetCurrentChannel: function() {
-        //     dispatch(setCurrentChannel(null));
-        // },
         // resetCurrentUserChannel: function() {
         //     dispatch(setCurrentUserChannel(null));
         // },

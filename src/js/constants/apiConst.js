@@ -11,7 +11,7 @@ module.exports = {
 	channelApi: `${api_url}/channel`,
 	messageApi: `${api_url}/message`,
 
-	userChannelApi: `${api_url}/user-channel`,
+	privateChannelApi: `${api_url}/private-channel`,
 	userInfoApi: `${api_url}/user-info`,
 
 	defaultRoomId: '0',

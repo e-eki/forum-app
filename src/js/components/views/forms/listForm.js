@@ -50,6 +50,8 @@ export default class ListForm extends PureComponent {
                 newItem.parentItemId = this.props.parentItemId;
             }
 
+            // newItem.senderId = '1';  //todo!
+
             this.props.setModifiableItem(newItem);
         }
     }

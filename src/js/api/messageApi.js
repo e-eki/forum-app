@@ -46,13 +46,12 @@ export function modifyMessage(item) {
 		delete item.parentItemId;
 	}
 
-	//todo!!!
-	item.senderId = '1';
-
 	const tasks = [];
 
 	tasks.push(item.id);
 	tasks.push(item.channelId);
+
+	item.senderId = item.channelId;  //todo!
 
 	if (item.id) {
 		tasks.push(updateMessage(item));
@@ -82,7 +81,7 @@ function createMessage(item) {
 	return axios.post(`${apiConst.messageApi}`, {
 		date: item.date,
 		text: item.text,
-		senderId: '1',   //item.senderId   //todo!!!!
+		senderId: item.senderId,
 		recipientId: item.recipientId,
 		channelId: item.channelId,
 	})

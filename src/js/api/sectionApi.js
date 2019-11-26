@@ -19,7 +19,6 @@ export function getAllSections() {
 			store.dispatch(subSectionActions.setCurrentSubSection(null));
 			store.dispatch(channelActions.setCurrentChannel(null));
 			store.dispatch(sectionActions.setSections(response.data));  //?? где лучше - здесь или в contentContainer?
-			
 
             return response.data;
 		});

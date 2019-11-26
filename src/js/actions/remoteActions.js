@@ -104,3 +104,22 @@ export function deleteMessageById(messageId, channelId) {
 	  meta: {remote: true},
 	};
 }
+
+//---PRIVATE-CHANNEL
+
+export function updatePrivateChannelById(privateChannelId) {
+	return {
+	  type: actionTypes.UPDATE_PRIVATE_CHANNEL_BY_ID,
+	  privateChannelId: privateChannelId,
+	  meta: {remote: true},
+	};
+}
+
+export function deletePrivateChannelById(privateChannelId) {
+	return {
+	  type: actionTypes.DELETE_PRIVATE_CHANNEL_BY_ID,
+	  privateChannelId: privateChannelId,
+	  meta: {remote: true},
+	};
+}
+

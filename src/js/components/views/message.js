@@ -2,7 +2,6 @@
 
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-import UserInfoForm from './forms/userInfoForm';
 
 // Сообщение
 export default class Message extends PureComponent {
@@ -36,18 +35,11 @@ export default class Message extends PureComponent {
 
         let userInfoBlock;
 
-        //resetUserInfo = {this.props.resetUserInfo}
-        if (this.props.userInfo) {
-            userInfoBlock = <UserInfoForm
-                                userInfo = {this.props.userInfo}
-                                resetUserInfo = {this.props.resetUserInfo}
-                            />;
-        }
-        else if (this.props.message.senderId) {
+        if (this.props.message.senderId) {
             userInfoBlock = <Link to="/" onClick = {this.showUserInfo}>Sender</Link> 
         }
         else {
-            userInfoBlock = 'Sender';  //todo?
+            userInfoBlock = 'Sender';
         }
         
         return (

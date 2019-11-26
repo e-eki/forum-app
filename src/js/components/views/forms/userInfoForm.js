@@ -16,7 +16,7 @@ export default class UserInfoForm extends PureComponent {
 
         debugger;
 
-        const birthDate = this.props.userInfo.birthDate;
+        const birthDate = this.props.currentUserInfo.birthDate;
         let birthDateString;
 
         if (birthDate) {
@@ -26,13 +26,13 @@ export default class UserInfoForm extends PureComponent {
         return (
             <div className = {className}>
                 <div>USER</div>
-                <div>{this.props.userInfo.nickName}</div>
-                {this.props.userInfo.name ? <div>{this.props.userInfo.name}</div> : null}
+                <div>{this.props.currentUserInfo.nickName}</div>
+                {this.props.currentUserInfo.name ? <div>{this.props.currentUserInfo.name}</div> : null}
                 {birthDateString}
-                {this.props.userInfo.city ? <div>{this.props.userInfo.city}</div> : null}
-                {this.props.userInfo.profession ? <div>{this.props.userInfo.profession}</div> : null}
-                {this.props.userInfo.hobby ? <div>{this.props.userInfo.hobby}</div> : null}
-                {this.props.userInfo.citation ? <div>{this.props.userInfo.citation}</div> : null}
+                {this.props.currentUserInfo.city ? <div>{this.props.currentUserInfo.city}</div> : null}
+                {this.props.currentUserInfo.profession ? <div>{this.props.currentUserInfo.profession}</div> : null}
+                {this.props.currentUserInfo.hobby ? <div>{this.props.currentUserInfo.hobby}</div> : null}
+                {this.props.currentUserInfo.citation ? <div>{this.props.currentUserInfo.citation}</div> : null}
                 
                 {/* {this.props.currentUserChannel
                     ?
@@ -43,7 +43,7 @@ export default class UserInfoForm extends PureComponent {
                     </Link>
                 } */}
 
-                <button className = '' onClick = {this.props.resetUserInfo}>
+                <button className = '' onClick = {this.props.resetCurrentUserInfo}>
                     Закрыть
                 </button>
             </div>
