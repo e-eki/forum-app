@@ -34,17 +34,6 @@ export default class App extends Component {
         //     </Router>
         // )
 
-        // return (
-        //     <Switch>
-        //       <Route exact path="/" component={ContentContainer} />
-
-        //       <Route path="/sections/:id" component={SectionContainer} />
-        //       <Route path="/subsections/:id" component={SubSectionContainer} />
-        //       <Route path="/channels/:id" component={ChannelContainer} />
-
-        //       <Route path="/userChannels/:userId" component={ChannelContainer} />
-        //     </Switch>
-        // )
 
         //todo: <Route exact path="/sections" component={ContentContainer} />
         //todo: <Redirect to="/sections" />
@@ -64,7 +53,8 @@ export default class App extends Component {
                   <Route exact path="/subsections/:id" component={SubSectionContainer} />
                   <Route exact path="/channels/:id" component={ChannelContainer} />
 
-                  <Route exact path="/userChannels/:userId" component={ChannelContainer} />
+                  <Route exact path="/private-channels/:id" component={ChannelContainer} />
+                  <Route path="/private-channels" component={ChannelContainer} />
 
                   <Redirect to="/" />
                 </Switch>

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Channel from '../views/channel';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { getChannelById } from '../../api/channelApi';
+import { getPrivateChannelByRecipientId } from '../../api/privateChannelApi';
 import { getUserInfoById } from '../../api/userInfoApi';
 import UserInfoForm from '../views/forms/userInfoForm';
 import * as messageApi from '../../api/messageApi';
@@ -18,27 +19,28 @@ class ChannelContainer extends PureComponent {
         super(props);
 
         this.channelId = null;
+        this.recipientId = null;
 
         this.showUserInfoById = this.showUserInfoById.bind(this);
+        this.resetChannelContainer = this.resetChannelContainer.bind(this);
     }
 
     componentDidMount() {
-        // if (this.props.match && this.props.match.params) {
-        //     this.props.resetUserInfo();
+        debugger;
 
-        //     if (this.props.match.params.id) {
-        //         this.props.resetCurrentUserChannel();
-        //         const id = this.props.match.params.id;
-        //         getChannelById(id);
-        //     }
-        //     else if (this.props.match.params.userId) {
-        //         this.props.resetCurrentChannel();
-        //         const id = this.props.match.params.userId;
-        //         getUserChannelById(id);
-        //     }
-        // }
+        if (this.props.match && this.props.match.params && this.props.match.params.id) {
 
-        if (this.props.match && this.props.match.params) {
+            // if (this.props.match.params.userId) {
+            //     const userId = this.props.match.params.userId;
+            //     return getPrivateChannelByRecipientId(userId)
+            //         .then(privateChannel => {
+            //             this.props.joinRoom(privateChannel.id);
+            //             this.channelId = privateChannel.id;
+
+            //             return true;
+            //         });
+            // }
+            //else if (this.props.match.params.id) {
             const id = this.props.match.params.id;
             return getChannelById(id)
                 .then(channel => {
@@ -47,10 +49,38 @@ class ChannelContainer extends PureComponent {
 
                     return true;
                 });
+           // }
+        }
+    }
+
+    componentDidUpdate() {
+        debugger;
+        //new URLSearchParams(this.props.location.search).get("recipientId")
+
+        if (this.props.location && this.props.location.search) {
+            const newRecipientId = new URLSearchParams(this.props.location.search).get("recipientId");
+
+            if (newRecipientId && (newRecipientId !== this.recipientId)) {
+                this.recipientId = newRecipientId;
+
+                this.resetChannelContainer();
+
+                return getPrivateChannelByRecipientId(newRecipientId)
+                    .then(privateChannel => {
+                        this.props.joinRoom(privateChannel.id);
+                        this.channelId = privateChannel.id;
+
+                        return true;
+                    });
+            }
         }
     }
 
     componentWillUnmount() {
+        this.resetChannelContainer();
+    }
+
+    resetChannelContainer() {
         this.props.resetCurrentUserInfo();
 
         if (this.channelId) {
@@ -74,12 +104,12 @@ class ChannelContainer extends PureComponent {
 
         let userInfoBlock;
 
-            if (this.props.currentUserInfo) {
-                userInfoBlock = <UserInfoForm
-                                    currentUserInfo = {this.props.currentUserInfo}
-                                    resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
-                                />;
-            }
+        if (this.props.currentUserInfo) {
+            userInfoBlock = <UserInfoForm
+                                userInfo = {this.props.currentUserInfo}
+                                resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
+                            />;
+        }
 
         return (
             <div>
@@ -87,6 +117,7 @@ class ChannelContainer extends PureComponent {
             
                 <Channel
                     channel = {this.props.currentChannel}
+                    privateChannel = {this.props.currentPrivateChannel}
                     isCurrent = {true}
                     setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
 
@@ -106,10 +137,9 @@ class ChannelContainer extends PureComponent {
 
 const mapStateToProps = function(store) {
     return {
-        // // currentUserChannel: state.get('currentUserChannel'),
-        currentUserInfo: store.userInfo.get('currentUserInfo'),
-        
+        currentUserInfo: store.userInfo.get('currentUserInfo'),       
         currentChannel: store.channelState.get('currentChannel'),
+        currentPrivateChannel: store.privateChannelState.get('currentPrivateChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),
     };
@@ -123,9 +153,6 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentUserInfo: function() {  //?
             dispatch(setCurrentUserInfo(null));
         },
-        // resetCurrentUserChannel: function() {
-        //     dispatch(setCurrentUserChannel(null));
-        // },
         setCurrentInfoChannel: function(item) {
             dispatch(setCurrentInfoChannel(item));
         },

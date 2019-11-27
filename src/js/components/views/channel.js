@@ -17,7 +17,8 @@ export default class Channel extends PureComponent {
 
     showInfo() {
         debugger;
-        this.props.setCurrentInfoChannel(this.props.channel);
+        const channelData = this.props.channel || this.props.privateChannel;
+        this.props.setCurrentInfoChannel(channelData);
     }
 
     render() {
@@ -30,14 +31,17 @@ export default class Channel extends PureComponent {
         //     className += 'channel_transparent ';  //todo
         // }
 
+        const channelData = this.props.channel || this.props.privateChannel;   //??todo
+        const isPrivate = this.props.privateChannel ? true : false;
+
         let channel = <div></div>;
         const messages = [];
         let key = 0;
 
-        if (this.props.channel) {
+        if (channelData) {
 
-            if (this.props.channel.messages) {
-                this.props.channel.messages.forEach(function(item) {
+            if (channelData.messages) {
+                channelData.messages.forEach(function(item) {
                     const message = <Message
                                         key={key}
                                         message = {item}
@@ -48,23 +52,32 @@ export default class Channel extends PureComponent {
                 }.bind(this));
             }
 
-            channel = <div>
-                        {this.props.isCurrent 
-                            ?
-                            this.props.channel.name
-                            :
-                            <Link to={`/channels/${this.props.channel.id}`}>{this.props.channel.name}</Link>
-                        }
-                        
-                        {this.props.isCurrent ? <div>{this.props.channel.description}</div> : null}
+            let channelNameBlock;
+            
+            if (this.props.isCurrent) {
+                channelNameBlock = channelData.name;
+            }
+            else {
+                if (isPrivate) {
+                    channelNameBlock = <Link to={`/private-channels/${channelData.id}`}>{channelData.name}</Link>;
+                }
+                else {
+                    channelNameBlock = <Link to={`/channels/${channelData.id}`}>{channelData.name}</Link>;
+                }
+            }
 
-                        {this.props.isCurrent ? <div>{this.props.channel.descriptionMessage}</div> : null}
+            channel = <div>
+                        {channelNameBlock}
+                        
+                        {(this.props.isCurrent && !isPrivate) ? <div>{channelData.description}</div> : null}
+
+                        {this.props.isCurrent ? <div>{channelData.descriptionMessage}</div> : null}
 
                         {this.props.isCurrent
                             ?
                             <ListForm
                                 type = {forumConst.itemTypes.message}
-                                parentItemId = {this.props.channel.id}
+                                parentItemId = {channelData.id}
                                 items = {messages}
                                 currentInfoItem = {this.props.currentInfoMessage}
                                 setCurrentInfoItem = {this.props.setCurrentInfoMessage}
@@ -77,75 +90,30 @@ export default class Channel extends PureComponent {
                             messages
                         }
                     </div>;
-    }
+        }
 
-    let channelInfoBlock = null;
+        let channelInfoBlock = null;
 
-    if (!this.props.isCurrent) {
-        channelInfoBlock = <button className = '' onClick = {this.showInfo}>
-                                Информация {this.props.channel.name ? this.props.channel.name : null}
-                            </button>;
-    }
-    
-    return (
-        <div className = {className}>
-            {channel}
-
-            {channelInfoBlock}
-        </div>
-    )
-
-        // const data = this.props.currentChannel || this.props.currentUserChannel;
-        // let channelName = null;
-        // let channelId = null;
-
-        // if (data) {
-        //     if (this.props.currentChannel) {
-        //         channelName = data.name;
-        //         channelId = data.id;
-        //     }
-        //     else if (this.props.currentUserChannel) {
-        //         channelName = data.userName;
-        //         channelId = data.userId;
-        //     }
-
-        //     if (this.props.isCurrent && data.messages) {
-        //         data.messages.forEach(function(item) {
-        //             const message = <Message
-        //                                 key={key}
-        //                                 data = {item}
-        //                                 getUserInfo = {this.props.getUserInfo}
-        //                             />;
-        //             messages.push(message);
-        //             key++;
-        //         }.bind(this));
-        //     }
-        // }
-
-        // channel = <div>
-        //             {this.props.isCurrent
-        //                 ?
-        //                 channelName
-        //                 :
-        //                 <Link to={`/channels/${channelId}`}>{channelName}</Link> 
-        //             }
-
-        //             <div>
-        //                 {this.props.isCurrent 
-        //                     ? 
-        //                     ((data && data.descriptionMessage) || null)
-        //                     :
-        //                     null
-        //                 }
-        //             </div>
-
-        //             {this.props.isCurrent ? messages : null}
-        //         </div>;
+        if (!this.props.isCurrent) {
+            if (!isPrivate) {
+                channelInfoBlock = <button className = '' onClick = {this.showInfo}>
+                                        Информация {channelData ? channelData.name : null}
+                                    </button>;
+            }
+            // else {
+            //     channelInfoBlock = <button className = '' onClick = {this.showInfo}>
+            //                             Удалить диалог {this.channelData ? this.channelData.name : null}
+            //                         </button>;  //todo!!
+            // }
+            
+        }
         
-        // return (
-        //     <div className = {className}>
-        //         {channel}
-        //     </div>
-        // )
+        return (
+            <div className = {className}>
+                {channel}
+
+                {channelInfoBlock}
+            </div>
+        )
     }
 }

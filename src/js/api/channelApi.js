@@ -6,6 +6,7 @@ import store from '../store/store';
 import * as sectionActions from '../actions/sectionActions';
 import * as subSectionActions from '../actions/subSectionActions';
 import * as channelActions from '../actions/channelActions';
+import * as privateChannelActions from '../actions/privateChannelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 
@@ -18,6 +19,7 @@ export function getChannelById(id) {
 			store.dispatch(sectionActions.setCurrentSection(null));
 			store.dispatch(subSectionActions.setCurrentSubSection(null));
 			store.dispatch(sectionActions.setSections(null));
+			store.dispatch(privateChannelActions.setCurrentPrivateChannel(null));  //??
 			store.dispatch(channelActions.setCurrentChannel(response.data));
 			
 		    return response.data;
