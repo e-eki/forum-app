@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import SubSection from '../views/subSection';
 import { getSubSectionById } from '../../api/subSectionApi';
 import * as channelApi from '../../api/channelApi';
-import { setCurrentInfoSubSection } from '../../actions/subSectionActions';
+import { setCurrentInfoSubSection, setCurrentSubSection } from '../../actions/subSectionActions';
 import { setModifiableChannel, setCurrentInfoChannel } from '../../actions/channelActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 
@@ -35,11 +35,12 @@ class SubSectionContainer extends PureComponent {
         if (this.subSectionId) {
             this.props.leaveRoom(this.subSectionId);
         }
+        this.props.resetCurrentSubSection();  //?
     }
     
     render() {
         //console.log('render SubSectionContainer');
-        debugger;
+
         return (
             <SubSection
                 subSection = {this.props.currentSubSection}
@@ -67,6 +68,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
+        resetCurrentSubSection: function() {
+            dispatch(setCurrentSubSection(null));
+        },
         setCurrentInfoSubSection: function(item) {
             dispatch(setCurrentInfoSubSection(item));
         },

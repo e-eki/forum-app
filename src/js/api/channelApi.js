@@ -16,10 +16,10 @@ export function getChannelById(id) {
 		.then(response => {
 			debugger;
 
-			store.dispatch(sectionActions.setCurrentSection(null));
-			store.dispatch(subSectionActions.setCurrentSubSection(null));
-			store.dispatch(sectionActions.setSections(null));
-			store.dispatch(privateChannelActions.setCurrentPrivateChannel(null));  //??
+			// store.dispatch(sectionActions.setCurrentSection(null));
+			// store.dispatch(subSectionActions.setCurrentSubSection(null));
+			// store.dispatch(sectionActions.setSections(null));
+			// store.dispatch(privateChannelActions.setCurrentPrivateChannel(null));  //??
 			store.dispatch(channelActions.setCurrentChannel(response.data));
 			
 		    return response.data;

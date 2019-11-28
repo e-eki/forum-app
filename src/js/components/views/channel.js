@@ -21,6 +21,11 @@ export default class Channel extends PureComponent {
         this.props.setCurrentInfoChannel(channelData);
     }
 
+    deleteChannel() {
+        debugger;
+        this.props.deleteChannel();  //todo!!!
+    }
+
     render() {
         //console.log('render channel');
         let className = 'channel ' + (this.props.className ? this.props.className : '');
@@ -32,7 +37,7 @@ export default class Channel extends PureComponent {
         // }
 
         const channelData = this.props.channel || this.props.privateChannel;   //??todo
-        const isPrivate = this.props.privateChannel ? true : false;
+        const isPrivate = this.props.channel ? false : true;
 
         let channel = <div></div>;
         const messages = [];
@@ -100,10 +105,13 @@ export default class Channel extends PureComponent {
                                         Информация {channelData ? channelData.name : null}
                                     </button>;
             }
-            // else {
-            //     channelInfoBlock = <button className = '' onClick = {this.showInfo}>
-            //                             Удалить диалог {this.channelData ? this.channelData.name : null}
-            //                         </button>;  //todo!!
+            else {
+                channelInfoBlock = <button className = '' onClick = {this.showInfo}>
+                                        Удалить диалог {this.channelData ? this.channelData.name : null}
+                                    </button>;
+            }
+
+            //link to privateChannels
             // }
             
         }

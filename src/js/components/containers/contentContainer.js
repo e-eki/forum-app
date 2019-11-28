@@ -37,6 +37,8 @@ class ContentContainer extends PureComponent {
 
     componentWillUnmount() {
         this.props.leaveRoom(apiConst.defaultRoomId);
+
+        this.props.resetSections();
     }
     
     render() {
@@ -74,6 +76,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
+        resetSections: function() {
+            dispatch(sectionActions.setSections(null));
+        },
         modifySection: function(item) {
             sectionApi.modifySection(item);
         },
@@ -91,7 +96,7 @@ const mapDispatchToProps = function(dispatch) {
             subSectionApi.modifySubSection(item);
         },
         deleteSubSection: function(item) {
-            subSectionApi.deleteSubSection(item);
+            subSectionApi.deleteSubSection(item);  //todo??
         },
         setModifiableSubSection: function(item) {
             dispatch(subSectionActions.setModifiableSubSection(item));
@@ -99,10 +104,6 @@ const mapDispatchToProps = function(dispatch) {
         setCurrentInfoSubSection: function(item) {
             dispatch(subSectionActions.setCurrentInfoSubSection(item));
         },
-
-        // setSections: function(items) {
-        //     dispatch(sectionActions.setSections(items));
-        // },
         joinRoom: function(id) {
             dispatch(joinRoom(id));
         },

@@ -11,7 +11,9 @@ import UserInfoForm from '../views/forms/userInfoForm';
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
-import { setCurrentInfoChannel } from '../../actions/channelActions';
+import { setCurrentInfoChannel, setCurrentChannel } from '../../actions/channelActions';
+import { setCurrentPrivateChannel } from '../../actions/privateChannelActions';
+import { deletePrivateChannel } from '../../api/privateChannelApi';
 
 class ChannelContainer extends PureComponent {
 
@@ -23,50 +25,59 @@ class ChannelContainer extends PureComponent {
 
         this.showUserInfoById = this.showUserInfoById.bind(this);
         this.resetChannelContainer = this.resetChannelContainer.bind(this);
+        this.getChannelOrPrivateChannelById = this.getChannelOrPrivateChannelById.bind(this);
     }
 
     componentDidMount() {
         debugger;
+        this.getChannelOrPrivateChannelById();
+    }
 
+    componentDidUpdate() {
+        debugger;
+        this.getChannelOrPrivateChannelById();
+    }
+
+    componentWillUnmount() {
+        this.resetChannelContainer();
+
+        // if (this.channelId) {
+        //     this.props.resetCurrentChannel();  //?
+        // }
+        // else if (this.recipientId) {
+        //     this.props.resetCurrentPrivateChannel();  //?
+        // }
+    }
+
+    getChannelOrPrivateChannelById() {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
+            const newChannelId = this.props.match.params.id;
 
-            // if (this.props.match.params.userId) {
-            //     const userId = this.props.match.params.userId;
-            //     return getPrivateChannelByRecipientId(userId)
-            //         .then(privateChannel => {
-            //             this.props.joinRoom(privateChannel.id);
-            //             this.channelId = privateChannel.id;
+            if (newChannelId && (newChannelId !== this.channelId)) {
 
-            //             return true;
-            //         });
-            // }
-            //else if (this.props.match.params.id) {
-            const id = this.props.match.params.id;
-            return getChannelById(id)
+                this.resetChannelContainer();
+                this.channelId = newChannelId;
+
+                return getChannelById(newChannelId)
                 .then(channel => {
                     this.props.joinRoom(channel.id);
                     this.channelId = channel.id;
 
                     return true;
                 });
-           // }
+            }
         }
-    }
-
-    componentDidUpdate() {
-        debugger;
-        //new URLSearchParams(this.props.location.search).get("recipientId")
-
-        if (this.props.location && this.props.location.search) {
+        else if (this.props.location && this.props.location.search) {
             const newRecipientId = new URLSearchParams(this.props.location.search).get("recipientId");
 
             if (newRecipientId && (newRecipientId !== this.recipientId)) {
-                this.recipientId = newRecipientId;
 
                 this.resetChannelContainer();
+                this.recipientId = newRecipientId;
 
                 return getPrivateChannelByRecipientId(newRecipientId)
                     .then(privateChannel => {
+                        debugger;
                         this.props.joinRoom(privateChannel.id);
                         this.channelId = privateChannel.id;
 
@@ -76,19 +87,30 @@ class ChannelContainer extends PureComponent {
         }
     }
 
-    componentWillUnmount() {
-        this.resetChannelContainer();
-    }
-
     resetChannelContainer() {
-        this.props.resetCurrentUserInfo();
+        if (this.props.currentUserInfo) {
+            this.props.resetCurrentUserInfo();
+        }
+
+        if (this.props.currentChannel) {
+            this.props.resetCurrentChannel();
+        }
+
+        if (this.props.currentPrivateChannel) {
+            this.props.resetCurrentPrivateChannel();
+        }
 
         if (this.channelId) {
             this.props.leaveRoom(this.channelId);
+            this.channelId = null;
+        }
+        else if (this.recipientId) {
+            this.props.leaveRoom(this.recipientId);
+            this.recipientId = null;
         }
     }
 
-    //??todo: вынести в отдельные методы в контейнерах - методы апи и следующие за ними действия?
+    //??todo: вынести в отдельные методы во всех контейнерах - методы апи и следующие за ними действия?
     showUserInfoById(id) {
         debugger;
         return getUserInfoById(id)
@@ -118,6 +140,7 @@ class ChannelContainer extends PureComponent {
                 <Channel
                     channel = {this.props.currentChannel}
                     privateChannel = {this.props.currentPrivateChannel}
+                    deletePrivateChannel = {deletePrivateChannel}
                     isCurrent = {true}
                     setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
 
@@ -147,6 +170,12 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
+        resetCurrentChannel: function() {
+            dispatch(setCurrentChannel(null));
+        },
+        resetCurrentPrivateChannel: function() {
+            dispatch(setCurrentPrivateChannel(null));
+        },
         setCurrentUserInfo: function(item) {
             dispatch(setCurrentUserInfo(item));
         },

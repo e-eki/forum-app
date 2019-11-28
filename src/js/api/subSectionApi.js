@@ -15,9 +15,9 @@ export function getSubSectionById(id) {
 		.then(response => {
 			debugger;
 
-			store.dispatch(sectionActions.setCurrentSection(null));
-			store.dispatch(channelActions.setCurrentChannel(null));
-			store.dispatch(sectionActions.setSections(null));
+			// store.dispatch(sectionActions.setCurrentSection(null));
+			// store.dispatch(channelActions.setCurrentChannel(null));
+			// store.dispatch(sectionActions.setSections(null));
 
 			store.dispatch(subSectionActions.setCurrentSubSection(response.data));
 			

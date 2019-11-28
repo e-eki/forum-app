@@ -14,7 +14,7 @@ export function getPrivateChannelById(id) {
 	return axios.get(`${apiConst.privateChannelApi}/${id}`)
 		.then(response => {
 			debugger;
-			setCurrentPrivateChannel(response.data);
+			store.dispatch(privateChannelActions.setCurrentPrivateChannel(response.data));
 
 		    return response.data;
 		});
@@ -27,12 +27,12 @@ export function getPrivateChannelByRecipientId(userId) {
 		.then(response => {
 			debugger;
 
-			if (response.data && response.data.length) {
-				const privateChannel = response.data[0];
+			if (response.data) {
+				const privateChannel = response.data;
 
-				setCurrentPrivateChannel(privateChannel);
+				store.dispatch(privateChannelActions.setCurrentPrivateChannel(privateChannel));
 				
-				return response.data;
+				return privateChannel;
 			}
 			else {
 				return createAndGetPrivateChannelByRecipientId(userId);
@@ -82,14 +82,14 @@ export function modifyPrivateChannel(item) {
 }
 
 
-function setCurrentPrivateChannel(privateChannel) {
-	debugger;
-	store.dispatch(sectionActions.setCurrentSection(null));
-	store.dispatch(subSectionActions.setCurrentSubSection(null));
-	store.dispatch(sectionActions.setSections(null));
-	store.dispatch(privateChannelActions.setCurrentPrivateChannel(privateChannel));
-	store.dispatch(channelActions.setCurrentChannel(null));  //?
-}
+// function setCurrentPrivateChannel(privateChannel) {
+// 	debugger;
+// 	store.dispatch(sectionActions.setCurrentSection(null));
+// 	store.dispatch(subSectionActions.setCurrentSubSection(null));
+// 	store.dispatch(sectionActions.setSections(null));
+// 	store.dispatch(privateChannelActions.setCurrentPrivateChannel(privateChannel));
+// 	store.dispatch(channelActions.setCurrentChannel(null));  //?
+// }
 
 function createPrivateChannel(userId) {
 	return axios.post(`${apiConst.privateChannelApi}`, {

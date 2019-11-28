@@ -15,9 +15,9 @@ export function getAllSections() {
 		.then(response => {
 			debugger;
 
-			store.dispatch(sectionActions.setCurrentSection(null));
-			store.dispatch(subSectionActions.setCurrentSubSection(null));
-			store.dispatch(channelActions.setCurrentChannel(null));
+			// store.dispatch(sectionActions.setCurrentSection(null));
+			// store.dispatch(subSectionActions.setCurrentSubSection(null));
+			// store.dispatch(channelActions.setCurrentChannel(null));
 			store.dispatch(sectionActions.setSections(response.data));  //?? где лучше - здесь или в contentContainer?
 
             return response.data;
@@ -29,9 +29,9 @@ export function getSectionById(id) {
 		.then(response => {
 			debugger;
 
-			store.dispatch(subSectionActions.setCurrentSubSection(null));
-			store.dispatch(channelActions.setCurrentChannel(null));
-			store.dispatch(sectionActions.setSections(null));
+			// store.dispatch(subSectionActions.setCurrentSubSection(null));
+			// store.dispatch(channelActions.setCurrentChannel(null));
+			// store.dispatch(sectionActions.setSections(null));
 			store.dispatch(sectionActions.setCurrentSection(response.data));
 			
 			//store.dispatch(remoteActions.joinRoom(response.data.id));

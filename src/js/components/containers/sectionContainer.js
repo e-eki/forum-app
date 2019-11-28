@@ -7,7 +7,7 @@ import { getSectionById } from '../../api/sectionApi';
 import * as subSectionApi from '../../api/subSectionApi';
 import * as subSectionActions from '../../actions/subSectionActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
-import { setCurrentInfoSection } from '../../actions/sectionActions';
+import { setCurrentInfoSection, setCurrentSection } from '../../actions/sectionActions';
 
 class SectionContainer extends PureComponent {
 
@@ -35,6 +35,7 @@ class SectionContainer extends PureComponent {
         if (this.sectionId) {
             this.props.leaveRoom(this.sectionId);
         }
+        this.props.resetCurrentSection();  //?
     }
     
     render() {
@@ -82,9 +83,9 @@ const mapDispatchToProps = function(dispatch) {
         setCurrentInfoSubSection: function(item) {
             dispatch(subSectionActions.setCurrentInfoSubSection(item));
         },
-        // setCurrentSection: function(item) {
-        //     dispatch(setCurrentSection(item));
-        // },
+        resetCurrentSection: function() {
+            dispatch(setCurrentSection(null));
+        },
         joinRoom: function(id) {
             dispatch(joinRoom(id));
         },

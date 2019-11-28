@@ -282,6 +282,7 @@ socket.on('action', action => {
 
 				if (action.messageId && action.channelId && action.data) {
 					const currentChannel = store.getState().channelState.get('currentChannel');
+					const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
 					const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');
 					const modifiableMessage = store.getState().messageState.get('modifiableMessage');
 
@@ -304,6 +305,26 @@ socket.on('action', action => {
 							//newCurrentChannel.messages = newMessages;
 
 							store.dispatch(setCurrentChannel(newCurrentChannel));   //?
+					}
+					else if (currentPrivateChannel &&
+						(currentPrivateChannel.id === action.channelId)) {
+							const message = currentPrivateChannel.messages.find(item => item.id === action.messageId);
+						
+							if (message) {
+								const newMessage = copyUtils.copyMessage(action.data);
+
+								const index = currentPrivateChannel.messages.indexOf(message);
+								currentPrivateChannel.messages[index] = newMessage;
+							}
+							else {
+								currentPrivateChannel.messages.push(action.data);
+							}
+
+							//const newMessages = currentChannel.messages.slice();  //?
+							const newCurrentPrivateChannel = copyUtils.copyChannel(currentPrivateChannel);
+							//newCurrentChannel.messages = newMessages;
+
+							store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));   //?
 					}
 					else if (currentInfoMessage &&
 							currentInfoMessage.id === action.messageId) {
