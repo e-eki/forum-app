@@ -8,3 +8,10 @@ export function setCurrentPrivateChannel(data) {
 	  data
 	};
 }
+
+export function setPrivateChannels(data) {
+	return {
+	  type: actionTypes.SET_PRIVATE_CHANNELS,
+	  data
+	};
+}

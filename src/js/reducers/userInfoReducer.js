@@ -14,6 +14,6 @@ export default function userInfoReducer(state = Map(), action) {
     
     default:
       return state;
-    }
+  }
 }
 

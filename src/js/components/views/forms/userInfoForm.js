@@ -2,7 +2,6 @@
 
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { getPrivateChannelByRecipientId } from '../../../api/privateChannelApi';
 
 // Форма с информацией о юзере
 export default class UserInfoForm extends PureComponent {
@@ -23,6 +22,8 @@ export default class UserInfoForm extends PureComponent {
         if (birthDate) {
             birthDateString = (typeof(birthDate) === 'string') ? new Date(birthDate).toDateString() : birthDate.toDateString();
         }
+
+        //todo: вынести все относительные пути в отдельный файл!
         
         return (
             <div className = {className}>
@@ -35,9 +36,9 @@ export default class UserInfoForm extends PureComponent {
                 {this.props.userInfo.hobby ? <div>{this.props.userInfo.hobby}</div> : null}
                 {this.props.userInfo.citation ? <div>{this.props.userInfo.citation}</div> : null}
                 
-                {this.props.userInfo.id
+                {!this.props.isPrivateChannel && this.props.userInfo.id
                     ?
-                    <Link to={`/private-channels?recipientId=${this.props.userInfo.id}`}>
+                    <Link to={`/private-channels/?recipientId=${this.props.userInfo.id}`}>
                         <button className = ''>Написать личное сообщение</button>
                     </Link>
                     :

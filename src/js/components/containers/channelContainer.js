@@ -2,6 +2,7 @@
 
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import forumConst from '../../constants/forumConst';
 import Channel from '../views/channel';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { getChannelById } from '../../api/channelApi';
@@ -21,104 +22,120 @@ class ChannelContainer extends PureComponent {
         super(props);
 
         this.channelId = null;
-        this.recipientId = null;
+        //this.recipientId = null;
 
-        this.showUserInfoById = this.showUserInfoById.bind(this);
-        this.resetChannelContainer = this.resetChannelContainer.bind(this);
-        this.getChannelOrPrivateChannelById = this.getChannelOrPrivateChannelById.bind(this);
+        //this.showUserInfoById = this.showUserInfoById.bind(this);
+        //this.resetChannelContainer = this.resetChannelContainer.bind(this);
+        //this.getChannelOrPrivateChannelById = this.getChannelOrPrivateChannelById.bind(this);
     }
 
     componentDidMount() {
         debugger;
-        this.getChannelOrPrivateChannelById();
-    }
 
-    componentDidUpdate() {
-        debugger;
-        this.getChannelOrPrivateChannelById();
-    }
-
-    componentWillUnmount() {
-        this.resetChannelContainer();
-
-        // if (this.channelId) {
-        //     this.props.resetCurrentChannel();  //?
-        // }
-        // else if (this.recipientId) {
-        //     this.props.resetCurrentPrivateChannel();  //?
-        // }
-    }
-
-    getChannelOrPrivateChannelById() {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
-            const newChannelId = this.props.match.params.id;
+            const channelId = this.props.match.params.id;
 
-            if (newChannelId && (newChannelId !== this.channelId)) {
-
-                this.resetChannelContainer();
-                this.channelId = newChannelId;
-
-                return getChannelById(newChannelId)
+            return getChannelById(channelId)
                 .then(channel => {
                     this.props.joinRoom(channel.id);
                     this.channelId = channel.id;
 
                     return true;
                 });
-            }
-        }
-        else if (this.props.location && this.props.location.search) {
-            const newRecipientId = new URLSearchParams(this.props.location.search).get("recipientId");
-
-            if (newRecipientId && (newRecipientId !== this.recipientId)) {
-
-                this.resetChannelContainer();
-                this.recipientId = newRecipientId;
-
-                return getPrivateChannelByRecipientId(newRecipientId)
-                    .then(privateChannel => {
-                        debugger;
-                        this.props.joinRoom(privateChannel.id);
-                        this.channelId = privateChannel.id;
-
-                        return true;
-                    });
-            }
         }
     }
 
-    resetChannelContainer() {
+    // componentDidUpdate() {
+    //     debugger;
+    //     this.getChannelOrPrivateChannelById();
+    // }
+
+    componentWillUnmount() {
+        //this.resetChannelContainer();
+
+        if (this.channelId) {
+            this.props.leaveRoom(this.channelId);
+        }
+
         if (this.props.currentUserInfo) {
             this.props.resetCurrentUserInfo();
         }
 
-        if (this.props.currentChannel) {
-            this.props.resetCurrentChannel();
-        }
-
-        if (this.props.currentPrivateChannel) {
-            this.props.resetCurrentPrivateChannel();
-        }
-
-        if (this.channelId) {
-            this.props.leaveRoom(this.channelId);
-            this.channelId = null;
-        }
-        else if (this.recipientId) {
-            this.props.leaveRoom(this.recipientId);
-            this.recipientId = null;
-        }
+        this.props.resetCurrentChannel();
     }
+
+    // getChannelOrPrivateChannelById() {
+    //     if (this.props.match && this.props.match.params && this.props.match.params.id) {
+    //         const newChannelId = this.props.match.params.id;
+
+    //         if (newChannelId && (newChannelId !== this.channelId)) {
+
+    //             this.resetChannelContainer();
+    //             this.channelId = newChannelId;
+
+    //             return getChannelById(newChannelId)
+    //             .then(channel => {
+    //                 this.props.joinRoom(channel.id);
+    //                 this.channelId = channel.id;
+
+    //                 return true;
+    //             });
+    //         }
+    //     }
+    //     else if (this.props.location && this.props.location.search) {
+    //         const newRecipientId = new URLSearchParams(this.props.location.search).get("recipientId");
+
+    //         if (newRecipientId && (newRecipientId !== this.recipientId)) {
+
+    //             this.resetChannelContainer();
+    //             this.recipientId = newRecipientId;
+
+    //             return getPrivateChannelByRecipientId(newRecipientId)
+    //                 .then(privateChannel => {
+    //                     debugger;
+    //                     this.props.joinRoom(privateChannel.id);
+    //                     this.channelId = privateChannel.id;
+
+    //                     return true;
+    //                 });
+    //         }
+    //     }
+    // }
+
+    // resetChannelContainer() {
+    //     if (this.props.currentUserInfo) {
+    //         this.props.resetCurrentUserInfo();
+    //     }
+
+    //     if (this.props.currentChannel) {
+    //         this.props.resetCurrentChannel();
+    //     }
+
+    //     if (this.props.currentPrivateChannel) {
+    //         this.props.resetCurrentPrivateChannel();
+    //     }
+
+    //     if (this.channelId) {
+    //         this.props.leaveRoom(this.channelId);
+    //         this.channelId = null;
+    //     }
+    //     else if (this.recipientId) {
+    //         this.props.leaveRoom(this.recipientId);
+    //         this.recipientId = null;
+    //     }
+    // }
+
+
 
     //??todo: вынести в отдельные методы во всех контейнерах - методы апи и следующие за ними действия?
-    showUserInfoById(id) {
-        debugger;
-        return getUserInfoById(id)
-            .then(data => {
-                debugger;
-                this.props.setCurrentUserInfo(data);
-            })
-    }
+    // showUserInfoById(id) {
+    //     debugger;
+    //     return getUserInfoById(id)
+    //         .then(data => {
+    //             debugger;
+    //             this.props.setCurrentUserInfo(data);
+    //         })
+    // }
     
     render() {
         //console.log('render ChannelContainer');
@@ -130,6 +147,7 @@ class ChannelContainer extends PureComponent {
             userInfoBlock = <UserInfoForm
                                 userInfo = {this.props.currentUserInfo}
                                 resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
+                                isPrivateChannel = {false}
                             />;
         }
 
@@ -137,9 +155,9 @@ class ChannelContainer extends PureComponent {
             <div>
                 {userInfoBlock}
             
-                <Channel
+                {/* <Channel
                     channel = {this.props.currentChannel}
-                    privateChannel = {this.props.currentPrivateChannel}
+                    type = {this.props.currentPrivateChannel}
                     deletePrivateChannel = {deletePrivateChannel}
                     isCurrent = {true}
                     setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
@@ -152,6 +170,22 @@ class ChannelContainer extends PureComponent {
                     deleteMessage = {this.props.deleteMessage}
 
                     showUserInfoById = {this.showUserInfoById}
+                /> */}
+
+                <Channel
+                    channel = {this.props.currentChannel}
+                    type = {forumConst.itemTypes.channel}
+                    isCurrent = {true}
+                    setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
+
+                    currentInfoMessage = {this.props.currentInfoMessage}
+                    modifiableMessage = {this.props.modifiableMessage}
+                    setCurrentInfoMessage = {this.props.setCurrentInfoMessage}
+                    setModifiableMessage = {this.props.setModifiableMessage}
+                    modifyMessage = {this.props.modifyMessage}
+                    deleteMessage = {this.props.deleteMessage}
+
+                    showUserInfoById = {getUserInfoById}
                 />
             </div>
         );
@@ -162,7 +196,7 @@ const mapStateToProps = function(store) {
     return {
         currentUserInfo: store.userInfo.get('currentUserInfo'),       
         currentChannel: store.channelState.get('currentChannel'),
-        currentPrivateChannel: store.privateChannelState.get('currentPrivateChannel'),
+        //currentPrivateChannel: store.privateChannelState.get('currentPrivateChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),
     };
@@ -173,9 +207,9 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentChannel: function() {
             dispatch(setCurrentChannel(null));
         },
-        resetCurrentPrivateChannel: function() {
-            dispatch(setCurrentPrivateChannel(null));
-        },
+        // resetCurrentPrivateChannel: function() {
+        //     dispatch(setCurrentPrivateChannel(null));
+        // },
         setCurrentUserInfo: function(item) {
             dispatch(setCurrentUserInfo(item));
         },

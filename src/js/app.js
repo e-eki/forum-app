@@ -7,6 +7,8 @@ import ContentContainer from './components/containers/contentContainer';
 import SectionContainer from './components/containers/sectionContainer';
 import SubSectionContainer from './components/containers/subSectionContainer';
 import ChannelContainer from './components/containers/channelContainer';
+import PrivateChannelContainer from './components/containers/privateChannelContainer';
+import PrivateSubSectionContainer from './components/containers/PrivateSubSectionContainer';
 import Header from './components/views/header';
 import Menu from './components/views/menu';
 import Footer from './components/views/footer';
@@ -53,8 +55,12 @@ export default class App extends Component {
                   <Route exact path="/subsections/:id" component={SubSectionContainer} />
                   <Route exact path="/channels/:id" component={ChannelContainer} />
 
-                  <Route exact path="/private-channels/:id" component={ChannelContainer} />
-                  <Route path="/private-channels" component={ChannelContainer} />
+                  {/* <Route exact path="/private-channels/:id" component={ChannelContainer} /> */}
+
+                  <Route exact path="/private-channels/" component={PrivateChannelContainer} />
+                  {/* <Route exact path="/private-channels/:id" component={PrivateChannelContainer} /> */}
+                  <Route path="/private-channels" component={PrivateSubSectionContainer} />
+                  
 
                   <Redirect to="/" />
                 </Switch>
@@ -66,6 +72,7 @@ export default class App extends Component {
         )  
     }
 }
+
 
 
 

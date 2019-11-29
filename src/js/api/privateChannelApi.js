@@ -3,12 +3,20 @@
 import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
-import * as sectionActions from '../actions/sectionActions';
-import * as subSectionActions from '../actions/subSectionActions';
-import * as channelActions from '../actions/channelActions';
 import * as privateChannelActions from '../actions/privateChannelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
+
+
+export function getPrivateChannels() {
+	return axios.get(`${apiConst.privateChannelApi}`)
+		.then(response => {
+			debugger;
+			store.dispatch(privateChannelActions.setPrivateChannels(response.data));
+
+            return response.data;
+		});
+}
 
 export function getPrivateChannelById(id) {
 	return axios.get(`${apiConst.privateChannelApi}/${id}`)

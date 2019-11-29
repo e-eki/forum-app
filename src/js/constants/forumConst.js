@@ -6,6 +6,7 @@ module.exports = {
 		subSection: 'subSection',
 		channel: 'channel',
 		message: 'message',
+		privateChannel: 'privateChannel',
 	}
 
 }
