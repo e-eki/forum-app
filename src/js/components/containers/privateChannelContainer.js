@@ -3,7 +3,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Channel from '../views/channel';
-import privateChannelApi from '../../api/privateChannelApi';
+import * as privateChannelApi from '../../api/privateChannelApi';
 import { setPrivateChannels } from '../../actions/privateChannelActions';
 
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
@@ -12,7 +12,6 @@ import UserInfoForm from '../views/forms/userInfoForm';
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
-import { setCurrentChannel } from '../../actions/channelActions';
 import { setCurrentPrivateChannel } from '../../actions/privateChannelActions';
 import forumConst from '../../constants/forumConst';
 
