@@ -14,6 +14,7 @@ export default class Channel extends PureComponent {
 
         this.showInfo = this.showInfo.bind(this);
         this.deleteChannel = this.deleteChannel.bind(this);
+        this.showUserInfo = this.showUserInfo.bind(this);
     }
 
     showInfo() {
@@ -26,6 +27,15 @@ export default class Channel extends PureComponent {
         debugger;
         //const channelData = this.props.channel || this.props.privateChannel;
         this.props.deleteChannel(this.props.channel);
+    }
+
+    showUserInfo(event) {
+        debugger;
+        event.preventDefault();
+
+        if (this.props.channel.recipientId) {
+            this.props.showUserInfoById(this.props.channel.recipientId);
+        }
     }
 
     render() {
@@ -67,11 +77,15 @@ export default class Channel extends PureComponent {
                 channelNameBlock = this.props.channel.name;
             }
             else {
-                if (isPrivate) {
-                    channelNameBlock = <Link to={`/private-channels/${this.props.channel.id}`}>{this.props.channel.name}</Link>;
+                if (!isPrivate) {
+                    channelNameBlock = <Link to={`/channels/${this.props.channel.id}`}>{this.props.channel.name}</Link>;
                 }
                 else {
-                    channelNameBlock = <Link to={`/channels/${this.props.channel.id}`}>{this.props.channel.name}</Link>;
+                    channelNameBlock = <div>
+                                            <Link to={`/private-channels/${this.props.channel.id}`}>{this.props.channel.name}</Link>
+                                            ----
+                                            <Link to="/" onClick = {this.showUserInfo}>RECIPIENT</Link>
+                                        </div>;
                 }
             }
 
@@ -103,23 +117,21 @@ export default class Channel extends PureComponent {
 
         let channelInfoBlock = null;
 
-        if (!this.props.isCurrent) {
-            if (!isPrivate) {
-                channelInfoBlock = <button className = '' onClick = {this.showInfo}>
-                                        Информация {this.props.channel ? this.props.channel.name : null}
-                                    </button>;
-            }
-            else {
-                channelInfoBlock = <div>
-                                        <button className = '' onClick = {this.deleteChannel}>
-                                            Удалить диалог с {this.props.channel ? this.props.channel.name : null}
-                                        </button>
+        if (this.props.isCurrent && isPrivate) {
+            channelInfoBlock = <div>
+                                    <button className = '' onClick = {this.deleteChannel}>
+                                        Удалить диалог
+                                    </button>
 
-                                        <Link to={`/private-channels`}>
-                                            <button className = ''>Перейти в личные сообщения</button>
-                                        </Link>
-                                    </div>;
-            }
+                                    <Link to={`/private-channels`}>
+                                        <button className = ''>Перейти в личные сообщения</button>
+                                    </Link>
+                                </div>;
+        }
+        else if (!this.props.isCurrent && !isPrivate) { 
+            channelInfoBlock = <button className = '' onClick = {this.showInfo}>
+                                    Информация {this.props.channel ? this.props.channel.name : null}
+                                </button>;
         }
         
         return (

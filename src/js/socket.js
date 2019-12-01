@@ -333,7 +333,7 @@ socket.on('action', action => {
 
 								store.dispatch(setAlertData({  //?
 									message: 'Это сообщение было отредактировано.',
-									link: defaultLink,
+									//link: defaultLink,
 								}));
 							}
 					else if (modifiableMessage &&
@@ -343,7 +343,7 @@ socket.on('action', action => {
 
 								store.dispatch(setAlertData({  //?
 									message: 'Это сообщение было отредактировано.',
-									link: defaultLink,
+									//link: defaultLink,
 								}));
 							}
 				}
@@ -418,7 +418,7 @@ socket.on('action', action => {
 
 							store.dispatch(setAlertData({
 								message: 'Этот чат был удалён.',
-								link: defaultLink,
+								link: '/private-channels',  //todo:  вынести!
 							}));
 					}
 				}

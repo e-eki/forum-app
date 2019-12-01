@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Channel from '../views/channel';
 import UserInfoForm from '../views/forms/userInfoForm';
-import { getPrivateChannels } from '../../api/privateChannelApi';
+import { getPrivateChannels, deletePrivateChannel } from '../../api/privateChannelApi';
 import { setPrivateChannels } from '../../actions/privateChannelActions';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { getUserInfoById } from '../../api/userInfoApi';
@@ -59,7 +59,7 @@ class PrivateSubSectionContainer extends PureComponent {
                 const channel = <Channel
                                     key={key}
                                     channel = {item}
-                                    deletePrivateChannel = {privateChannelApi.deletePrivateChannel}
+                                    deletePrivateChannel = {deletePrivateChannel}
                                     type = {forumConst.itemTypes.privateChannel}
 
                                     showUserInfoById = {getUserInfoById}

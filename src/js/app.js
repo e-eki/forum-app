@@ -57,11 +57,11 @@ export default class App extends Component {
 
                   {/* <Route exact path="/private-channels/:id" component={ChannelContainer} /> */}
 
-                  <Route exact path="/private-channels/" component={PrivateChannelContainer} />
+                  <Route exact strict path="/private-channels" component={PrivateSubSectionContainer} />
+                  <Route exact path="/private-channels/:id" component={PrivateChannelContainer} />
+                  <Route strict path="/private-channels/" component={PrivateChannelContainer} />
                   {/* <Route exact path="/private-channels/:id" component={PrivateChannelContainer} /> */}
-                  <Route path="/private-channels" component={PrivateSubSectionContainer} />
                   
-
                   <Redirect to="/" />
                 </Switch>
               </Router>

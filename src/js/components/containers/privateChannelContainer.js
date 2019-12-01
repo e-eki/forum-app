@@ -130,7 +130,7 @@ class PrivateChannelContainer extends PureComponent {
                     channel = {this.props.currentPrivateChannel}
                     type = {forumConst.itemTypes.privateChannel}
                     isCurrent = {true}
-                    deletePrivateChannel = {privateChannelApi.deletePrivateChannel}
+                    deleteChannel = {privateChannelApi.deletePrivateChannel}
 
                     currentInfoMessage = {this.props.currentInfoMessage}
                     modifiableMessage = {this.props.modifiableMessage}
