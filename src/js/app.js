@@ -12,7 +12,9 @@ import PrivateSubSectionContainer from './components/containers/PrivateSubSectio
 import Header from './components/views/header';
 import Menu from './components/views/menu';
 import Footer from './components/views/footer';
-import AlertFormContainer from './components/containers/alertFormContainer';  //todo!
+import AlertFormContainer from './components/containers/alertFormContainer';
+import UserInfoFormContainer from './components/containers/UserInfoFormContainer';
+import SearchResultsContainer from './components/containers/SearchResultsContainer';
 
 export default class App extends Component {
 
@@ -42,11 +44,14 @@ export default class App extends Component {
         return (
           <div className="app">
             <Header className = 'content__header '/>
-            <Menu/>
 
             <div className = 'content'>
               <Router history={history}>
                 <AlertFormContainer/>
+
+                <UserInfoFormContainer/>
+
+                <Menu/>
 
                 <Switch>
                   <Route exact path="/" component={ContentContainer} />
@@ -60,7 +65,9 @@ export default class App extends Component {
                   <Route exact strict path="/private-channels" component={PrivateSubSectionContainer} />
                   <Route exact path="/private-channels/:id" component={PrivateChannelContainer} />
                   <Route strict path="/private-channels/" component={PrivateChannelContainer} />
-                  {/* <Route exact path="/private-channels/:id" component={PrivateChannelContainer} /> */}
+
+                  <Route strict path="/search" component={SearchResultsContainer} />
+                  
                   
                   <Redirect to="/" />
                 </Switch>

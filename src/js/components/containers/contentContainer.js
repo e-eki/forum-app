@@ -26,7 +26,7 @@ class ContentContainer extends PureComponent {
     }
 
     componentDidMount() {      
-        return sectionApi.getAllSections()
+        return sectionApi.getSections()
             .then(sections => {
                 //this.props.setSections(sections);
 

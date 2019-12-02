@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Message from './message';
 import ListForm from './forms/listForm';
 import forumConst from '../../constants/forumConst';
+import appConst from '../../constants/appConst';
 
 // Канал
 export default class Channel extends PureComponent {
@@ -52,6 +53,7 @@ export default class Channel extends PureComponent {
         // const isPrivate = this.props.channel ? false : true;
 
         const isPrivate = this.props.type === forumConst.itemTypes.privateChannel;
+        const isSearchResult = this.props.type === forumConst.itemTypes.searchChannel;
 
         let channel = <div></div>;
         const messages = [];
@@ -78,11 +80,11 @@ export default class Channel extends PureComponent {
             }
             else {
                 if (!isPrivate) {
-                    channelNameBlock = <Link to={`/channels/${this.props.channel.id}`}>{this.props.channel.name}</Link>;
+                    channelNameBlock = <Link to={`${appConst.channelsLink}/${this.props.channel.id}`}>{this.props.channel.name}</Link>;
                 }
                 else {
                     channelNameBlock = <div>
-                                            <Link to={`/private-channels/${this.props.channel.id}`}>{this.props.channel.name}</Link>
+                                            <Link to={`${appConst.privateChannelsLink}/${this.props.channel.id}`}>{this.props.channel.name}</Link>
                                             ----
                                             <Link to="/" onClick = {this.showUserInfo}>RECIPIENT</Link>
                                         </div>;
@@ -92,7 +94,7 @@ export default class Channel extends PureComponent {
             channel = <div>
                         {channelNameBlock}
                         
-                        {(this.props.isCurrent && !isPrivate) ? <div>{this.props.channel.description}</div> : null}
+                        {((this.props.isCurrent && !isPrivate) || isSearchResult) ? <div>{this.props.channel.description}</div> : null}
 
                         {this.props.isCurrent ? <div>{this.props.channel.descriptionMessage}</div> : null}
 
@@ -123,12 +125,12 @@ export default class Channel extends PureComponent {
                                         Удалить диалог
                                     </button>
 
-                                    <Link to={`/private-channels`}>
+                                    <Link to={`${appConst.privateChannelsLink}`}>
                                         <button className = ''>Перейти в личные сообщения</button>
                                     </Link>
                                 </div>;
         }
-        else if (!this.props.isCurrent && !isPrivate) { 
+        else if (!this.props.isCurrent && !isPrivate && !isSearchResult) { 
             channelInfoBlock = <button className = '' onClick = {this.showInfo}>
                                     Информация {this.props.channel ? this.props.channel.name : null}
                                 </button>;

@@ -41,15 +41,15 @@ class PrivateSubSectionContainer extends PureComponent {
         debugger;
         const className = '';
 
-        let userInfoBlock;
+        // let userInfoBlock;
 
-        if (this.props.currentUserInfo) {
-            userInfoBlock = <UserInfoForm
-                                userInfo = {this.props.currentUserInfo}
-                                resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
-                                isPrivateChannel = {true}
-                            />;
-        }
+        // if (this.props.currentUserInfo) {
+        //     userInfoBlock = <UserInfoForm
+        //                         userInfo = {this.props.currentUserInfo}
+        //                         resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
+        //                         isPrivateChannel = {true}
+        //                     />;
+        // }
 
         const channels = [];
         let key = 0;
@@ -71,7 +71,7 @@ class PrivateSubSectionContainer extends PureComponent {
 
         return (
             <div className = {className}>
-                {userInfoBlock}
+                {/* {userInfoBlock} */}
 
                 <div>---ЛИЧНЫЕ СООБЩЕНИЯ---</div>
 
@@ -85,7 +85,7 @@ class PrivateSubSectionContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         privateChannels: store.privateChannelState.get('privateChannels'),
-        currentUserInfo: store.userInfo.get('currentUserInfo'),           
+        //currentUserInfo: store.userInfo.get('currentUserInfo'),           
     };
 };
 
@@ -94,12 +94,9 @@ const mapDispatchToProps = function(dispatch) {
         resetPrivateChannels: function() {
             dispatch(setPrivateChannels(null));
         },
-        setCurrentUserInfo: function(item) {
-            dispatch(setCurrentUserInfo(item));
-        },
-        resetCurrentUserInfo: function() {
-            dispatch(setCurrentUserInfo(null));
-        },
+        // resetCurrentUserInfo: function() {
+        //     dispatch(setCurrentUserInfo(null));
+        // },
         joinRoom: function(id) {
             dispatch(joinRoom(id));
         },

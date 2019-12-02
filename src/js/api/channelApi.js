@@ -9,7 +9,18 @@ import * as channelActions from '../actions/channelActions';
 import * as privateChannelActions from '../actions/privateChannelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
+import { setSearchChannels } from '../actions/searchActions';
 
+
+export function getChannelsByText(text) {
+	return axios.get(`${apiConst.channelApi}?text=${text}`)
+		.then(response => {
+			debugger;
+			store.dispatch(setSearchChannels(response.data));
+
+		    return response.data;
+		});
+}
 
 export function getChannelById(id) {
 	return axios.get(`${apiConst.channelApi}/${id}`)

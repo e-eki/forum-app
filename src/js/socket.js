@@ -11,6 +11,7 @@ import { setCurrentInfoMessage, setModifiableMessage } from './actions/messageAc
 import { setCurrentPrivateChannel } from './actions/privateChannelActions';
 import { setAlertData } from './actions/alertDataActions';
 import * as copyUtils from './lib/copyUtils';
+import appConst from './constants/appConst';
 
 const socket = io(`${apiConst.serverUrl}`);
 
@@ -418,7 +419,7 @@ socket.on('action', action => {
 
 							store.dispatch(setAlertData({
 								message: 'Этот чат был удалён.',
-								link: '/private-channels',  //todo:  вынести!
+								link: `${appConst.privateChannelsLink}`,  //todo:  вынести!
 							}));
 					}
 				}

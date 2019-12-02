@@ -7,6 +7,13 @@ module.exports = {
 		channel: 'channel',
 		message: 'message',
 		privateChannel: 'privateChannel',
-	}
+		searchChannel: 'searchChannel',
+		searchMessage: 'searchMessage',
+	},
+
+	searchTypes: {
+		channels: 'по темам',
+		messages: 'по сообщениям',
+	},
 
 }

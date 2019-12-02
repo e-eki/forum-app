@@ -112,19 +112,19 @@ class PrivateChannelContainer extends PureComponent {
     render() {
         //console.log('render privateChannelContainer');
         debugger;
-        let userInfoBlock;
+        // let userInfoBlock;
 
-        if (this.props.currentUserInfo) {
-            userInfoBlock = <UserInfoForm
-                                userInfo = {this.props.currentUserInfo}
-                                resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
-                                isPrivateChannel = {true}
-                            />;
-        }
+        // if (this.props.currentUserInfo) {
+        //     userInfoBlock = <UserInfoForm
+        //                         userInfo = {this.props.currentUserInfo}
+        //                         resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
+        //                         isPrivateChannel = {true}
+        //                     />;
+        //}
 
         return (
             <div>
-                {userInfoBlock}
+                {/* {userInfoBlock} */}
 
                 <Channel
                     channel = {this.props.currentPrivateChannel}
@@ -150,7 +150,7 @@ class PrivateChannelContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         privateChannels: store.privateChannelState.get('privateChannels'),
-        currentUserInfo: store.userInfo.get('currentUserInfo'),       
+        //currentUserInfo: store.userInfo.get('currentUserInfo'),       
         currentPrivateChannel: store.privateChannelState.get('currentPrivateChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),      
@@ -165,12 +165,9 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentPrivateChannel: function() {
             dispatch(setCurrentPrivateChannel(null));
         },
-        setCurrentUserInfo: function(item) {
-            dispatch(setCurrentUserInfo(item));
-        },
-        resetCurrentUserInfo: function() {  //?
-            dispatch(setCurrentUserInfo(null));
-        },
+        // resetCurrentUserInfo: function() {  //?
+        //     dispatch(setCurrentUserInfo(null));
+        // },
         modifyMessage: function(item) {
             messageApi.modifyMessage(item);
         },

@@ -6,6 +6,7 @@ import store from '../store/store';
 import * as actions from '../actions/messageActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
+import { setSearchMessages } from '../actions/searchActions';
 
 
 // export function getMessageById(id) {
@@ -16,6 +17,16 @@ import apiConst from '../constants/apiConst';
 // 		    return response.data;
 // 		});
 // }
+
+export function getMessagesByText(text) {
+	return axios.get(`${apiConst.messageApi}?text=${text}`)
+		.then(response => {
+			debugger;
+			store.dispatch(setSearchMessages(response.data));
+
+		    return response.data;
+		});
+}
 
 export function deleteMessage(item) {
 	debugger;

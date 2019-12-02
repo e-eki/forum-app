@@ -21,8 +21,6 @@ export default class AlertForm extends PureComponent {
 			const alertInfo = <div>
 									<p>{this.props.alertData.message || 'something crashed!'}</p>
 
-									
-
 									<button className = '' >
 										Ok
 									</button>

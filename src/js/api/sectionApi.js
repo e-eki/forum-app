@@ -10,7 +10,7 @@ import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 
 
-export function getAllSections() {
+export function getSections() {
 	return axios.get(`${apiConst.sectionApi}`)
 		.then(response => {
 			debugger;
