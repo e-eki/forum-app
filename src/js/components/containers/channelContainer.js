@@ -56,7 +56,7 @@ class ChannelContainer extends PureComponent {
         //console.log('render ChannelContainer');
         debugger;
 
-        let userInfoBlock;
+        //let userInfoBlock;
 
         // if (this.props.currentUserInfo) {
         //     userInfoBlock = <UserInfoForm

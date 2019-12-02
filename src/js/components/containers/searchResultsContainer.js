@@ -3,8 +3,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Promise from 'bluebird';
-import { getChannelsByText } from '../../api/channelApi';
-import { getMessagesByText } from '../../api/messageApi';
+// import { getChannelsByText } from '../../api/channelApi';
+// import { getMessagesByText } from '../../api/messageApi';
+import { getSearchResults } from '../../api/searchApi';
 import forumConst from '../../constants/forumConst';
 import * as searchActions from '../../actions/searchActions';
 import Channel from '../views/channel';
@@ -18,33 +19,14 @@ class SearchResultsContainer extends PureComponent {
 
     componentDidMount() {
         debugger;
-
         if (this.props.location && this.props.location.search) {
             const searchParams = new URLSearchParams(this.props.location.search);
             const text = searchParams.get("text");
             const searchType = searchParams.get("searchType");
 
             if (text && searchType) {
-                const tasks = [];
-
-                switch (searchType) {
-
-                    case forumConst.searchTypes.channels:
-                        tasks.push(getChannelsByText(text));
-                        break;
-
-                    case forumConst.searchTypes.messages:
-                        tasks.push(getMessagesByText(text));
-                        break;
-    
-                    default:    
-                        tasks.push(false); //?
-                        break;
-                }
-
-                return Promise.all(tasks)
+                return getSearchResults(text, searchType)
                     .then(results => {
-                        debugger;
                         return true;
                     });
             }

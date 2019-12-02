@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import appConst from '../../../constants/appConst';
 import forumConst from '../../../constants/forumConst';
+import { getSearchResults } from '../../../api/searchApi';  //вынести и передавать через контейнер !todo
 
 export default class SearchForm extends Component {
 
@@ -17,6 +18,7 @@ export default class SearchForm extends Component {
 
         this.changeData = this.changeData.bind(this);
         this.resetState = this.resetState.bind(this);
+        this.doSearch = this.doSearch.bind(this);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -33,10 +35,20 @@ export default class SearchForm extends Component {
     }
 
     resetState() {
-        this.state.text = '';
-        this.state.searchType = forumConst.searchTypes.channels;
+        // this.state.text = '';
+        // this.state.searchType = forumConst.searchTypes.channels;
 
-        this.setState({});
+        // this.setState({});
+    }
+
+    doSearch() {
+        debugger;
+        //validate??
+
+        return getSearchResults(this.state.text, this.state.searchType)
+            .then(results => {
+                return true;
+            });
     }
 
     render() {
@@ -60,7 +72,7 @@ export default class SearchForm extends Component {
                 </select>
                 
                 <Link to={`${appConst.searchLink}?text=${this.state.text}&searchType=${this.state.searchType}`}>
-                    <button className = '' onClick = {this.resetState}>
+                    <button className = '' onClick = {this.doSearch}>
                         Поиск
                     </button>
                 </Link>
