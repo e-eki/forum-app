@@ -15,6 +15,7 @@ import Footer from './components/views/footer';
 import AlertFormContainer from './components/containers/alertFormContainer';
 import UserInfoFormContainer from './components/containers/UserInfoFormContainer';
 import SearchResultsContainer from './components/containers/SearchResultsContainer';
+import SearchFormContainer from './components/containers/SearchFormContainer';
 
 export default class App extends Component {
 
@@ -52,6 +53,8 @@ export default class App extends Component {
                 <UserInfoFormContainer/>
 
                 <Menu/>
+
+                <SearchFormContainer/>
 
                 <Switch>
                   <Route exact path="/" component={ContentContainer} />

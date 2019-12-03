@@ -6,20 +6,22 @@ import store from '../store/store';
 import forumConst from '../constants/forumConst';
 import { getChannelsByText } from './channelApi';
 import { getMessagesByText } from './messageApi';
+import * as searchActions from '../actions/searchActions';
 
-export function getSearchResults(text, searchType) {
+
+export function getSearchResults(searchText, searchType) {
 	debugger;
-
+		
 	const tasks = [];
 
 	switch (searchType) {
 
 		case forumConst.searchTypes.channels:
-			tasks.push(getChannelsByText(text));
+			tasks.push(getChannelsByText(searchText));
 			break;
 
 		case forumConst.searchTypes.messages:
-			tasks.push(getMessagesByText(text));
+			tasks.push(getMessagesByText(searchText));
 			break;
 
 		default:    

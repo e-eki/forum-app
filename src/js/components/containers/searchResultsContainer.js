@@ -3,9 +3,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Promise from 'bluebird';
-// import { getChannelsByText } from '../../api/channelApi';
-// import { getMessagesByText } from '../../api/messageApi';
-import { getSearchResults } from '../../api/searchApi';
 import forumConst from '../../constants/forumConst';
 import * as searchActions from '../../actions/searchActions';
 import Channel from '../views/channel';
@@ -15,37 +12,46 @@ class SearchResultsContainer extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.searchType = '';
+        this.searchText = '';
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
         debugger;
+        
+        // if (this.props.location && this.props.location.search) {
+        //     const searchParams = new URLSearchParams(this.props.location.search);
+        //     const searchText = searchParams.get("searchText");
+        //     const searchType = searchParams.get("searchType");
+
+        //     if (searchText && searchType &&
+        //         (searchText !== this.searchText ||
+        //         searchType !== this.searchType)) {
+
+        //         this.searchText = searchText;
+        //         this.searchType = searchType;
+
+        //         return getSearchResults(searchText, searchType)
+        //             .then(results => {
+        //                 return true;
+        //             });
+        //     }
+        // }
+
         if (this.props.location && this.props.location.search) {
             const searchParams = new URLSearchParams(this.props.location.search);
-            const text = searchParams.get("text");
+            const searchText = searchParams.get("searchText");
             const searchType = searchParams.get("searchType");
 
-            if (text && searchType) {
-                return getSearchResults(text, searchType)
-                    .then(results => {
-                        return true;
-                    });
-            }
-        }
-    }
-
-    componentWillUnmount() {  //??
-        debugger;
-
-        if (this.props.searchChannels) {
-            this.props.resetSearchChannels();
-        }
-        else if (this.props.searchMessages) {
-            this.props.resetSearchMessages();
+            this.props.setSearchText(searchText);
+            this.props.setSearchType(searchType);  //?
         }
     }
     
     render() {
         //console.log('render SearchContainer');
+        debugger;
 
         const items = [];
         let key = 0;
@@ -90,11 +96,11 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        resetSearchChannels: function() {
-            dispatch(searchActions.setSearchChannels(null));
+        setSearchText: function(data) {
+            dispatch(searchActions.setSearchText(data));
         },
-        resetSearchMessages: function() {
-            dispatch(searchActions.setSearchMessages(null));
+        setSearchType: function(data) {
+            dispatch(searchActions.setSearchType(data));
         },
     }
 }

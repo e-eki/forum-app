@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import appConst from '../../../constants/appConst';
 import forumConst from '../../../constants/forumConst';
-import { getSearchResults } from '../../../api/searchApi';  //вынести и передавать через контейнер !todo
 
 export default class SearchForm extends Component {
 
@@ -12,17 +11,29 @@ export default class SearchForm extends Component {
         super(props);
 
         this.state = {
-            text: '',
-            searchType: forumConst.searchTypes.channels,
+            searchText: this.props.searchText || '',
+            searchType: this.props.searchType || forumConst.searchTypes.channels,
         };
 
         this.changeData = this.changeData.bind(this);
-        this.resetState = this.resetState.bind(this);
         this.doSearch = this.doSearch.bind(this);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return true; //todo??
+    shouldComponentUpdate(nextProps, nextState) {  //todo??????
+        debugger;
+        if ((((!nextState.searchText && nextState.searchText !== '') || nextState.searchText === this.state.searchText) && (nextProps.searchText || nextProps.searchText === '') && nextProps.searchText !== this.state.searchText) ||
+            (!nextState.searchType && nextProps.searchType && nextProps.searchType !== this.state.searchType)) {
+                this.setState({
+                    searchText: nextProps.searchText,
+                    searchType: nextProps.searchType
+                });
+        }
+
+        return true;
+        // return (((nextState.searchText || nextState.searchText === '') && nextState.searchText !== this.state.searchText) ||
+        //         (nextState.searchType && nextState.searchType !== this.state.searchType) ||
+        //         ((nextProps.searchText || nextProps.searchText === '') && nextProps.searchText !== this.state.searchText) ||
+        //         (nextProps.searchType && nextProps.searchType !== this.state.searchType));
     }
 
     // ввод данных
@@ -34,35 +45,26 @@ export default class SearchForm extends Component {
 		this.setState({});
     }
 
-    resetState() {
-        // this.state.text = '';
-        // this.state.searchType = forumConst.searchTypes.channels;
-
-        // this.setState({});
-    }
-
     doSearch() {
         debugger;
         //validate??
 
-        return getSearchResults(this.state.text, this.state.searchType)
-            .then(results => {
-                return true;
-            });
+        this.props.doSearch(this.state.searchText, this.state.searchType);
     }
 
     render() {
         //console.log('render searchBar');
+        debugger;
         const className = 'search-bar ' + (this.props.className ? this.props.className : '');
         
         return (
             <div className = {className}>
                 <input 
-                    name = "text"
-                    type="text" 
+                    name = "searchText"
+                    type="searchText" 
                     className = '' 
                     maxLength = '30'
-                    value = {this.state.text}
+                    value = {this.state.searchText}
                     onChange = {this.changeData}
                 />
 
@@ -71,7 +73,7 @@ export default class SearchForm extends Component {
                     <option value={forumConst.searchTypes.messages}>{forumConst.searchTypes.messages}</option>
                 </select>
                 
-                <Link to={`${appConst.searchLink}?text=${this.state.text}&searchType=${this.state.searchType}`}>
+                <Link to={`${appConst.searchLink}?searchText=${this.state.searchText}&searchType=${this.state.searchType}`}>
                     <button className = '' onClick = {this.doSearch}>
                         Поиск
                     </button>

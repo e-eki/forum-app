@@ -12,6 +12,12 @@ export default function searchReducer(state = Map(), action) {
     case actionTypes.SET_SEARCH_MESSAGES:
       return state.set('searchMessages', action.data);
 
+    case actionTypes.SET_SEARCH_TYPE:
+      return state.set('searchType', action.data);
+
+    case actionTypes.SET_SEARCH_TEXT:
+      return state.set('searchText', action.data);
+
     default:
       return state;
     }

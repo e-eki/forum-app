@@ -12,8 +12,8 @@ import apiConst from '../constants/apiConst';
 import { setSearchChannels } from '../actions/searchActions';
 
 
-export function getChannelsByText(text) {
-	return axios.get(`${apiConst.channelApi}?text=${text}`)
+export function getChannelsByText(searchText) {
+	return axios.get(`${apiConst.channelApi}?searchText=${searchText}`)
 		.then(response => {
 			debugger;
 			store.dispatch(setSearchChannels(response.data));

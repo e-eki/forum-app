@@ -1,7 +1,6 @@
 'use strict';
 
 import React, { PureComponent } from 'react';
-import SearchForm from './forms/searchForm';
 
 export default class Menu extends PureComponent {
 
@@ -16,8 +15,6 @@ export default class Menu extends PureComponent {
         return (
             <div className = {className}>
                 <div>Menu</div>
-
-                <SearchForm/>
             </div>
         )
     }

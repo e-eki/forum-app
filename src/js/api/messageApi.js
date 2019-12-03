@@ -18,8 +18,8 @@ import { setSearchMessages } from '../actions/searchActions';
 // 		});
 // }
 
-export function getMessagesByText(text) {
-	return axios.get(`${apiConst.messageApi}?text=${text}`)
+export function getMessagesByText(searchText) {
+	return axios.get(`${apiConst.messageApi}?searchText=${searchText}`)
 		.then(response => {
 			debugger;
 			store.dispatch(setSearchMessages(response.data));

@@ -2,6 +2,8 @@
 
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
+import forumConst from '../../constants/forumConst';
+import appConst from '../../constants/appConst';
 
 // Сообщение
 export default class Message extends PureComponent {
@@ -26,6 +28,14 @@ export default class Message extends PureComponent {
         const className = 'message ' + (this.props.className ? this.props.className : '');
 
         debugger;
+        let headerBlock = <div>MESSAGE</div>;
+
+        if (this.props.type === forumConst.itemTypes.searchMessage && this.props.message.channelId) {
+            headerBlock = <Link to={`${appConst.channelsLink}/${this.props.message.channelId}`}>
+                                <div>MESSAGE</div>
+                            </Link>;
+        }
+
         const date = this.props.message.date;
         let dateString;
 
@@ -44,7 +54,7 @@ export default class Message extends PureComponent {
         
         return (
             <div className = {className}>
-                <div>MESSAGE</div>
+                {headerBlock}
                 
                 <div>{userInfoBlock}</div>
 
