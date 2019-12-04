@@ -49,7 +49,7 @@ export default class SearchForm extends Component {
     }
 
     // ввод данных
-	changeData(event) {
+	changeData(event) {  //todo! вынести в lib
         debugger;
         const name = event.target.name;
         const value = event.target.value;
@@ -57,12 +57,6 @@ export default class SearchForm extends Component {
         this.setState({
             [name]: value
         });
-
-        
-		// const dataName = event.target.name;
-
-        // this.state[`${dataName}`] = event.target.value;
-        // this.setState({});
     }
 
     doSearch() {

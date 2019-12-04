@@ -31,21 +31,12 @@ class SearchFormContainer extends PureComponent {
 
     doSearch(searchText, searchType) {
         debugger;
-        
-        // if (searchType !== this.props.searchType) {
-        //     this.searchType = searchType;
-        //     this.props.setSearchType(searchType);
-        // }
-        // if (searchText !== this.searchText) {
-        //     this.searchText = searchText;
-        //     this.props.setSearchText(searchText);
-        // }
 
         this.searchText = searchText;
         this.searchType = searchType;
 
         this.props.setSearchText(searchText);
-        this.props.setSearchType(searchType);  //?
+        this.props.setSearchType(searchType);
 
         this.resetSearchResults();
 

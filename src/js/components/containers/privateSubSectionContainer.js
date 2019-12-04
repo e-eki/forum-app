@@ -7,6 +7,7 @@ import UserInfoForm from '../views/forms/userInfoForm';
 import { getPrivateChannels, deletePrivateChannel } from '../../api/privateChannelApi';
 import { setPrivateChannels } from '../../actions/privateChannelActions';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
+import { setNewMessagesNotification } from '../../actions/notificationActions';
 import { getUserInfoById } from '../../api/userInfoApi';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import forumConst from '../../constants/forumConst';
@@ -16,24 +17,34 @@ class PrivateSubSectionContainer extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.userId = '1';  //todo!
+        this.userId = '5dd6d4c6d0412d25e4895fad';  //todo!
     }
 
     componentDidMount() {
         debugger;
+        if (this.props.setNewMessagesNotification) {  //???
+            this.props.resetNewMessagesNotification();
+        }
+
         return getPrivateChannels()
             .then(results => {
-                this.props.joinRoom(this.userId);
+                //this.props.joinRoom(this.userId);  //? один раз в самом начале?
 
                 return true;
             });
     }
 
     componentWillUnmount() {
-        if (this.userId) {  //todo: userId!
-            this.props.leaveRoom(this.userId);
+        // if (this.userId) {  //todo: userId!
+        //     this.props.leaveRoom(this.userId);
+        // }
+        if (this.props.privateChannels) {
+            this.props.resetPrivateChannels();  //?
         }
-        this.props.resetPrivateChannels();  //?
+
+        if (this.props.currentUserInfo) {
+            this.props.resetCurrentUserInfo();
+        }
     }
     
     render() {
@@ -85,7 +96,8 @@ class PrivateSubSectionContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         privateChannels: store.privateChannelState.get('privateChannels'),
-        //currentUserInfo: store.userInfo.get('currentUserInfo'),           
+        currentUserInfo: store.userInfo.get('currentUserInfo'),
+        newMessages: store.notificationState.get('newMessages'),        
     };
 };
 
@@ -94,9 +106,12 @@ const mapDispatchToProps = function(dispatch) {
         resetPrivateChannels: function() {
             dispatch(setPrivateChannels(null));
         },
-        // resetCurrentUserInfo: function() {
-        //     dispatch(setCurrentUserInfo(null));
-        // },
+        resetCurrentUserInfo: function() {
+            dispatch(setCurrentUserInfo(null));
+        },
+        resetNewMessagesNotification: function() {
+            dispatch(setNewMessagesNotification(null));
+        },
         joinRoom: function(id) {
             dispatch(joinRoom(id));
         },

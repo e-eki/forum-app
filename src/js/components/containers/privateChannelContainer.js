@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Channel from '../views/channel';
 import * as privateChannelApi from '../../api/privateChannelApi';
 import { setPrivateChannels } from '../../actions/privateChannelActions';
-
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { getUserInfoById } from '../../api/userInfoApi';
 import UserInfoForm from '../views/forms/userInfoForm';
@@ -13,6 +12,7 @@ import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import { setCurrentPrivateChannel } from '../../actions/privateChannelActions';
+import { setNewMessagesNotification } from '../../actions/notificationActions';
 import forumConst from '../../constants/forumConst';
 
 class PrivateChannelContainer extends PureComponent {
@@ -32,6 +32,10 @@ class PrivateChannelContainer extends PureComponent {
 
     componentDidMount() {
         debugger;
+        if (this.props.setNewMessagesNotification) {
+            this.props.resetNewMessagesNotification();  //???
+        }
+
         this.getPrivateChannel();
     }
 
@@ -97,7 +101,7 @@ class PrivateChannelContainer extends PureComponent {
             this.channelId = null;
         }
         else if (this.recipientId && this.recipientChannelId) {  //??
-            this.props.leaveRoom(this.recipientChannelId);
+            //this.props.leaveRoom(this.recipientChannelId);
             this.recipientId = null;
             this.recipientChannelId = null
         }
@@ -150,10 +154,11 @@ class PrivateChannelContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         privateChannels: store.privateChannelState.get('privateChannels'),
-        //currentUserInfo: store.userInfo.get('currentUserInfo'),       
+        currentUserInfo: store.userInfo.get('currentUserInfo'),       
         currentPrivateChannel: store.privateChannelState.get('currentPrivateChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
-        modifiableMessage: store.messageState.get('modifiableMessage'),      
+        modifiableMessage: store.messageState.get('modifiableMessage'),
+        newMessages: store.notificationState.get('newMessages'),    
     };
 };
 
@@ -165,9 +170,12 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentPrivateChannel: function() {
             dispatch(setCurrentPrivateChannel(null));
         },
-        // resetCurrentUserInfo: function() {  //?
-        //     dispatch(setCurrentUserInfo(null));
-        // },
+        resetCurrentUserInfo: function() {
+            dispatch(setCurrentUserInfo(null));
+        },
+        resetNewMessagesNotification: function() {
+            dispatch(setNewMessagesNotification(null));
+        },
         modifyMessage: function(item) {
             messageApi.modifyMessage(item);
         },

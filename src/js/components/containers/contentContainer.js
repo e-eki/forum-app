@@ -23,6 +23,8 @@ class ContentContainer extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.userId = '5dd6d4c6d0412d25e4895fad';  //todo!
     }
 
     componentDidMount() {      
@@ -31,6 +33,9 @@ class ContentContainer extends PureComponent {
                 //this.props.setSections(sections);
 
                 this.props.joinRoom(apiConst.defaultRoomId);
+
+                this.props.joinRoom(this.userId);  //todo!
+                
                 return true;
             });
     }

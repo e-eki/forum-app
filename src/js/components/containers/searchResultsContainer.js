@@ -7,6 +7,8 @@ import forumConst from '../../constants/forumConst';
 import * as searchActions from '../../actions/searchActions';
 import Channel from '../views/channel';
 import Message from '../views/message';
+import { getUserInfoById } from '../../api/userInfoApi';
+import { setCurrentUserInfo } from '../../actions/userInfoActions';
 
 class SearchResultsContainer extends PureComponent {
 
@@ -58,8 +60,9 @@ class SearchResultsContainer extends PureComponent {
                                     key={key}
                                     message = {item}
                                     type = {forumConst.itemTypes.searchMessage}
+                                    showUserInfoById = {getUserInfoById}
                                 />;
-                items.push(message);  //todo! message - проверка на search
+                items.push(message);
                 key++;
             })
         }
@@ -78,6 +81,7 @@ const mapStateToProps = function(store) {
         searchMessages: store.searchState.get('searchMessages'),
         searchType: store.searchState.get('searchType'),
         searchText: store.searchState.get('searchText'),
+        currentUserInfo: store.userInfo.get('currentUserInfo'),
     };
 };
 
@@ -88,6 +92,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         setSearchType: function(data) {
             dispatch(searchActions.setSearchType(data));
+        },
+        resetCurrentUserInfo: function() {
+            dispatch(setCurrentUserInfo(null));
         },
     }
 }

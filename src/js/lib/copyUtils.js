@@ -51,8 +51,8 @@ export function copyMessage(sourse) {
 export function copyPrivateChannel(sourse) {
 	const result = copyBase(sourse);	
 
-	result.firstSenderId = sourse.firstSenderId || '';
-	result.secondSenderId = sourse.secondSenderId || '';
+	result.senderId = sourse.senderId || '';
+	result.recipientId = sourse.recipientId || '';
 	result.descriptionMessageId = sourse.descriptionMessageId || null;
 	result.messages = sourse.messages || [];
 

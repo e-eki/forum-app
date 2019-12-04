@@ -6,15 +6,11 @@ import forumConst from '../../constants/forumConst';
 import Channel from '../views/channel';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { getChannelById } from '../../api/channelApi';
-import { getPrivateChannelByRecipientId } from '../../api/privateChannelApi';
 import { getUserInfoById } from '../../api/userInfoApi';
-import UserInfoForm from '../views/forms/userInfoForm';
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import { setCurrentInfoChannel, setCurrentChannel } from '../../actions/channelActions';
-import { setCurrentPrivateChannel } from '../../actions/privateChannelActions';
-import { deletePrivateChannel } from '../../api/privateChannelApi';
 
 class ChannelContainer extends PureComponent {
 
@@ -92,7 +88,7 @@ class ChannelContainer extends PureComponent {
 
 const mapStateToProps = function(store) {
     return {
-        //currentUserInfo: store.userInfo.get('currentUserInfo'),       
+        currentUserInfo: store.userInfo.get('currentUserInfo'),       
         currentChannel: store.channelState.get('currentChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),
@@ -104,9 +100,9 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentChannel: function() {
             dispatch(setCurrentChannel(null));
         },
-        // resetCurrentUserInfo: function() {  //?
-        //     dispatch(setCurrentUserInfo(null));
-        // },
+        resetCurrentUserInfo: function() {
+            dispatch(setCurrentUserInfo(null));
+        },
         setCurrentInfoChannel: function(item) {
             dispatch(setCurrentInfoChannel(item));
         },

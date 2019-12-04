@@ -76,10 +76,12 @@ export default class ModifyForm extends Component {
     // ввод данных
 	changeData(event) {
         debugger;
-		const dataName = event.target.name;
+        const name = event.target.name;
+        const value = event.target.value;
 
-		this.state[`${dataName}`] = event.target.value;
-		this.setState({});
+        this.setState({
+            [name]: value
+        });
     }
     
     modifyItem() {

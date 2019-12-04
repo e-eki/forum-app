@@ -28,21 +28,49 @@ export function getPrivateChannelById(id) {
 		});
 }
 
-export function getPrivateChannelByRecipientId(userId) {
+export function getPrivateChannelByRecipientId(recipientId) {
 	debugger;
 
-	return axios.get(`${apiConst.privateChannelApi}?recipientId=${userId}`)
+	return Promise.resolve(axios.get(`${apiConst.privateChannelApi}?recipientId=${recipientId}`))
 		.then(response => {
 			debugger;
+			const tasks = [];
 
 			if (response.data) {
 				store.dispatch(privateChannelActions.setCurrentPrivateChannel(response.data));
 				
-				return response.data;
+				tasks.push(response.data);
 			}
 			else {
-				return createAndGetPrivateChannelByRecipientId(userId);
+				tasks.push(false);
+
+				const newPrivateChannel = {
+					senderId: '5dd6d4c6d0412d25e4895fad',  //todo!
+					recipientId: recipientId,
+				};
+
+				tasks.push(modifyPrivateChannel(newPrivateChannel));
 			}
+
+			return Promise.all(tasks);
+		})
+		.spread((privateChannel, privateChannelId) => {
+			const tasks = [];
+
+			if (privateChannel) {
+				tasks.push(privateChannel);
+			}
+			else if (privateChannelId) {
+				tasks.push(getPrivateChannelById(privateChannelId))
+			}
+			else {
+				tasks.push(false);
+			}
+
+			return Promise.all(tasks);
+		})
+		.spread(privateChannel => {
+			return privateChannel;
 		})
 }
 
@@ -51,11 +79,14 @@ export function deletePrivateChannel(item) {
 	const tasks = [];
 
 	tasks.push(item.id);
+	tasks.push(item.senderId);
+	tasks.push(item.recipientId);
+
 	tasks.push(axios.delete(`${apiConst.privateChannelApi}/${item.id}`));
 
 	return Promise.all(tasks)
-		.spread((privateChannelId, response) => {
-			store.dispatch(remoteActions.deletePrivateChannelById(privateChannelId));
+		.spread((privateChannelId, senderId, recipientId, response) => {
+			store.dispatch(remoteActions.deletePrivateChannelById(privateChannelId, senderId, recipientId));
 
 			return true;
 		})
@@ -66,24 +97,26 @@ export function modifyPrivateChannel(item) {
 	const tasks = [];
 
 	tasks.push(item.id);
+	tasks.push(item.senderId);
+	tasks.push(item.recipientId);
 
 	if (item.id) {
 		tasks.push(updatePrivateChannel(item));
 	}
-	// else {
-	// 	tasks.push(createPrivateChannel(item));
-	// }
+	else {
+		tasks.push(createPrivateChannel(item));
+	}
 	
 	return Promise.all(tasks)
-		.spread((privateChannelId, response) => {
+		.spread((privateChannelId, senderId, recipientId, response) => {
 			debugger;
 			if (!privateChannelId && response.data && response.data.id) {
 				privateChannelId = response.data.id;
 			}
 			
-			store.dispatch(remoteActions.updatePrivateChannelById(privateChannelId));  //?
+			store.dispatch(remoteActions.updatePrivateChannelById(privateChannelId, senderId, recipientId));
 
-			return true;
+			return privateChannelId;
 		})
 }
 
@@ -97,9 +130,10 @@ export function modifyPrivateChannel(item) {
 // 	store.dispatch(channelActions.setCurrentChannel(null));  //?
 // }
 
-function createPrivateChannel(userId) {
+function createPrivateChannel(item) {
 	return axios.post(`${apiConst.privateChannelApi}`, {
-		recipientId: userId,
+		senderId: item.senderId,
+		recipientId: item.recipientId,
 	})
 }
 
@@ -109,16 +143,23 @@ function updatePrivateChannel(item) {
 	})
 }
 
-function createAndGetPrivateChannelByRecipientId(userId) {
-	return createPrivateChannel(userId)
-		.then(response => {
-			if (!response.data || !response.data.id) {
-				return false;
-			}
+// function createAndGetPrivateChannelByRecipientId(userId) {
+// 	debugger;
+// 	const tasks = [];
 
-			const privateChannelId = response.data.id;
+// 	tasks.push()
 
-			return getPrivateChannelById(privateChannelId);
-		})
-}
+// 	return createPrivateChannel(userId)
+// 		.then(senderId, recipientId, response => {
+// 			if (!response.data || !response.data.id) {
+// 				return false;
+// 			}
+
+// 			const privateChannelId = response.data.id;
+
+// 			store.dispatch(remoteActions.updatePrivateChannelById(privateChannelId, senderId, recipientId));
+
+// 			return getPrivateChannelById(privateChannelId);
+// 		})
+// }
 
