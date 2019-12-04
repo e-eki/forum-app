@@ -7,7 +7,6 @@ import { getSearchResults } from '../../api/searchApi';
 import * as searchActions from '../../actions/searchActions';
 import SearchForm from '../views/forms/searchForm';
 
-
 class SearchFormContainer extends PureComponent {
 
     constructor(props) {
@@ -23,23 +22,30 @@ class SearchFormContainer extends PureComponent {
     componentDidUpdate() {
         debugger;
 
-        if (this.props.searchText !== this.searchText ||
-            this.props.searchType !== this.searchType) {
+        if (((this.props.searchText || this.props.searchText === '') && (this.searchText || this.searchText === '') && (this.props.searchText !== this.searchText)) ||
+            (this.props.searchType && this.searchType && this.props.searchType !== this.searchType)) {
+
                 this.doSearch(this.props.searchText, this.props.searchType);
-            }
+        }
     }
 
     doSearch(searchText, searchType) {
         debugger;
         
-        if (searchType !== this.searchType) {
-            this.searchType = searchType;
-            this.props.setSearchType(searchType);
-        }
-        if (searchText !== this.searchText) {
-            this.searchText = searchText;
-            this.props.setSearchText(searchText);
-        }
+        // if (searchType !== this.props.searchType) {
+        //     this.searchType = searchType;
+        //     this.props.setSearchType(searchType);
+        // }
+        // if (searchText !== this.searchText) {
+        //     this.searchText = searchText;
+        //     this.props.setSearchText(searchText);
+        // }
+
+        this.searchText = searchText;
+        this.searchType = searchType;
+
+        this.props.setSearchText(searchText);
+        this.props.setSearchType(searchType);  //?
 
         this.resetSearchResults();
 

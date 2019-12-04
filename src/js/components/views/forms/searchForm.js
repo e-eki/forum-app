@@ -19,49 +19,67 @@ export default class SearchForm extends Component {
         this.doSearch = this.doSearch.bind(this);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {  //todo??????
+    shouldComponentUpdate(nextProps, nextState) {  //??todo
         debugger;
-        if ((((!nextState.searchText && nextState.searchText !== '') || nextState.searchText === this.state.searchText) && (nextProps.searchText || nextProps.searchText === '') && nextProps.searchText !== this.state.searchText) ||
-            (!nextState.searchType && nextProps.searchType && nextProps.searchType !== this.state.searchType)) {
-                this.setState({
-                    searchText: nextProps.searchText,
-                    searchType: nextProps.searchType
-                });
+        if ((nextProps.searchText || nextProps.searchText === '') && (this.state.searchText || this.state.searchText === '') && (nextProps.searchText !== this.state.searchText)) {
+            this.setState({searchText : nextProps.searchText});
+        }
+        if (nextProps.searchType && this.state.searchType && (nextProps.searchType !== this.state.searchType)) {
+            this.setState({searchType : nextProps.searchType});
         }
 
         return true;
-        // return (((nextState.searchText || nextState.searchText === '') && nextState.searchText !== this.state.searchText) ||
-        //         (nextState.searchType && nextState.searchType !== this.state.searchType) ||
-        //         ((nextProps.searchText || nextProps.searchText === '') && nextProps.searchText !== this.state.searchText) ||
-        //         (nextProps.searchType && nextProps.searchType !== this.state.searchType));
+
+        // if (nextState &&
+        //     ((nextState.searchText || nextState.searchText === '') && (nextState.searchText !== this.state.searchText) ||
+        //     (nextState.searchType && (nextState.searchType !== this.state.searchType)))) {
+        //         return true;
+        // }
+
+        // else {
+        //     if ((nextProps.searchText || nextProps.searchText === '') && (this.state.searchText || this.state.searchText === '') && (nextProps.searchText !== this.state.searchText)) {
+        //         this.setState({searchText : nextProps.searchText});
+        //     }
+        //     if (nextProps.searchType && this.state.searchType && (nextProps.searchType !== this.state.searchType)) {
+        //         this.setState({searchType : nextProps.searchType});
+        //     }
+
+        //     return false;
+        // }
     }
 
     // ввод данных
 	changeData(event) {
         debugger;
-		const dataName = event.target.name;
+        const name = event.target.name;
+        const value = event.target.value;
 
-		this.state[`${dataName}`] = event.target.value;
-		this.setState({});
+        this.setState({
+            [name]: value
+        });
+
+        
+		// const dataName = event.target.name;
+
+        // this.state[`${dataName}`] = event.target.value;
+        // this.setState({});
     }
 
     doSearch() {
-        debugger;
-        //validate??
+        //todo: validate??
 
         this.props.doSearch(this.state.searchText, this.state.searchType);
     }
 
     render() {
         //console.log('render searchBar');
-        debugger;
         const className = 'search-bar ' + (this.props.className ? this.props.className : '');
         
         return (
             <div className = {className}>
                 <input 
                     name = "searchText"
-                    type="searchText" 
+                    type="text" 
                     className = '' 
                     maxLength = '30'
                     value = {this.state.searchText}

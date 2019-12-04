@@ -19,38 +19,23 @@ class SearchResultsContainer extends PureComponent {
 
     componentDidUpdate() {
         debugger;
-        
-        // if (this.props.location && this.props.location.search) {
-        //     const searchParams = new URLSearchParams(this.props.location.search);
-        //     const searchText = searchParams.get("searchText");
-        //     const searchType = searchParams.get("searchType");
-
-        //     if (searchText && searchType &&
-        //         (searchText !== this.searchText ||
-        //         searchType !== this.searchType)) {
-
-        //         this.searchText = searchText;
-        //         this.searchType = searchType;
-
-        //         return getSearchResults(searchText, searchType)
-        //             .then(results => {
-        //                 return true;
-        //             });
-        //     }
-        // }
 
         if (this.props.location && this.props.location.search) {
             const searchParams = new URLSearchParams(this.props.location.search);
             const searchText = searchParams.get("searchText");
             const searchType = searchParams.get("searchType");
 
-            this.props.setSearchText(searchText);
-            this.props.setSearchType(searchType);  //?
+            if (this.props.searchText !== searchText) {
+                this.props.setSearchText(searchText);
+            }
+            if (this.props.searchType !== searchType) {
+                this.props.setSearchType(searchType); 
+            }
         }
     }
     
     render() {
-        //console.log('render SearchContainer');
+        //console.log('render SearchResultsContainer');
         debugger;
 
         const items = [];
@@ -91,6 +76,8 @@ const mapStateToProps = function(store) {
     return {
         searchChannels: store.searchState.get('searchChannels'),
         searchMessages: store.searchState.get('searchMessages'),
+        searchType: store.searchState.get('searchType'),
+        searchText: store.searchState.get('searchText'),
     };
 };
 
