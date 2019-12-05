@@ -20,13 +20,11 @@ export default class Channel extends PureComponent {
 
     showInfo() {
         debugger;
-        //const channelData = this.props.channel || this.props.privateChannel;
         this.props.setCurrentInfoChannel(this.props.channel);
     }
 
     deleteChannel() {
         debugger;
-        //const channelData = this.props.channel || this.props.privateChannel;
         this.props.deleteChannel(this.props.channel);
     }
 
@@ -48,9 +46,6 @@ export default class Channel extends PureComponent {
         // if (this.props.userInfo) {
         //     className += 'channel_transparent ';  //todo
         // }
-
-        // const channelData = this.props.channel || this.props.privateChannel;   //??todo
-        // const isPrivate = this.props.channel ? false : true;
 
         const isPrivate = this.props.type === forumConst.itemTypes.privateChannel;
         const isSearchResult = this.props.type === forumConst.itemTypes.searchChannel;
@@ -103,6 +98,7 @@ export default class Channel extends PureComponent {
                             <ListForm
                                 type = {forumConst.itemTypes.message}
                                 parentItemId = {this.props.channel.id}
+                                recipientId = {this.props.channel.recipientId}
                                 items = {messages}
                                 currentInfoItem = {this.props.currentInfoMessage}
                                 setCurrentInfoItem = {this.props.setCurrentInfoMessage}

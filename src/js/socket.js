@@ -412,6 +412,7 @@ socket.on('action', action => {
 				
 				break;
 
+			//todo: сделать, чтоб не рендерился дважды чат в списке ЛС, когда одно событие приходит как currentChannel и как recipientId
 			case actionTypes.UPDATE_PRIVATE_CHANNEL_BY_ID:
 				debugger;
 

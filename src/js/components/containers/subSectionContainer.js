@@ -22,9 +22,13 @@ class SubSectionContainer extends PureComponent {
             const id = this.props.match.params.id;
             return getSubSectionById(id)
                 .then(subSection => {
-                    //this.props.setCurrentSection(section);
-                    this.props.joinRoom(subSection.id);
-                    this.subSectionId = subSection.id;
+                    
+                    if (subSection) {
+                        this.props.setCurrentSubSection(subSection);
+
+                        this.props.joinRoom(subSection.id);
+                        this.subSectionId = subSection.id;
+                    }
 
                     return true;
                 });
@@ -68,6 +72,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
+        setCurrentSubSection: function(item) {
+            dispatch(setCurrentSubSection(item));
+        },
         resetCurrentSubSection: function() {
             dispatch(setCurrentSubSection(null));
         },

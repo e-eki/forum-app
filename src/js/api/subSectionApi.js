@@ -3,9 +3,7 @@
 import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
-import * as sectionActions from '../actions/sectionActions';
 import * as subSectionActions from '../actions/subSectionActions';
-import * as channelActions from '../actions/channelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 
@@ -14,12 +12,7 @@ export function getSubSectionById(id) {
 	return axios.get(`${apiConst.subSectionApi}/${id}`)
 		.then(response => {
 			debugger;
-
-			// store.dispatch(sectionActions.setCurrentSection(null));
-			// store.dispatch(channelActions.setCurrentChannel(null));
-			// store.dispatch(sectionActions.setSections(null));
-
-			store.dispatch(subSectionActions.setCurrentSubSection(response.data));
+			//store.dispatch(subSectionActions.setCurrentSubSection(response.data));
 			
 		    return response.data;
 		});

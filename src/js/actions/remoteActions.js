@@ -87,11 +87,12 @@ export function deleteChannelById(channelId, subSectionId) {
 
 //---MESSAGE
 
-export function updateMessageById(messageId, channelId) {
+export function updateMessageById(messageId, channelId, recipientId) {
 	return {
 	  type: actionTypes.UPDATE_MESSAGE_BY_ID,
 	  messageId: messageId,
 	  channelId: channelId,
+	  recipientId: recipientId,
 	  meta: {remote: true},
 	};
 }

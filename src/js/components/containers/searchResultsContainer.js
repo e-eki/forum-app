@@ -7,7 +7,7 @@ import forumConst from '../../constants/forumConst';
 import * as searchActions from '../../actions/searchActions';
 import Channel from '../views/channel';
 import Message from '../views/message';
-import { getUserInfoById } from '../../api/userInfoApi';
+import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 
 class SearchResultsContainer extends PureComponent {
@@ -60,7 +60,7 @@ class SearchResultsContainer extends PureComponent {
                                     key={key}
                                     message = {item}
                                     type = {forumConst.itemTypes.searchMessage}
-                                    showUserInfoById = {getUserInfoById}
+                                    showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
                                 />;
                 items.push(message);
                 key++;

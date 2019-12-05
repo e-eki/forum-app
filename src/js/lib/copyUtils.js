@@ -54,6 +54,7 @@ export function copyPrivateChannel(sourse) {
 	result.senderId = sourse.senderId || '';
 	result.recipientId = sourse.recipientId || '';
 	result.descriptionMessageId = sourse.descriptionMessageId || null;
+	result.name = sourse.name || '';
 	result.messages = sourse.messages || [];
 
 	return result;

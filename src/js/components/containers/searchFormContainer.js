@@ -6,6 +6,7 @@ import Promise from 'bluebird';
 import { getSearchResults } from '../../api/searchApi';
 import * as searchActions from '../../actions/searchActions';
 import SearchForm from '../views/forms/searchForm';
+import forumConst from '../../constants/forumConst';
 
 class SearchFormContainer extends PureComponent {
 
@@ -43,6 +44,20 @@ class SearchFormContainer extends PureComponent {
         return getSearchResults(searchText, searchType)
             .then(results => {
                 debugger;
+
+                if (results) {
+                    switch (searchType) {
+
+                        case forumConst.searchTypes.channels:
+                            this.props.setSearchChannels(results);
+                            break;
+
+                        case forumConst.searchTypes.messages:
+                            this.props.setSearchMessages(results);
+                            break;
+                    }
+                }
+                
                 return true;
             });
     }
@@ -83,6 +98,12 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
+        setSearchChannels: function(items) {
+            dispatch(searchActions.setSearchChannels(items));
+        },
+        setSearchMessages: function(items) {
+            dispatch(searchActions.setSearchMessages(items));
+        },
         resetSearchChannels: function() {
             dispatch(searchActions.setSearchChannels(null));
         },

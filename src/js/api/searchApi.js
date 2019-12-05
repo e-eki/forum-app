@@ -30,7 +30,7 @@ export function getSearchResults(searchText, searchType) {
 	}
 
 	return Promise.all(tasks)
-		.then(results => {
+		.spread(results => {
 			debugger;
 			return results;
 		});

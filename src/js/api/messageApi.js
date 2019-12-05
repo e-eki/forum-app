@@ -6,8 +6,6 @@ import store from '../store/store';
 import * as actions from '../actions/messageActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
-import { setSearchMessages } from '../actions/searchActions';
-
 
 // export function getMessageById(id) {
 // 	return axios.get(`${apiConst.messageApi}/${id}`)  //??
@@ -22,7 +20,7 @@ export function getMessagesByText(searchText) {
 	return axios.get(`${apiConst.messageApi}?searchText=${searchText}`)
 		.then(response => {
 			debugger;
-			store.dispatch(setSearchMessages(response.data));
+			// store.dispatch(setSearchMessages(response.data));
 
 		    return response.data;
 		});
@@ -61,6 +59,7 @@ export function modifyMessage(item) {
 
 	tasks.push(item.id);
 	tasks.push(item.channelId);
+	tasks.push(item.recipientId);  //?
 
 	item.senderId = item.channelId;  //todo!
 
@@ -72,7 +71,7 @@ export function modifyMessage(item) {
 	}
 	
 	return Promise.all(tasks)
-		.spread((messageId, channelId, response) => {
+		.spread((messageId, channelId, recipientId, response) => {
 			debugger;
 			if (!messageId && response.data && response.data.id) {
 				messageId = response.data.id;
@@ -80,7 +79,7 @@ export function modifyMessage(item) {
 
 			store.dispatch(actions.setModifiableMessage(null));
 
-			store.dispatch(remoteActions.updateMessageById(messageId, channelId));
+			store.dispatch(remoteActions.updateMessageById(messageId, channelId, recipientId));
 
 			return true;
 		})

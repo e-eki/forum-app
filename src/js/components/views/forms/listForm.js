@@ -49,6 +49,9 @@ export default class ListForm extends PureComponent {
             if (this.props.parentItemId) {
                 newItem.parentItemId = this.props.parentItemId;
             }
+            if (this.props.recipientId) {
+                newItem.recipientId = this.props.recipientId;
+            }
 
             // newItem.senderId = '1';  //todo!
 

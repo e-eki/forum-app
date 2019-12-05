@@ -6,7 +6,7 @@ import Channel from '../views/channel';
 import * as privateChannelApi from '../../api/privateChannelApi';
 import { setPrivateChannels } from '../../actions/privateChannelActions';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
-import { getUserInfoById } from '../../api/userInfoApi';
+import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import UserInfoForm from '../views/forms/userInfoForm';
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
@@ -66,8 +66,13 @@ class PrivateChannelContainer extends PureComponent {
 
                 return privateChannelApi.getPrivateChannelById(newChannelId)
                 .then(channel => {
-                    this.props.joinRoom(channel.id);
-                    this.channelId = channel.id;
+
+                    if (channel) {
+                        this.props.joinRoom(channel.id);
+                        this.channelId = channel.id;
+
+                        this.props.setCurrentPrivateChannel(channel);
+                    }
 
                     return true;
                 });
@@ -84,8 +89,13 @@ class PrivateChannelContainer extends PureComponent {
                 return privateChannelApi.getPrivateChannelByRecipientId(newRecipientId)
                     .then(privateChannel => {
                         debugger;
-                        this.props.joinRoom(privateChannel.id);
-                        this.recipientChannelId = privateChannel.id;  //?
+
+                        if (privateChannel) {
+                            this.props.joinRoom(privateChannel.id);
+                            this.recipientChannelId = privateChannel.id;
+
+                            this.props.setCurrentPrivateChannel(privateChannel);
+                        }
 
                         return true;
                     });
@@ -116,19 +126,9 @@ class PrivateChannelContainer extends PureComponent {
     render() {
         //console.log('render privateChannelContainer');
         debugger;
-        // let userInfoBlock;
-
-        // if (this.props.currentUserInfo) {
-        //     userInfoBlock = <UserInfoForm
-        //                         userInfo = {this.props.currentUserInfo}
-        //                         resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
-        //                         isPrivateChannel = {true}
-        //                     />;
-        //}
 
         return (
             <div>
-                {/* {userInfoBlock} */}
 
                 <Channel
                     channel = {this.props.currentPrivateChannel}
@@ -143,7 +143,7 @@ class PrivateChannelContainer extends PureComponent {
                     modifyMessage = {this.props.modifyMessage}
                     deleteMessage = {this.props.deleteMessage}
 
-                    showUserInfoById = {getUserInfoById}
+                    showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
                 />
             </div>
         );
@@ -166,6 +166,9 @@ const mapDispatchToProps = function(dispatch) {
     return {
         resetPrivateChannels: function() {
             dispatch(setPrivateChannels(null));
+        },
+        setCurrentPrivateChannel: function(item) {
+            dispatch(setCurrentPrivateChannel(item));
         },
         resetCurrentPrivateChannel: function() {
             dispatch(setCurrentPrivateChannel(null));

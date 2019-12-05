@@ -6,7 +6,7 @@ import forumConst from '../../constants/forumConst';
 import Channel from '../views/channel';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { getChannelById } from '../../api/channelApi';
-import { getUserInfoById } from '../../api/userInfoApi';
+import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
@@ -28,8 +28,12 @@ class ChannelContainer extends PureComponent {
 
             return getChannelById(channelId)
                 .then(channel => {
-                    this.props.joinRoom(channel.id);
-                    this.channelId = channel.id;
+                    if (channel && channel.id) {
+                        this.props.joinRoom(channel.id);
+                        this.channelId = channel.id;
+
+                        this.props.setCurrentChannel(channel);
+                    }
 
                     return true;
                 });
@@ -52,20 +56,8 @@ class ChannelContainer extends PureComponent {
         //console.log('render ChannelContainer');
         debugger;
 
-        //let userInfoBlock;
-
-        // if (this.props.currentUserInfo) {
-        //     userInfoBlock = <UserInfoForm
-        //                         userInfo = {this.props.currentUserInfo}
-        //                         resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
-        //                         isPrivateChannel = {false}
-        //                     />;
-        // }
-
         return (
             <div>
-                {/* {userInfoBlock} */}
-
                 <Channel
                     channel = {this.props.currentChannel}
                     type = {forumConst.itemTypes.channel}
@@ -79,7 +71,7 @@ class ChannelContainer extends PureComponent {
                     modifyMessage = {this.props.modifyMessage}
                     deleteMessage = {this.props.deleteMessage}
 
-                    showUserInfoById = {getUserInfoById}
+                    showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
                 />
             </div>
         );
@@ -97,6 +89,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
+        setCurrentChannel: function(item) {
+            dispatch(setCurrentChannel(item));
+        },
         resetCurrentChannel: function() {
             dispatch(setCurrentChannel(null));
         },

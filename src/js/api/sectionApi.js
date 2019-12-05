@@ -4,21 +4,14 @@ import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
 import * as sectionActions from '../actions/sectionActions';
-import * as subSectionActions from '../actions/subSectionActions';
-import * as channelActions from '../actions/channelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
-
 
 export function getSections() {
 	return axios.get(`${apiConst.sectionApi}`)
 		.then(response => {
 			debugger;
-
-			// store.dispatch(sectionActions.setCurrentSection(null));
-			// store.dispatch(subSectionActions.setCurrentSubSection(null));
-			// store.dispatch(channelActions.setCurrentChannel(null));
-			store.dispatch(sectionActions.setSections(response.data));  //?? где лучше - здесь или в contentContainer?
+			// store.dispatch(sectionActions.setSections(response.data));
 
             return response.data;
 		});
@@ -28,13 +21,7 @@ export function getSectionById(id) {
 	return axios.get(`${apiConst.sectionApi}/${id}`)
 		.then(response => {
 			debugger;
-
-			// store.dispatch(subSectionActions.setCurrentSubSection(null));
-			// store.dispatch(channelActions.setCurrentChannel(null));
-			// store.dispatch(sectionActions.setSections(null));
-			store.dispatch(sectionActions.setCurrentSection(response.data));
-			
-			//store.dispatch(remoteActions.joinRoom(response.data.id));
+			// store.dispatch(sectionActions.setCurrentSection(response.data));
 
 		    return response.data;
 		});

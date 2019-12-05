@@ -8,7 +8,7 @@ import { getPrivateChannels, deletePrivateChannel } from '../../api/privateChann
 import { setPrivateChannels } from '../../actions/privateChannelActions';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { setNewMessagesNotification } from '../../actions/notificationActions';
-import { getUserInfoById } from '../../api/userInfoApi';
+import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import forumConst from '../../constants/forumConst';
 
@@ -29,6 +29,7 @@ class PrivateSubSectionContainer extends PureComponent {
         return getPrivateChannels()
             .then(results => {
                 //this.props.joinRoom(this.userId);  //? один раз в самом начале?
+                this.props.setPrivateChannels(results);
 
                 return true;
             });
@@ -73,7 +74,7 @@ class PrivateSubSectionContainer extends PureComponent {
                                     deletePrivateChannel = {deletePrivateChannel}
                                     type = {forumConst.itemTypes.privateChannel}
 
-                                    showUserInfoById = {getUserInfoById}
+                                    showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
                                 />;
                 channels.push(channel);
                 key++;
@@ -103,6 +104,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
+        setPrivateChannels: function(items) {
+            dispatch(setPrivateChannels(items));
+        },
         resetPrivateChannels: function() {
             dispatch(setPrivateChannels(null));
         },

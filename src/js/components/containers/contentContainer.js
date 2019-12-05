@@ -30,10 +30,11 @@ class ContentContainer extends PureComponent {
     componentDidMount() {      
         return sectionApi.getSections()
             .then(sections => {
-                //this.props.setSections(sections);
+                if (sections) {
+                    this.props.setSections(sections);
+                }
 
                 this.props.joinRoom(apiConst.defaultRoomId);
-
                 this.props.joinRoom(this.userId);  //todo!
                 
                 return true;
@@ -81,6 +82,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
+        setSections: function(items) {
+            dispatch(sectionActions.setSections(items));
+        },
         resetSections: function() {
             dispatch(sectionActions.setSections(null));
         },

@@ -3,16 +3,15 @@
 import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
-import * as privateChannelActions from '../actions/privateChannelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
-
+import { getUserInfoById } from './userInfoApi';
 
 export function getPrivateChannels() {
 	return axios.get(`${apiConst.privateChannelApi}`)
 		.then(response => {
 			debugger;
-			store.dispatch(privateChannelActions.setPrivateChannels(response.data));
+			// store.dispatch(privateChannelActions.setPrivateChannels(response.data));
 
             return response.data;
 		});
@@ -22,7 +21,7 @@ export function getPrivateChannelById(id) {
 	return axios.get(`${apiConst.privateChannelApi}/${id}`)
 		.then(response => {
 			debugger;
-			store.dispatch(privateChannelActions.setCurrentPrivateChannel(response.data));
+			// store.dispatch(privateChannelActions.setCurrentPrivateChannel(response.data));
 
 		    return response.data;
 		});
@@ -37,7 +36,7 @@ export function getPrivateChannelByRecipientId(recipientId) {
 			const tasks = [];
 
 			if (response.data) {
-				store.dispatch(privateChannelActions.setCurrentPrivateChannel(response.data));
+				// store.dispatch(privateChannelActions.setCurrentPrivateChannel(response.data));
 				
 				tasks.push(response.data);
 			}
@@ -61,7 +60,7 @@ export function getPrivateChannelByRecipientId(recipientId) {
 				tasks.push(privateChannel);
 			}
 			else if (privateChannelId) {
-				tasks.push(getPrivateChannelById(privateChannelId))
+				tasks.push(getPrivateChannelById(privateChannelId));
 			}
 			else {
 				tasks.push(false);
@@ -121,45 +120,26 @@ export function modifyPrivateChannel(item) {
 }
 
 
-// function setCurrentPrivateChannel(privateChannel) {
-// 	debugger;
-// 	store.dispatch(sectionActions.setCurrentSection(null));
-// 	store.dispatch(subSectionActions.setCurrentSubSection(null));
-// 	store.dispatch(sectionActions.setSections(null));
-// 	store.dispatch(privateChannelActions.setCurrentPrivateChannel(privateChannel));
-// 	store.dispatch(channelActions.setCurrentChannel(null));  //?
-// }
-
 function createPrivateChannel(item) {
-	return axios.post(`${apiConst.privateChannelApi}`, {
-		senderId: item.senderId,
-		recipientId: item.recipientId,
-	})
+	debugger;
+
+	return getUserInfoById(item.recipientId)
+		.then(recipientUserInfo => {
+			item.name = recipientUserInfo ? recipientUserInfo.nickName : 'NONAME';
+
+			return axios.post(`${apiConst.privateChannelApi}`, {
+				senderId: item.senderId,
+				recipientId: item.recipientId,
+				name: item.name,
+			})
+		})
 }
 
 function updatePrivateChannel(item) {
+	debugger;
 	return axios.put(`${apiConst.privateChannelApi}/${item.id}`, {
 		descriptionMessageId: item.descriptionMessageId,
+		name: item.name,
 	})
 }
-
-// function createAndGetPrivateChannelByRecipientId(userId) {
-// 	debugger;
-// 	const tasks = [];
-
-// 	tasks.push()
-
-// 	return createPrivateChannel(userId)
-// 		.then(senderId, recipientId, response => {
-// 			if (!response.data || !response.data.id) {
-// 				return false;
-// 			}
-
-// 			const privateChannelId = response.data.id;
-
-// 			store.dispatch(remoteActions.updatePrivateChannelById(privateChannelId, senderId, recipientId));
-
-// 			return getPrivateChannelById(privateChannelId);
-// 		})
-// }
 

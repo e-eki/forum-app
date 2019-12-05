@@ -22,9 +22,13 @@ class SectionContainer extends PureComponent {
             const id = this.props.match.params.id;
             return getSectionById(id)
                 .then(section => {
-                    //this.props.setCurrentSection(section);
-                    this.props.joinRoom(section.id);
-                    this.sectionId = section.id;
+
+                    if (section) {
+                        this.props.setCurrentSection(section);
+                        
+                        this.props.joinRoom(section.id);
+                        this.sectionId = section.id;
+                    }
 
                     return true;
                 });
@@ -82,6 +86,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         setCurrentInfoSubSection: function(item) {
             dispatch(subSectionActions.setCurrentInfoSubSection(item));
+        },
+        setCurrentSection: function(item) {
+            dispatch(setCurrentSection(item));
         },
         resetCurrentSection: function() {
             dispatch(setCurrentSection(null));
