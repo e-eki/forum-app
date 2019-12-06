@@ -10,7 +10,7 @@ import ChannelContainer from './components/containers/channelContainer';
 import PrivateChannelContainer from './components/containers/privateChannelContainer';
 import PrivateSubSectionContainer from './components/containers/PrivateSubSectionContainer';
 import Header from './components/views/header';
-import Menu from './components/views/menu';
+import MenuContainer from './components/containers/menuContainer';
 import Footer from './components/views/footer';
 import AlertFormContainer from './components/containers/alertFormContainer';
 import UserInfoFormContainer from './components/containers/UserInfoFormContainer';
@@ -48,11 +48,12 @@ export default class App extends Component {
 
             <div className = 'content'>
               <Router history={history}>
+
                 <AlertFormContainer/>
 
                 <UserInfoFormContainer/>
 
-                <Menu/>
+                <MenuContainer/>
 
                 <SearchFormContainer/>
 

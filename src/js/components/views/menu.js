@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import appConst from '../../constants/appConst';
+import NotificationForm from './forms/notificationForm';
 
 export default class Menu extends PureComponent {
 
@@ -12,11 +13,19 @@ export default class Menu extends PureComponent {
 
     render() {
         //console.log('render menu');
+        debugger;
         const className = 'menu ' + (this.props.className ? this.props.className : '');
 
-        const newMessagesCount = (this.props.newMessages && this.props.newMessages.count) ? this.props.newMessages.count : null;
+        let notificationBlock = null;
+        const newMessagesCount = this.props.newMessagesCount ? this.props.newMessagesCount : null;
 
-        const newMessagesNotification = newMessagesCount ? `+ ${newMessagesCount} новых` : '';
+        if (newMessagesCount) {
+            const notificationText = `+ ${newMessagesCount} новых`;
+
+            notificationBlock = <NotificationForm
+                                    notificationText = {notificationText}
+                                />;
+        }
         
         return (
             <div className = {className}>
@@ -32,7 +41,7 @@ export default class Menu extends PureComponent {
                 </Link> */}
 
                 <Link to={`${appConst.privateChannelsLink}`}>
-                    <div>Личные сообщения {newMessagesNotification}</div>
+                    <div>Личные сообщения {notificationBlock}</div>
                 </Link>
                 -----
             </div>

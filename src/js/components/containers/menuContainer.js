@@ -11,9 +11,11 @@ class MenuContainer extends PureComponent {
     }
     
     render() {
+        debugger;
+
         return (
             <Menu
-                newMessages = {this.props.newMessages}
+                newMessagesCount = {this.props.newMessagesCount}
             />
         );
     }
@@ -21,15 +23,13 @@ class MenuContainer extends PureComponent {
 
 const mapStateToProps = function(store) {
     return {
-        newMessages: store.notificationState.get('newMessages'),  //todo: check - reset нов.сообщений при переходе в личные сообщения
+        newMessagesCount: store.notificationState.get('newMessagesCount'),  //todo: check - reset нов.сообщений при переходе в личные сообщения
     };
 };
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        // resetAlertData: function() {
-        //     dispatch(setAlertData(null));
-        // },
+        //
     }
 }
 

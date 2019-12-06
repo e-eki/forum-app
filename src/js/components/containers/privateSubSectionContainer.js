@@ -3,11 +3,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Channel from '../views/channel';
-import UserInfoForm from '../views/forms/userInfoForm';
 import { getPrivateChannels, deletePrivateChannel } from '../../api/privateChannelApi';
 import { setPrivateChannels } from '../../actions/privateChannelActions';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
-import { setNewMessagesNotification } from '../../actions/notificationActions';
+import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
 import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import forumConst from '../../constants/forumConst';
@@ -22,8 +21,8 @@ class PrivateSubSectionContainer extends PureComponent {
 
     componentDidMount() {
         debugger;
-        if (this.props.setNewMessagesNotification) {  //???
-            this.props.resetNewMessagesNotification();
+        if (this.props.newMessagesCount) {
+            this.props.resetNewPrivateMessagesCount();
         }
 
         return getPrivateChannels()
@@ -53,16 +52,6 @@ class PrivateSubSectionContainer extends PureComponent {
         debugger;
         const className = '';
 
-        // let userInfoBlock;
-
-        // if (this.props.currentUserInfo) {
-        //     userInfoBlock = <UserInfoForm
-        //                         userInfo = {this.props.currentUserInfo}
-        //                         resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
-        //                         isPrivateChannel = {true}
-        //                     />;
-        // }
-
         const channels = [];
         let key = 0;
 
@@ -83,7 +72,6 @@ class PrivateSubSectionContainer extends PureComponent {
 
         return (
             <div className = {className}>
-                {/* {userInfoBlock} */}
 
                 <div>---ЛИЧНЫЕ СООБЩЕНИЯ---</div>
 
@@ -98,7 +86,7 @@ const mapStateToProps = function(store) {
     return {
         privateChannels: store.privateChannelState.get('privateChannels'),
         currentUserInfo: store.userInfo.get('currentUserInfo'),
-        newMessages: store.notificationState.get('newMessages'),        
+        newMessagesCount: store.notificationState.get('newMessagesCount'),        
     };
 };
 
@@ -113,8 +101,8 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentUserInfo: function() {
             dispatch(setCurrentUserInfo(null));
         },
-        resetNewMessagesNotification: function() {
-            dispatch(setNewMessagesNotification(null));
+        resetNewPrivateMessagesCount: function() {
+            dispatch(setNewPrivateMessagesCount(null));
         },
         joinRoom: function(id) {
             dispatch(joinRoom(id));

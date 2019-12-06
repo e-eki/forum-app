@@ -7,12 +7,11 @@ import * as privateChannelApi from '../../api/privateChannelApi';
 import { setPrivateChannels } from '../../actions/privateChannelActions';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
-import UserInfoForm from '../views/forms/userInfoForm';
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import { setCurrentPrivateChannel } from '../../actions/privateChannelActions';
-import { setNewMessagesNotification } from '../../actions/notificationActions';
+import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
 import forumConst from '../../constants/forumConst';
 
 class PrivateChannelContainer extends PureComponent {
@@ -32,8 +31,8 @@ class PrivateChannelContainer extends PureComponent {
 
     componentDidMount() {
         debugger;
-        if (this.props.setNewMessagesNotification) {
-            this.props.resetNewMessagesNotification();  //???
+        if (this.props.newMessagesCount) {
+            this.props.resetNewPrivateMessagesCount();  //???
         }
 
         this.getPrivateChannel();
@@ -43,7 +42,6 @@ class PrivateChannelContainer extends PureComponent {
         // if (this.userId) {  //todo: userId!
         //     this.props.leaveRoom(this.userId);
         // }
-        // this.props.resetPrivateChannels();  //?
 
         this.resetPrivateChannelContainer();
     }
@@ -158,7 +156,7 @@ const mapStateToProps = function(store) {
         currentPrivateChannel: store.privateChannelState.get('currentPrivateChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),
-        newMessages: store.notificationState.get('newMessages'),    
+        newMessagesCount: store.notificationState.get('newMessagesCount'),    
     };
 };
 
@@ -176,8 +174,8 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentUserInfo: function() {
             dispatch(setCurrentUserInfo(null));
         },
-        resetNewMessagesNotification: function() {
-            dispatch(setNewMessagesNotification(null));
+        resetNewPrivateMessagesCount: function() {
+            dispatch(setNewPrivateMessagesCount(null));
         },
         modifyMessage: function(item) {
             messageApi.modifyMessage(item);
