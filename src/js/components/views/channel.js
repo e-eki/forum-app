@@ -6,6 +6,7 @@ import Message from './message';
 import ListForm from './forms/listForm';
 import forumConst from '../../constants/forumConst';
 import appConst from '../../constants/appConst';
+import { getDateString } from '../../lib/dateStringUtils';
 
 // Канал
 export default class Channel extends PureComponent {
@@ -69,6 +70,8 @@ export default class Channel extends PureComponent {
             }
 
             let channelNameBlock;
+
+            let lastMessageBlock;
             
             if (this.props.isCurrent) {
                 channelNameBlock = this.props.channel.name;
@@ -84,6 +87,23 @@ export default class Channel extends PureComponent {
                                             <Link to="/" onClick = {this.showUserInfo}>RECIPIENT</Link>
                                         </div>;
                 }
+
+                if (this.props.channel.lastMessage) {
+                    let text = this.props.channel.lastMessage.text;
+
+                    if (text && (text.length > forumConst.lastMessageTextLength)) {
+                        text = `${text.slice(0, forumConst.lastMessageTextLength)}...`
+                    }
+
+                    const dateString = getDateString(this.props.channel.lastMessage.date);
+
+                    const senderName = this.props.channel.lastMessage.senderName || 'NoName';
+
+                    lastMessageBlock = <div>------------
+                                            {senderName} : {text} <span>{dateString}</span>
+                                        </div>;
+                }
+                
             }
 
             channel = <div>
@@ -108,7 +128,7 @@ export default class Channel extends PureComponent {
                                 deleteItem = {this.props.deleteMessage}
                             />
                             :
-                            messages
+                            lastMessageBlock
                         }
                     </div>;
         }

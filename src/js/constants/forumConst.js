@@ -16,4 +16,6 @@ module.exports = {
 		messages: 'по сообщениям',
 	},
 
+	lastMessageTextLength: 10,
+
 }

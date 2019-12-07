@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import forumConst from '../../constants/forumConst';
 import appConst from '../../constants/appConst';
+import { getDateString } from '../../lib/dateStringUtils';
 
 // Сообщение
 export default class Message extends PureComponent {
@@ -36,12 +37,7 @@ export default class Message extends PureComponent {
                             </Link>;
         }
 
-        const date = this.props.message.date;
-        let dateString;
-
-        if (date) {
-            dateString = (typeof(date) === "string") ? new Date(date).toLocaleTimeString() : date.toLocaleTimeString();
-        }
+        const dateString = getDateString(this.props.message.date);
 
         let userInfoBlock;
 

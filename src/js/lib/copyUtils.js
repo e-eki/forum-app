@@ -32,6 +32,20 @@ export function copyChannel(sourse) {
 	result.senderId = sourse.senderId;
 	result.descriptionMessageId = sourse.descriptionMessageId || null;
 	result.messages = sourse.messages || [];
+	result.lastMessage = sourse.lastMessage || null;
+
+	return result;
+};
+
+export function copyPrivateChannel(sourse) {
+	const result = copyBase(sourse);	
+
+	result.senderId = sourse.senderId || '';
+	result.recipientId = sourse.recipientId || '';
+	result.descriptionMessageId = sourse.descriptionMessageId || null;
+	result.name = sourse.name || '';
+	result.messages = sourse.messages || [];
+	result.lastMessage = sourse.lastMessage || null;
 
 	return result;
 };
@@ -48,17 +62,6 @@ export function copyMessage(sourse) {
 	return result;
 };
 
-export function copyPrivateChannel(sourse) {
-	const result = copyBase(sourse);	
-
-	result.senderId = sourse.senderId || '';
-	result.recipientId = sourse.recipientId || '';
-	result.descriptionMessageId = sourse.descriptionMessageId || null;
-	result.name = sourse.name || '';
-	result.messages = sourse.messages || [];
-
-	return result;
-};
 
 
 function copyBase(sourse) {
