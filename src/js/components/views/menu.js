@@ -17,10 +17,10 @@ export default class Menu extends PureComponent {
         const className = 'menu ' + (this.props.className ? this.props.className : '');
 
         let notificationBlock = null;
-        const newMessagesCount = this.props.newMessagesCount ? this.props.newMessagesCount : null;
+        const newPrivateMessagesCount = this.props.newPrivateMessagesCount ? this.props.newPrivateMessagesCount : null;
 
-        if (newMessagesCount) {
-            const notificationText = `+ ${newMessagesCount} новых`;
+        if (newPrivateMessagesCount) {
+            const notificationText = `+ ${newPrivateMessagesCount} новых`;
 
             notificationBlock = <NotificationForm
                                     notificationText = {notificationText}

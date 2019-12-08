@@ -31,7 +31,7 @@ class PrivateChannelContainer extends PureComponent {
 
     componentDidMount() {
         debugger;
-        if (this.props.newMessagesCount) {
+        if (this.props.newPrivateMessagesCount) {
             this.props.resetNewPrivateMessagesCount();  //???
         }
 
@@ -156,7 +156,7 @@ const mapStateToProps = function(store) {
         currentPrivateChannel: store.privateChannelState.get('currentPrivateChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),
-        newMessagesCount: store.notificationState.get('newMessagesCount'),    
+        newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),    
     };
 };
 

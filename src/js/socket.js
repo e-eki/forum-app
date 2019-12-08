@@ -241,7 +241,6 @@ socket.on('action', action => {
 							}
 
 							const newCurrentSubSection = copyUtils.copySubSection(currentSubSection);
-
 							store.dispatch(setCurrentSubSection(newCurrentSubSection));
 					}
 				}
@@ -350,31 +349,32 @@ socket.on('action', action => {
 					}
 					// для уведомлений о новых сообщениях
 					else if ((!currentChannel || currentChannel.id !== action.channelId) &&
-							(!currentPrivateChannel || currentPrivateChannel.id !== action.channelId) &&
-							action.recipientId /*&&
-							this.userId === action.recipientId*/) {  //todo!!userId
+							(!currentPrivateChannel || currentPrivateChannel.id !== action.channelId)) {  
 
 								debugger;
-								if (action.recipientId) {
+								if (action.recipientId /*&&
+									this.userId === action.recipientId*/) {   //todo!!userId
 									store.dispatch(setNewPrivateMessagesCount({
 										message: action.data,  //?
 									}));	
+								}
 
-									if (privateChannels) {
-										const privateChannel = privateChannels.find(item => item.id === action.channel);
+								if (privateChannels) {
+									const privateChannel = privateChannels.find(item => item.id === action.channelId);
 
-										if (privateChannel) {
-											const newPrivateChannel = copyUtils.copyPrivateChannel(privateChannel);
+									if (privateChannel) {
+										const newPrivateChannel = copyUtils.copyPrivateChannel(privateChannel);
 
-											newPrivateChannel.lastMessage = action.data;
+										newPrivateChannel.lastMessage = action.data;
 
-											const index = privateChannels.indexOf(privateChannel);
-											privateChannels[index] = newPrivateChannel;
-										}
+										const index = privateChannels.indexOf(privateChannel);
+										privateChannels[index] = newPrivateChannel;
+
+										const newPrivateChannels = privateChannels.slice();
+										store.dispatch(setPrivateChannels(newPrivateChannels));
 									}
 								}
-								else {
-									if (currentSubSection) {
+								else if (currentSubSection) {
 										const channel = currentSubSection.channels.find(item => item.id === action.channelId);
 						
 										if (channel) {
@@ -383,10 +383,12 @@ socket.on('action', action => {
 
 											const index = currentSubSection.channels.indexOf(channel);
 											currentSubSection.channels[index] = newChannel;
+
+											const newCurrentSubSection = copyUtils.copySubSection(currentSubSection);
+											store.dispatch(setCurrentSubSection(newCurrentSubSection));
 										}
-									}
 								}
-					}
+						}
 				}
 				
 				break;

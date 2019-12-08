@@ -15,7 +15,7 @@ class MenuContainer extends PureComponent {
 
         return (
             <Menu
-                newMessagesCount = {this.props.newMessagesCount}
+                newPrivateMessagesCount = {this.props.newPrivateMessagesCount}
             />
         );
     }
@@ -23,7 +23,7 @@ class MenuContainer extends PureComponent {
 
 const mapStateToProps = function(store) {
     return {
-        newMessagesCount: store.notificationState.get('newMessagesCount'),  //todo: check - reset нов.сообщений при переходе в личные сообщения
+        newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),  //todo: check - reset нов.сообщений при переходе в личные сообщения
     };
 };
 
