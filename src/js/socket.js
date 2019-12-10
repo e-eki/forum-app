@@ -10,7 +10,7 @@ import { setCurrentChannel } from './actions/channelActions';
 import { setCurrentInfoMessage, setModifiableMessage } from './actions/messageActions';
 import { setCurrentPrivateChannel, setPrivateChannels } from './actions/privateChannelActions';
 import { setAlertData } from './actions/alertDataActions';
-import { setNewPrivateMessagesCount } from './actions/notificationActions';
+import { incrementNewPrivateMessagesCount } from './actions/notificationActions';
 import * as copyUtils from './lib/copyUtils';
 import appConst from './constants/appConst';
 
@@ -287,6 +287,11 @@ socket.on('action', action => {
 					const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');
 					const modifiableMessage = store.getState().messageState.get('modifiableMessage');
 
+					// если это личное сообщение, то инкрементим общее кол-во личных сообщений
+					if (action.recipientId) {
+						store.dispatch(incrementNewPrivateMessagesCount());
+					}
+
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
 							const message = currentChannel.messages.find(item => item.id === action.messageId);
@@ -347,48 +352,39 @@ socket.on('action', action => {
 									//link: appConst.defaultLink,
 								}));
 					}
-					// для уведомлений о новых сообщениях
-					else if ((!currentChannel || currentChannel.id !== action.channelId) &&
-							(!currentPrivateChannel || currentPrivateChannel.id !== action.channelId)) {  
+					// для уведомлений о новых личных сообщениях
+					else if (privateChannels) {
+						const privateChannel = privateChannels.find(item => item.id === action.channelId);
 
-								debugger;
-								if (action.recipientId /*&&
-									this.userId === action.recipientId*/) {   //todo!!userId
-									store.dispatch(setNewPrivateMessagesCount({
-										message: action.data,  //?
-									}));	
-								}
+						if (privateChannel) {
+							const newPrivateChannel = copyUtils.copyPrivateChannel(privateChannel);
 
-								if (privateChannels) {
-									const privateChannel = privateChannels.find(item => item.id === action.channelId);
+							newPrivateChannel.lastMessage = action.data;
+							newPrivateChannel.newMessagesCount = privateChannel.newMessagesCount ? privateChannel.newMessagesCount++ : 1;
 
-									if (privateChannel) {
-										const newPrivateChannel = copyUtils.copyPrivateChannel(privateChannel);
+							const index = privateChannels.indexOf(privateChannel);
+							privateChannels[index] = newPrivateChannel;
 
-										newPrivateChannel.lastMessage = action.data;
-
-										const index = privateChannels.indexOf(privateChannel);
-										privateChannels[index] = newPrivateChannel;
-
-										const newPrivateChannels = privateChannels.slice();
-										store.dispatch(setPrivateChannels(newPrivateChannels));
-									}
-								}
-								else if (currentSubSection) {
-										const channel = currentSubSection.channels.find(item => item.id === action.channelId);
-						
-										if (channel) {
-											const newChannel = copyUtils.copyChannel(channel);
-											newChannel.lastMessage = action.data;
-
-											const index = currentSubSection.channels.indexOf(channel);
-											currentSubSection.channels[index] = newChannel;
-
-											const newCurrentSubSection = copyUtils.copySubSection(currentSubSection);
-											store.dispatch(setCurrentSubSection(newCurrentSubSection));
-										}
-								}
+							const newPrivateChannels = privateChannels.slice();
+							store.dispatch(setPrivateChannels(newPrivateChannels));
 						}
+					}
+					// для уведомлений о новых сообщениях
+					else if (currentSubSection) {
+						const channel = currentSubSection.channels.find(item => item.id === action.channelId);
+		
+						if (channel) {
+							const newChannel = copyUtils.copyChannel(channel);
+							newChannel.lastMessage = action.data;
+							newChannel.newMessagesCount = channel.newMessagesCount ? channel.newMessagesCount++ : 1;
+
+							const index = currentSubSection.channels.indexOf(channel);
+							currentSubSection.channels[index] = newChannel;
+
+							const newCurrentSubSection = copyUtils.copySubSection(currentSubSection);
+							store.dispatch(setCurrentSubSection(newCurrentSubSection));
+						}
+					}
 				}
 				
 				break;

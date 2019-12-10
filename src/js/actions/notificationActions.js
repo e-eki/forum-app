@@ -9,3 +9,10 @@ export function setNewPrivateMessagesCount(data) {
 	};
 }
 
+export function incrementNewPrivateMessagesCount(data) {
+	return {
+	  type: actionTypes.INCREMENT_NEW_PRIVATE_MESSAGES_COUNT,
+	  data
+	};
+}
+

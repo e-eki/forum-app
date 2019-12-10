@@ -21,9 +21,6 @@ class PrivateSubSectionContainer extends PureComponent {
 
     componentDidMount() {
         debugger;
-        if (this.props.newPrivateMessagesCount) {
-            this.props.resetNewPrivateMessagesCount();
-        }
 
         return getPrivateChannels()
             .then(results => {
@@ -85,8 +82,7 @@ class PrivateSubSectionContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         privateChannels: store.privateChannelState.get('privateChannels'),
-        currentUserInfo: store.userInfo.get('currentUserInfo'),
-        newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),        
+        currentUserInfo: store.userInfo.get('currentUserInfo'),      
     };
 };
 
@@ -100,9 +96,6 @@ const mapDispatchToProps = function(dispatch) {
         },
         resetCurrentUserInfo: function() {
             dispatch(setCurrentUserInfo(null));
-        },
-        resetNewPrivateMessagesCount: function() {
-            dispatch(setNewPrivateMessagesCount(null));
         },
         joinRoom: function(id) {
             dispatch(joinRoom(id));

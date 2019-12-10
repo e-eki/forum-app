@@ -31,8 +31,11 @@ class PrivateChannelContainer extends PureComponent {
 
     componentDidMount() {
         debugger;
-        if (this.props.newPrivateMessagesCount) {
-            this.props.resetNewPrivateMessagesCount();  //???
+        if (this.props.newPrivateMessagesCount &&   //todo: check!
+            this.props.currentPrivateChannel &&
+            this.props.currentPrivateChannel.newMessagesCount) {
+                const newCount = this.props.newPrivateMessagesCount - this.props.currentPrivateChannel.newMessagesCount;
+                this.props.setNewPrivateMessagesCount(newCount);
         }
 
         this.getPrivateChannel();
@@ -174,8 +177,8 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentUserInfo: function() {
             dispatch(setCurrentUserInfo(null));
         },
-        resetNewPrivateMessagesCount: function() {
-            dispatch(setNewPrivateMessagesCount(null));
+        setNewPrivateMessagesCount: function(data) {
+            dispatch(setNewPrivateMessagesCount(data));
         },
         modifyMessage: function(item) {
             messageApi.modifyMessage(item);

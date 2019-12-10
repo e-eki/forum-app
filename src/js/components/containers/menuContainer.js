@@ -3,11 +3,34 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Menu from '../views/menu';
+import { getPrivateChannels } from '../../api/privateChannelApi';
+import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
 
 class MenuContainer extends PureComponent {
 
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        debugger;
+
+        //if (user.id)   //todo!
+        return getPrivateChannels()
+            .then(privateChannels => {
+                debugger;
+                let newPrivateMessagesCount = 0;
+
+                if (privateChannels && privateChannels.length) {
+                    privateChannels.forEach(item => {
+                        newPrivateMessagesCount += (item.newMessagesCount || 0);
+                    })
+
+                    this.props.setNewPrivateMessagesCount(newPrivateMessagesCount);
+                }
+
+                return true;
+            });
     }
     
     render() {
@@ -29,7 +52,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        //
+        setNewPrivateMessagesCount: function(data) {
+            dispatch(setNewPrivateMessagesCount(data));
+        },
     }
 }
 

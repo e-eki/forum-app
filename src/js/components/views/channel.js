@@ -7,6 +7,7 @@ import ListForm from './forms/listForm';
 import forumConst from '../../constants/forumConst';
 import appConst from '../../constants/appConst';
 import { getDateString } from '../../lib/dateStringUtils';
+import NewMessagesNotificationForm from './forms/newMessagesNotificationForm';
 
 // Канал
 export default class Channel extends PureComponent {
@@ -72,17 +73,29 @@ export default class Channel extends PureComponent {
             let channelNameBlock;
 
             let lastMessageBlock;
+
+            let newMessagesNotificationBlock;
+
+            const channelName = this.props.channel.name || 'NoName channel';
             
             if (this.props.isCurrent) {
-                channelNameBlock = this.props.channel.name;
+                channelNameBlock = channelName;
             }
             else {
                 if (!isPrivate) {
-                    channelNameBlock = <Link to={`${appConst.channelsLink}/${this.props.channel.id}`}>{this.props.channel.name}</Link>;
+                    channelNameBlock = <Link to={`${appConst.channelsLink}/${this.props.channel.id}`}>{channelName}</Link>;
                 }
                 else {
+                    if (this.props.channel.newMessagesCount) {
+                        newMessagesNotificationBlock = <NewMessagesNotificationForm
+                                                            newMessagesCount = {this.props.channel.newMessagesCount}
+                                                        />
+                    }
+
                     channelNameBlock = <div>
-                                            <Link to={`${appConst.privateChannelsLink}/${this.props.channel.id}`}>{this.props.channel.name}</Link>
+                                            <Link to={`${appConst.privateChannelsLink}/${this.props.channel.id}`}>
+                                                {channelName} {newMessagesNotificationBlock}
+                                            </Link>
                                             ----
                                             <Link to="/" onClick = {this.showUserInfo}>RECIPIENT</Link>
                                         </div>;
@@ -103,7 +116,6 @@ export default class Channel extends PureComponent {
                                             {senderName} : {text} <span>{dateString}</span>
                                         </div>;
                 }
-                
             }
 
             channel = <div>

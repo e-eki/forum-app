@@ -33,6 +33,7 @@ export function copyChannel(sourse) {
 	result.descriptionMessageId = sourse.descriptionMessageId || null;
 	result.messages = sourse.messages || [];
 	result.lastMessage = sourse.lastMessage || null;
+	result.newMessagesCount = sourse.newMessagesCount || null;
 
 	return result;
 };
@@ -46,6 +47,7 @@ export function copyPrivateChannel(sourse) {
 	result.name = sourse.name || '';
 	result.messages = sourse.messages || [];
 	result.lastMessage = sourse.lastMessage || null;
+	result.newMessagesCount = sourse.newMessagesCount || null;
 
 	return result;
 };
