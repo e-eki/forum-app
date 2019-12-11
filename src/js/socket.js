@@ -287,9 +287,11 @@ socket.on('action', action => {
 					const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');
 					const modifiableMessage = store.getState().messageState.get('modifiableMessage');
 
-					// если это личное сообщение, то инкрементим общее кол-во личных сообщений
-					if (action.recipientId) {
-						store.dispatch(incrementNewPrivateMessagesCount());
+					// если это личное сообщение и мы не в чате, куда оно пришло, - то инкрементим общее кол-во личных сообщений
+					if (action.recipientId &&
+						!(currentPrivateChannel &&
+						(currentPrivateChannel.id === action.channelId))) {
+							store.dispatch(incrementNewPrivateMessagesCount());
 					}
 
 					if (currentChannel &&

@@ -25,20 +25,19 @@ class PrivateChannelContainer extends PureComponent {
         this.recipientChannelId = null;
         this.channelId = null;
 
+        this.updateNewPrivateMessagesCount = this.updateNewPrivateMessagesCount.bind(this);
         this.getPrivateChannel = this.getPrivateChannel.bind(this);
         this.resetPrivateChannelContainer = this.resetPrivateChannelContainer.bind(this);
     }
 
     componentDidMount() {
         debugger;
-        if (this.props.newPrivateMessagesCount &&   //todo: check!
-            this.props.currentPrivateChannel &&
-            this.props.currentPrivateChannel.newMessagesCount) {
-                const newCount = this.props.newPrivateMessagesCount - this.props.currentPrivateChannel.newMessagesCount;
-                this.props.setNewPrivateMessagesCount(newCount);
-        }
+        return this.getPrivateChannel()
+            .then(result => {
+                this.updateNewPrivateMessagesCount();
+            })
 
-        this.getPrivateChannel();
+        
     }
 
     componentWillUnmount() {
@@ -52,6 +51,16 @@ class PrivateChannelContainer extends PureComponent {
     componentDidUpdate() {
         debugger;
         this.getPrivateChannel();
+    }
+
+    updateNewPrivateMessagesCount() {
+        debugger;
+        if (this.props.newPrivateMessagesCount &&   //todo: check!
+            this.props.currentPrivateChannel &&
+            this.props.currentPrivateChannel.newMessagesCount) {
+                const newCount = this.props.newPrivateMessagesCount - this.props.currentPrivateChannel.newMessagesCount;
+                this.props.setNewPrivateMessagesCount(newCount);
+        }
     }
 
     getPrivateChannel() {

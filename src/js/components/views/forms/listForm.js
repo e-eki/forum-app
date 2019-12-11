@@ -53,8 +53,6 @@ export default class ListForm extends PureComponent {
                 newItem.recipientId = this.props.recipientId;
             }
 
-            // newItem.senderId = '1';  //todo!
-
             this.props.setModifiableItem(newItem);
         }
     }
@@ -90,6 +88,28 @@ export default class ListForm extends PureComponent {
                                 />;
         }
 
+        let itemsBlock = null;
+
+        if (this.props.items) {
+            if (this.props.newMessagesCount) {
+                const newItems = this.props.items.slice(-this.props.newMessagesCount);
+                const oldItems = this.props.items.slice(0, -this.props.newMessagesCount);
+
+                itemsBlock = <div>
+                                {oldItems}
+                                -----новые сообщения-----
+                                {newItems}
+                            </div>;
+            }
+            else {
+                itemsBlock = this.props.items;
+            }
+        }
+
+        
+
+           
+
         return (
             <div className = {className}>
 
@@ -101,7 +121,7 @@ export default class ListForm extends PureComponent {
                     Добавить {this.props.type ? this.props.type : null}
                 </button>
 
-                {this.props.items || null}
+                {itemsBlock}
             </div>
         )
     }

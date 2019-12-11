@@ -17,15 +17,14 @@ export default class InfoForm extends PureComponent {
 
     initItemInfo() {
         debugger;
-        let itemInfo;
+        let itemInfo = null;
 
-        if (this.props.type) {
+        if (this.props.type && this.props.currentInfoItem) {
             switch (this.props.type) {
 
                 case forumConst.itemTypes.message:
                     itemInfo = <div>
-                                    <div>{this.props.data.date.toLocaleTimeString()}</div>
-                                    <div>{this.props.data.text}</div>
+                                    <div>{this.props.currentInfoItem.text}</div>
                                 </div>;
                     break;
                     

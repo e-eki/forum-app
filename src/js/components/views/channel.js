@@ -6,7 +6,7 @@ import Message from './message';
 import ListForm from './forms/listForm';
 import forumConst from '../../constants/forumConst';
 import appConst from '../../constants/appConst';
-import { getDateString } from '../../lib/dateStringUtils';
+import { getDateTimeString } from '../../lib/dateStringUtils';
 import NewMessagesNotificationForm from './forms/newMessagesNotificationForm';
 
 // Канал
@@ -59,11 +59,14 @@ export default class Channel extends PureComponent {
         if (this.props.channel) {
 
             if (this.props.channel.messages) {
+                //todo: сделать группировку сообщений по датам здесь или на сервере
+                
                 this.props.channel.messages.forEach(function(item) {
                     const message = <Message
                                         key={key}
                                         message = {item}
                                         showUserInfoById = {this.props.showUserInfoById}
+                                        setCurrentInfoMessage = {this.props.setCurrentInfoMessage}
                                     />;
                     messages.push(message);
                     key++;
@@ -82,24 +85,21 @@ export default class Channel extends PureComponent {
                 channelNameBlock = channelName;
             }
             else {
-                if (!isPrivate) {
-                    channelNameBlock = <Link to={`${appConst.channelsLink}/${this.props.channel.id}`}>{channelName}</Link>;
-                }
-                else {
-                    if (this.props.channel.newMessagesCount) {
-                        newMessagesNotificationBlock = <NewMessagesNotificationForm
-                                                            newMessagesCount = {this.props.channel.newMessagesCount}
-                                                        />
-                    }
+                const channelsLink = (!isPrivate) ? appConst.channelsLink : appConst.privateChannelsLink;
 
-                    channelNameBlock = <div>
-                                            <Link to={`${appConst.privateChannelsLink}/${this.props.channel.id}`}>
-                                                {channelName} {newMessagesNotificationBlock}
-                                            </Link>
-                                            ----
-                                            <Link to="/" onClick = {this.showUserInfo}>RECIPIENT</Link>
-                                        </div>;
+                if (this.props.channel.newMessagesCount) {
+                    newMessagesNotificationBlock = <NewMessagesNotificationForm
+                                                        newMessagesCount = {this.props.channel.newMessagesCount}
+                                                    />
                 }
+
+                channelNameBlock = <div>
+                                        <Link to={`${channelsLink}/${this.props.channel.id}`}>
+                                            {channelName} {newMessagesNotificationBlock}
+                                        </Link>
+                                        ----
+                                        {isPrivate ? <Link to="/" onClick = {this.showUserInfo}>RECIPIENT</Link> : null}
+                                    </div>;
 
                 if (this.props.channel.lastMessage) {
                     let text = this.props.channel.lastMessage.text;
@@ -108,7 +108,7 @@ export default class Channel extends PureComponent {
                         text = `${text.slice(0, forumConst.lastMessageTextLength)}...`
                     }
 
-                    const dateString = getDateString(this.props.channel.lastMessage.date);
+                    const dateString = getDateTimeString(this.props.channel.lastMessage.date);
 
                     const senderName = this.props.channel.lastMessage.senderName || 'NoName';
 
@@ -138,6 +138,8 @@ export default class Channel extends PureComponent {
                                 setModifiableItem = {this.props.setModifiableMessage}
                                 modifyItem = {this.props.modifyMessage}
                                 deleteItem = {this.props.deleteMessage}
+
+                                newMessagesCount = {this.props.channel.newMessagesCount}
                             />
                             :
                             lastMessageBlock

@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import forumConst from '../../constants/forumConst';
 import appConst from '../../constants/appConst';
-import { getDateString } from '../../lib/dateStringUtils';
+import { getDateTimeString } from '../../lib/dateStringUtils';
 
 // Сообщение
 export default class Message extends PureComponent {
@@ -13,6 +13,12 @@ export default class Message extends PureComponent {
         super(props);
 
         this.showUserInfo = this.showUserInfo.bind(this);
+        this.showInfo = this.showInfo.bind(this);
+    }
+
+    showInfo() {
+        debugger;
+        this.props.setCurrentInfoMessage(this.props.message);
     }
 
     showUserInfo(event) {
@@ -37,15 +43,17 @@ export default class Message extends PureComponent {
                             </Link>;
         }
 
-        const dateString = getDateString(this.props.message.date);
+        const dateString = getDateTimeString(this.props.message.date);
 
-        let userInfoBlock;
+        const senderName = this.props.message.senderName || 'NoName';
+        const userInfoBlock = <Link to="/" onClick = {this.showUserInfo}>{senderName}</Link> 
 
-        if (this.props.message.senderId) {
-            userInfoBlock = <Link to="/" onClick = {this.showUserInfo}>Sender</Link> 
-        }
-        else {
-            userInfoBlock = 'Sender';
+        let messageInfoBlock = null;
+
+        if (!this.props.isCurrent) {
+            messageInfoBlock = <button className = '' onClick = {this.showInfo}>
+                                    Информация
+                                </button>;
         }
         
         return (
@@ -56,6 +64,8 @@ export default class Message extends PureComponent {
 
                 <div>{dateString}</div>
                 <div>{this.props.message.text}</div>
+
+                {messageInfoBlock}
             </div>
         )
     }

@@ -92,7 +92,6 @@ export default class ModifyForm extends Component {
 
                 case forumConst.itemTypes.message:
                     this.props.modifiableItem.text = this.state.text;
-                    this.props.modifiableItem.date = new Date();
                     break;
 
                 default:
