@@ -18,6 +18,9 @@ class ChannelContainer extends PureComponent {
         super(props);
 
         this.channelId = null;
+
+        this.setDescriptionMessage = this.setDescriptionMessage.bind(this);
+        this.resetDescriptionMessage = this.resetDescriptionMessage.bind(this);
     }
 
     componentDidMount() {
@@ -51,6 +54,26 @@ class ChannelContainer extends PureComponent {
 
         this.props.resetCurrentChannel();
     }
+
+    setDescriptionMessage(message) {
+        debugger;
+
+        if (message && message.id) {
+            const channel = this.props.currentChannel;
+            channel.descriptionMessageId = message.id;
+
+            this.props.setCurrentChannel(channel);
+        }
+    }
+
+    resetDescriptionMessage() {
+        debugger;
+
+        const channel = this.props.currentChannel;
+        channel.descriptionMessageId = null;
+
+        this.props.setCurrentChannel(channel);
+    }
     
     render() {
         //console.log('render ChannelContainer');
@@ -72,6 +95,9 @@ class ChannelContainer extends PureComponent {
                     deleteMessage = {this.props.deleteMessage}
 
                     showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
+
+                    setDescriptionMessage = {this.setDescriptionMessage}
+                    resetDescriptionMessage = {this.resetDescriptionMessage}
                 />
             </div>
         );
@@ -80,7 +106,7 @@ class ChannelContainer extends PureComponent {
 
 const mapStateToProps = function(store) {
     return {
-        currentUserInfo: store.userInfo.get('currentUserInfo'),       
+        currentUserInfo: store.userInfo.get('currentUserInfo'),      
         currentChannel: store.channelState.get('currentChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),

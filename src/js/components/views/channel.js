@@ -80,9 +80,25 @@ export default class Channel extends PureComponent {
             let newMessagesNotificationBlock;
 
             const channelName = this.props.channel.name || 'NoName channel';
+
+            let descriptionMessageBlock = null;
             
             if (this.props.isCurrent) {
                 channelNameBlock = channelName;
+
+                if (this.props.channel.descriptionMessage) {
+                    const descriptionMessage = this.props.channel.descriptionMessage;
+
+                    descriptionMessageBlock = <div>
+                                                ---description-message----
+                                                <div>{descriptionMessage.senderName || 'NoName'}</div>
+                                                <div>{descriptionMessage.text || ''}</div>
+                                                --------------------------
+                                                <button className = '' onClick = {this.props.resetDescriptionMessage}>
+                                                    Открепить
+                                                </button>
+                                            </div>;
+                }
             }
             else {
                 const channelsLink = (!isPrivate) ? appConst.channelsLink : appConst.privateChannelsLink;
@@ -140,6 +156,8 @@ export default class Channel extends PureComponent {
                                 deleteItem = {this.props.deleteMessage}
 
                                 newMessagesCount = {this.props.channel.newMessagesCount}
+
+                                setDescriptionMessage = {this.props.setDescriptionMessage}
                             />
                             :
                             lastMessageBlock

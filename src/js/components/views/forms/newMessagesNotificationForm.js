@@ -18,7 +18,7 @@ export default class NewMessagesNotificationForm extends PureComponent {
 		return (
 			<div className = {className}>
 
-				{this.props.newMessagesCount} новое
+				{this.props.newMessagesCount} новое сообщение
 
 			</div>
 		)

@@ -63,6 +63,8 @@ export function modifyChannel(item) {
 	tasks.push(item.id);
 	tasks.push(item.subSectionId);
 
+	item.senderId = item.subSectionId;  //todo!
+
 	if (item.id) {
 		tasks.push(updateChannel(item));
 	}

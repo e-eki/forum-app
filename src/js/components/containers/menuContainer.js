@@ -22,7 +22,7 @@ class MenuContainer extends PureComponent {
                 let newPrivateMessagesCount = 0;
 
                 if (privateChannels && privateChannels.length) {
-                    privateChannels.forEach(item => {
+                    privateChannels.forEach(item => {  //?todo: reduce
                         newPrivateMessagesCount += (item.newMessagesCount || 0);
                     })
 

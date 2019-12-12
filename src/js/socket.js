@@ -6,7 +6,7 @@ import * as actionTypes from './actions/actionTypes';
 import store from './store/store';
 import { setSections, setCurrentSection } from './actions/sectionActions';
 import { setCurrentSubSection } from './actions/subSectionActions';
-import { setCurrentChannel } from './actions/channelActions';
+import { setCurrentChannel, setCurrentInfoChannel, setModifiableChannel } from './actions/channelActions';
 import { setCurrentInfoMessage, setModifiableMessage } from './actions/messageActions';
 import { setCurrentPrivateChannel, setPrivateChannels } from './actions/privateChannelActions';
 import { setAlertData } from './actions/alertDataActions';
@@ -217,6 +217,39 @@ socket.on('action', action => {
 				if (action.subSectionId && action.channelId && action.data) {
 					const currentSubSection = store.getState().subSectionState.get('currentSubSection');
 					const currentChannel = store.getState().channelState.get('currentChannel');
+					const currentInfoChannel = store.getState().channelState.get('currentInfoChannel');
+					const modifiableChannel = store.getState().channelState.get('modifiableChannel');
+
+					if (action.data.senderId !== 0) { //todo! userId вместо 0
+						if (currentInfoChannel &&
+							currentInfoChannel.id === action.channelId) {
+								// если изменилось имя или описание чата
+								if (action.data.name !== currentInfoChannel.name ||
+									action.data.description !== currentInfoChannel.description) {
+										const newChannel = copyUtils.copyChannel(action.data);
+										store.dispatch(setCurrentInfoChannel(newChannel));
+			
+										store.dispatch(setAlertData({  //?
+											message: 'Редактируемый чат был изменен.',
+											//link: appConst.defaultLink,
+										}));
+									}
+						}
+
+						if (modifiableChannel &&
+							modifiableChannel.id === action.channelId) {
+								// если изменилось имя или описание чата
+								if (action.data.name !== currentInfoChannel.name ||
+									action.data.description !== currentInfoChannel.description) {
+										store.dispatch(setModifiableChannel(null));
+
+										store.dispatch(setAlertData({  //?
+											message: 'Редактируемый чат был изменен.',
+											//link: appConst.defaultLink,
+										}));
+								}
+						}
+					}
 
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
@@ -253,6 +286,28 @@ socket.on('action', action => {
 				if (action.channelId && action.subSectionId) {
 					const currentSubSection = store.getState().subSectionState.get('currentSubSection');
 					const currentChannel = store.getState().channelState.get('currentChannel');
+					const currentInfoChannel = store.getState().channelState.get('currentInfoChannel');
+					const modifiableChannel = store.getState().channelState.get('modifiableChannel');
+
+					if (currentInfoChannel &&
+						currentInfoChannel.id === action.channelId) {
+							store.dispatch(setCurrentInfoChannel(null));
+
+							store.dispatch(setAlertData({  //?
+								message: 'Редактируемый чат был удален.',
+								//link: appConst.defaultLink,
+							}));
+					}
+
+					if (modifiableChannel &&
+						modifiableChannel.id === action.channelId) {
+							store.dispatch(setModifiableChannel(null));
+
+							store.dispatch(setAlertData({  //?
+								message: 'Редактируемый чат был удален.',
+								//link: appConst.defaultLink,
+							}));
+					}
 					
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
@@ -294,6 +349,29 @@ socket.on('action', action => {
 							store.dispatch(incrementNewPrivateMessagesCount());
 					}
 
+					if (action.data.senderId !== 0) { //todo! userId вместо 0
+						if (currentInfoMessage &&
+							currentInfoMessage.id === action.messageId) {
+								const newMessage = copyUtils.copyMessage(action.data);
+								store.dispatch(setCurrentInfoMessage(newMessage));
+	
+								store.dispatch(setAlertData({  //?
+									message: 'Редактируемое сообщение было изменено.',
+									//link: appConst.defaultLink,
+								}));
+						}
+
+						if (modifiableMessage &&
+							modifiableMessage.id === action.messageId) {
+								store.dispatch(setModifiableMessage(null));
+
+								store.dispatch(setAlertData({  //?
+									message: 'Редактируемое сообщение было изменено.',
+									//link: appConst.defaultLink,
+								}));
+						}
+					}
+
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
 							const message = currentChannel.messages.find(item => item.id === action.messageId);
@@ -314,6 +392,7 @@ socket.on('action', action => {
 
 							store.dispatch(setCurrentChannel(newCurrentChannel));   //?
 					}
+					
 					else if (currentPrivateChannel &&
 						(currentPrivateChannel.id === action.channelId)) {
 							const message = currentPrivateChannel.messages.find(item => item.id === action.messageId);
@@ -334,26 +413,7 @@ socket.on('action', action => {
 
 							store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));   //?
 					}
-					else if (currentInfoMessage &&
-							currentInfoMessage.id === action.messageId) {
-								const newMessage = copyUtils.copyMessage(action.data);
-								store.dispatch(setCurrentInfoMessage(newMessage));
-
-								store.dispatch(setAlertData({  //?
-									message: 'Это сообщение было отредактировано.',
-									//link: appConst.defaultLink,
-								}));
-					}
-					else if (modifiableMessage &&
-							modifiableMessage.id === action.messageId) {
-								const newMessage = copyUtils.copyMessage(action.data);
-								store.dispatch(setModifiableMessage(newMessage));
-
-								store.dispatch(setAlertData({  //?
-									message: 'Это сообщение было отредактировано.',
-									//link: appConst.defaultLink,
-								}));
-					}
+					
 					// для уведомлений о новых личных сообщениях
 					else if (privateChannels) {
 						const privateChannel = privateChannels.find(item => item.id === action.channelId);
@@ -400,6 +460,26 @@ socket.on('action', action => {
 					const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');  //todo: то же для section,subsection,channel
 					const modifiableMessage = store.getState().messageState.get('modifiableMessage');
 
+					if (currentInfoMessage &&
+						currentInfoMessage.id === action.messageId) {
+							store.dispatch(setCurrentInfoMessage(null));
+
+							store.dispatch(setAlertData({  //?
+								message: 'Редактируемое сообщение было удалено.',
+								//link: appConst.defaultLink,
+							}));
+					}
+
+					if (modifiableMessage &&
+						modifiableMessage.id === action.messageId) {
+							store.dispatch(setModifiableMessage(null));
+
+							store.dispatch(setAlertData({  //?
+								message: 'Редактируемое сообщение было удалено.',
+								//link: appConst.defaultLink,
+							}));
+					}
+					
 					if (currentChannel &&
 						(currentChannel.id === action.channelId)) {
 							const newMessages = currentChannel.messages.filter(item => item.id !== action.messageId)
@@ -418,24 +498,6 @@ socket.on('action', action => {
 
 							store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));   //?
 					}
-					else if (currentInfoMessage &&
-							currentInfoMessage.id === action.messageId) {
-								store.dispatch(setCurrentInfoMessage(null));
-
-								store.dispatch(setAlertData({  //?
-									message: 'Это сообщение было удалено.',
-									link: appConst.defaultLink,
-								}));
-							}
-					else if (modifiableMessage &&
-							modifiableMessage.id === action.messageId) {
-								store.dispatch(setModifiableMessage(null));
-
-								store.dispatch(setAlertData({  //?
-									message: 'Это сообщение было удалено.',
-									link: appConst.defaultLink,
-								}));
-							}
 				}
 				
 				break;
@@ -492,7 +554,7 @@ socket.on('action', action => {
 
 							store.dispatch(setAlertData({
 								message: 'Этот чат был удалён.',
-								link: `${appConst.privateChannelsLink}`,  //todo:  вынести!
+								link: `${appConst.privateChannelsLink}`,
 							}));
 					}
 				}

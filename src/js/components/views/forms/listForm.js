@@ -75,6 +75,8 @@ export default class ListForm extends PureComponent {
                                 setModifiableItem = {this.props.setModifiableItem}
                                 modifyItem = {this.props.modifyItem}
                                 type = {this.props.type}
+
+                                setDescriptionMessage = {this.props.setDescriptionMessage}
                             />;
         }
 
