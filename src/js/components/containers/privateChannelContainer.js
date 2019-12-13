@@ -13,6 +13,7 @@ import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import { setCurrentPrivateChannel } from '../../actions/privateChannelActions';
 import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
 import forumConst from '../../constants/forumConst';
+import { setDescriptionMessageForChannel } from '../../lib/channelUtils';
 
 class PrivateChannelContainer extends PureComponent {
 
@@ -28,6 +29,8 @@ class PrivateChannelContainer extends PureComponent {
         this.updateNewPrivateMessagesCount = this.updateNewPrivateMessagesCount.bind(this);
         this.getPrivateChannel = this.getPrivateChannel.bind(this);
         this.resetPrivateChannelContainer = this.resetPrivateChannelContainer.bind(this);
+        this.setDescriptionMessage = this.setDescriptionMessage.bind(this);
+        this.resetDescriptionMessage = this.resetDescriptionMessage.bind(this);
     }
 
     componentDidMount() {
@@ -36,8 +39,6 @@ class PrivateChannelContainer extends PureComponent {
             .then(result => {
                 this.updateNewPrivateMessagesCount();
             })
-
-        
     }
 
     componentWillUnmount() {
@@ -132,6 +133,20 @@ class PrivateChannelContainer extends PureComponent {
 
         this.props.resetCurrentPrivateChannel();
     }
+
+    setDescriptionMessage(message) {
+        debugger;
+
+        return setDescriptionMessageForChannel(forumConst.itemTypes.privateChannel, message, this.props.currentPrivateChannel)
+            .then(result => true);
+    }
+
+    resetDescriptionMessage() {
+        debugger;
+
+        return setDescriptionMessageForChannel(forumConst.itemTypes.privateChannel, null, this.props.currentPrivateChannel)
+            .then(result => true);
+    }
     
     render() {
         //console.log('render privateChannelContainer');
@@ -154,6 +169,9 @@ class PrivateChannelContainer extends PureComponent {
                     deleteMessage = {this.props.deleteMessage}
 
                     showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
+
+                    setDescriptionMessage = {this.setDescriptionMessage}
+                    resetDescriptionMessage = {this.resetDescriptionMessage}
                 />
             </div>
         );

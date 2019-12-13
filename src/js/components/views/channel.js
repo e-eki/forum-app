@@ -93,7 +93,7 @@ export default class Channel extends PureComponent {
                                                 ---description-message----
                                                 <div>{descriptionMessage.senderName || 'NoName'}</div>
                                                 <div>{descriptionMessage.text || ''}</div>
-                                                --------------------------
+                                                -----
                                                 <button className = '' onClick = {this.props.resetDescriptionMessage}>
                                                     Открепить
                                                 </button>
@@ -139,7 +139,7 @@ export default class Channel extends PureComponent {
                         
                         {((this.props.isCurrent && !isPrivate) || isSearchResult) ? <div>{this.props.channel.description}</div> : null}
 
-                        {this.props.isCurrent ? <div>{this.props.channel.descriptionMessage}</div> : null}
+                        {descriptionMessageBlock}
 
                         {this.props.isCurrent
                             ?

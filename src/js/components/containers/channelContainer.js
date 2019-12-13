@@ -11,6 +11,7 @@ import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import { setCurrentInfoChannel, setCurrentChannel } from '../../actions/channelActions';
+import { setDescriptionMessageForChannel } from '../../lib/channelUtils';
 
 class ChannelContainer extends PureComponent {
 
@@ -58,21 +59,15 @@ class ChannelContainer extends PureComponent {
     setDescriptionMessage(message) {
         debugger;
 
-        if (message && message.id) {
-            const channel = this.props.currentChannel;
-            channel.descriptionMessageId = message.id;
-
-            this.props.setCurrentChannel(channel);
-        }
+        return setDescriptionMessageForChannel(forumConst.itemTypes.channel, message, this.props.currentChannel)
+            .then(result => true);
     }
 
     resetDescriptionMessage() {
         debugger;
 
-        const channel = this.props.currentChannel;
-        channel.descriptionMessageId = null;
-
-        this.props.setCurrentChannel(channel);
+        return setDescriptionMessageForChannel(forumConst.itemTypes.channel, null, this.props.currentChannel)
+            .then(result => true);
     }
     
     render() {

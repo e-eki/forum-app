@@ -386,11 +386,13 @@ socket.on('action', action => {
 								currentChannel.messages.push(action.data);
 							}
 
-							//const newMessages = currentChannel.messages.slice();  //?
 							const newCurrentChannel = copyUtils.copyChannel(currentChannel);
-							//newCurrentChannel.messages = newMessages;
 
-							store.dispatch(setCurrentChannel(newCurrentChannel));   //?
+							if (action.messageId === currentChannel.descriptionMessageId) {   //?
+								newCurrentChannel.descriptionMessage = action.data;
+							}
+
+							store.dispatch(setCurrentChannel(newCurrentChannel));
 					}
 					
 					else if (currentPrivateChannel &&
@@ -407,11 +409,13 @@ socket.on('action', action => {
 								currentPrivateChannel.messages.push(action.data);
 							}
 
-							//const newMessages = currentChannel.messages.slice();  //?
 							const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(currentPrivateChannel);
-							//newCurrentChannel.messages = newMessages;
+							
+							if (action.messageId === currentPrivateChannel.descriptionMessageId) {  //?
+								newCurrentPrivateChannel.descriptionMessage = action.data;
+							}
 
-							store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));   //?
+							store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));
 					}
 					
 					// для уведомлений о новых личных сообщениях
@@ -487,6 +491,11 @@ socket.on('action', action => {
 							const newCurrentChannel = copyUtils.copyChannel(currentChannel);
 							newCurrentChannel.messages = newMessages;
 
+							if (action.messageId === currentChannel.descriptionMessageId) {   //?
+								newCurrentChannel.descriptionMessage = null;
+								newCurrentChannel.descriptionMessageId = null;
+							}
+
 							store.dispatch(setCurrentChannel(newCurrentChannel));
 					}
 					else if (currentPrivateChannel &&
@@ -496,7 +505,12 @@ socket.on('action', action => {
 							const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(currentPrivateChannel);
 							newCurrentPrivateChannel.messages = newMessages;
 
-							store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));   //?
+							if (action.messageId === currentPrivateChannel.descriptionMessageId) {   //?
+								newCurrentPrivateChannel.descriptionMessage = null;
+								newCurrentPrivateChannel.descriptionMessageId = null;
+							}
+
+							store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));
 					}
 				}
 				
@@ -529,7 +543,7 @@ socket.on('action', action => {
 					else if (currentPrivateChannel &&
 						(currentPrivateChannel.id === action.privateChannelId)) {
 							const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(action.data);
-							newCurrentChannel.messages = currentPrivateChannel.messages;
+							newCurrentPrivateChannel.messages = currentPrivateChannel.messages;
 
 							store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));
 					}

@@ -94,6 +94,7 @@ function createChannel(item) {
 		name: item.name,
 		description: item.description,
 		subSectionId: item.subSectionId,
+		descriptionMessageId: item.descriptionMessageId,
 	})
 }
 
@@ -102,5 +103,6 @@ function updateChannel(item) {
 		name: item.name,
 		description: item.description,
 		subSectionId: item.subSectionId,
+		descriptionMessageId: item.descriptionMessageId,
 	})
 }

@@ -60,7 +60,7 @@ export default class InfoForm extends PureComponent {
     setDescriptionMessage() {
         debugger;
         if (this.props.setDescriptionMessage) {
-            this.rpops.setDescriptionMessage(this.props.currentInfoItem);
+            this.props.setDescriptionMessage(this.props.currentInfoItem);
         }
     }
 

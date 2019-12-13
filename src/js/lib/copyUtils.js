@@ -24,30 +24,37 @@ export function copySubSection(sourse) {
 };
 
 export function copyChannel(sourse) {
-	const result = copyBase(sourse);	
+	const result = copyChannelBase(sourse);	
 
-	result.name = sourse.name || '';
 	result.description = sourse.description || '';
 	result.subSectionId = sourse.subSectionId || null;
-	result.senderId = sourse.senderId;
-	result.descriptionMessageId = sourse.descriptionMessageId || null;
-	result.messages = sourse.messages || [];
-	result.lastMessage = sourse.lastMessage || null;
-	result.newMessagesCount = sourse.newMessagesCount || null;
+
+	// result.name = sourse.name || '';
+	// result.description = sourse.description || '';
+	
+	// result.senderId = sourse.senderId;
+	// result.descriptionMessageId = sourse.descriptionMessageId || null;
+	// result.descriptionMessage = sourse.descriptionMessage || null;
+	// result.messages = sourse.messages || [];
+	// result.lastMessage = sourse.lastMessage || null;
+	// result.newMessagesCount = sourse.newMessagesCount || null;
 
 	return result;
 };
 
 export function copyPrivateChannel(sourse) {
-	const result = copyBase(sourse);	
+	const result = copyChannelBase(sourse);
 
-	result.senderId = sourse.senderId || '';
-	result.recipientId = sourse.recipientId || '';
-	result.descriptionMessageId = sourse.descriptionMessageId || null;
-	result.name = sourse.name || '';
-	result.messages = sourse.messages || [];
-	result.lastMessage = sourse.lastMessage || null;
-	result.newMessagesCount = sourse.newMessagesCount || null;
+	result.recipientId = sourse.recipientId || '';	
+
+	// result.senderId = sourse.senderId || '';
+	// result.recipientId = sourse.recipientId || '';
+	// result.descriptionMessageId = sourse.descriptionMessageId || null;
+	// result.descriptionMessage = sourse.descriptionMessage || null;
+	// result.name = sourse.name || '';
+	// result.messages = sourse.messages || [];
+	// result.lastMessage = sourse.lastMessage || null;
+	// result.newMessagesCount = sourse.newMessagesCount || null;
 
 	return result;
 };
@@ -70,6 +77,20 @@ function copyBase(sourse) {
 	const result = new Object();  //let?
 
 	result.id = sourse.id;
+
+	return result;
+}
+
+function copyChannelBase(sourse) {
+	const result = copyBase(sourse);	
+
+	result.name = sourse.name || '';
+	result.senderId = sourse.senderId || '';
+	result.descriptionMessageId = sourse.descriptionMessageId || null;
+	result.descriptionMessage = sourse.descriptionMessage || null;
+	result.messages = sourse.messages || [];
+	result.lastMessage = sourse.lastMessage || null;
+	result.newMessagesCount = sourse.newMessagesCount || null;
 
 	return result;
 }
