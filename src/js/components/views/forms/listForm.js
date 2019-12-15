@@ -27,8 +27,17 @@ export default class ListForm extends PureComponent {
                         text: ''
                     };
                     break;
+
+                case forumConst.itemTypes.section:
+                case forumConst.itemTypes.subSection:
+                    newItem = {
+                        name: '',
+                        description: '',
+                        orderNumber: this.props.items ? this.props.items.length : 0,   //?
+                    };
+                    break;
                     
-                default:
+                default:  //?
                     newItem = {
                         name: '',
                         description: '',
@@ -70,6 +79,7 @@ export default class ListForm extends PureComponent {
                                 currentInfoItem = {this.props.currentInfoItem}
                                 setCurrentInfoItem = {this.props.setCurrentInfoItem}
                                 deleteItem = {this.props.deleteItem}
+                                items = {this.props.items}
 
                                 modifiableItem = {this.props.modifiableItem}
                                 setModifiableItem = {this.props.setModifiableItem}
@@ -107,10 +117,6 @@ export default class ListForm extends PureComponent {
                 itemsBlock = this.props.items;
             }
         }
-
-        
-
-           
 
         return (
             <div className = {className}>

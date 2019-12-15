@@ -18,4 +18,8 @@ module.exports = {
 
 	lastMessageTextLength: 10,
 
+	movingInListTypes: {
+		up: 'вверх',
+		down: 'вниз',
+	},
 }

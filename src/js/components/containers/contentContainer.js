@@ -25,6 +25,8 @@ class ContentContainer extends PureComponent {
         super(props);
 
         this.userId = '5dd6d4c6d0412d25e4895fad';  //todo!
+
+        this.props.
     }
 
     componentDidMount() {      
@@ -45,6 +47,18 @@ class ContentContainer extends PureComponent {
         this.props.leaveRoom(apiConst.defaultRoomId);
 
         this.props.resetSections();
+    }
+
+    moveItemInList(section) {
+        debugger;
+
+        if (this.props.sections) {
+            const movingSection = this.props.sections.find(item => item.id === section.id);
+
+            const index = this.props.sections.indexOf(movingSection);
+
+
+        }
     }
     
     render() {

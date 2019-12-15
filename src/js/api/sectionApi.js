@@ -80,6 +80,7 @@ function createSection(item) {
 	return axios.post(`${apiConst.sectionApi}`, {
 		name: item.name,
 		description: item.description,
+		orderNumber: item.orderNumber,
 	})
 }
 
@@ -87,5 +88,6 @@ function updateSection(item) {
 	return axios.put(`${apiConst.sectionApi}/${item.id}`, {
 		name: item.name,
 		description: item.description,
+		orderNumber: item.orderNumber,
 	})
 }

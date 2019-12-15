@@ -35,10 +35,10 @@ export function getPrivateChannelByRecipientId(recipientId) {
 			debugger;
 			const tasks = [];
 
-			if (response.data) {
-				// store.dispatch(privateChannelActions.setCurrentPrivateChannel(response.data));
+			if (response.data && response.data.length) {
+				const privateChannel = response.data[0];
 				
-				tasks.push(response.data);
+				tasks.push(privateChannel);
 			}
 			else {
 				tasks.push(false);

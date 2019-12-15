@@ -83,6 +83,7 @@ function createSubSection(item) {
 		name: item.name,
 		description: item.description,
 		sectionId: item.sectionId,
+		orderNumber: item.orderNumber,
 	})
 }
 
@@ -91,5 +92,6 @@ function updateSubSection(item) {
 		name: item.name,
 		description: item.description,
 		sectionId: item.sectionId,
+		orderNumber: item.orderNumber,
 	})
 }
