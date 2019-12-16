@@ -3,11 +3,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import SubSection from '../views/subSection';
-import { getSubSectionById } from '../../api/subSectionApi';
+import { getSubSectionById, getSubSections } from '../../api/subSectionApi';
 import * as channelApi from '../../api/channelApi';
 import { setCurrentInfoSubSection, setCurrentSubSection } from '../../actions/subSectionActions';
-import { setModifiableChannel, setCurrentInfoChannel } from '../../actions/channelActions';
+import { setModifiableChannel, setCurrentInfoChannel, setMovingChannel } from '../../actions/channelActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
+import { setParentItemsList } from '../../actions/modifyingActions';
 
 class SubSectionContainer extends PureComponent {
 
@@ -41,6 +42,18 @@ class SubSectionContainer extends PureComponent {
         }
         this.props.resetCurrentSubSection();  //?
     }
+
+    componentDidUpdate() {
+        debugger;
+
+        if (this.props.movingChannel) {
+            return getSubSections()    //?
+                .then(subSections => {
+                    debugger;
+                    this.props.setParentItemsList(subSections);
+                })
+        }
+    }
     
     render() {
         //console.log('render SubSectionContainer');
@@ -49,14 +62,18 @@ class SubSectionContainer extends PureComponent {
             <SubSection
                 subSection = {this.props.currentSubSection}
                 isCurrent = {true}
-                setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
+                setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}   //todo: info|modify check!!!
 
                 currentInfoChannel = {this.props.currentInfoChannel}
                 modifiableChannel = {this.props.modifiableChannel}
+                movingChannel = {this.props.movingChannel}
                 setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
                 setModifiableChannel = {this.props.setModifiableChannel}
+                setMovingChannel = {this.props.setMovingChannel}
                 modifyChannel = {this.props.modifyChannel}
                 deleteChannel = {this.props.deleteChannel}
+
+                parentItemsList = {this.props.parentItemsList}
             />
         );
     }
@@ -67,6 +84,8 @@ const mapStateToProps = function(store) {
         currentSubSection: store.subSectionState.get('currentSubSection'),
         currentInfoChannel: store.channelState.get('currentInfoChannel'),
         modifiableChannel: store.channelState.get('modifiableChannel'),
+        movingChannel: store.channelState.get('movingChannel'),
+        parentItemsList: store.modifyingState.get('parentItemsList'),
     };
 };
 
@@ -90,8 +109,14 @@ const mapDispatchToProps = function(dispatch) {
         setModifiableChannel: function(item) {
             dispatch(setModifiableChannel(item));
         },
+        setMovingChannel: function(item) {
+            dispatch(setMovingChannel(item));
+        },
         setCurrentInfoChannel: function(item) {
             dispatch(setCurrentInfoChannel(item));
+        },
+        setParentItemsList: function(items) {
+            dispatch(setParentItemsList(items));
         },
         joinRoom: function(id) {
             dispatch(joinRoom(id));

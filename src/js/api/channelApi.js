@@ -8,6 +8,14 @@ import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 
 
+export function getChannels() {  //?
+	return axios.get(`${apiConst.channelApi}`)
+		.then(response => {
+			debugger;
+		    return response.data;
+		});
+}
+
 export function getChannelsByText(searchText) {
 	return axios.get(`${apiConst.channelApi}?searchText=${searchText}`)
 		.then(response => {
@@ -80,6 +88,8 @@ export function modifyChannel(item) {
 			}
 			
 			store.dispatch(channelActions.setModifiableChannel(null));
+
+			store.dispatch(channelActions.setMovingChannel(null)); //?
 
 			store.dispatch(remoteActions.updateChannelById(channelId, subSectionId));
 

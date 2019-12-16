@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react';
 import ListForm from './forms/listForm';
 import Section from './section';
+import forumConst from '../../constants/forumConst';
 
 export default class Main extends PureComponent {
 
@@ -22,6 +23,7 @@ export default class Main extends PureComponent {
             this.props.sections.forEach(function(item) {
                 let modifiableSubSection = null;
                 let currentInfoSubSection = null;
+                let movingSubSection = null;
 
                 if (item.id) {
                     if (this.props.modifiableSubSection) {
@@ -39,6 +41,14 @@ export default class Main extends PureComponent {
                             currentInfoSubSection = this.props.currentInfoSubSection;
                         }
                     }
+
+                    if (this.props.movingSubSection) {
+                        const parentId = this.props.movingSubSection.parentItemId || this.props.movingSubSection.sectionId;
+
+                        if (parentId && parentId === item.id) {
+                            movingSubSection = this.props.movingSubSection;
+                        }
+                    }
                 }
 
                 const section = <Section
@@ -48,8 +58,10 @@ export default class Main extends PureComponent {
 
                                     currentInfoSubSection = {currentInfoSubSection}
                                     modifiableSubSection = {modifiableSubSection}
+                                    movingSubSection = {movingSubSection}
                                     setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
                                     setModifiableSubSection = {this.props.setModifiableSubSection}
+                                    setMovingSubSection = {this.props.setMovingSubSection}
                                     modifySubSection = {this.props.modifySubSection}
                                     deleteSubSection = {this.props.deleteSubSection}
                                 />;
@@ -62,12 +74,14 @@ export default class Main extends PureComponent {
             <div className = {className}>
 
                 <ListForm
-                    type = 'section'
+                    type = {forumConst.itemTypes.section}
                     items = {sections}
                     currentInfoItem = {this.props.currentInfoSection}
                     setCurrentInfoItem = {this.props.setCurrentInfoSection}
                     modifiableItem = {this.props.modifiableSection}
+                    movingItem = {this.props.movingSection}
                     setModifiableItem = {this.props.setModifiableSection}
+                    setMovingItem = {this.props.setMovingSection}
                     modifyItem = {this.props.modifySection}
                     deleteItem = {this.props.deleteSection}
                 />

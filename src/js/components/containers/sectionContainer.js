@@ -3,11 +3,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Section from '../views/section';
-import { getSectionById } from '../../api/sectionApi';
+import { getSectionById, getSections } from '../../api/sectionApi';
 import * as subSectionApi from '../../api/subSectionApi';
 import * as subSectionActions from '../../actions/subSectionActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import { setCurrentInfoSection, setCurrentSection } from '../../actions/sectionActions';
+import { setParentItemsList } from '../../actions/modifyingActions';
 
 class SectionContainer extends PureComponent {
 
@@ -41,6 +42,18 @@ class SectionContainer extends PureComponent {
         }
         this.props.resetCurrentSection();  //?
     }
+
+    componentDidUpdate() {
+        debugger;
+
+        if (this.props.movingSubSection) {
+            return getSections()
+                .then(sections => {
+                    debugger;
+                    this.props.setParentItemsList(sections);
+                })
+        }
+    }
     
     render() {
         //console.log('render SectionContainer');
@@ -49,14 +62,18 @@ class SectionContainer extends PureComponent {
             <Section
                 section = {this.props.currentSection}
                 isCurrent = {true}
-                setCurrentInfoSection = {this.props.setCurrentInfoSection}
+                setCurrentInfoSection = {this.props.setCurrentInfoSection}   //???
 
                 currentInfoSubSection = {this.props.currentInfoSubSection}
                 modifiableSubSection = {this.props.modifiableSubSection}
+                movingSubSection = {this.props.movingSubSection}
                 setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
                 setModifiableSubSection = {this.props.setModifiableSubSection}
+                setMovingSubSection = {this.props.setMovingSubSection}
                 modifySubSection = {this.props.modifySubSection}
                 deleteSubSection = {this.props.deleteSubSection}
+
+                parentItemsList = {this.props.parentItemsList}
             />
         );
     }
@@ -67,6 +84,8 @@ const mapStateToProps = function(store) {
         currentSection: store.sectionState.get('currentSection'),
         currentInfoSubSection: store.subSectionState.get('currentInfoSubSection'),
         modifiableSubSection: store.subSectionState.get('modifiableSubSection'),
+        movingSubSection: store.subSectionState.get('movingSubSection'),
+        parentItemsList: store.modifyingState.get('parentItemsList'),
     };
 };
 
@@ -84,6 +103,9 @@ const mapDispatchToProps = function(dispatch) {
         setModifiableSubSection: function(item) {
             dispatch(subSectionActions.setModifiableSubSection(item));
         },
+        setMovingSubSection: function(item) {
+            dispatch(subSectionActions.setMovingSubSection(item));
+        },
         setCurrentInfoSubSection: function(item) {
             dispatch(subSectionActions.setCurrentInfoSubSection(item));
         },
@@ -92,6 +114,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         resetCurrentSection: function() {
             dispatch(setCurrentSection(null));
+        },
+        setParentItemsList: function(items) {
+            dispatch(setParentItemsList(items));
         },
         joinRoom: function(id) {
             dispatch(joinRoom(id));

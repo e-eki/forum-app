@@ -22,3 +22,10 @@ export function setModifiableChannel(data) {
 	  data
 	};
 }
+
+export function setMovingChannel(data) {
+	return {
+	  type: actionTypes.SET_MOVING_CHANNEL,
+	  data
+	};
+}

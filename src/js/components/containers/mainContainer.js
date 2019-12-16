@@ -2,13 +2,14 @@
 
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import Content from '../views/content';
+import Main from '../views/main';
 import * as sectionApi from '../../api/sectionApi';
 import * as subSectionApi from '../../api/subSectionApi';
 import * as sectionActions from '../../actions/sectionActions';
 import * as subSectionActions from '../../actions/subSectionActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import apiConst from '../../constants/apiConst';
+import { setParentItemsList } from '../../actions/modifyingActions';
 
 // const mapStateToProps = function(state) {
 //     debugger;
@@ -19,14 +20,12 @@ import apiConst from '../../constants/apiConst';
 
 // export default connect(mapStateToProps, actions)(Content);
 
-class ContentContainer extends PureComponent {
+class MainContainer extends PureComponent {
 
     constructor(props) {
         super(props);
 
         this.userId = '5dd6d4c6d0412d25e4895fad';  //todo!
-
-        this.props.
     }
 
     componentDidMount() {      
@@ -49,34 +48,34 @@ class ContentContainer extends PureComponent {
         this.props.resetSections();
     }
 
-    moveItemInList(section) {
+    componentDidUpdate() {
         debugger;
 
-        if (this.props.sections) {
-            const movingSection = this.props.sections.find(item => item.id === section.id);
-
-            const index = this.props.sections.indexOf(movingSection);
-
-
+        if (this.props.movingSection || this.props.movingSubSection) {   //?
+            this.props.setParentItemsList(this.props.sections);
         }
     }
     
     render() {
-        //console.log('render ContentContainer');
+        //console.log('render MainContainer');
         return (
-            <Content
+            <Main  
                 sections = {this.props.sections}
                 currentInfoSection = {this.props.currentInfoSection}
-                modifiableSection = {this.props.modifiableSection}
                 setCurrentInfoSection = {this.props.setCurrentInfoSection}
+                modifiableSection = {this.props.modifiableSection}
+                movingSection = {this.props.movingSection}
                 setModifiableSection = {this.props.setModifiableSection}
+                setMovingSection = {this.props.setMovingSection}
                 modifySection = {this.props.modifySection}
                 deleteSection = {this.props.deleteSection}
 
                 currentInfoSubSection = {this.props.currentInfoSubSection}
                 modifiableSubSection = {this.props.modifiableSubSection}
+                movingSubSection = {this.props.movingSubSection}
                 setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
                 setModifiableSubSection = {this.props.setModifiableSubSection}
+                setMovingSubSection = {this.props.setMovingSubSection}
                 modifySubSection = {this.props.modifySubSection}
                 deleteSubSection = {this.props.deleteSubSection}
             />
@@ -89,8 +88,10 @@ const mapStateToProps = function(store) {
         sections: store.sectionState.get('sections'),
         currentInfoSection: store.sectionState.get('currentInfoSection'),
         modifiableSection: store.sectionState.get('modifiableSection'),
+        movingSection: store.sectionState.get('movingSection'),
         currentInfoSubSection: store.subSectionState.get('currentInfoSubSection'),
         modifiableSubSection: store.subSectionState.get('modifiableSubSection'),
+        movingSubSection: store.subSectionState.get('movingSubSection'),
     };
 };
 
@@ -111,10 +112,12 @@ const mapDispatchToProps = function(dispatch) {
         setModifiableSection: function(item) {
             dispatch(sectionActions.setModifiableSection(item));
         },
+        setMovingSection: function(item) {
+            dispatch(sectionActions.setMovingSection(item));
+        },
         setCurrentInfoSection: function(item) {
             dispatch(sectionActions.setCurrentInfoSection(item));
         },
-
         modifySubSection: function(item) {
             subSectionApi.modifySubSection(item);
         },
@@ -124,8 +127,14 @@ const mapDispatchToProps = function(dispatch) {
         setModifiableSubSection: function(item) {
             dispatch(subSectionActions.setModifiableSubSection(item));
         },
+        setMovingSubSection: function(item) {
+            dispatch(subSectionActions.setMovingSubSection(item));
+        },
         setCurrentInfoSubSection: function(item) {
             dispatch(subSectionActions.setCurrentInfoSubSection(item));
+        },
+        setParentItemsList: function(items) {
+            dispatch(setParentItemsList(items));
         },
         joinRoom: function(id) {
             dispatch(joinRoom(id));
@@ -136,4 +145,4 @@ const mapDispatchToProps = function(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContentContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);

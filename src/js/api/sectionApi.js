@@ -67,7 +67,8 @@ export function modifySection(item) {
 
 			store.dispatch(sectionActions.setModifiableSection(null));
 
-			//todo: нужна ли проверка, обработка ошибки, если нет id?
+			store.dispatch(sectionActions.setMovingSection(null));  //?
+
 			store.dispatch(remoteActions.updateSectionById(sectionId));
 
 			return true;

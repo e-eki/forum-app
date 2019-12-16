@@ -10,6 +10,7 @@ import userInfoReducer from './userInfoReducer';
 import privateChannelReducer from './privateChannelReducer';
 import searchReducer from './searchReducer';
 import notificationReducer from './notificationReducer';
+import modifyingReducer from './modifyingReducer';
 
 const reducer = combineReducers({
   sectionState: sectionReducer,
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   privateChannelState: privateChannelReducer,
   searchState: searchReducer,
   notificationState: notificationReducer,
+  modifyingState: modifyingReducer,
 });
 
 export default reducer;

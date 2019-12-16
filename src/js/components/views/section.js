@@ -54,22 +54,6 @@ export default class Section extends PureComponent {
                         
                         {this.props.isCurrent ? <div>{this.props.section.description}</div> : null}
 
-                        {/* {this.props.isCurrent
-                            ?
-                            <ListForm
-                                parentItemId = {this.props.section.id}
-                                items = {subSections}
-                                currentInfoItem = {this.props.currentInfoSubSection}
-                                setCurrentInfoItem = {this.props.setCurrentInfoSubSection}
-                                modifiableItem = {this.props.modifiableSubSection}
-                                setModifiableItem = {this.props.setModifiableSubSection}
-                                modifyItem = {this.props.modifySubSection}
-                                deleteItem = {this.props.deleteSubSection}
-                            />
-                            :
-                            subSections
-                        } */}
-
                         <ListForm
                             type = {forumConst.itemTypes.subSection}
                             parentItemId = {this.props.section.id}
@@ -77,9 +61,12 @@ export default class Section extends PureComponent {
                             currentInfoItem = {this.props.currentInfoSubSection}
                             setCurrentInfoItem = {this.props.setCurrentInfoSubSection}
                             modifiableItem = {this.props.modifiableSubSection}
+                            movingItem = {this.props.movingSubSection}
                             setModifiableItem = {this.props.setModifiableSubSection}
+                            setMovingItem = {this.props.setMovingSubSection}
                             modifyItem = {this.props.modifySubSection}
                             deleteItem = {this.props.deleteSubSection}
+                            parentItemsList = {this.props.parentItemsList}
                         />
                     </div>;
         }

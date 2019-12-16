@@ -151,13 +151,14 @@ export default class Channel extends PureComponent {
                                 currentInfoItem = {this.props.currentInfoMessage}
                                 setCurrentInfoItem = {this.props.setCurrentInfoMessage}
                                 modifiableItem = {this.props.modifiableMessage}
+                                movingItem = {this.props.movingMessage}
                                 setModifiableItem = {this.props.setModifiableMessage}
+                                setMovingItem = {this.props.setMovingMessage}
                                 modifyItem = {this.props.modifyMessage}
                                 deleteItem = {this.props.deleteMessage}
-
                                 newMessagesCount = {this.props.channel.newMessagesCount}
-
                                 setDescriptionMessage = {this.props.setDescriptionMessage}
+                                parentItemsList = {this.props.parentItemsList}
                             />
                             :
                             lastMessageBlock

@@ -15,6 +15,9 @@ export default function channelReducer(state = Map(), action) {
     case actionTypes.SET_MODIFIABLE_CHANNEL:
       return state.set('modifiableChannel', action.data);
 
+    case actionTypes.SET_MOVING_CHANNEL:
+      return state.set('movingChannel', action.data);
+
     default:
       return state;
     }

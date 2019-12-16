@@ -14,6 +14,9 @@ export default function subSectionReducer(state = Map(), action) {
 
     case actionTypes.SET_MODIFIABLE_SUBSECTION:
       return state.set('modifiableSubSection', action.data);
+
+    case actionTypes.SET_MOVING_SUBSECTION:
+      return state.set('movingSubSection', action.data);
     
     default:
       return state;

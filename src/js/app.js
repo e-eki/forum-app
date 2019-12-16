@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Router, Switch, Route, Redirect } from 'react-router';
 const createBrowserHistory = require("history").createBrowserHistory;    //?? через import
-import ContentContainer from './components/containers/contentContainer';
+import MainContainer from './components/containers/mainContainer';
 import SectionContainer from './components/containers/sectionContainer';
 import SubSectionContainer from './components/containers/subSectionContainer';
 import ChannelContainer from './components/containers/channelContainer';
@@ -26,7 +26,7 @@ export default class App extends Component {
         //     <Router history={history}>
 
         //         <Route component={MainLayout}>
-        //           <Route exact path="/" component={ContentContainer} />
+        //           <Route exact path="/" component={MainContainer} />
 
         //           <Route path="/sections/:id" component={SectionContainer} />
         //           <Route path="/subsections/:id" component={SubSectionContainer} />
@@ -40,7 +40,7 @@ export default class App extends Component {
         // )
 
 
-        //todo: <Route exact path="/sections" component={ContentContainer} />
+        //todo: <Route exact path="/sections" component={MainContainer} />
         //todo: <Redirect to="/sections" />
         return (
           <div className="app">
@@ -58,7 +58,7 @@ export default class App extends Component {
                 <SearchFormContainer/>
 
                 <Switch>
-                  <Route exact path="/" component={ContentContainer} />
+                  <Route exact path="/" component={MainContainer} />
 
                   <Route exact path="/sections/:id" component={SectionContainer} />
                   <Route exact path="/subsections/:id" component={SubSectionContainer} />

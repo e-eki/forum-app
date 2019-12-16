@@ -63,9 +63,12 @@ export default class SubSection extends PureComponent {
                                     currentInfoItem = {this.props.currentInfoChannel}
                                     setCurrentInfoItem = {this.props.setCurrentInfoChannel}
                                     modifiableItem = {this.props.modifiableChannel}
+                                    movingItem = {this.props.movingChannel}
                                     setModifiableItem = {this.props.setModifiableChannel}
+                                    setMovingItem = {this.props.setMovingChannel}
                                     modifyItem = {this.props.modifyChannel}
                                     deleteItem = {this.props.deleteChannel}
+                                    parentItemsList = {this.props.parentItemsList}
                                 />
                                 :
                                 channels

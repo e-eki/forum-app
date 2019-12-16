@@ -8,6 +8,14 @@ import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 
 
+export function getSubSections() {
+	return axios.get(`${apiConst.subSectionApi}`)
+		.then(response => {
+			debugger;
+		    return response.data;
+		});
+}
+
 export function getSubSectionById(id) {
 	return axios.get(`${apiConst.subSectionApi}/${id}`)
 		.then(response => {
@@ -69,6 +77,8 @@ export function modifySubSection(item) {
 			}
 
 			store.dispatch(subSectionActions.setModifiableSubSection(null));
+
+			store.dispatch(subSectionActions.setMovingSubSection(null));  //?
 
 			store.dispatch(remoteActions.updateSubSectionById(subSectionId, sectionId));
 

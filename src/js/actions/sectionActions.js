@@ -29,3 +29,10 @@ export function setModifiableSection(data) {
 	  data
 	};
 }
+
+export function setMovingSection(data) {
+	return {
+	  type: actionTypes.SET_MOVING_SECTION,
+	  data
+	};
+}

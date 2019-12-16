@@ -2,49 +2,20 @@
 
 import React, { PureComponent } from 'react';
 import ModifyForm from './modifyForm';
+import MovingForm from './movingForm';
 import forumConst from '../../../constants/forumConst';
-import { getSections } from '../../../api/sectionApi';
 
 export default class InfoForm extends PureComponent {
 
     constructor(props) {
         super(props);
 
-        this.movingBlock = null;
-
         this.resetInfoItem = this.resetInfoItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
         this.editItem = this.editItem.bind(this);
+        this.moveItem = this.moveItem.bind(this);
         this.initItemInfo = this.initItemInfo.bind(this);
         this.setDescriptionMessage = this.setDescriptionMessage.bind(this);
-        this.initMovingBlock = this.initMovingBlock.bind(this);
-        this.changeData = this.changeData.bind(this);
-        this.moveInList = this.moveInList.bind(this);
-    }
-
-    componentWillMount() {
-        debugger;
-
-        return Promise.resolve(this.initMovingBlock())
-            .then(result => true);
-    }
-
-    // ввод данных
-	changeData(event) {
-        debugger;
-        const name = event.target.name;
-        const value = event.target.value;
-
-        this.props.currentInfoItem[name] = value;
-    }
-
-    moveInList(event) {
-        debugger;
-        const movingInListType = event.target.value;
-
-        if (this.props.moveItemInList) {
-            this.props.moveItemInList(this.props.currentInfoItem, movingInListType);
-        }
     }
 
     initItemInfo() {
@@ -88,74 +59,15 @@ export default class InfoForm extends PureComponent {
         this.props.setModifiableItem(this.props.currentInfoItem);
     }
 
+    moveItem() {
+        debugger;
+        this.props.setMovingItem(this.props.currentInfoItem);  //todo!
+    }
+
     setDescriptionMessage() {
         debugger;
         if (this.props.setDescriptionMessage) {
             this.props.setDescriptionMessage(this.props.currentInfoItem);
-        }
-    }
-
-    initMovingBlock() {
-        debugger;
-        let movingInListBlock = null;
-        let movingOutBlock = null;
-
-        if (this.props.items && this.props.items.length > 1 && this.props.moveItemInList) {
-            movingInListBlock = <div>
-                                    Переместить в списке на позицию 
-                                    <select
-                                        name="movingInListType"
-                                        className = ''
-                                        onChange = {this.moveInList}
-                                        value = {forumConst.movingInListTypes.up}
-                                    >
-                                        <option value={forumConst.movingInListTypes.up}>{forumConst.movingInListTypes.up}</option>
-                                        <option value={forumConst.movingInListTypes.down}>{forumConst.movingInListTypes.down}</option>
-                                    </select>
-                                </div>;
-        }
-
-        if (this.props.type === forumConst.itemTypes.section) {
-            this.movingBlock = movingInListBlock;
-
-            return true;
-        }
-        else if (this.props.type === forumConst.itemTypes.subSection) {
-            return getSections()
-                .then(sections => {
-                    debugger;
-                    if (sections && sections.length > 1) {
-                        const options = [];
-                        let currentSectionName;
-
-                        sections.forEach(item => {
-                            if (item.id === this.props.currentInfoItem.sectionId) {
-                                currentSectionName = item.name;
-                            }
-
-                            options.push(<option key={item.id} value={item.id}>{item.name}</option>);
-                        });
-
-                        movingOutBlock = <div>
-                                            Переместить в раздел 
-                                            <select
-                                                name="sectionId"
-                                                className = ''
-                                                onChange = {this.changeData}
-                                                value = {currentSectionName}
-                                            >
-                                                {options}
-                                            </select>
-                                        </div>;
-                    }
-
-                   this.movingBlock = <div>
-                                        {movingInListBlock}
-                                        {movingOutBlock}   
-                                    </div>;
-
-                    return true;
-                })
         }
     }
 
@@ -164,6 +76,7 @@ export default class InfoForm extends PureComponent {
         const className = 'info-form ' + (this.props.className ? this.props.className : '');
 
         let modifyingBlock = null;
+        let movingBlock = null;
         let setDescriptionMessageBlock = null;
         debugger;
 
@@ -175,6 +88,16 @@ export default class InfoForm extends PureComponent {
                                 type = {this.props.type}
                             />;
         }
+        else if (this.props.movingItem) {
+            movingBlock = <MovingForm
+                                movingItem = {this.props.movingItem}
+                                setMovingItem = {this.props.setMovingItem}
+                                modifyItem = {this.props.modifyItem}
+                                type = {this.props.type}
+                                parentItemsList = {this.props.parentItemsList}
+                                parentItemId = {this.props.parentItemId}
+                            />
+        }
 
         const itemInfo = this.initItemInfo();
         
@@ -183,15 +106,19 @@ export default class InfoForm extends PureComponent {
 
                 {modifyingBlock}
 
+                {movingBlock}
+
                 {itemInfo}
 
                 <button className = '' onClick = {this.editItem}>
                     Редактировать {this.props.type ? this.props.type : null}
                 </button>
 
-                {setDescriptionMessageBlock}
+                <button className = '' onClick = {this.moveItem}>
+                    Переместить {this.props.type ? this.props.type : null}
+                </button>
 
-                {this.movingBlock}
+                {setDescriptionMessageBlock}
 
                 <button className = '' onClick = {this.deleteItem}>
                     Удалить {this.props.type ? this.props.type : null}

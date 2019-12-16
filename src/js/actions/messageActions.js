@@ -15,3 +15,10 @@ export function setModifiableMessage(data) {
 	  data
 	};
 }
+
+export function setMovingMessage(data) {
+	return {
+	  type: actionTypes.SET_MOVING_MESSAGE,
+	  data
+	};
+}

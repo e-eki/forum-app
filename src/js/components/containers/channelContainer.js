@@ -5,13 +5,14 @@ import { connect } from 'react-redux';
 import forumConst from '../../constants/forumConst';
 import Channel from '../views/channel';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
-import { getChannelById } from '../../api/channelApi';
+import { getChannelById, getChannels } from '../../api/channelApi';
 import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import * as messageApi from '../../api/messageApi';
-import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
+import { setModifiableMessage, setCurrentInfoMessage, setMovingMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import { setCurrentInfoChannel, setCurrentChannel } from '../../actions/channelActions';
 import { setDescriptionMessageForChannel } from '../../lib/channelUtils';
+import { setParentItemsList } from '../../actions/modifyingActions';
 
 class ChannelContainer extends PureComponent {
 
@@ -56,6 +57,18 @@ class ChannelContainer extends PureComponent {
         this.props.resetCurrentChannel();
     }
 
+    componentDidUpdate() {
+        debugger;
+
+        if (this.props.movingMessage) {
+            return getChannels()    //?
+                .then(channels => {
+                    debugger;
+                    this.props.setParentItemsList(channels);
+                })
+        }
+    }
+
     setDescriptionMessage(message) {
         debugger;
 
@@ -80,12 +93,14 @@ class ChannelContainer extends PureComponent {
                     channel = {this.props.currentChannel}
                     type = {forumConst.itemTypes.channel}
                     isCurrent = {true}
-                    setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
+                    setCurrentInfoChannel = {this.props.setCurrentInfoChannel}    //????
 
                     currentInfoMessage = {this.props.currentInfoMessage}
                     modifiableMessage = {this.props.modifiableMessage}
+                    movingMessage = {this.props.movingMessage}
                     setCurrentInfoMessage = {this.props.setCurrentInfoMessage}
                     setModifiableMessage = {this.props.setModifiableMessage}
+                    setMovingMessage = {this.props.setMovingMessage}
                     modifyMessage = {this.props.modifyMessage}
                     deleteMessage = {this.props.deleteMessage}
 
@@ -93,6 +108,8 @@ class ChannelContainer extends PureComponent {
 
                     setDescriptionMessage = {this.setDescriptionMessage}
                     resetDescriptionMessage = {this.resetDescriptionMessage}
+
+                    parentItemsList = {this.props.parentItemsList}
                 />
             </div>
         );
@@ -105,6 +122,8 @@ const mapStateToProps = function(store) {
         currentChannel: store.channelState.get('currentChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),
+        movingMessage: store.messageState.get('movingMessage'),
+        parentItemsList: store.modifyingState.get('parentItemsList'),
     };
 };
 
@@ -131,8 +150,14 @@ const mapDispatchToProps = function(dispatch) {
         setModifiableMessage: function(item) {
             dispatch(setModifiableMessage(item));
         },
+        setMovingMessage: function(item) {
+            dispatch(setMovingMessage(item));
+        },
         setCurrentInfoMessage: function(item) {
             dispatch(setCurrentInfoMessage(item));
+        },
+        setParentItemsList: function(items) {
+            dispatch(setParentItemsList(items));
         },
         joinRoom: function(id) {
             dispatch(joinRoom(id));

@@ -6,8 +6,8 @@ import * as actionTypes from './actions/actionTypes';
 import store from './store/store';
 import { setSections, setCurrentSection } from './actions/sectionActions';
 import { setCurrentSubSection } from './actions/subSectionActions';
-import { setCurrentChannel, setCurrentInfoChannel, setModifiableChannel } from './actions/channelActions';
-import { setCurrentInfoMessage, setModifiableMessage } from './actions/messageActions';
+import { setCurrentChannel, setCurrentInfoChannel, setModifiableChannel, setMovingChannel } from './actions/channelActions';
+import { setCurrentInfoMessage, setModifiableMessage, setMovingMessage } from './actions/messageActions';
 import { setCurrentPrivateChannel, setPrivateChannels } from './actions/privateChannelActions';
 import { setAlertData } from './actions/alertDataActions';
 import { incrementNewPrivateMessagesCount } from './actions/notificationActions';
@@ -229,7 +229,7 @@ socket.on('action', action => {
 										const newChannel = copyUtils.copyChannel(action.data);
 										store.dispatch(setCurrentInfoChannel(newChannel));
 			
-										store.dispatch(setAlertData({  //?
+										store.dispatch(setAlertData({
 											message: 'Редактируемый чат был изменен.',
 											//link: appConst.defaultLink,
 										}));
@@ -243,7 +243,7 @@ socket.on('action', action => {
 									action.data.description !== currentInfoChannel.description) {
 										store.dispatch(setModifiableChannel(null));
 
-										store.dispatch(setAlertData({  //?
+										store.dispatch(setAlertData({
 											message: 'Редактируемый чат был изменен.',
 											//link: appConst.defaultLink,
 										}));
@@ -288,12 +288,13 @@ socket.on('action', action => {
 					const currentChannel = store.getState().channelState.get('currentChannel');
 					const currentInfoChannel = store.getState().channelState.get('currentInfoChannel');
 					const modifiableChannel = store.getState().channelState.get('modifiableChannel');
+					const movingChannel = store.getState().channelState.get('movingChannel');
 
 					if (currentInfoChannel &&
 						currentInfoChannel.id === action.channelId) {
 							store.dispatch(setCurrentInfoChannel(null));
 
-							store.dispatch(setAlertData({  //?
+							store.dispatch(setAlertData({
 								message: 'Редактируемый чат был удален.',
 								//link: appConst.defaultLink,
 							}));
@@ -303,9 +304,18 @@ socket.on('action', action => {
 						modifiableChannel.id === action.channelId) {
 							store.dispatch(setModifiableChannel(null));
 
-							store.dispatch(setAlertData({  //?
+							store.dispatch(setAlertData({
 								message: 'Редактируемый чат был удален.',
 								//link: appConst.defaultLink,
+							}));
+					}
+
+					if (movingChannel &&
+						movingChannel.id === action.channelId) {
+							store.dispatch(setMovingChannel(null));
+
+							store.dispatch(setAlertData({
+								message: 'Перемещаемый чат был удален.',  //?
 							}));
 					}
 					
@@ -463,6 +473,7 @@ socket.on('action', action => {
 					const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
 					const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');  //todo: то же для section,subsection,channel
 					const modifiableMessage = store.getState().messageState.get('modifiableMessage');
+					const movingMessage = store.getState().messageState.get('movingMessage');
 
 					if (currentInfoMessage &&
 						currentInfoMessage.id === action.messageId) {
@@ -480,6 +491,16 @@ socket.on('action', action => {
 
 							store.dispatch(setAlertData({  //?
 								message: 'Редактируемое сообщение было удалено.',
+								//link: appConst.defaultLink,
+							}));
+					}
+
+					if (movingMessage &&
+						movingMessage.id === action.messageId) {
+							store.dispatch(setMovingMessage(null));
+
+							store.dispatch(setAlertData({  //?
+								message: 'Перемещаемое сообщение было удалено.',
 								//link: appConst.defaultLink,
 							}));
 					}
@@ -516,7 +537,7 @@ socket.on('action', action => {
 				
 				break;
 
-			//todo: сделать, чтоб не рендерился дважды чат в списке ЛС, когда одно событие приходит как currentChannel и как recipientId
+			//todo: ?сделать, чтоб не рендерился дважды чат в списке ЛС, когда одно событие приходит как currentChannel и как recipientId
 			case actionTypes.UPDATE_PRIVATE_CHANNEL_BY_ID:
 				debugger;
 

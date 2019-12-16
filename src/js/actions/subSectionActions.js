@@ -22,3 +22,10 @@ export function setModifiableSubSection(data) {
 	  data
 	};
 }
+
+export function setMovingSubSection(data) {
+	return {
+	  type: actionTypes.SET_MOVING_SUBSECTION,
+	  data
+	};
+}

@@ -12,6 +12,9 @@ export default function messageReducer(state = Map(), action) {
     case actionTypes.SET_MODIFIABLE_MESSAGE:
       return state.set('modifiableMessage', action.data);
 
+    case actionTypes.SET_MOVING_MESSAGE:
+      return state.set('movingMessage', action.data);
+
     default:
       return state;
     }
