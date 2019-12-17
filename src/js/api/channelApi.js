@@ -89,8 +89,6 @@ export function modifyChannel(item) {
 			
 			store.dispatch(channelActions.setModifiableChannel(null));
 
-			store.dispatch(channelActions.setMovingChannel(null)); //?
-
 			store.dispatch(remoteActions.updateChannelById(channelId, subSectionId));
 
 			return true;

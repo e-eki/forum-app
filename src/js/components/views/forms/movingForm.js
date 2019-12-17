@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
+import Promise from 'bluebird';
 import forumConst from '../../../constants/forumConst';
 
 // Форма для перемещения элемента внутри списка/в другой элемент верхнего уровня
@@ -9,10 +10,18 @@ export default class MovingForm extends Component {
     constructor(props) {
         super(props);
 
+        this.defaultValue = '';
+
         this.state = {
-            movingInListType: null,
-            parentItemName: null,
+            movingInListType: this.defaultValue,
+            parentItemName: this.defaultValue,
         };
+
+        this.parentItemsList = null;
+        this.parentItemType = null;
+        this.parentItemOptions = [];
+        this.itemsList = null;
+        this.movingInListTypeOptions = [];
 
         this.resetMovingItem = this.resetMovingItem.bind(this);
         this.changeData = this.changeData.bind(this);
@@ -23,16 +32,26 @@ export default class MovingForm extends Component {
         this.moveItemOtsideList = this.moveItemOtsideList.bind(this);
         this.getItemsList = this.getItemsList.bind(this);
         this.getMovingInListTypeOptions = this.getMovingInListTypeOptions.bind(this);
-
-        this.parentItemType = this.getParentItemType();  //?
-        this.parentItemOptions = this.getParentItemOptions();   //?
-
-        this.itemsList = this.getItemsList();  //?
-        this.movingInListOptions = this.getMovingInListTypeOptions();  //?
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        debugger;
+        if (nextProps.parentItemsList !== this.parentItemsList) {
+            this.parentItemsList = nextProps.parentItemsList;
+
+            this.parentItemType = this.getParentItemType();  //?
+            this.parentItemOptions = this.getParentItemOptions(nextProps.parentItemsList);   //?
+
+            this.itemsList = this.getItemsList(nextProps.parentItemsList);  //?
+            this.movingInListTypeOptions = this.getMovingInListTypeOptions();  //?
+        }
+
         return true;  //todo??
+    }
+
+    componentWillUnmount() {
+        debugger;
+        this.props.resetParentItemsList();
     }
 
     getParentItemType() {
@@ -57,38 +76,44 @@ export default class MovingForm extends Component {
         return parentItemType;
     }
 
-    getParentItemOptions() {
+    getParentItemOptions(parentItemsList) {
         debugger;
         const options = [];
+        let i = 0;
 
-        if (this.props.parentItemsList) {
-            let i = 0;
-
-            this.props.parentItemsList.forEach(item => {
-                options.push(<option key={i++} value={item.name}>{item.name}</option>);
+        if (parentItemsList) {
+            parentItemsList.forEach(item => {
+                if (this.props.parentItemId && item.id !== this.props.parentItemId) {
+                    options.push(<option key={i++} value={item.name}>{item.name}</option>);
+                }
             })
         }
         
+        if (options.length) {
+            options.unshift(<option key={i++} value={this.defaultValue}></option>);
+        }
         return options;
     }
 
-    getItemsList() {
+    getItemsList(parentItemsList) {
         debugger;
 
-        if (this.props.parentItemsList) {
+        if (parentItemsList) {
             const parentItem = this.props.parentItemId
                                 ?
-                                this.props.parentItemsList.find(item => item.id === this.props.parentItemId)
+                                parentItemsList.find(item => item.id === this.props.parentItemId)
                                 :
                                 null;
 
             if (this.props.type) {
                 switch (this.props.type) {
                     case forumConst.itemTypes.section:
-                        return this.props.parentItemsList;
+                        return parentItemsList;
 
                     case forumConst.itemTypes.subSection:
-                        return (parentItem ? parentItem.subsections : null);
+                        return (parentItem ? parentItem.subSections : null);
+
+                    //чат и сообщение не имеет смысла перемещать в пределах списка, т.к. они сортируются по дате
 
                     default:
                         return null;
@@ -102,12 +127,38 @@ export default class MovingForm extends Component {
     getMovingInListTypeOptions() {
         debugger;
         const options = [];
+        let i = 0;
 
         if (this.itemsList && (this.itemsList.length > 1)) {
-            const index = itemsList.indexOf(this.props.movingItem);
+            const index = this.itemsList.indexOf(this.props.movingItem);
 
-            if ()
+            if (index !== -1) {
+
+                if (index < (this.itemsList.length - 1)) {
+                    options.push(<option
+                                        key={i++}
+                                        value={forumConst.movingInListTypes.down}
+                                    >
+                                        {forumConst.movingInListTypes.down}
+                                    </option>);
+                }
+
+                if (index > 0) {
+                    options.push(<option
+                                        key={i++}
+                                        value={forumConst.movingInListTypes.up}
+                                    >
+                                        {forumConst.movingInListTypes.up}
+                                    </option>);
+                }
+            }
         }
+
+        if (options.length) {
+            options.unshift(<option key={i++} value={this.defaultValue}></option>);
+        }
+
+        return options;
     }
 
     resetMovingItem() {
@@ -120,65 +171,99 @@ export default class MovingForm extends Component {
         const name = event.target.name;
         const value = event.target.value;
 
-        if (name === movingInListType) {
-            this.setState({
-                movingInListType: value,
-                parentItemName: null,
-            })
-        }
-        if (name === movingInListType) {
-            this.setState({
-                movingInListType: null,
-                parentItemName: value,
-            })
+        if (value !== this.defaultValue) {
+            if (name === 'movingInListType') {
+                this.setState({
+                    movingInListType: value,
+                    parentItemName: this.defaultValue,
+                })
+            }
+            if (name === 'parentItemName') {
+                this.setState({
+                    movingInListType: this.defaultValue,
+                    parentItemName: value,
+                })
+            }
         }
     }
 
     moveItem() {
         debugger;
+        const tasks = []
 
         if (this.state.movingInListType) {
-            this.moveItemInList();
+            tasks.push(this.moveItemInList());
         }
         else if (this.state.parentItemName) {
-            this.moveItemOutsideList();
+            tasks.push(this.moveItemOutsideList());
+        }
+
+        return Promise.all(tasks)
+            .then(result => {
+                debugger;
+                this.resetMovingItem();
+                this.props.resetInfoItem();
+
+                return true;
+            })
+    }
+
+    moveItemInList() {  //?как вынести эту логику в контейнер?
+        debugger;
+        const movingItems = [];
+        
+        if (this.itemsList && (this.itemsList.length > 1)) {
+            const index = this.itemsList.indexOf(this.props.movingItem);
+
+            switch (this.state.movingInListType) {
+
+                case forumConst.movingInListTypes.up:
+                    const prevItem = this.itemsList[index - 1];
+
+                    this.props.movingItem.orderNumber--;  //?                   
+                    prevItem.orderNumber++;               //?
+
+                    movingItems.push(this.props.movingItem);
+                    movingItems.push(prevItem);
+
+                    break;
+
+                case forumConst.movingInListTypes.down:
+                    const nextItem = this.itemsList[index + 1];
+
+                    this.props.movingItem.orderNumber++;  //?                   
+                    nextItem.orderNumber--;               //? 
+
+                    movingItems.push(this.props.movingItem);
+                    movingItems.push(nextItem);
+
+                    break;
+            }
+        }
+
+        if (movingItems.length) {
+            const tasks = [];
+
+            movingItems.forEach(item => {
+                tasks.push(this.props.modifyItem(item));
+            });
+
+            return Promise.all(tasks)
+                .then(result => true);
+        }
+        else {
+            return false;
         }
     }
 
-    moveItemInList() {
+    moveItemOtsideList() {   //?как вынести эту логику в контейнер?
         debugger;
-        // if (this.props.parentItemsList && this.props.parentItemId) {
-        //     const parentItem = this.props.parentItemId
-        //                         ?
-        //                         this.props.parentItemsList.find(item => item.id === this.props.parentItemId)
-        //                         :
-        //                         null;
+        const parent = this.parentItemsList.find(item => item.name === this.state.parentItemName);
 
-        //     if (this.props.type) {
-        //         switch (this.props.type) {
-        //             case forumConst.itemTypes.section:
-                        
-        //                 break;
+        this.props.movingItem.parentItemId = parent.id;
 
-        //             case forumConst.itemTypes.subSection:
-        //                 parentItemType = forumConst.itemTypes.section;
-        //                 break;
-    
-        //             case forumConst.itemTypes.channel:
-        //                 parentItemType = forumConst.itemTypes.subSection;
-        //                 break;
-    
-        //             case forumConst.itemTypes.message:
-        //                 parentItemType = forumConst.itemTypes.channel;
-        //                 break;
-        //         }
-        //     }
-        // }
-    }
-
-    moveItemOtsideList() {
-        debugger;
-
+        return this.props.modifyItem(this.props.movingItem)
+            .then(result => true);
     }
 
     render() {
@@ -198,9 +283,7 @@ export default class MovingForm extends Component {
                         onChange = {this.changeData}
                         value = {this.state.movingInListType}
                     >
-                        <option value={null}>{null}</option>
-                        <option value={forumConst.movingInListTypes.up}>{forumConst.movingInListTypes.up}</option>
-                        <option value={forumConst.movingInListTypes.down}>{forumConst.movingInListTypes.down}</option>
+                        {this.movingInListTypeOptions}
                     </select>
                 </div>
 

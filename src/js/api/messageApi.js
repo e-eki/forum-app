@@ -79,8 +79,6 @@ export function modifyMessage(item) {
 
 			store.dispatch(actions.setModifiableMessage(null));
 
-			store.dispatch(actions.setMovingMessage(null));  //?
-
 			store.dispatch(remoteActions.updateMessageById(messageId, channelId, recipientId));
 
 			return true;

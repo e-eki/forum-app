@@ -78,8 +78,6 @@ export function modifySubSection(item) {
 
 			store.dispatch(subSectionActions.setModifiableSubSection(null));
 
-			store.dispatch(subSectionActions.setMovingSubSection(null));  //?
-
 			store.dispatch(remoteActions.updateSubSectionById(subSectionId, sectionId));
 
 			return true;

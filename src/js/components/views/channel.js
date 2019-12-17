@@ -158,7 +158,9 @@ export default class Channel extends PureComponent {
                                 deleteItem = {this.props.deleteMessage}
                                 newMessagesCount = {this.props.channel.newMessagesCount}
                                 setDescriptionMessage = {this.props.setDescriptionMessage}
+
                                 parentItemsList = {this.props.parentItemsList}
+                                resetParentItemsList = {this.props.resetParentItemsList}
                             />
                             :
                             lastMessageBlock

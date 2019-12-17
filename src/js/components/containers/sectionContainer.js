@@ -62,7 +62,7 @@ class SectionContainer extends PureComponent {
             <Section
                 section = {this.props.currentSection}
                 isCurrent = {true}
-                setCurrentInfoSection = {this.props.setCurrentInfoSection}   //???
+                //setCurrentInfoSection = {this.props.setCurrentInfoSection}   //???
 
                 currentInfoSubSection = {this.props.currentInfoSubSection}
                 modifiableSubSection = {this.props.modifiableSubSection}
@@ -74,6 +74,7 @@ class SectionContainer extends PureComponent {
                 deleteSubSection = {this.props.deleteSubSection}
 
                 parentItemsList = {this.props.parentItemsList}
+                resetParentItemsList = {this.props.resetParentItemsList}
             />
         );
     }
@@ -91,9 +92,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        setCurrentInfoSection: function(item) {
-            dispatch(setCurrentInfoSection(item));
-        },
+        // setCurrentInfoSection: function(item) {
+        //     dispatch(setCurrentInfoSection(item));
+        // },
         modifySubSection: function(item) {
             subSectionApi.modifySubSection(item);
         },
@@ -117,6 +118,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         setParentItemsList: function(items) {
             dispatch(setParentItemsList(items));
+        },
+        resetParentItemsList: function() {
+            dispatch(setParentItemsList(null));
         },
         joinRoom: function(id) {
             dispatch(joinRoom(id));

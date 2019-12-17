@@ -93,7 +93,7 @@ class ChannelContainer extends PureComponent {
                     channel = {this.props.currentChannel}
                     type = {forumConst.itemTypes.channel}
                     isCurrent = {true}
-                    setCurrentInfoChannel = {this.props.setCurrentInfoChannel}    //????
+                    //setCurrentInfoChannel = {this.props.setCurrentInfoChannel}    //????
 
                     currentInfoMessage = {this.props.currentInfoMessage}
                     modifiableMessage = {this.props.modifiableMessage}
@@ -103,13 +103,13 @@ class ChannelContainer extends PureComponent {
                     setMovingMessage = {this.props.setMovingMessage}
                     modifyMessage = {this.props.modifyMessage}
                     deleteMessage = {this.props.deleteMessage}
-
                     showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
 
                     setDescriptionMessage = {this.setDescriptionMessage}
                     resetDescriptionMessage = {this.resetDescriptionMessage}
 
                     parentItemsList = {this.props.parentItemsList}
+                    resetParentItemsList = {this.props.resetParentItemsList}
                 />
             </div>
         );
@@ -138,9 +138,9 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentUserInfo: function() {
             dispatch(setCurrentUserInfo(null));
         },
-        setCurrentInfoChannel: function(item) {
-            dispatch(setCurrentInfoChannel(item));
-        },
+        // setCurrentInfoChannel: function(item) {
+        //     dispatch(setCurrentInfoChannel(item));
+        // },
         modifyMessage: function(item) {
             messageApi.modifyMessage(item);
         },
@@ -158,6 +158,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         setParentItemsList: function(items) {
             dispatch(setParentItemsList(items));
+        },
+        resetParentItemsList: function() {
+            dispatch(setParentItemsList(null));
         },
         joinRoom: function(id) {
             dispatch(joinRoom(id));

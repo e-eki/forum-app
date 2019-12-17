@@ -62,7 +62,7 @@ class SubSectionContainer extends PureComponent {
             <SubSection
                 subSection = {this.props.currentSubSection}
                 isCurrent = {true}
-                setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}   //todo: info|modify check!!!
+                //setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}   //todo: info|modify check!!!
 
                 currentInfoChannel = {this.props.currentInfoChannel}
                 modifiableChannel = {this.props.modifiableChannel}
@@ -74,6 +74,7 @@ class SubSectionContainer extends PureComponent {
                 deleteChannel = {this.props.deleteChannel}
 
                 parentItemsList = {this.props.parentItemsList}
+                resetParentItemsList = {this.props.resetParentItemsList}
             />
         );
     }
@@ -97,9 +98,9 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentSubSection: function() {
             dispatch(setCurrentSubSection(null));
         },
-        setCurrentInfoSubSection: function(item) {
-            dispatch(setCurrentInfoSubSection(item));
-        },
+        // setCurrentInfoSubSection: function(item) {
+        //     dispatch(setCurrentInfoSubSection(item));
+        // },
         modifyChannel: function(item) {
             channelApi.modifyChannel(item);
         },
@@ -117,6 +118,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         setParentItemsList: function(items) {
             dispatch(setParentItemsList(items));
+        },
+        resetParentItemsList: function() {
+            dispatch(setParentItemsList(null));
         },
         joinRoom: function(id) {
             dispatch(joinRoom(id));

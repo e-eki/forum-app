@@ -78,6 +78,9 @@ class MainContainer extends PureComponent {
                 setMovingSubSection = {this.props.setMovingSubSection}
                 modifySubSection = {this.props.modifySubSection}
                 deleteSubSection = {this.props.deleteSubSection}
+
+                parentItemsList = {this.props.parentItemsList}
+                resetParentItemsList = {this.props.resetParentItemsList}
             />
         );
     }
@@ -92,6 +95,7 @@ const mapStateToProps = function(store) {
         currentInfoSubSection: store.subSectionState.get('currentInfoSubSection'),
         modifiableSubSection: store.subSectionState.get('modifiableSubSection'),
         movingSubSection: store.subSectionState.get('movingSubSection'),
+        parentItemsList: store.modifyingState.get('parentItemsList'),
     };
 };
 
@@ -135,6 +139,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         setParentItemsList: function(items) {
             dispatch(setParentItemsList(items));
+        },
+        resetParentItemsList: function() {
+            dispatch(setParentItemsList(null));
         },
         joinRoom: function(id) {
             dispatch(joinRoom(id));

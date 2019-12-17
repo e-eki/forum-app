@@ -19,7 +19,6 @@ export default class InfoForm extends PureComponent {
     }
 
     initItemInfo() {
-        debugger;
         let itemInfo = null;
 
         if (this.props.type && this.props.currentInfoItem) {
@@ -92,9 +91,12 @@ export default class InfoForm extends PureComponent {
             movingBlock = <MovingForm
                                 movingItem = {this.props.movingItem}
                                 setMovingItem = {this.props.setMovingItem}
+                                resetInfoItem = {this.resetInfoItem}
                                 modifyItem = {this.props.modifyItem}
                                 type = {this.props.type}
+
                                 parentItemsList = {this.props.parentItemsList}
+                                resetParentItemsList = {this.props.resetParentItemsList}
                                 parentItemId = {this.props.parentItemId}
                             />
         }

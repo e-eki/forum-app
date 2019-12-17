@@ -64,6 +64,9 @@ export default class Main extends PureComponent {
                                     setMovingSubSection = {this.props.setMovingSubSection}
                                     modifySubSection = {this.props.modifySubSection}
                                     deleteSubSection = {this.props.deleteSubSection}
+
+                                    parentItemsList = {this.props.parentItemsList}
+                                    resetParentItemsList = {this.props.resetParentItemsList}
                                 />;
                 sections.push(section);
                 key++;
@@ -84,6 +87,9 @@ export default class Main extends PureComponent {
                     setMovingItem = {this.props.setMovingSection}
                     modifyItem = {this.props.modifySection}
                     deleteItem = {this.props.deleteSection}
+
+                    parentItemsList = {this.props.parentItemsList}
+                    resetParentItemsList = {this.props.resetParentItemsList}
                 />
             </div>
         )
