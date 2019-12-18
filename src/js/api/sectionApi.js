@@ -11,8 +11,6 @@ export function getSections() {
 	return axios.get(`${apiConst.sectionApi}`)
 		.then(response => {
 			debugger;
-			// store.dispatch(sectionActions.setSections(response.data));
-
             return response.data;
 		});
 }
@@ -21,8 +19,6 @@ export function getSectionById(id) {
 	return axios.get(`${apiConst.sectionApi}/${id}`)
 		.then(response => {
 			debugger;
-			// store.dispatch(sectionActions.setCurrentSection(response.data));
-
 		    return response.data;
 		});
 }
@@ -36,7 +32,7 @@ export function deleteSection(item) {
 	return Promise.all(tasks)
 		.spread((sectionId, response) => {
 			debugger;
-		    store.dispatch(sectionActions.setCurrentInfoSection(null));
+		    //store.dispatch(sectionActions.setCurrentInfoSection(null));
 
 			store.dispatch(remoteActions.deleteSectionById(sectionId));
 
@@ -65,7 +61,7 @@ export function modifySection(item) {
 				sectionId = response.data.id;
 			}
 
-			store.dispatch(sectionActions.setModifiableSection(null));
+			//store.dispatch(sectionActions.setModifiableSection(null));
 
 			store.dispatch(remoteActions.updateSectionById(sectionId));
 

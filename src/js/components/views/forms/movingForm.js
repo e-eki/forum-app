@@ -187,7 +187,7 @@ export default class MovingForm extends Component {
         }
     }
 
-    moveItem() {
+    moveItem() {  //?как вынести эту логику в контейнер?
         debugger;
         const tasks = []
 
@@ -208,7 +208,7 @@ export default class MovingForm extends Component {
             })
     }
 
-    moveItemInList() {  //?как вынести эту логику в контейнер?
+    moveItemInList() {
         debugger;
         const movingItems = [];
         
@@ -220,8 +220,8 @@ export default class MovingForm extends Component {
                 case forumConst.movingInListTypes.up:
                     const prevItem = this.itemsList[index - 1];
 
-                    this.props.movingItem.orderNumber--;  //?                   
-                    prevItem.orderNumber++;               //?
+                    this.props.movingItem.orderNumber--;                   
+                    prevItem.orderNumber++;               
 
                     movingItems.push(this.props.movingItem);
                     movingItems.push(prevItem);
@@ -231,8 +231,8 @@ export default class MovingForm extends Component {
                 case forumConst.movingInListTypes.down:
                     const nextItem = this.itemsList[index + 1];
 
-                    this.props.movingItem.orderNumber++;  //?                   
-                    nextItem.orderNumber--;               //? 
+                    this.props.movingItem.orderNumber++;                   
+                    nextItem.orderNumber--;             
 
                     movingItems.push(this.props.movingItem);
                     movingItems.push(nextItem);
@@ -256,7 +256,7 @@ export default class MovingForm extends Component {
         }
     }
 
-    moveItemOtsideList() {   //?как вынести эту логику в контейнер?
+    moveItemOtsideList() {
         debugger;
         const parent = this.parentItemsList.find(item => item.name === this.state.parentItemName);
 

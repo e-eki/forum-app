@@ -20,8 +20,6 @@ export function getSubSectionById(id) {
 	return axios.get(`${apiConst.subSectionApi}/${id}`)
 		.then(response => {
 			debugger;
-			//store.dispatch(subSectionActions.setCurrentSubSection(response.data));
-			
 		    return response.data;
 		});
 }
@@ -43,9 +41,11 @@ export function deleteSubSection(item) {
 	return Promise.all(tasks)
 		.spread((subSectionId, sectionId, response) => {
 			debugger;
-		    store.dispatch(subSectionActions.setCurrentInfoSubSection(null));
+		    //store.dispatch(subSectionActions.setCurrentInfoSubSection(null));
 
 			store.dispatch(remoteActions.deleteSubSectionById(subSectionId, sectionId));
+
+			return true;
 		});
 }
 
@@ -76,7 +76,7 @@ export function modifySubSection(item) {
 				subSectionId = response.data.id;
 			}
 
-			store.dispatch(subSectionActions.setModifiableSubSection(null));
+			//store.dispatch(subSectionActions.setModifiableSubSection(null));
 
 			store.dispatch(remoteActions.updateSubSectionById(subSectionId, sectionId));
 

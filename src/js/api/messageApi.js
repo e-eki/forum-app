@@ -20,8 +20,6 @@ export function getMessagesByText(searchText) {
 	return axios.get(`${apiConst.messageApi}?searchText=${searchText}`)
 		.then(response => {
 			debugger;
-			// store.dispatch(setSearchMessages(response.data));
-
 		    return response.data;
 		});
 }
@@ -42,9 +40,11 @@ export function deleteMessage(item) {
 	return Promise.all(tasks)
 		.spread((messageId, channelId, response) => {
 			debugger;
-		    store.dispatch(actions.setCurrentInfoMessage(null));
+		    //store.dispatch(actions.setCurrentInfoMessage(null));
 
 			store.dispatch(remoteActions.deleteMessageById(messageId, channelId));
+
+			return true;
 		});
 }
 
@@ -59,7 +59,7 @@ export function modifyMessage(item) {
 
 	tasks.push(item.id);
 	tasks.push(item.channelId);
-	tasks.push(item.recipientId);  //?
+	tasks.push(item.recipientId);
 
 	item.senderId = item.channelId;  //todo!
 
@@ -77,7 +77,7 @@ export function modifyMessage(item) {
 				messageId = response.data.id;
 			}
 
-			store.dispatch(actions.setModifiableMessage(null));
+			//store.dispatch(actions.setModifiableMessage(null));
 
 			store.dispatch(remoteActions.updateMessageById(messageId, channelId, recipientId));
 

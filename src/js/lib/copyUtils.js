@@ -7,7 +7,7 @@ export function copySection(sourse) {
 	result.description = sourse.description || '';
 	result.subSections = sourse.subSections || [];
 	result.senderId = sourse.senderId;
-	result.orderNumber = sourse.orderNumber || null;
+	result.orderNumber = sourse.orderNumber;
 
 	return result;
 };
@@ -20,7 +20,7 @@ export function copySubSection(sourse) {
 	result.sectionId = sourse.sectionId || '';
 	result.channels = sourse.channels || [];
 	result.senderId = sourse.senderId;
-	result.orderNumber = sourse.orderNumber || null;
+	result.orderNumber = sourse.orderNumber;
 
 	return result;
 };

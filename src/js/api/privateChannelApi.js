@@ -11,8 +11,6 @@ export function getPrivateChannels() {
 	return axios.get(`${apiConst.privateChannelApi}`)
 		.then(response => {
 			debugger;
-			// store.dispatch(privateChannelActions.setPrivateChannels(response.data));
-
             return response.data;
 		});
 }
@@ -21,8 +19,6 @@ export function getPrivateChannelById(id) {
 	return axios.get(`${apiConst.privateChannelApi}/${id}`)
 		.then(response => {
 			debugger;
-			// store.dispatch(privateChannelActions.setCurrentPrivateChannel(response.data));
-
 		    return response.data;
 		});
 }

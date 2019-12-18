@@ -8,8 +8,6 @@ export function getUserInfoById(id) {
 	return axios.get(`${apiConst.userInfoApi}/${id}`)
 		.then(response => {
 			debugger;
-			//store.dispatch(setCurrentUserInfo(response.data));
-
 			return response.data;
 		});
 }

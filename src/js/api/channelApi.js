@@ -20,8 +20,6 @@ export function getChannelsByText(searchText) {
 	return axios.get(`${apiConst.channelApi}?searchText=${searchText}`)
 		.then(response => {
 			debugger;
-			// store.dispatch(setSearchChannels(response.data));
-
 		    return response.data;
 		});
 }
@@ -30,8 +28,6 @@ export function getChannelById(id) {
 	return axios.get(`${apiConst.channelApi}/${id}`)
 		.then(response => {
 			debugger;
-			//store.dispatch(channelActions.setCurrentChannel(response.data));
-			
 		    return response.data;
 		});
 }
@@ -53,9 +49,11 @@ export function deleteChannel(item) {
 		.spread((channelId, subSectionId, response) => {
 			debugger;
 
-		    store.dispatch(channelActions.setCurrentInfoChannel(null));
+		    //store.dispatch(channelActions.setCurrentInfoChannel(null));
 
 			store.dispatch(remoteActions.deleteChannelById(channelId, subSectionId));
+
+			return true;
 		});
 }
 
@@ -87,7 +85,7 @@ export function modifyChannel(item) {
 				channelId = response.data.id;
 			}
 			
-			store.dispatch(channelActions.setModifiableChannel(null));
+			//store.dispatch(channelActions.setModifiableChannel(null));
 
 			store.dispatch(remoteActions.updateChannelById(channelId, subSectionId));
 

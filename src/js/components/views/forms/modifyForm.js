@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
+import Promise from 'bluebird';
 import forumConst from '../../../constants/forumConst';
 
 // Форма для создания/редактирования раздела
@@ -101,7 +102,10 @@ export default class ModifyForm extends Component {
             }
         }
 
-        this.props.modifyItem(this.props.modifiableItem);
+        return Promise.resolve(this.props.modifyItem(this.props.modifiableItem))
+            .then(result => {
+                this.resetModifiableItem();   //?
+            })
     }
 
     resetModifiableItem() {

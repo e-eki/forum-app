@@ -13,6 +13,7 @@ import { setAlertData } from './actions/alertDataActions';
 import { incrementNewPrivateMessagesCount } from './actions/notificationActions';
 import * as copyUtils from './lib/copyUtils';
 import appConst from './constants/appConst';
+import { getSortedItemsByOrderNumber } from './lib/sortingUtils';
 
 const socket = io(`${apiConst.serverUrl}`);
 
@@ -54,7 +55,8 @@ socket.on('action', action => {
 							sections.push(action.data);
 						}
 
-						const newSections = sections.slice();   //! immutable
+						const sortedSections = getSortedItemsByOrderNumber(sections);
+						const newSections = sortedSections.slice();   //! immutable
 						store.dispatch(setSections(newSections));
 					}		
 				}

@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { PureComponent } from 'react';
+import Promise from 'bluebird';
 import ModifyForm from './modifyForm';
 import MovingForm from './movingForm';
 import forumConst from '../../../constants/forumConst';
@@ -50,7 +51,10 @@ export default class InfoForm extends PureComponent {
 
     deleteItem() {
         debugger;
-        this.props.deleteItem(this.props.currentInfoItem);
+        return Promise.resolve(this.props.deleteItem(this.props.currentInfoItem))
+            .then(result => {
+                this.resetInfoItem();  //?
+            })
     }
 
     editItem() {
@@ -60,7 +64,7 @@ export default class InfoForm extends PureComponent {
 
     moveItem() {
         debugger;
-        this.props.setMovingItem(this.props.currentInfoItem);  //todo!
+        this.props.setMovingItem(this.props.currentInfoItem);
     }
 
     setDescriptionMessage() {
