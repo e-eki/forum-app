@@ -7,7 +7,7 @@ import { getSubSectionById, getSubSections } from '../../api/subSectionApi';
 import * as channelApi from '../../api/channelApi';
 import { setCurrentInfoSubSection, setCurrentSubSection } from '../../actions/subSectionActions';
 import { setModifiableChannel, setCurrentInfoChannel, setMovingChannel } from '../../actions/channelActions';
-import { joinRoom, leaveRoom } from '../../actions/remoteActions';
+import { joinRoom, leaveRoom, deleteChannelById } from '../../actions/remoteActions';
 import { setParentItemsList } from '../../actions/modifyingActions';
 
 class SubSectionContainer extends PureComponent {
@@ -70,8 +70,9 @@ class SubSectionContainer extends PureComponent {
                 setCurrentInfoChannel = {this.props.setCurrentInfoChannel}
                 setModifiableChannel = {this.props.setModifiableChannel}
                 setMovingChannel = {this.props.setMovingChannel}
-                modifyChannel = {this.props.modifyChannel}
-                deleteChannel = {this.props.deleteChannel}
+                modifyChannel = {channelApi.modifyChannel}
+                deleteChannel = {channelApi.deleteChannel}
+                deleteChannelById = {this.props.deleteChannelById}
 
                 parentItemsList = {this.props.parentItemsList}
                 resetParentItemsList = {this.props.resetParentItemsList}
@@ -101,12 +102,12 @@ const mapDispatchToProps = function(dispatch) {
         // setCurrentInfoSubSection: function(item) {
         //     dispatch(setCurrentInfoSubSection(item));
         // },
-        modifyChannel: function(item) {
-            channelApi.modifyChannel(item);
-        },
-        deleteChannel: function(item) {
-            channelApi.deleteChannel(item);
-        },
+        // modifyChannel: function(item) {
+        //     channelApi.modifyChannel(item);
+        // },
+        // deleteChannel: function(item) {
+        //     channelApi.deleteChannel(item);
+        // },
         setModifiableChannel: function(item) {
             dispatch(setModifiableChannel(item));
         },
@@ -128,6 +129,9 @@ const mapDispatchToProps = function(dispatch) {
         leaveRoom: function(id) {
             dispatch(leaveRoom(id));
         },
+        deleteChannelById: function(channelId, subSectionId) {
+            dispatch(deleteChannelById(channelId, subSectionId));
+        }
     }
 }
 

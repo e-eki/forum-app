@@ -9,7 +9,7 @@ import { getChannelById, getChannels } from '../../api/channelApi';
 import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage, setMovingMessage } from '../../actions/messageActions';
-import { joinRoom, leaveRoom } from '../../actions/remoteActions';
+import { joinRoom, leaveRoom, deleteMessageById } from '../../actions/remoteActions';
 import { setCurrentInfoChannel, setCurrentChannel } from '../../actions/channelActions';
 import { setDescriptionMessageForChannel } from '../../lib/channelUtils';
 import { setParentItemsList } from '../../actions/modifyingActions';
@@ -101,12 +101,12 @@ class ChannelContainer extends PureComponent {
                     setCurrentInfoMessage = {this.props.setCurrentInfoMessage}
                     setModifiableMessage = {this.props.setModifiableMessage}
                     setMovingMessage = {this.props.setMovingMessage}
-                    modifyMessage = {this.props.modifyMessage}
-                    deleteMessage = {this.props.deleteMessage}
+                    modifyMessage = {messageApi.modifyMessage}
+                    deleteMessage = {messageApi.deleteMessage}
                     showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
-
                     setDescriptionMessage = {this.setDescriptionMessage}
                     resetDescriptionMessage = {this.resetDescriptionMessage}
+                    deleteMessageById = {this.props.deleteMessageById}
 
                     parentItemsList = {this.props.parentItemsList}
                     resetParentItemsList = {this.props.resetParentItemsList}
@@ -141,12 +141,12 @@ const mapDispatchToProps = function(dispatch) {
         // setCurrentInfoChannel: function(item) {
         //     dispatch(setCurrentInfoChannel(item));
         // },
-        modifyMessage: function(item) {
-            messageApi.modifyMessage(item);
-        },
-        deleteMessage: function(item) {
-            messageApi.deleteMessage(item);
-        },
+        // modifyMessage: function(item) {
+        //     messageApi.modifyMessage(item);
+        // },
+        // deleteMessage: function(item) {
+        //     messageApi.deleteMessage(item);
+        // },
         setModifiableMessage: function(item) {
             dispatch(setModifiableMessage(item));
         },
@@ -168,6 +168,9 @@ const mapDispatchToProps = function(dispatch) {
         leaveRoom: function(id) {
             dispatch(leaveRoom(id));
         },
+        deleteMessageById: function(messageId, channelId) {
+            dispatch(deleteMessageById(messageId, channelId));
+        }
     }
 }
 

@@ -6,7 +6,7 @@ import Section from '../views/section';
 import { getSectionById, getSections } from '../../api/sectionApi';
 import * as subSectionApi from '../../api/subSectionApi';
 import * as subSectionActions from '../../actions/subSectionActions';
-import { joinRoom, leaveRoom } from '../../actions/remoteActions';
+import { joinRoom, leaveRoom, deleteSubSectionById } from '../../actions/remoteActions';
 import { setCurrentInfoSection, setCurrentSection } from '../../actions/sectionActions';
 import { setParentItemsList } from '../../actions/modifyingActions';
 
@@ -70,8 +70,9 @@ class SectionContainer extends PureComponent {
                 setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
                 setModifiableSubSection = {this.props.setModifiableSubSection}
                 setMovingSubSection = {this.props.setMovingSubSection}
-                modifySubSection = {this.props.modifySubSection}
-                deleteSubSection = {this.props.deleteSubSection}
+                modifySubSection = {subSectionApi.modifySubSection}
+                deleteSubSection = {subSectionApi.deleteSubSection}
+                deleteSubSectionById = {this.props.deleteSubSectionById}
 
                 parentItemsList = {this.props.parentItemsList}
                 resetParentItemsList = {this.props.resetParentItemsList}
@@ -95,12 +96,12 @@ const mapDispatchToProps = function(dispatch) {
         // setCurrentInfoSection: function(item) {
         //     dispatch(setCurrentInfoSection(item));
         // },
-        modifySubSection: function(item) {
-            subSectionApi.modifySubSection(item);
-        },
-        deleteSubSection: function(item) {
-            subSectionApi.deleteSubSection(item);
-        },
+        // modifySubSection: function(item) {
+        //     subSectionApi.modifySubSection(item);
+        // },
+        // deleteSubSection: function(item) {
+        //     subSectionApi.deleteSubSection(item);
+        // },
         setModifiableSubSection: function(item) {
             dispatch(subSectionActions.setModifiableSubSection(item));
         },
@@ -128,6 +129,9 @@ const mapDispatchToProps = function(dispatch) {
         leaveRoom: function(id) {
             dispatch(leaveRoom(id));
         },
+        deleteSubSectionById: function(subSectionId, sectionId) {
+            dispatch(deleteSubSectionById(subSectionId, sectionId));
+        }
     }
 }
 

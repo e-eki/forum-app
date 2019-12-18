@@ -23,10 +23,6 @@ socket.on('action', action => {
 	if (action && action.type) {
 		switch (action.type) {
 
-			// case actionTypes.UPDATE_SECTIONS:
-			// 	store.dispatch(setSections(action.data));
-			// 	break;
-
 			case actionTypes.UPDATE_SECTION_BY_ID:
 				debugger;
 
@@ -55,8 +51,13 @@ socket.on('action', action => {
 							sections.push(action.data);
 						}
 
-						const sortedSections = getSortedItemsByOrderNumber(sections);
-						const newSections = sortedSections.slice();   //! immutable
+						// если был изменен раздел, то порядок разделов мог измениться, сортируем их по номеру
+						const newSections = section
+											?
+											getSortedItemsByOrderNumber(sections.slice())
+											:
+											sections.slice();
+
 						store.dispatch(setSections(newSections));
 					}		
 				}
@@ -127,9 +128,17 @@ socket.on('action', action => {
 								currentSection.subSections.push(action.data);
 							}
 
-							const newSection = copyUtils.copySection(currentSection);  
+							// если был изменен подраздел, то порядок подразделов мог измениться, сортируем их по номеру
+							const newSubSections = subSection
+													?
+													getSortedItemsByOrderNumber(currentSection.subSections.slice())
+													:
+													currentSection.subSections.slice();
 
-							store.dispatch(setCurrentSection(newSection));   //immutable!!!
+							const newSection = copyUtils.copySection(currentSection);
+							newSection.subSections = newSubSections;
+
+							store.dispatch(setCurrentSection(newSection));
 					}
 					else if (sections) {
 						const section = sections.find(item => item.id === action.sectionId);
@@ -148,7 +157,15 @@ socket.on('action', action => {
 								section.subSections.push(action.data);
 							}
 
+							// если был изменен подраздел, то порядок подразделов мог измениться, сортируем их по номеру
+							const newSubSections = subSection
+													?
+													getSortedItemsByOrderNumber(section.subSections.slice())
+													:
+													section.subSections.slice();
+
 							const newSection = copyUtils.copySection(section);
+							newSection.subSections = newSubSections;
 
 							const index = sections.indexOf(section);
 							sections[index] = newSection;

@@ -165,8 +165,8 @@ class PrivateChannelContainer extends PureComponent {
                     modifiableMessage = {this.props.modifiableMessage}
                     setCurrentInfoMessage = {this.props.setCurrentInfoMessage}
                     setModifiableMessage = {this.props.setModifiableMessage}
-                    modifyMessage = {this.props.modifyMessage}
-                    deleteMessage = {this.props.deleteMessage}
+                    modifyMessage = {messageApi.modifyMessage}
+                    deleteMessage = {messageApi.deleteMessage}
 
                     showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
 
@@ -207,12 +207,12 @@ const mapDispatchToProps = function(dispatch) {
         setNewPrivateMessagesCount: function(data) {
             dispatch(setNewPrivateMessagesCount(data));
         },
-        modifyMessage: function(item) {
-            messageApi.modifyMessage(item);
-        },
-        deleteMessage: function(item) {
-            messageApi.deleteMessage(item);
-        },
+        // modifyMessage: function(item) {
+        //     messageApi.modifyMessage(item);
+        // },
+        // deleteMessage: function(item) {
+        //     messageApi.deleteMessage(item);
+        // },
         setModifiableMessage: function(item) {
             dispatch(setModifiableMessage(item));
         },

@@ -98,6 +98,7 @@ export default class InfoForm extends PureComponent {
                                 resetInfoItem = {this.resetInfoItem}
                                 modifyItem = {this.props.modifyItem}
                                 type = {this.props.type}
+                                deletedItemAction = {this.props.deletedItemAction}
 
                                 parentItemsList = {this.props.parentItemsList}
                                 resetParentItemsList = {this.props.resetParentItemsList}

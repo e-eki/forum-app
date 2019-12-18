@@ -64,6 +64,7 @@ export default class Main extends PureComponent {
                                     setMovingSubSection = {this.props.setMovingSubSection}
                                     modifySubSection = {this.props.modifySubSection}
                                     deleteSubSection = {this.props.deleteSubSection}
+                                    deleteSubSectionById = {this.props.deleteSubSectionById}
 
                                     parentItemsList = {this.props.parentItemsList}
                                     resetParentItemsList = {this.props.resetParentItemsList}

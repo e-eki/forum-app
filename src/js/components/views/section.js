@@ -66,6 +66,7 @@ export default class Section extends PureComponent {
                             setMovingItem = {this.props.setMovingSubSection}
                             modifyItem = {this.props.modifySubSection}
                             deleteItem = {this.props.deleteSubSection}
+                            deletedItemAction = {this.props.deleteSubSectionById}
                             
                             parentItemsList = {this.props.parentItemsList}
                             resetParentItemsList = {this.props.resetParentItemsList}

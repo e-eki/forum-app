@@ -86,6 +86,7 @@ export default class ListForm extends PureComponent {
                                 modifyItem = {this.props.modifyItem}
                                 type = {this.props.type}
                                 setDescriptionMessage = {this.props.setDescriptionMessage}
+                                deletedItemAction = {this.props.deletedItemAction}
                                 
                                 parentItemsList = {this.props.parentItemsList}
                                 resetParentItemsList = {this.props.resetParentItemsList}

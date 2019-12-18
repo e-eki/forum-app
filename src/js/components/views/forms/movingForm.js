@@ -39,11 +39,18 @@ export default class MovingForm extends Component {
         if (nextProps.parentItemsList !== this.parentItemsList) {
             this.parentItemsList = nextProps.parentItemsList;
 
-            this.parentItemType = this.getParentItemType();  //?
-            this.parentItemOptions = this.getParentItemOptions(nextProps.parentItemsList);   //?
+            if (this.props.type) {
+                if (this.props.type !== forumConst.itemTypes.section) {
+                    this.parentItemType = this.getParentItemType();
+                    this.parentItemOptions = this.getParentItemOptions(nextProps.parentItemsList);
+                }
 
-            this.itemsList = this.getItemsList(nextProps.parentItemsList);  //?
-            this.movingInListTypeOptions = this.getMovingInListTypeOptions();  //?
+                if ((this.props.type === forumConst.itemTypes.section) ||
+                    (this.props.type === forumConst.itemTypes.subSection)) {
+                        this.itemsList = this.getItemsList(nextProps.parentItemsList);
+                        this.movingInListTypeOptions = this.getMovingInListTypeOptions();
+                    }
+            }
         }
 
         return true;  //todo??
@@ -92,6 +99,7 @@ export default class MovingForm extends Component {
         if (options.length) {
             options.unshift(<option key={i++} value={this.defaultValue}></option>);
         }
+        
         return options;
     }
 
@@ -130,7 +138,8 @@ export default class MovingForm extends Component {
         let i = 0;
 
         if (this.itemsList && (this.itemsList.length > 1)) {
-            const index = this.itemsList.indexOf(this.props.movingItem);
+
+            const index = this.itemsList.findIndex(item => item.id === this.props.movingItem.id);
 
             if (index !== -1) {
 
@@ -195,7 +204,7 @@ export default class MovingForm extends Component {
             tasks.push(this.moveItemInList());
         }
         else if (this.state.parentItemName) {
-            tasks.push(this.moveItemOutsideList());
+            tasks.push(this.moveItemOtsideList());
         }
 
         return Promise.all(tasks)
@@ -213,7 +222,7 @@ export default class MovingForm extends Component {
         const movingItems = [];
         
         if (this.itemsList && (this.itemsList.length > 1)) {
-            const index = this.itemsList.indexOf(this.props.movingItem);
+            const index = this.itemsList.findIndex(item => item.id === this.props.movingItem.id);
 
             switch (this.state.movingInListType) {
 
@@ -258,46 +267,99 @@ export default class MovingForm extends Component {
 
     moveItemOtsideList() {
         debugger;
+        const tasks = [];
+
+        const movingItem = this.props.movingItem;
+        const prevParentId = movingItem.parentItemId || movingItem.sectionId || movingItem.subSectionId || movingItem.channelId;
+
+        // если перемещаем подраздел, то в предыдущем родительском элементе нужно поправить
+        // номера всем под-элементам, следующим за перемещаемым
+        if (this.props.type === forumConst.itemTypes.subSection) {
+            const prevParent = this.parentItemsList.find(item => item.id === prevParentId);
+
+            if (prevParent.subSections.length > 1) {
+                prevParent.subSections.forEach(item => {
+                    if (item.orderNumber > movingItem.orderNumber) {
+                        item.orderNumber--;
+                        tasks.push(this.props.modifyItem(item));  //?
+                    }
+                })
+            }
+        }
+
         const parent = this.parentItemsList.find(item => item.name === this.state.parentItemName);
 
-        this.props.movingItem.parentItemId = parent.id;
+        movingItem.parentItemId = parent.id;
 
-        return this.props.modifyItem(this.props.movingItem)
-            .then(result => true);
+        // если в элементе, в кот. перемещаем, есть под-элементы, то номер перемещаемого = кол-ву под-элементов + 1
+        if (this.props.type === forumConst.itemTypes.subSection) {
+            movingItem.orderNumber = parent.subSections ? parent.subSections.length : 0;
+        }
+        
+        tasks.push(this.props.modifyItem(this.props.movingItem));
+
+        return Promise.all(tasks)
+            .then(result => {
+                this.props.deletedItemAction(movingItem.id, prevParentId);
+
+                return true;
+            });
     }
 
     render() {
         //console.log('render movingForm');
         const className = 'moving-form ' + (this.props.className ? this.props.className : '');
         debugger;
+
+        const movingOutsideListBlock = (this.props.type && (this.props.type !== forumConst.itemTypes.section)) 
+                                    ?
+                                    <div>
+                                        Переместить в элемент верхнего уровня ({this.parentItemType}) 
+                                        <select
+                                            name="parentItemName"
+                                            className = ''
+                                            onChange = {this.changeData}
+                                            value = {this.state.parentItemName}
+                                        >
+                                            {this.parentItemOptions}
+                                        </select>
+                                    </div>
+                                    :
+                                    null;
+
+        const movingInListBlock = (this.props.type &&
+                                    ((this.props.type === forumConst.itemTypes.section) ||
+                                    (this.props.type === forumConst.itemTypes.subSection)))
+                                    ?
+                                    <div>
+                                        Переместить в списке на позицию 
+                                        <select
+                                            name="movingInListType"
+                                            className = ''
+                                            onChange = {this.changeData}
+                                            value = {this.state.movingInListType}
+                                        >
+                                            {this.movingInListTypeOptions}
+                                        </select>
+                                    </div>
+                                    :
+                                    null;
+
+        const noteBlock = (!movingOutsideListBlock && !movingInListBlock)
+                            ?
+                            'некуда перемещать'
+                            :
+                            null;
         
         return (
             <div className = {className}>
                 ПЕРЕМЕЩЕНИЕ ЭЛЕМЕНТА
 
-                <div>
-                    Переместить в списке на позицию 
-                    <select
-                        name="movingInListType"
-                        className = ''
-                        onChange = {this.changeData}
-                        value = {this.state.movingInListType}
-                    >
-                        {this.movingInListTypeOptions}
-                    </select>
-                </div>
+                {movingInListBlock}
 
-                <div>
-                    Переместить в элемент верхнего уровня ({this.parentItemType}) 
-                    <select
-                        name="parentItemName"
-                        className = ''
-                        onChange = {this.changeData}
-                        value = {this.state.parentItemName}
-                    >
-                        {this.parentItemOptions}
-                    </select>
-                </div>
+                {movingOutsideListBlock}
+
+                {noteBlock}
 
                 <button className = '' onClick = {this.moveItem}>
                     Ок
