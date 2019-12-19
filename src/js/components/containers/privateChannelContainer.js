@@ -13,7 +13,7 @@ import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import { setCurrentPrivateChannel } from '../../actions/privateChannelActions';
 import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
 import forumConst from '../../constants/forumConst';
-import { setDescriptionMessageForChannel } from '../../lib/channelUtils';
+import { setDescriptionMessageForChannel } from '../../utils/channelUtils';
 
 class PrivateChannelContainer extends PureComponent {
 

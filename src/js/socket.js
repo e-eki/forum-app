@@ -11,9 +11,9 @@ import { setCurrentInfoMessage, setModifiableMessage, setMovingMessage } from '.
 import { setCurrentPrivateChannel, setPrivateChannels } from './actions/privateChannelActions';
 import { setAlertData } from './actions/alertDataActions';
 import { incrementNewPrivateMessagesCount } from './actions/notificationActions';
-import * as copyUtils from './lib/copyUtils';
+import * as copyUtils from './utils/copyUtils';
 import appConst from './constants/appConst';
-import { getSortedItemsByOrderNumber } from './lib/sortingUtils';
+import { getSortedItemsByOrderNumber } from './utils/sortingUtils';
 
 const socket = io(`${apiConst.serverUrl}`);
 

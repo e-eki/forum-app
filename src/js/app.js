@@ -16,6 +16,7 @@ import AlertFormContainer from './components/containers/alertFormContainer';
 import UserInfoFormContainer from './components/containers/UserInfoFormContainer';
 import SearchResultsContainer from './components/containers/SearchResultsContainer';
 import SearchFormContainer from './components/containers/SearchFormContainer';
+import BreadcrumbsContainer from './components/containers/BreadcrumbsContainer';
 
 export default class App extends Component {
 
@@ -56,6 +57,8 @@ export default class App extends Component {
                 <MenuContainer/>
 
                 <SearchFormContainer/>
+
+                <BreadcrumbsContainer/>
 
                 <Switch>
                   <Route exact path="/" component={MainContainer} />

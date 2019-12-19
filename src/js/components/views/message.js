@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import forumConst from '../../constants/forumConst';
 import appConst from '../../constants/appConst';
-import { getDateTimeString } from '../../lib/dateStringUtils';
+import { getDateTimeString } from '../../utils/dateStringUtils';
 
 // Сообщение
 export default class Message extends PureComponent {

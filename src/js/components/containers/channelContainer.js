@@ -11,7 +11,7 @@ import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage, setMovingMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom, deleteMessageById } from '../../actions/remoteActions';
 import { setCurrentInfoChannel, setCurrentChannel } from '../../actions/channelActions';
-import { setDescriptionMessageForChannel } from '../../lib/channelUtils';
+import { setDescriptionMessageForChannel } from '../../utils/channelUtils';
 import { setParentItemsList } from '../../actions/modifyingActions';
 
 class ChannelContainer extends PureComponent {

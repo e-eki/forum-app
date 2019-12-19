@@ -6,7 +6,7 @@ import Message from './message';
 import ListForm from './forms/listForm';
 import forumConst from '../../constants/forumConst';
 import appConst from '../../constants/appConst';
-import { getDateTimeString } from '../../lib/dateStringUtils';
+import { getDateTimeString } from '../../utils/dateStringUtils';
 import NewMessagesNotificationForm from './forms/newMessagesNotificationForm';
 
 // Канал
