@@ -9,7 +9,7 @@ import appConst from '../../constants/appConst';
 import { getDateTimeString } from '../../utils/dateStringUtils';
 import NewMessagesNotificationForm from './forms/newMessagesNotificationForm';
 
-// Канал
+// Чат
 export default class Channel extends PureComponent {
 
     constructor(props) {
