@@ -121,7 +121,7 @@ function createPrivateChannel(item) {
 
 	return getUserInfoById(item.recipientId)
 		.then(recipientUserInfo => {
-			item.name = recipientUserInfo ? recipientUserInfo.nickName : 'NONAME';
+			item.name = recipientUserInfo ? recipientUserInfo.login : 'NONAME';
 
 			return axios.post(`${apiConst.privateChannelApi}`, {
 				senderId: item.senderId,

@@ -29,13 +29,13 @@ export default class UserInfoForm extends PureComponent {
 
             userInfoBlock = <div>
                                 <div>USER</div>
-                                <div>{this.props.userInfo.nickName}</div>
+                                <div>{this.props.userInfo.login}</div>
                                 {this.props.userInfo.name ? <div>{this.props.userInfo.name}</div> : null}
                                 {birthDateString}
                                 {this.props.userInfo.city ? <div>{this.props.userInfo.city}</div> : null}
                                 {this.props.userInfo.profession ? <div>{this.props.userInfo.profession}</div> : null}
                                 {this.props.userInfo.hobby ? <div>{this.props.userInfo.hobby}</div> : null}
-                                {this.props.userInfo.citation ? <div>{this.props.userInfo.citation}</div> : null}
+                                {this.props.userInfo.captionText ? <div>{this.props.userInfo.captionText}</div> : null}
                                 
                                 {/* {!this.props.isPrivateChannel && this.props.userInfo.id
                                     ?
