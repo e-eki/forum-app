@@ -63,6 +63,12 @@ export default class App extends Component {
                 <Switch>
                   <Route exact path="/" component={MainContainer} />
 
+                  <Route path="/login" component={LoginPage} />
+                  <Route path="/registration" component={RegistrationPage} />
+                  <Route path="/recovery-password" component={RecoveryPasswordPage} />
+                  <Route path="/email-confirm" component={EmailConfirmPage} />
+                  <Route path="/reset-password/" component={ResetPasswordPage} /> 
+
                   <Route exact path="/sections/:id" component={SectionContainer} />
                   <Route exact path="/subsections/:id" component={SubSectionContainer} />
                   <Route exact path="/channels/:id" component={ChannelContainer} />

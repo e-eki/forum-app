@@ -6,4 +6,8 @@ module.exports = {
 	privateChannelsLink: '/private-channels',
 	searchLink: '/search',
 	userInfoLink: '/user-info',
+
+	registrationLink: '/registration',
+	recoveryPasswordLink: '/recovery-password',
+	emailConfirmLink: '/email-confirm',
 }
