@@ -17,6 +17,11 @@ import UserInfoFormContainer from './components/containers/UserInfoFormContainer
 import SearchResultsContainer from './components/containers/SearchResultsContainer';
 import SearchFormContainer from './components/containers/SearchFormContainer';
 import BreadcrumbsContainer from './components/containers/BreadcrumbsContainer';
+import LoginFormContainer from './components/containers/LoginFormContainer';
+import RegistrationFormContainer from './components/containers/RegistrationFormContainer';
+import RecoveryPasswordFormContainer from './components/containers/RecoveryPasswordFormContainer';
+import EmailConfirmFormContainer from './components/containers/EmailConfirmFormContainer';
+import ResetPasswordFormContainer from './components/containers/ResetPasswordFormContainer';
 
 export default class App extends Component {
 
@@ -63,11 +68,11 @@ export default class App extends Component {
                 <Switch>
                   <Route exact path="/" component={MainContainer} />
 
-                  <Route path="/login" component={LoginPage} />
-                  <Route path="/registration" component={RegistrationPage} />
-                  <Route path="/recovery-password" component={RecoveryPasswordPage} />
-                  <Route path="/email-confirm" component={EmailConfirmPage} />
-                  <Route path="/reset-password/" component={ResetPasswordPage} /> 
+                  <Route path="/login" component={LoginFormContainer} />
+                  <Route path="/registration" component={RegistrationFormContainer} />
+                  <Route path="/recovery-password" component={RecoveryPasswordFormContainer} />
+                  <Route path="/email-confirm" component={EmailConfirmFormContainer} />
+                  <Route path="/reset-password" component={ResetPasswordFormContainer} /> 
 
                   <Route exact path="/sections/:id" component={SectionContainer} />
                   <Route exact path="/subsections/:id" component={SubSectionContainer} />

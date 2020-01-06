@@ -6,26 +6,21 @@ import appConst from '../../../constants/appConst';
 import authConst from '../../../constants/authConst';
 import * as authUtils from '../../../utils/authUtils';
 
-// Форма для входа на сайт
-export default class LoginForm extends Component {
+// Форма для регистрации на сайте
+export default class RegistrationForm extends Component {
 
     constructor(props) {
         super(props);
 
-        this.titles = {
-			vkTitle: 'Войти с помощью Вконтакте',
-			googleTitle: 'Войти с помощью Google',
-		};
-
         this.state = {
+            login: '',
             email: '',
             password: '',
         }
 
         this.changeData = this.changeData.bind(this);
         this.clearData = this.clearData.bind(this);
-        this.clickLoginButton = this.clickLoginButton.bind(this);
-        this.clickSocialLoginButton = this.clickSocialLoginButton.bind(this);
+        this.clickRegistrationButton = this.clickRegistrationButton.bind(this);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -53,9 +48,15 @@ export default class LoginForm extends Component {
         });
     }
 
-    clickLoginButton(event) {
+    clickRegistrationButton(event) {
         debugger;
         let isDataValid = true;
+
+        if (!this.state.login ||
+            (this.state.login === authConst.warningData.login)) {
+                this.state.login = authConst.warningData.login;
+                isDataValid = false;
+        }
 
         if (!this.state.email ||
             (this.state.email === authConst.warningData.email  ||
@@ -76,10 +77,10 @@ export default class LoginForm extends Component {
             return true;
         }
 
-		return this.props.login(this.state.email, this.state.password)
+		return this.props.registration(this.state.email, this.state.login, this.state.password)
 			.then(response => {
                 const alertData = {
-                    message: 'Вы успешно вошли на сайт. Нажмите ссылку для перехода.',
+                    message: 'Письмо с кодом подтверждения было отправлено на указанный имейл.',   //?
                     secondaryMessage: 'На главную',
                     secondaryLink: appConst.defaultLink,
                 };
@@ -87,22 +88,12 @@ export default class LoginForm extends Component {
                 this.props.setAlertData(alertData);
 			})
 			.catch(error => {
-                let alertData;
+                const message = authUtils.getErrorResponseMessage(error);  //?
 
-                if (error.response && error.response.status && error.response.status === 401) {
-                    alertData = {
-                        message: 'Пользователь с указанным имейлом не найден.',
-                        secondaryMessage: 'Зарегистрироваться',
-                        secondaryLink: appConst.registrationLink,
-                    };
-                }
-                else {
-                    const message = authUtils.getErrorResponseMessage(error);  //?
-
-                    alertData = {
-                        message: message,
-                    };
-                }
+                const alertData = {
+                    message: message,
+                    
+                };
 
 				this.props.setAlertData(alertData);
 			})

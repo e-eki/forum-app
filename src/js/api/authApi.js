@@ -8,7 +8,7 @@ import apiConst from '../constants/apiConst';
 import authConst from '../constants/authConst';
 
 
-export function socialLogin(serviceName) {
+export function socialLogin(serviceName) {   //todo: доделать PUT!
 	debugger;
 	let socialLink;
 
@@ -47,7 +47,7 @@ export function socialLogin(serviceName) {
 		})
 };
 
-export function loginAction(email, password) {
+export function login(email, password) {
 	debugger;
 	return axios.post(`${apiConst.loginApi}`, {
 		email: email,
@@ -64,6 +64,16 @@ export function loginAction(email, password) {
 				return false;  //?
 			}
 		})
+};
+
+export function registration(email, login, password) {
+	debugger;
+
+	return axios.post(`${apiConst.registrationApi}`, {
+		email: email,
+		login: login,
+		password: password,
+	})
 };
 
 

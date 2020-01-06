@@ -18,6 +18,14 @@ export default class AlertForm extends PureComponent {
 		debugger;
 
 		if (this.props.alertData) {
+			const secondaryLink = (this.props.alertData.secondaryMessage && this.props.alertData.secondaryLink)
+									?
+									<Link to = {this.props.alertData.alertData.secondaryLink}>
+										{this.props.alertData.secondaryMessage}	
+									</Link>
+									:
+									null;
+
 			const alertInfo = <div>
 									<p>{this.props.alertData.message || 'something crashed!'}</p>
 
@@ -26,7 +34,7 @@ export default class AlertForm extends PureComponent {
 									</button>
 								</div>;
 
-			if (this.props.alertData.link) {
+			if (!secondaryLink && this.props.alertData.link) {
 				alertBlock = <Link to = {this.props.alertData.link}>
 								{alertInfo}	
 							</Link>;
@@ -35,8 +43,6 @@ export default class AlertForm extends PureComponent {
 				alertBlock = alertInfo;
 			}
 		}
-
-		
 
 		return (
 			<div className = {className} onClick = {this.props.resetAlertData}>

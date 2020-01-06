@@ -24,8 +24,6 @@ export default class LoginForm extends Component {
 
         this.changeData = this.changeData.bind(this);
         this.clearData = this.clearData.bind(this);
-        this.clickLoginButton = this.clickLoginButton.bind(this);
-        this.clickSocialLoginButton = this.clickSocialLoginButton.bind(this);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -55,25 +53,23 @@ export default class LoginForm extends Component {
 
     clickLoginButton(event) {
         debugger;
-        let isDataValid = true;
+        let isLoginDataValid = true;
 
         if (!this.state.email ||
             (this.state.email === authConst.warningData.email  ||
             !authUtils.isEmailValid)) {
                 this.state.email = authConst.warningData.email;
-                isDataValid = false;
+                isLoginDataValid = false;
         }
 
         if (!this.state.password ||
             (this.state.password === authConst.warningData.password)) {
                 this.state.password = authConst.warningData.password;
-                isDataValid = false;
+                isLoginDataValid = false;
         }
 
-        if (!isDataValid) {
+        if (!isLoginDataValid) {
             this.setState({});
-
-            return true;
         }
 
 		return this.props.login(this.state.email, this.state.password)
