@@ -6,9 +6,10 @@ import store from '../store/store';
 import * as authActions from '../actions/authActions';
 import apiConst from '../constants/apiConst';
 import authConst from '../constants/authConst';
+import { getFingerprint } from '../utils/fingerprintUtils';
+import * as authUtils from '../utils/authUtils';
 
-
-export function socialLogin(serviceName) {   //todo: доделать PUT!
+export function socialLogin(serviceName) {
 	debugger;
 	let socialLink;
 
@@ -22,7 +23,7 @@ export function socialLogin(serviceName) {   //todo: доделать PUT!
 			break;
 
 		default:  //?
-			throw new Error('login error: no service name');
+			throw new Error('social login error: no service name');
 	}
 
 	// TODO!!! vkontakte api не отвечает localhost (нет 'Access-Control-Allow-Origin' в заголовке)
@@ -32,36 +33,60 @@ export function socialLogin(serviceName) {   //todo: доделать PUT!
 		url: socialLink
 	};
 	
-	return axios(options)
-	//return axios.get(socialLink)
+	return Promise.resolve(axios(options))
+		.then(socialLoginDataId => {
+			debugger;
+			const tasks = [];
+
+			tasks.push(socialLoginDataId);
+
+			//get fingerprint
+			tasks.push(getFingerprint());
+
+			return Promise.all(tasks);
+		})
+		.spread((socialLoginDataId, fingerprint) => {
+			debugger;
+
+			return axios.put(`${apiConst.loginApi}`, {
+				socialLoginDataId: socialLoginDataId,
+				fingerprint: fingerprint,
+			})
+		})
 		.then(tokensData => {
 			debugger;
 
-			if (_isTokensDataValid(tokensData)) {
+			if (authUtils.isTokensDataValid(tokensData)) {
 				_setTokensData(response.data);
 				return true;
 			}
 			else {
-				return false;  //?
+				throw new Error('auth error: invalid tokens data');
 			}
 		})
 };
 
 export function login(email, password) {
 	debugger;
-	return axios.post(`${apiConst.loginApi}`, {
-		email: email,
-		password: password,
-	})
+	//get fingerprint
+	return Promise.resolve(getFingerprint())
+		.spread(fingerprint => {
+
+			return axios.post(`${apiConst.loginApi}`, {
+				email: email,
+				password: password,
+				fingerprint: fingerprint,
+			});
+		})
 		.then(tokensData => {
 			debugger;
 
-			if (_isTokensDataValid(tokensData)) {
+			if (authUtils.isTokensDataValid(tokensData)) {
 				_setTokensData(response.data);
 				return true;
 			}
 			else {
-				return false;  //?
+				throw new Error('auth error: invalid tokens data');
 			}
 		})
 };
@@ -69,27 +94,124 @@ export function login(email, password) {
 export function registration(email, login, password) {
 	debugger;
 
-	return axios.post(`${apiConst.registrationApi}`, {
-		email: email,
-		login: login,
-		password: password,
-	})
+	//get fingerprint
+	return Promise.resolve(getFingerprint())
+		.spread(fingerprint => {
+
+			return axios.post(`${apiConst.registrationApi}`, {
+				email: email,
+				login: login,
+				password: password,
+				fingerprint: fingerprint,
+			});
+		})
+};
+
+export function recoveryPassword(email) {
+	debugger;
+
+	//get fingerprint
+	return Promise.resolve(getFingerprint())
+		.spread(fingerprint => {
+
+			return axios.post(`${apiConst.resetPasswordApi}`, {
+				email: email,
+				fingerprint: fingerprint,
+			});
+		})
+};
+
+export function emailConfirm(email) {
+	debugger;
+
+	//get fingerprint
+	return Promise.resolve(getFingerprint())
+		.spread(fingerprint => {
+
+			return axios.post(`${apiConst.emailConfirmApi}`, {
+				email: email,
+				fingerprint: fingerprint,
+			});
+		})
+};
+
+export function resetPassword(accessToken, password) {
+	debugger;
+	return Promise.resolve(true)
+		.then(() => {
+			const params = {
+				password: password,
+			};
+		
+			const options = {
+				method: 'PUT',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				data: params,
+				url: `${apiConst.resetPasswordApi}`
+			};
+			
+			return axios(options);
+		})
+		.then(response => {
+			authUtils.removeTokensData();
+
+			return response;
+		})
+};
+
+export function getActualAccessToken() {
+	debugger;
+	const accessToken = authUtils.getAccessToken();
+	const refreshToken = authUtils.getRefreshToken();
+	const accessTokenExpired = authUtils.isAccessTokenExpired();
+
+	return Promise.resolve(true)
+		.then(() => {
+			if (!accessTokenExpired) {
+				return true;
+			}
+			else {
+				//get fingerprint
+				return getFingerprint();
+			}
+		})
+		.then(response => {
+			if (response === true) {
+				return true;
+			}
+			else {
+				const fingerprint = response;
+
+				return axios.post(`${apiConst.refreshTokensApi}`, {	
+					refreshToken: refreshToken,
+					fingerprint: fingerprint,
+				});
+			}
+		})
+		.then(response => {
+			if (response === true) {
+				return accessToken;
+			}
+
+			const tokensData = response.data;
+
+			if (authUtils.isTokensDataValid(tokensData)) {
+				_setTokensData(response.data);
+				return tokensData.accessToken;
+			}
+			else {
+				throw new Error('auth error: invalid tokens data');
+			}
+		})
 };
 
 
-function _isTokensDataValid(tokensData) {
-	if (tokensData.accessToken &&
-		tokensData.refreshToken &&
-		tokensData.accessTokenExpiresIn) {
-			return true;
-	}
-	else {
-		return false;
-	}
-}
+//----
 
 function _setTokensData(tokensData) {
 	debugger;
+
+	authUtils.saveTokensData(tokensData);
 
 	store.dispatch(authActions.setAccessToken(tokensData.accessToken));
 	store.dispatch(authActions.setRefreshToken(tokensData.refreshToken));

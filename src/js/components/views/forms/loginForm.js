@@ -75,64 +75,17 @@ export default class LoginForm extends Component {
 
             return true;
         }
+        else {
+            return this.props.doLogin(this.state.email, this.state.password);
+        }
+    }
 
-		return this.props.login(this.state.email, this.state.password)
-			.then(response => {
-                const alertData = {
-                    message: 'Вы успешно вошли на сайт. Нажмите ссылку для перехода.',
-                    secondaryMessage: 'На главную',
-                    secondaryLink: appConst.defaultLink,
-                };
-
-                this.props.setAlertData(alertData);
-			})
-			.catch(error => {
-                let alertData;
-
-                if (error.response && error.response.status && error.response.status === 401) {
-                    alertData = {
-                        message: 'Пользователь с указанным имейлом не найден.',
-                        secondaryMessage: 'Зарегистрироваться',
-                        secondaryLink: appConst.registrationLink,
-                    };
-                }
-                else {
-                    const message = authUtils.getErrorResponseMessage(error);  //?
-
-                    alertData = {
-                        message: message,
-                    };
-                }
-
-				this.props.setAlertData(alertData);
-			})
-	}
-    
     clickSocialLoginButton(event) {
-		debugger;
-		const service = event.target.name;
+        debugger;
+        const service = event.target.name;
 
-		// TODO!!! vkontakte api не отвечает localhost (нет 'Access-Control-Allow-Origin' в заголовке)
-		return this.props.socialLogin(service)
-            .then(response => {
-                const alertData = {
-                    message: 'Вы успешно вошли на сайт. Нажмите ссылку для перехода.',
-                    secondaryMessage: 'На главную',
-                    secondaryLink: appConst.defaultLink,
-                };
-
-                this.props.setAlertData(alertData);
-            })
-            .catch(error => {
-                const message = authUtils.getErrorResponseMessage(error);  //?
-
-                const alertData = {
-                    message: message,
-                };
-
-                this.props.setAlertData(alertData);
-            })
-	}
+        return this.props.doSocialLogin(service);
+    }
 
     render() {
         //console.log('render loginForm');
@@ -147,7 +100,8 @@ export default class LoginForm extends Component {
             this.props.accessTokenExpiresIn) {
                 const alertData = {
                     message: 'Вы успешно вошли на сайт. Нажмите ссылку для перехода.',
-                    link: appConst.defaultLink,
+                    secondaryMessage: 'На главную',
+                    secondaryLink: appConst.defaultLink,
                 };
 
                 this.props.setAlertData(alertData);

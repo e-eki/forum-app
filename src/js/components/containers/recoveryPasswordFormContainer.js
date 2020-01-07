@@ -2,19 +2,56 @@
 
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import LoginForm from '../views/forms/loginForm';
-import * as authApi from '../../api/authApi';
+import RecoveryPasswordForm from '../views/forms/recoveryPasswordForm';
+import { recoveryPassword } from '../../api/authApi';
+import { setAlertData } from '../../actions/alertDataActions';
+import appConst from '../../constants/appConst';
+import * as baseUtils from '../../utils/baseUtils';
 
-class AuthFormContainer extends PureComponent {
+class RecoveryPasswordFormContainer extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.doRecoveryPassword = this.doRecoveryPassword.bind(this);
+    }
+
+    doRecoveryPassword(email) {
+        debugger;
+
+        return recoveryPassword(email)
+			.then(response => {
+                debugger; 
+
+                const alertData = {
+                    message: 'Инструкции по восстановлению пароля отправлены на указанный адрес электронной почты.',   //?
+                    secondaryMessage: 'На главную',
+                    secondaryLink: appConst.defaultLink,
+                };
+
+                this.props.setAlertData(alertData);
+			})
+			.catch(error => {
+                const message = baseUtils.getErrorResponseMessage(error);  //?
+
+                const alertData = {
+                    message: message,
+                    
+                };
+
+				this.props.setAlertData(alertData);
+			})
     }
     
     render() {
         return (
-            <LoginForm
-                //todo: loginApi
+            <RecoveryPasswordForm
+                setAlertData = {this.props.setAlertData}
+                doRecoveryPassword = {this.doRecoveryPassword}
+
+                accessToken = {this.props.accessToken}
+                refreshToken = {this.props.refreshToken}
+                accessTokenExpiresIn = {this.props.accessTokenExpiresIn}
             />
         );
     }
@@ -22,16 +59,18 @@ class AuthFormContainer extends PureComponent {
 
 const mapStateToProps = function(store) {
     return {
-        alertData: store.alertDataState.get('alertData'),
+        accessToken: store.authState.get('accessToken'),
+        refreshToken: store.authState.get('refreshToken'),
+        accessTokenExpiresIn: store.authState.get('accessTokenExpiresIn'),
     };
 };
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        resetAlertData: function() {
-            dispatch(setAlertData(null));
-        },
+        setAlertData: function(data) {
+            dispatch(setAlertData(data));
+        }
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AlertFormContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(RecoveryPasswordFormContainer);

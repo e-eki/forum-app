@@ -7,6 +7,7 @@ module.exports = {
 	searchLink: '/search',
 	userInfoLink: '/user-info',
 
+	loginLink: '/login',
 	registrationLink: '/registration',
 	recoveryPasswordLink: '/recovery-password',
 	emailConfirmLink: '/email-confirm',
