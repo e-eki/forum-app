@@ -91,6 +91,29 @@ export function login(email, password) {
 		})
 };
 
+export function logout() {   //todo!
+	debugger;
+
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			const options = {
+				method: 'DELETE',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				url: `${apiConst.logoutApi}`
+			};
+			
+			return axios(options);
+		})
+		.then(response => {
+			authUtils.removeTokensData();
+
+			return response;
+		})
+};
+
 export function registration(email, login, password) {
 	debugger;
 
