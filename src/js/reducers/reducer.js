@@ -19,7 +19,7 @@ const reducer = combineReducers({
   channelState: channelReducer,
   messageState: messageReducer,
   alertDataState: alertDataReducer,
-  userInfo: userInfoReducer,
+  userInfoState: userInfoReducer,
   privateChannelState: privateChannelReducer,
   searchState: searchReducer,
   notificationState: notificationReducer,

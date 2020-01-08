@@ -14,6 +14,11 @@ export default class ModifyForm extends Component {
             name: this.props.modifiableItem.name || '',
             description: this.props.modifiableItem.description || '',
             text: this.props.modifiableItem.text || '',  //?
+            birthDate: this.props.modifiableItem.birthDate || null,
+            city: this.props.modifiableItem.city || null,
+            profession: this.props.modifiableItem.profession || null,
+            hobby: this.props.modifiableItem.hobby || null,
+            captionText: this.props.modifiableItem.captionText || null,
         }
 
         this.changeData = this.changeData.bind(this);
@@ -41,6 +46,65 @@ export default class ModifyForm extends Component {
                                         className = '' 
                                         maxLength = '5000'
                                         value = {this.state.text}
+                                        onChange = {this.changeData}
+                                    />
+                                </div>;
+                    break;
+
+                case forumConst.itemTypes.userInfo:
+                    itemInputs = <div>
+                                    <input 
+                                        name = "name"
+                                        type="text" 
+                                        className = '' 
+                                        maxLength = '50'
+                                        value = {this.state.name}
+                                        onChange = {this.changeData}
+                                    />
+
+                                    <input 
+                                        name = "birthDate"
+                                        type="date" 
+                                        className = '' 
+                                        min="1900-01-01"
+                                        max="2019-01-01"
+                                        value = {this.state.birthDate}
+                                        onChange = {this.changeData}
+                                    />
+
+                                    <input 
+                                        name = "city"
+                                        type="text" 
+                                        className = '' 
+                                        maxLength = '50'
+                                        value = {this.state.city}
+                                        onChange = {this.changeData}
+                                    />
+
+                                    <input 
+                                        name = "profession"
+                                        type="text" 
+                                        className = '' 
+                                        maxLength = '200'
+                                        value = {this.state.profession}
+                                        onChange = {this.changeData}
+                                    />
+
+                                    <input 
+                                        name = "hobby"
+                                        type="text" 
+                                        className = '' 
+                                        maxLength = '300'
+                                        value = {this.state.hobby}
+                                        onChange = {this.changeData}
+                                    />
+
+                                    <input 
+                                        name = "captionText"
+                                        type="text" 
+                                        className = '' 
+                                        maxLength = '300'
+                                        value = {this.state.captionText}
                                         onChange = {this.changeData}
                                     />
                                 </div>;
@@ -87,22 +151,32 @@ export default class ModifyForm extends Component {
     
     modifyItem() {
         debugger;
+        const modifiableItem = this.props.modifiableItem;
 
         if (this.props.type) {
             switch (this.props.type) {
 
                 case forumConst.itemTypes.message:
-                    this.props.modifiableItem.text = this.state.text;
+                    modifiableItem.text = this.state.text;
+                    break;
+
+                case forumConst.itemTypes.userInfo:
+                    modifiableItem.name = this.state.name;
+                    modifiableItem.birthDate = this.state.birthDate;
+                    modifiableItem.city = this.state.city;
+                    modifiableItem.profession = this.state.profession;
+                    modifiableItem.hobby = this.state.hobby;
+                    modifiableItem.captionText = this.state.captionText;
                     break;
 
                 default:
-                    this.props.modifiableItem.name = this.state.name;
-                    this.props.modifiableItem.description = this.state.description;
+                    modifiableItem.name = this.state.name;
+                    modifiableItem.description = this.state.description;
                     break;
             }
         }
 
-        return Promise.resolve(this.props.modifyItem(this.props.modifiableItem))
+        return Promise.resolve(this.props.modifyItem(modifiableItem))
             .then(result => {
                 this.resetModifiableItem();   //?
             })

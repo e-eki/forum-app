@@ -6,7 +6,7 @@ import forumConst from '../../constants/forumConst';
 import Channel from '../views/channel';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { getChannelById, getChannels } from '../../api/channelApi';
-import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
+import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage, setMovingMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom, deleteMessageById } from '../../actions/remoteActions';
@@ -103,7 +103,7 @@ class ChannelContainer extends PureComponent {
                     setMovingMessage = {this.props.setMovingMessage}
                     modifyMessage = {messageApi.modifyMessage}
                     deleteMessage = {messageApi.deleteMessage}
-                    showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
+                    showUserInfoById = {getUserInfoAndSetCurrentUserInfo}
                     setDescriptionMessage = {this.setDescriptionMessage}
                     resetDescriptionMessage = {this.resetDescriptionMessage}
                     deleteMessageById = {this.props.deleteMessageById}

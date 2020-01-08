@@ -6,7 +6,7 @@ import Channel from '../views/channel';
 import * as privateChannelApi from '../../api/privateChannelApi';
 import { setPrivateChannels } from '../../actions/privateChannelActions';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
-import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
+import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
@@ -168,7 +168,7 @@ class PrivateChannelContainer extends PureComponent {
                     modifyMessage = {messageApi.modifyMessage}
                     deleteMessage = {messageApi.deleteMessage}
 
-                    showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
+                    showUserInfoById = {getUserInfoAndSetCurrentUserInfo}
 
                     setDescriptionMessage = {this.setDescriptionMessage}
                     resetDescriptionMessage = {this.resetDescriptionMessage}

@@ -7,7 +7,7 @@ import { getPrivateChannels, deletePrivateChannel } from '../../api/privateChann
 import { setPrivateChannels } from '../../actions/privateChannelActions';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
-import { getUserInfoByIdAndSetCurrentUserInfo } from '../../api/userInfoApi';
+import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import forumConst from '../../constants/forumConst';
 
@@ -60,7 +60,7 @@ class PrivateSubSectionContainer extends PureComponent {
                                     deletePrivateChannel = {deletePrivateChannel}
                                     type = {forumConst.itemTypes.privateChannel}
 
-                                    showUserInfoById = {getUserInfoByIdAndSetCurrentUserInfo}
+                                    showUserInfoById = {getUserInfoAndSetCurrentUserInfo}
                                 />;
                 channels.push(channel);
                 key++;

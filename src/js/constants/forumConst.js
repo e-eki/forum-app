@@ -9,6 +9,7 @@ module.exports = {
 		privateChannel: 'privateChannel',
 		searchChannel: 'searchChannel',
 		searchMessage: 'searchMessage',
+		userInfo: 'userInfo',
 	},
 
 	searchTypes: {
