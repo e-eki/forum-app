@@ -42,13 +42,13 @@ export default class UserInfoForm extends PureComponent {
             const userInfo = this.props.userInfo;
 
             const birthDate = userInfo.birthDate;
-            let birthDateString;
+            let birthDateString = null;
 
             if (birthDate) {
                 birthDateString = (typeof(birthDate) === 'string') ? new Date(birthDate).toDateString() : birthDate.toDateString();
             }
 
-            const privateMessageBlock = !userInfo.isOwnInfo
+            const privateMessageBlock = (!userInfo.isOwnInfo && !userInfo.inBlackList)
                                             ?
                                             <Link to={`${appConst.privateChannelsLink}/?recipientId=${this.props.userInfo.id}`}>
                                                 <button className = ''>Написать личное сообщение</button>
@@ -56,35 +56,29 @@ export default class UserInfoForm extends PureComponent {
                                             :
                                             null;
 
-            const editBlock = userInfo.isOwnInfo
-                                ?
-                                <button className = '' onClick = {this.editItem}>
-                                    Редактировать
-                                </button>
-                                :
-                                null;
-
-            // const roleBlock = userInfo.shownForManageRole
-            //                     ?
-            //                     <div>
-            //                         <button className = '' onClick = {this.props.}>
-            //                             Внести в черный список
-            //                         </button>
-
-            //                         <button className = '' onClick = {this.editItem}>
-            //                             Назначить модератором
-            //                         </button>
-            //                     </div>
+            const editBlock = ((userInfo.isOwnInfo || userInfo.canEditRole || userInfo.canEditBlackList) &&
+                                !userInfo.inBlackList)
+                                    ?
+                                    <button className = '' onClick = {this.editItem}>
+                                        Редактировать
+                                    </button>
+                                    :
+                                    null;
 
             userInfoBlock = <div>
                                 <div>USER</div>
+
+                                <div>{userInfo.role}</div>
+
+                                {userInfo.inBlackList ? <div>В черном списке</div> : null}
+
                                 <div>{userInfo.login}</div>
-                                {userInfo.name ? <div>{userInfo.name}</div> : null}
-                                {birthDateString}
-                                {userInfo.city ? <div>{userInfo.city}</div> : null}
-                                {userInfo.profession ? <div>{userInfo.profession}</div> : null}
-                                {userInfo.hobby ? <div>{userInfo.hobby}</div> : null}
-                                {userInfo.captionText ? <div>{userInfo.captionText}</div> : null}
+                                {userInfo.name ? <div>Имя: {userInfo.name}</div> : null}
+                                {birthDateString ? <div>Дата рождения: {birthDateString}</div> : null}
+                                {userInfo.city ? <div>Город: {userInfo.city}</div> : null}
+                                {userInfo.profession ? <div>Профессия: {userInfo.profession}</div> : null}
+                                {userInfo.hobby ? <div>Хобби: {userInfo.hobby}</div> : null}
+                                {userInfo.captionText ? <div>Подпись: {userInfo.captionText}</div> : null}
                                 
                                 {privateMessageBlock}
 

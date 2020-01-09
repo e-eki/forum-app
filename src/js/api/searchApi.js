@@ -8,7 +8,6 @@ import { getChannelsByText } from './channelApi';
 import { getMessagesByText } from './messageApi';
 import * as searchActions from '../actions/searchActions';
 
-
 export function getSearchResults(searchText, searchType) {
 	debugger;
 		

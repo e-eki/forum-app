@@ -40,6 +40,7 @@ class SubSectionContainer extends PureComponent {
         if (this.subSectionId) {
             this.props.leaveRoom(this.subSectionId);
         }
+        
         this.props.resetCurrentSubSection();  //?
     }
 

@@ -23,4 +23,10 @@ module.exports = {
 		up: 'вверх',
 		down: 'вниз',
 	},
+
+	userRoles: {
+        admin: 'admin',
+        moderator: 'moderator',
+        user: 'user',
+    }
 }

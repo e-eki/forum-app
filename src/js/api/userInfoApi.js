@@ -67,6 +67,8 @@ export function modifyUserInfo(item) {
 				profession: item.profession,
 				hobby: item.hobby,
 				captionText: item.captionText,
+				role: item.role,
+				inBlackList: item.inBlackList,
 			};
 
 			const options = {

@@ -6,17 +6,42 @@ import store from '../store/store';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 import { getUserInfoById } from './userInfoApi';
+import { getActualAccessToken } from '../api/authApi';
 
 export function getPrivateChannels() {
-	return axios.get(`${apiConst.privateChannelApi}`)
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			const options = {
+				method: 'GET',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				url: `${apiConst.privateChannelApi}`
+			};
+			
+			return axios(options);
+		})
 		.then(response => {
 			debugger;
             return response.data;
-		});
+		})
 }
 
 export function getPrivateChannelById(id) {
-	return axios.get(`${apiConst.privateChannelApi}/${id}`)
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			const options = {
+				method: 'GET',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				url: `${apiConst.privateChannelApi}/${id}`
+			};
+			
+			return axios(options);
+		})
 		.then(response => {
 			debugger;
 		    return response.data;
@@ -26,7 +51,19 @@ export function getPrivateChannelById(id) {
 export function getPrivateChannelByRecipientId(recipientId) {
 	debugger;
 
-	return Promise.resolve(axios.get(`${apiConst.privateChannelApi}?recipientId=${recipientId}`))
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			const options = {
+				method: 'GET',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				url: `${apiConst.privateChannelApi}?recipientId=${recipientId}`
+			};
+			
+			return axios(options);
+		})
 		.then(response => {
 			debugger;
 			const tasks = [];
@@ -40,7 +77,6 @@ export function getPrivateChannelByRecipientId(recipientId) {
 				tasks.push(false);
 
 				const newPrivateChannel = {
-					senderId: '5dd6d4c6d0412d25e4895fad',  //todo!
 					recipientId: recipientId,
 				};
 
@@ -71,15 +107,27 @@ export function getPrivateChannelByRecipientId(recipientId) {
 
 export function deletePrivateChannel(item) {
 	debugger;
-	const tasks = [];
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			const tasks = [];
 
-	tasks.push(item.id);
-	tasks.push(item.senderId);
-	tasks.push(item.recipientId);
+			tasks.push(item.id);
+			tasks.push(item.senderId);
+			tasks.push(item.recipientId);
 
-	tasks.push(axios.delete(`${apiConst.privateChannelApi}/${item.id}`));
+			const options = {
+				method: 'DELETE',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				url: `${apiConst.privateChannelApi}/${item.id}`
+			};
+			
+			tasks.push(axios(options));
 
-	return Promise.all(tasks)
+			return Promise.all(tasks);
+		})
 		.spread((privateChannelId, senderId, recipientId, response) => {
 			store.dispatch(remoteActions.deletePrivateChannelById(privateChannelId, senderId, recipientId));
 
@@ -89,24 +137,37 @@ export function deletePrivateChannel(item) {
 
 export function modifyPrivateChannel(item) {
 	debugger;
-	const tasks = [];
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			const tasks = [];
 
-	tasks.push(item.id);
-	tasks.push(item.senderId);
-	tasks.push(item.recipientId);
+			tasks.push(item.id);
+			tasks.push(item.senderId);
+			tasks.push(item.recipientId);
 
-	if (item.id) {
-		tasks.push(updatePrivateChannel(item));
-	}
-	else {
-		tasks.push(createPrivateChannel(item));
-	}
-	
-	return Promise.all(tasks)
+			const privateChannelData = {
+				descriptionMessageId: item.descriptionMessageId,
+			};
+
+			if (item.id) {
+				tasks.push(_updatePrivateChannel(privateChannelData, accessToken));
+			}
+			else {
+				tasks.push(_createPrivateChannel(privateChannelData, accessToken));
+			}
+			
+			return Promise.all(tasks);
+		})
 		.spread((privateChannelId, senderId, recipientId, response) => {
 			debugger;
 			if (!privateChannelId && response.data && response.data.id) {
 				privateChannelId = response.data.id;
+			}
+			if (!senderId && response.data && response.data.senderId) {  //?
+				senderId = response.data.senderId;
 			}
 			
 			store.dispatch(remoteActions.updatePrivateChannelById(privateChannelId, senderId, recipientId));
@@ -116,26 +177,27 @@ export function modifyPrivateChannel(item) {
 }
 
 
-function createPrivateChannel(item) {
+function _createPrivateChannel(privateChannelData, accessToken) {
 	debugger;
-
-	return getUserInfoById(item.recipientId)
-		.then(recipientUserInfo => {
-			item.name = recipientUserInfo ? recipientUserInfo.login : 'NONAME';
-
-			return axios.post(`${apiConst.privateChannelApi}`, {
-				senderId: item.senderId,
-				recipientId: item.recipientId,
-				name: item.name,
-			})
-		})
+	const options = {
+		method: 'POST',
+		headers: { 'Authorization': `Token ${accessToken}` },
+		url: `${apiConst.privateChannelApi}`,
+		data: privateChannelData,
+	};
+	
+	return axios(options);
 }
 
-function updatePrivateChannel(item) {
+function _updatePrivateChannel(privateChannelData, accessToken) {
 	debugger;
-	return axios.put(`${apiConst.privateChannelApi}/${item.id}`, {
-		descriptionMessageId: item.descriptionMessageId,
-		name: item.name,
-	})
+	const options = {
+		method: 'POST',
+		headers: { 'Authorization': `Token ${accessToken}` },
+		url: `${apiConst.privateChannelApi}/${item.id}`,
+		data: privateChannelData,
+	};
+	
+	return axios(options);
 }
 

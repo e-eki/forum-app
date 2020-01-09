@@ -6,6 +6,7 @@ import store from '../store/store';
 import * as sectionActions from '../actions/sectionActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
+import { getActualAccessToken } from '../api/authApi';
 
 export function getSections() {
 	return axios.get(`${apiConst.sectionApi}`)
@@ -24,12 +25,25 @@ export function getSectionById(id) {
 }
 
 export function deleteSection(item) {
-	const tasks = [];
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			const tasks = [];
 
-	tasks.push(item.id);
-	tasks.push(axios.delete(`${apiConst.sectionApi}/${item.id}`));
+			tasks.push(item.id);
 
-	return Promise.all(tasks)
+			const options = {
+				method: 'DELETE',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				url: `${apiConst.sectionApi}/${item.id}`
+			};
+			
+			tasks.push(axios(options));
+
+			return Promise.all(tasks);
+		})
 		.spread((sectionId, response) => {
 			debugger;
 		    //store.dispatch(sectionActions.setCurrentInfoSection(null));
@@ -42,19 +56,30 @@ export function deleteSection(item) {
 
 export function modifySection(item) {
 	debugger;
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			const tasks = [];
 
-	const tasks = [];
+			tasks.push(item.id);
 
-	tasks.push(item.id);
+			const sectionData = {
+				name: item.name,
+				description: item.description,
+				orderNumber: item.orderNumber,
+			};
 
-	if (item.id) {
-		tasks.push(updateSection(item));
-	}
-	else {
-		tasks.push(createSection(item));
-	}
-	
-	return Promise.all(tasks)
+			if (item.id) {
+				tasks.push(_updateSection(sectionData, accessToken));
+			}
+			else {
+				tasks.push(_createSection(sectionData, accessToken));
+			}
+			
+			return Promise.all(tasks);
+		})
 		.spread((sectionId, response) => {
 			debugger;
 			if (!sectionId && response.data && response.data.id) {
@@ -71,18 +96,24 @@ export function modifySection(item) {
 
 
 
-function createSection(item) {
-	return axios.post(`${apiConst.sectionApi}`, {
-		name: item.name,
-		description: item.description,
-		orderNumber: item.orderNumber,
-	})
+function _createSection(sectionData, accessToken) {
+	const options = {
+		method: 'POST',
+		headers: { 'Authorization': `Token ${accessToken}` },
+		url: `${apiConst.sectionApi}`,
+		data: sectionData,
+	};
+	
+	return axios(options);
 }
 
-function updateSection(item) {
-	return axios.put(`${apiConst.sectionApi}/${item.id}`, {
-		name: item.name,
-		description: item.description,
-		orderNumber: item.orderNumber,
-	})
+function _updateSection(sectionData, accessToken) {
+	const options = {
+		method: 'PUT',
+		headers: { 'Authorization': `Token ${accessToken}` },
+		url: `${apiConst.sectionApi}/${item.id}`,
+		data: sectionData,
+	};
+	
+	return axios(options);
 }

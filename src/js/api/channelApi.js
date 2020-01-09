@@ -6,7 +6,7 @@ import store from '../store/store';
 import * as channelActions from '../actions/channelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
-
+import { getActualAccessToken } from '../api/authApi';
 
 export function getChannels() {  //?
 	return axios.get(`${apiConst.channelApi}`)
@@ -34,21 +34,33 @@ export function getChannelById(id) {
 
 export function deleteChannel(item) {
 	debugger;
-	if (item.parentItemId) {
-		item.subSectionId = item.parentItemId;
-		delete item.parentItemId;
-	}
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			if (item.parentItemId) {
+				item.subSectionId = item.parentItemId;
+				delete item.parentItemId;
+			}
+		
+			const tasks = [];
+		
+			tasks.push(item.id);
+			tasks.push(item.subSectionId);
 
-	const tasks = [];
+			const options = {
+				method: 'DELETE',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				url: `${apiConst.channelApi}/${item.id}`
+			};
+			
+			tasks.push(axios(options));
 
-	tasks.push(item.id);
-	tasks.push(item.subSectionId);
-	tasks.push(axios.delete(`${apiConst.channelApi}/${item.id}`));
-
-	return Promise.all(tasks)
+			return Promise.all(tasks);
+		})
 		.spread((channelId, subSectionId, response) => {
 			debugger;
-
 		    //store.dispatch(channelActions.setCurrentInfoChannel(null));
 
 			store.dispatch(remoteActions.deleteChannelById(channelId, subSectionId));
@@ -59,26 +71,37 @@ export function deleteChannel(item) {
 
 export function modifyChannel(item) {
 	debugger;
-	if (item.parentItemId) {
-		item.subSectionId = item.parentItemId;
-		delete item.parentItemId;
-	}
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			if (item.parentItemId) {
+				item.subSectionId = item.parentItemId;
+				delete item.parentItemId;
+			}
 
-	const tasks = [];
+			const tasks = [];
 
-	tasks.push(item.id);
-	tasks.push(item.subSectionId);
+			tasks.push(item.id);
+			tasks.push(item.subSectionId);
 
-	item.senderId = item.subSectionId;  //todo!
+			const channelData = {
+				name: item.name,
+				description: item.description,
+				subSectionId: item.subSectionId,
+				descriptionMessageId: item.descriptionMessageId,
+			};
 
-	if (item.id) {
-		tasks.push(updateChannel(item));
-	}
-	else {
-		tasks.push(createChannel(item));
-	}
-	
-	return Promise.all(tasks)
+			if (item.id) {
+				tasks.push(_updateChannel(channelData, accessToken));
+			}
+			else {
+				tasks.push(_createChannel(channelData, accessToken));
+			}
+			
+			return Promise.all(tasks);
+		})
 		.spread((channelId, subSectionId, response) => {
 			debugger;
 			if (!channelId && response.data && response.data.id) {
@@ -95,20 +118,24 @@ export function modifyChannel(item) {
 
 
 
-function createChannel(item) {
-	return axios.post(`${apiConst.channelApi}`, {
-		name: item.name,
-		description: item.description,
-		subSectionId: item.subSectionId,
-		descriptionMessageId: item.descriptionMessageId,
-	})
+function _createChannel(channelData, accessToken) {
+	const options = {
+		method: 'POST',
+		headers: { 'Authorization': `Token ${accessToken}` },
+		url: `${apiConst.channelApi}`,
+		data: channelData,
+	};
+	
+	return axios(options);
 }
 
-function updateChannel(item) {
-	return axios.put(`${apiConst.channelApi}/${item.id}`, {
-		name: item.name,
-		description: item.description,
-		subSectionId: item.subSectionId,
-		descriptionMessageId: item.descriptionMessageId,
-	})
+function _updateChannel(channelData, accessToken) {
+	const options = {
+		method: 'PUT',
+		headers: { 'Authorization': `Token ${accessToken}` },
+		url: `${apiConst.channelApi}/${item.id}`,
+		data: channelData,
+	};
+	
+	return axios(options);
 }

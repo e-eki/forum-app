@@ -19,27 +19,50 @@ export default class ModifyForm extends Component {
             profession: this.props.modifiableItem.profession || null,
             hobby: this.props.modifiableItem.hobby || null,
             captionText: this.props.modifiableItem.captionText || null,
+            role: this.props.modifiableItem.role || null,
+            inBlackList: this.props.modifiableItem.inBlackList || null,
         }
 
         this.changeData = this.changeData.bind(this);
         this.modifyItem = this.modifyItem.bind(this);
         this.resetModifiableItem = this.resetModifiableItem.bind(this);
         this.initItemInputs = this.initItemInputs.bind(this);
+        this.getRoleOptions = this.getRoleOptions.bind(this);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         return true; //todo??
     }
 
+    getRoleOptions() {
+        debugger;
+        const options = [];
+        let i = 0;
+
+        forumConst.userRoles.forEach(item => {
+            if (item !== this.props.modifiableItem.role) {  //?
+                options.push(<option
+                                key={i++}
+                                value={forumConst.movingInListTypes.down}
+                            >
+                                {forumConst.movingInListTypes.down}
+                            </option>);
+            }
+        })
+        
+        return options;
+    }
+
     initItemInputs() {
         debugger;
-        let itemInputs;
+        let itemInputs;      
 
         if (this.props.type) {
             switch (this.props.type) {
 
                 case forumConst.itemTypes.message:
                     itemInputs = <div>
+                                    Текст сообщения
                                     <input 
                                         name = "text"
                                         type="text" 
@@ -51,67 +74,123 @@ export default class ModifyForm extends Component {
                                 </div>;
                     break;
 
-                case forumConst.itemTypes.userInfo:
+                case forumConst.itemTypes.userInfo:                   
+                    let roleOptions;
+
+                    if (this.props.modifiableItem.canEditRole) {
+                        roleOptions = this.getRoleOptions();
+                    }
+
                     itemInputs = <div>
-                                    <input 
-                                        name = "name"
-                                        type="text" 
-                                        className = '' 
-                                        maxLength = '50'
-                                        value = {this.state.name}
-                                        onChange = {this.changeData}
-                                    />
+                                    {this.props.modifiableItem.canEditRole
+                                        ?
+                                        <div>
+                                            Изменить роль пользователя 
+                                            <select
+                                                name="role"
+                                                className = ''
+                                                onChange = {this.changeData}
+                                                value = {this.state.role}
+                                            >
+                                                {roleOptions}
+                                            </select>
+                                        </div>
+                                        :
+                                        null
+                                    }
 
-                                    <input 
-                                        name = "birthDate"
-                                        type="date" 
-                                        className = '' 
-                                        min="1900-01-01"
-                                        max="2019-01-01"
-                                        value = {this.state.birthDate}
-                                        onChange = {this.changeData}
-                                    />
+                                    {this.props.modifiableItem.canEditBlackList
+                                        ?
+                                        <div>
+                                            <input
+                                                name = "inBlackList"
+                                                type="checkbox"
+                                                checked = {this.state.inBlackList}
+                                                onChange = {this.changeData}
+                                            />
+                                            В чёрном списке
+                                        </div>
+                                        :
+                                        null
+                                    }
 
-                                    <input 
-                                        name = "city"
-                                        type="text" 
-                                        className = '' 
-                                        maxLength = '50'
-                                        value = {this.state.city}
-                                        onChange = {this.changeData}
-                                    />
+                                    {(this.props.modifiableItem.isOwnInfo && !this.props.modifiableItem.inBlackList)
+                                        ?
+                                        <div>
+                                            <div>
+                                                Имя - фамилия
+                                                <input 
+                                                    name = "name"
+                                                    type="text" 
+                                                    className = '' 
+                                                    maxLength = '50'
+                                                    value = {this.state.name}
+                                                    onChange = {this.changeData}
+                                                />
+                                            </div>
+                                            
+                                            Дата рождения
+                                            <input 
+                                                name = "birthDate"
+                                                type="date" 
+                                                className = '' 
+                                                min="1900-01-01"
+                                                max="2019-01-01"
+                                                value = {this.state.birthDate}
+                                                onChange = {this.changeData}
+                                            />
 
-                                    <input 
-                                        name = "profession"
-                                        type="text" 
-                                        className = '' 
-                                        maxLength = '200'
-                                        value = {this.state.profession}
-                                        onChange = {this.changeData}
-                                    />
+                                            Город
+                                            <input 
+                                                name = "city"
+                                                type="text" 
+                                                className = '' 
+                                                maxLength = '50'
+                                                value = {this.state.city}
+                                                onChange = {this.changeData}
+                                            />
 
-                                    <input 
-                                        name = "hobby"
-                                        type="text" 
-                                        className = '' 
-                                        maxLength = '300'
-                                        value = {this.state.hobby}
-                                        onChange = {this.changeData}
-                                    />
+                                            Профессия
+                                            <input 
+                                                name = "profession"
+                                                type="text" 
+                                                className = '' 
+                                                maxLength = '200'
+                                                value = {this.state.profession}
+                                                onChange = {this.changeData}
+                                            />
 
-                                    <input 
-                                        name = "captionText"
-                                        type="text" 
-                                        className = '' 
-                                        maxLength = '300'
-                                        value = {this.state.captionText}
-                                        onChange = {this.changeData}
-                                    />
+                                            Хобби
+                                            <input 
+                                                name = "hobby"
+                                                type="text" 
+                                                className = '' 
+                                                maxLength = '300'
+                                                value = {this.state.hobby}
+                                                onChange = {this.changeData}
+                                            />
+
+                                            Подпись под аватаром
+                                            <input 
+                                                name = "captionText"
+                                                type="text" 
+                                                className = '' 
+                                                maxLength = '300'
+                                                value = {this.state.captionText}
+                                                onChange = {this.changeData}
+                                            />
+                                        </div>
+                                        :
+                                        null
+                                    }
+                                    
                                 </div>;
                     break;
                     
                 default:
                     itemInputs = <div>
+
+                                    Название
                                     <input 
                                         name = "name"
                                         type="text" 
@@ -121,6 +200,7 @@ export default class ModifyForm extends Component {
                                         onChange = {this.changeData}
                                     />
 
+                                    Описание
                                     <input 
                                         name = "description"
                                         type="text" 

@@ -6,7 +6,7 @@ import store from '../store/store';
 import * as subSectionActions from '../actions/subSectionActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
-
+import { getActualAccessToken } from '../api/authApi';
 
 export function getSubSections() {
 	return axios.get(`${apiConst.subSectionApi}`)
@@ -26,19 +26,31 @@ export function getSubSectionById(id) {
 
 export function deleteSubSection(item) {
 	debugger;
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			if (item.parentItemId) {
+				item.sectionId = item.parentItemId;
+				delete item.parentItemId;
+			}
 
-	if (item.parentItemId) {
-		item.sectionId = item.parentItemId;
-		delete item.parentItemId;
-	}
+			const tasks = [];
 
-	const tasks = [];
+			tasks.push(item.id);
+			tasks.push(item.sectionId);
 
-	tasks.push(item.id);
-	tasks.push(item.sectionId);
-	tasks.push(axios.delete(`${apiConst.subSectionApi}/${item.id}`));
+			const options = {
+				method: 'DELETE',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				url: `${apiConst.subSectionApi}/${item.id}`
+			};
+			
+			tasks.push(axios(options));
 
-	return Promise.all(tasks)
+			return Promise.all(tasks);
+		})
 		.spread((subSectionId, sectionId, response) => {
 			debugger;
 		    //store.dispatch(subSectionActions.setCurrentInfoSubSection(null));
@@ -51,25 +63,37 @@ export function deleteSubSection(item) {
 
 export function modifySubSection(item) {
 	debugger;
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			if (item.parentItemId) {
+				item.sectionId = item.parentItemId;
+				delete item.parentItemId;
+			}
 
-	if (item.parentItemId) {
-		item.sectionId = item.parentItemId;
-		delete item.parentItemId;
-	}
+			const tasks = [];
 
-	const tasks = [];
+			tasks.push(item.id);
+			tasks.push(item.sectionId);
 
-	tasks.push(item.id);
-	tasks.push(item.sectionId);
+			const subSectionData = {
+				name: item.name,
+				description: item.description,
+				sectionId: item.sectionId,
+				orderNumber: item.orderNumber,
+			};
 
-	if (item.id) {
-		tasks.push(updateSubSection(item));
-	}
-	else {
-		tasks.push(createSubSection(item));
-	}
-	
-	return Promise.all(tasks)
+			if (item.id) {
+				tasks.push(_updateSubSection(subSectionData, accessToken));
+			}
+			else {
+				tasks.push(_createSubSection(subSectionData, accessToken));
+			}
+			
+			return Promise.all(tasks);
+		})
 		.spread((subSectionId, sectionId, response) => {
 			debugger;
 			if (!subSectionId && response.data && response.data.id) {
@@ -86,20 +110,24 @@ export function modifySubSection(item) {
 
 
 
-function createSubSection(item) {
-	return axios.post(`${apiConst.subSectionApi}`, {
-		name: item.name,
-		description: item.description,
-		sectionId: item.sectionId,
-		orderNumber: item.orderNumber,
-	})
+function _createSubSection((subSectionData, accessToken) {
+	const options = {
+		method: 'POST',
+		headers: { 'Authorization': `Token ${accessToken}` },
+		url: `${apiConst.subSectionApi}`,
+		data: subSectionData,
+	};
+	
+	return axios(options);
 }
 
-function updateSubSection(item) {
-	return axios.put(`${apiConst.subSectionApi}/${item.id}`, {
-		name: item.name,
-		description: item.description,
-		sectionId: item.sectionId,
-		orderNumber: item.orderNumber,
-	})
+function _updateSubSection((subSectionData, accessToken) {
+	const options = {
+		method: 'PUT',
+		headers: { 'Authorization': `Token ${accessToken}` },
+		url: `${apiConst.subSectionApi}/${item.id}`,
+		data: subSectionData,
+	};
+	
+	return axios(options);
 }

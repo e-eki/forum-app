@@ -6,15 +6,7 @@ import store from '../store/store';
 import * as actions from '../actions/messageActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
-
-// export function getMessageById(id) {
-// 	return axios.get(`${apiConst.messageApi}/${id}`)  //??
-// 		.then(response => {
-// 			debugger;
-// 		    store.dispatch(actions.setCurrentChannel(response.data));  //??
-// 		    return response.data;
-// 		});
-// }
+import { getActualAccessToken } from '../api/authApi';
 
 export function getMessagesByText(searchText) {
 	return axios.get(`${apiConst.messageApi}?searchText=${searchText}`)
@@ -26,18 +18,31 @@ export function getMessagesByText(searchText) {
 
 export function deleteMessage(item) {
 	debugger;
-	if (item.parentItemId) {
-		item.channelId = item.parentItemId;
-		delete item.parentItemId;
-	}
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			if (item.parentItemId) {
+				item.channelId = item.parentItemId;
+				delete item.parentItemId;
+			}
 
-	const tasks = [];
+			const tasks = [];
 
-	tasks.push(item.id);
-	tasks.push(item.channelId);
-	tasks.push(axios.delete(`${apiConst.messageApi}/${item.id}`));
+			tasks.push(item.id);
+			tasks.push(item.channelId);
 
-	return Promise.all(tasks)
+			const options = {
+				method: 'DELETE',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				url: `${apiConst.messageApi}/${item.id}`
+			};
+			
+			tasks.push(axios(options));
+
+			return Promise.all(tasks);
+		})
 		.spread((messageId, channelId, response) => {
 			debugger;
 		    //store.dispatch(actions.setCurrentInfoMessage(null));
@@ -50,27 +55,39 @@ export function deleteMessage(item) {
 
 export function modifyMessage(item) {
 	debugger;
-	if (item.parentItemId) {
-		item.channelId = item.parentItemId;
-		delete item.parentItemId;
-	}
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			if (item.parentItemId) {
+				item.channelId = item.parentItemId;
+				delete item.parentItemId;
+			}
 
-	const tasks = [];
+			const tasks = [];
 
-	tasks.push(item.id);
-	tasks.push(item.channelId);
-	tasks.push(item.recipientId);
+			tasks.push(item.id);
+			tasks.push(item.channelId);
+			tasks.push(item.recipientId);
 
-	item.senderId = item.channelId;  //todo!
+			const messageData = {
+				date: item.date,
+				text: item.text,
+				senderId: item.senderId,
+				recipientId: item.recipientId,
+				channelId: item.channelId,
+			};
 
-	if (item.id) {
-		tasks.push(updateMessage(item));
-	}
-	else {
-		tasks.push(createMessage(item));
-	}
-	
-	return Promise.all(tasks)
+			if (item.id) {
+				tasks.push(_updateMessage(messageData, accessToken));
+			}
+			else {
+				tasks.push(_createMessage(messageData, accessToken));
+			}
+			
+			return Promise.all(tasks);
+		})
 		.spread((messageId, channelId, recipientId, response) => {
 			debugger;
 			if (!messageId && response.data && response.data.id) {
@@ -87,22 +104,24 @@ export function modifyMessage(item) {
 
 
 
-function createMessage(item) {
-	return axios.post(`${apiConst.messageApi}`, {
-		date: item.date,
-		text: item.text,
-		senderId: item.senderId,
-		recipientId: item.recipientId,
-		channelId: item.channelId,
-	})
+function _createMessage(messageData, accessToken) {
+	const options = {
+		method: 'POST',
+		headers: { 'Authorization': `Token ${accessToken}` },
+		url: `${apiConst.messageApi}`,
+		data: messageData,
+	};
+	
+	return axios(options);
 }
 
-function updateMessage(item) {
-	return axios.put(`${apiConst.messageApi}/${item.id}`, {
-		date: item.date,
-		text: item.text,
-		senderId: item.senderId,
-		recipientId: item.recipientId,
-		channelId: item.channelId,
-	})
+function _updateMessage(messageData, accessToken) {
+	const options = {
+		method: 'PUT',
+		headers: { 'Authorization': `Token ${accessToken}` },
+		url: `${apiConst.messageApi}/${item.id}`,
+		data: messageData,
+	};
+	
+	return axios(options);
 }
