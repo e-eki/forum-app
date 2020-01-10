@@ -1,7 +1,7 @@
 'use strict';
 
 export function copySection(sourse) {
-	const result = copyBase(sourse);	
+	const result = _copyBase(sourse);	
 
 	result.name = sourse.name || '';
 	result.description = sourse.description || '';
@@ -13,7 +13,7 @@ export function copySection(sourse) {
 };
 
 export function copySubSection(sourse) {
-	const result = copyBase(sourse);	
+	const result = _copyBase(sourse);	
 
 	result.name = sourse.name || '';
 	result.description = sourse.description || '';
@@ -26,7 +26,7 @@ export function copySubSection(sourse) {
 };
 
 export function copyChannel(sourse) {
-	const result = copyChannelBase(sourse);	
+	const result = _copyChannelBase(sourse);	
 
 	result.description = sourse.description || '';
 	result.subSectionId = sourse.subSectionId || null;
@@ -45,7 +45,7 @@ export function copyChannel(sourse) {
 };
 
 export function copyPrivateChannel(sourse) {
-	const result = copyChannelBase(sourse);
+	const result = _copyChannelBase(sourse);
 
 	result.recipientId = sourse.recipientId || '';	
 
@@ -62,7 +62,7 @@ export function copyPrivateChannel(sourse) {
 };
 
 export function copyMessage(sourse) {
-	const result = copyBase(sourse);	
+	const result = _copyBase(sourse);	
 
 	result.text = sourse.text || '';
 	result.date = sourse.date || null;
@@ -73,18 +73,33 @@ export function copyMessage(sourse) {
 	return result;
 };
 
+export function copyUserInfo(sourse) {
+	const result = _copyBase(sourse);	
+
+	result.userId = sourse.userId || null;
+	result.login = sourse.login || '';
+	result.birthDate = sourse.birthDate || null;
+	result.city = sourse.city || '';
+	result.profession = sourse.profession || '';
+	result.hobby = sourse.hobby || '';
+	result.captionText = sourse.captionText || '';
+	result.role = sourse.role || '';
+	result.inBlackList = sourse.inBlackList || '';
+
+	return result;
+};
 
 
-function copyBase(sourse) {
-	const result = new Object();  //let?
+function _copyBase(sourse) {
+	const result = new Object();
 
 	result.id = sourse.id;
 
 	return result;
 }
 
-function copyChannelBase(sourse) {
-	const result = copyBase(sourse);	
+function _copyChannelBase(sourse) {
+	const result = _copyBase(sourse);	
 
 	result.name = sourse.name || '';
 	result.senderId = sourse.senderId || '';

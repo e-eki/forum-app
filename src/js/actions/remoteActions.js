@@ -22,13 +22,6 @@ export function leaveRoom(id) {
 
 //---SECTION
 
-// export function updateSections() {
-// 	return {
-// 	  type: actionTypes.UPDATE_SECTIONS,
-// 	  meta: {remote: true},
-// 	};
-// }
-
 export function updateSectionById(sectionId) {
 	return {
 	  type: actionTypes.UPDATE_SECTION_BY_ID,
@@ -124,6 +117,15 @@ export function deletePrivateChannelById(privateChannelId, senderId, recipientId
 	  privateChannelId: privateChannelId,
 	  senderId: senderId,
 	  recipientId: recipientId,
+	  meta: {remote: true},
+	};
+}
+
+//---USER-DATA
+
+export function updateUserData(userId) {
+	return {
+	  type: actionTypes.UPDATE_USER_DATA,
 	  meta: {remote: true},
 	};
 }

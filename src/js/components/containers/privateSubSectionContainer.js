@@ -15,8 +15,6 @@ class PrivateSubSectionContainer extends PureComponent {
 
     constructor(props) {
         super(props);
-
-        this.userId = '5dd6d4c6d0412d25e4895fad';  //todo!
     }
 
     componentDidMount() {
@@ -32,9 +30,6 @@ class PrivateSubSectionContainer extends PureComponent {
     }
 
     componentWillUnmount() {
-        // if (this.userId) {  //todo: userId!
-        //     this.props.leaveRoom(this.userId);
-        // }
         if (this.props.privateChannels) {
             this.props.resetPrivateChannels();  //?
         }

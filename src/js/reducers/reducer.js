@@ -12,6 +12,7 @@ import searchReducer from './searchReducer';
 import notificationReducer from './notificationReducer';
 import modifyingReducer from './modifyingReducer';
 import authReducer from './authReducer';
+import userReducer from './userReducer';
 
 const reducer = combineReducers({
   sectionState: sectionReducer,
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   notificationState: notificationReducer,
   modifyingState: modifyingReducer,
   authState: authReducer,
+  userState: userReducer,
 });
 
 export default reducer;

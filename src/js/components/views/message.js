@@ -35,10 +35,10 @@ export default class Message extends PureComponent {
         const className = 'message ' + (this.props.className ? this.props.className : '');
 
         debugger;
-        let headerBlock = <div>MESSAGE</div>;
+        let messageNameBlock = <div>MESSAGE</div>;
 
         if (this.props.type === forumConst.itemTypes.searchMessage && this.props.message.channelId) {
-            headerBlock = <Link to={`${appConst.channelsLink}/${this.props.message.channelId}`}>
+            messageNameBlock = <Link to={`${appConst.channelsLink}/${this.props.message.channelId}`}>
                                 <div>MESSAGE</div>
                             </Link>;
         }
@@ -58,7 +58,7 @@ export default class Message extends PureComponent {
         
         return (
             <div className = {className}>
-                {headerBlock}
+                {messageNameBlock}
                 
                 <div>{userInfoBlock}</div>
 

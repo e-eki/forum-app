@@ -91,6 +91,8 @@ export default class Main extends PureComponent {
 
                     parentItemsList = {this.props.parentItemsList}
                     resetParentItemsList = {this.props.resetParentItemsList}
+
+                    userData = {this.props.userData}
                 />
             </div>
         )

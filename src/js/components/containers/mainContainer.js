@@ -24,11 +24,10 @@ class MainContainer extends PureComponent {
 
     constructor(props) {
         super(props);
-
-        this.userId = '5dd6d4c6d0412d25e4895fad';  //todo!
     }
 
-    componentDidMount() {      
+    componentDidMount() {
+        debugger;
         return sectionApi.getSections()
             .then(sections => {
                 if (sections) {
@@ -36,7 +35,6 @@ class MainContainer extends PureComponent {
                 }
 
                 this.props.joinRoom(apiConst.defaultRoomId);
-                this.props.joinRoom(this.userId);  //todo!
                 
                 return true;
             });
@@ -82,6 +80,8 @@ class MainContainer extends PureComponent {
 
                 parentItemsList = {this.props.parentItemsList}
                 resetParentItemsList = {this.props.resetParentItemsList}
+
+                userData = {this.props.userData}
             />
         );
     }
@@ -97,6 +97,7 @@ const mapStateToProps = function(store) {
         modifiableSubSection: store.subSectionState.get('modifiableSubSection'),
         movingSubSection: store.subSectionState.get('movingSubSection'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
+        userData: store.userState.get('userData'),
     };
 };
 

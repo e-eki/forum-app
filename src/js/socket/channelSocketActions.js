@@ -1,7 +1,6 @@
 'use strict';
 
 import * as copyUtils from '../utils/copyUtils';
-import { getSortedItemsByOrderNumber } from '../utils/sortingUtils';
 import { setCurrentSubSection } from '../actions/subSectionActions';
 import * as channelActions from '../actions/channelActions';
 import { setAlertData } from '../actions/alertDataActions';
@@ -17,8 +16,11 @@ export function updateChannel(store, action) {
 		const currentChannel = store.getState().channelState.get('currentChannel');
 		const currentInfoChannel = store.getState().channelState.get('currentInfoChannel');
 		const modifiableChannel = store.getState().channelState.get('modifiableChannel');
+		const userData = store.getState().userState.get('userData');
 
-		if (action.data.senderId !== 0) { //todo! userId вместо 0
+		const userId = userData ? userData.id : null;
+
+		if (action.data.senderId !== userId) { //?
 			if (currentInfoChannel &&
 				currentInfoChannel.id === action.channelId) {
 					// если изменилось имя или описание чата

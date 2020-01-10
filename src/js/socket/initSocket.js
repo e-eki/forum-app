@@ -9,6 +9,7 @@ import * as subSectionSocketActions from './subSectionSocketActions';
 import * as channelSocketActions from './channelSocketActions';
 import * as messageSocketActions from './messageSocketActions';
 import * as privateChannelSocketActions from './privateChannelSocketActions';
+import * as userSocketActions from './userSocketActions';
 
 // import { setSections, setCurrentSection } from './actions/sectionActions';
 // import { setCurrentSubSection } from './actions/subSectionActions';
@@ -619,6 +620,10 @@ socket.on('action', action => {
 				// 	}
 				// }
 				
+				break;
+
+			case actionTypes.UPDATE_USER_DATA:
+				userSocketActions.updateUserData(store, action);				
 				break;
 
 			default:

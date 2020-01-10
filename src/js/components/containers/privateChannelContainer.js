@@ -20,8 +20,6 @@ class PrivateChannelContainer extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.userId = '1';  //todo!
-
         this.recipientId = null;
         this.recipientChannelId = null;
         this.channelId = null;
@@ -42,10 +40,6 @@ class PrivateChannelContainer extends PureComponent {
     }
 
     componentWillUnmount() {
-        // if (this.userId) {  //todo: userId!
-        //     this.props.leaveRoom(this.userId);
-        // }
-
         this.resetPrivateChannelContainer();
     }
 

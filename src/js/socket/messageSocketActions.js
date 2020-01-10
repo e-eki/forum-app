@@ -21,6 +21,9 @@ export function updateMessage(store, action) {
 		const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
 		const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');
 		const modifiableMessage = store.getState().messageState.get('modifiableMessage');
+		const userData = store.getState().userState.get('userData');
+
+		const userId = userData ? userData.id : null;
 
 		// если это личное сообщение и мы не в чате, куда оно пришло, - то инкрементим общее кол-во личных сообщений
 		if (action.recipientId &&
@@ -29,7 +32,7 @@ export function updateMessage(store, action) {
 				store.dispatch(incrementNewPrivateMessagesCount());
 		}
 
-		if (action.data.senderId !== 0) { //todo! userId вместо 0
+		if (action.data.senderId !== userId) { //?
 			if (currentInfoMessage &&
 				currentInfoMessage.id === action.messageId) {
 					const newMessage = copyUtils.copyMessage(action.data);

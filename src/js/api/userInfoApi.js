@@ -6,14 +6,23 @@ import store from '../store/store';
 import apiConst from '../constants/apiConst';
 import { setCurrentUserInfo } from '../actions/userInfoActions';
 import { getActualAccessToken } from '../api/authApi';
+import { updateUserData } from '../actions/remoteActions';
 
 export function getUserInfoById(id) {
 	debugger;
-	return axios.get(`${apiConst.userInfoApi}/${id}`)
-		.then(response => {
-			debugger;
-			return response.data;
-		});
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken();
+		})
+		.then(accessToken => {
+			const options = {
+				method: 'GET',
+				headers: { 'Authorization': `Token ${accessToken}` },
+				url: `${apiConst.userInfoApi}/${id}`,
+			};
+			
+			return axios(options);
+		})
 }
 
 export function getUserInfoAndSetCurrentUserInfo(id, isOwnInfo) {
@@ -80,6 +89,13 @@ export function modifyUserInfo(item) {
 			
 			return axios(options);
 		})
-		.then(response => true)
+		.then(response => {
+			// если изменилась роль или чс юзера, то изменились данные юзера
+			if (item.role || item.inBlackList) {
+				store.dispatch(updateUserData(item.userId));
+			}
+
+			return true;
+		})
 	}
 

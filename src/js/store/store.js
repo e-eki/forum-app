@@ -8,6 +8,7 @@ import socket from '../socket/initSocket';
 const createStoreWithMiddleware = applyMiddleware(
     remoteActionMiddleware(socket)
 )(createStore);
+
 const store = createStoreWithMiddleware(reducer);
 
 //const store = createStore(reducer);

@@ -80,7 +80,6 @@ export default class InfoForm extends PureComponent {
 
         let modifyingBlock = null;
         let movingBlock = null;
-        let setDescriptionMessageBlock = null;
         debugger;
 
         if (this.props.modifiableItem) {
@@ -124,8 +123,6 @@ export default class InfoForm extends PureComponent {
                 <button className = '' onClick = {this.moveItem}>
                     Переместить {this.props.type ? this.props.type : null}
                 </button>
-
-                {setDescriptionMessageBlock}
 
                 <button className = '' onClick = {this.deleteItem}>
                     Удалить {this.props.type ? this.props.type : null}

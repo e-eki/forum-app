@@ -21,9 +21,9 @@ class SectionContainer extends PureComponent {
     componentDidMount() {
         if (this.props.match && this.props.match.params) {
             const id = this.props.match.params.id;
+            
             return getSectionById(id)
                 .then(section => {
-
                     if (section) {
                         this.props.setCurrentSection(section);
                         
