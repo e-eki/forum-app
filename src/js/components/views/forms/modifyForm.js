@@ -39,16 +39,16 @@ export default class ModifyForm extends Component {
         const options = [];
         let i = 0;
 
-        forumConst.userRoles.forEach(item => {
-            if (item !== this.props.modifiableItem.role) {  //?
-                options.push(<option
-                                key={i++}
-                                value={forumConst.movingInListTypes.down}
-                            >
-                                {forumConst.movingInListTypes.down}
-                            </option>);
-            }
-        })
+        // forumConst.userRoles.forEach(item => {
+        //     if (item !== this.props.modifiableItem.role) {  //?
+        //         options.push(<option
+        //                         key={i++}
+        //                         value={forumConst.movingInListTypes.down}
+        //                     >
+        //                         {forumConst.movingInListTypes.down}
+        //                     </option>);
+        //     }
+        // })
         
         return options;
     }

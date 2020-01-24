@@ -90,7 +90,7 @@ export function modifyUserInfo(item) {
 			return axios(options);
 		})
 		.then(response => {
-			// если изменилась роль или чс юзера, то изменились данные юзера
+			// если изменилась роль или чс юзера, то изменились данные юзера //?????
 			if (item.role || item.inBlackList) {
 				store.dispatch(updateUserData(item.userId));
 			}

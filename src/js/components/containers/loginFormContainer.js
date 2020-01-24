@@ -30,7 +30,7 @@ class LoginFormContainer extends PureComponent {
 
                 this.props.setAlertData(alertData);
 			})
-			.catch(error => {  //todo: перенести в контейнер
+			.catch(error => {
                 let alertData;
 
                 if (error.response && error.response.status && error.response.status === 401) {
