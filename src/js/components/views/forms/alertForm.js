@@ -15,7 +15,6 @@ export default class AlertForm extends PureComponent {
 		const className = 'alert-form ' + (this.props.className ? this.props.className : '');
 
 		let alertBlock = <div></div>;
-		debugger;
 
 		if (this.props.alertData) {
 			const secondaryLink = (this.props.alertData.secondaryMessage && this.props.alertData.secondaryLink)

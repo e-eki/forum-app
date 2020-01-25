@@ -55,6 +55,7 @@ export default class InfoForm extends PureComponent {
             .then(result => {
                 this.resetInfoItem();  //?
             })
+            //todo: catch повсюду!
     }
 
     editItem() {

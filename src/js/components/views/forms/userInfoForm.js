@@ -24,7 +24,6 @@ export default class UserInfoForm extends PureComponent {
         //console.log('render UserInfoForm');
         const className = 'user-info ' + (this.props.className ? this.props.className : '');
 
-        debugger;
         let modifyingBlock = null;
 
         if (this.props.modifiableItem) {
@@ -86,7 +85,7 @@ export default class UserInfoForm extends PureComponent {
 
                                 <button className = '' onClick = {this.props.resetCurrentUserInfo}>
                                     Закрыть
-                                </button> 
+                                </button>
                             </div>
         }
 

@@ -11,7 +11,6 @@ class BreadcrumbsContainer extends PureComponent {
     }
     
     render() {
-        debugger;
         let breadcrumbs = null;
 
         if (this.props.currentSection ||

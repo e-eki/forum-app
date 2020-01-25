@@ -1,7 +1,14 @@
 'use strict';
 
-module.exports = {   //??
-	warningData: {
+module.exports = {
+	defaultAuthData: {
+		email: 'Введите e-mail',
+		login: 'Введите логин',
+		password: 'Введите пароль',
+		duplicatePassword: 'Повторите пароль'
+	},
+
+	warningAuthData: {
 		email: 'Введите корректный e-mail',
 		login: 'Введите корректный логин',
 		password: 'Введите корректный пароль',

@@ -16,9 +16,7 @@ export function updateChannel(store, action) {
 		const currentChannel = store.getState().channelState.get('currentChannel');
 		const currentInfoChannel = store.getState().channelState.get('currentInfoChannel');
 		const modifiableChannel = store.getState().channelState.get('modifiableChannel');
-		const userData = store.getState().userState.get('userData');
-
-		const userId = userData ? userData.id : null;
+		const userId = store.getState().authState.get('userId');
 
 		if (action.data.senderId !== userId) { //?
 			if (currentInfoChannel &&

@@ -13,8 +13,8 @@ export default class ResetPasswordForm extends Component {
         super(props);
 
         this.state = {
-            password: '',
-            duplicatePassword: '',
+            password: authConst.defaultAuthData.password,
+            duplicatePassword: authConst.defaultAuthData.duplicatePassword,
         }
 
         this.changeData = this.changeData.bind(this);
@@ -52,15 +52,17 @@ export default class ResetPasswordForm extends Component {
         let isDataValid = true;
 
         if (!this.state.password ||
-            (this.state.password === authConst.warningData.password)) {
-                this.state.password = authConst.warningData.password;
+            (this.state.password === authConst.defaultAuthData.password) ||
+            (this.state.password === authConst.warningAuthData.password)) {
+                this.state.password = authConst.warningAuthData.password;
                 isDataValid = false;
         }
 
         if (!this.state.duplicatePassword ||
-			(this.state.duplicatePassword === authConst.warningData.duplicatePassword) || 
+            (this.state.duplicatePassword === authConst.defaultAuthData.duplicatePassword) ||
+			(this.state.duplicatePassword === authConst.warningAuthData.duplicatePassword) || 
 			(this.state.duplicatePassword !== this.state.password)) {
-				this.state.duplicatePassword = authConst.warningData.duplicatePassword;
+				this.state.duplicatePassword = authConst.warningAuthData.duplicatePassword;
                 isDataValid = false;
         }
         

@@ -121,11 +121,11 @@ export function deletePrivateChannelById(privateChannelId, senderId, recipientId
 	};
 }
 
-//---USER-DATA
+//---USER-INFO
 
-export function updateUserData(userId) {
+export function updateUserInfo(userId) {  //?
 	return {
-	  type: actionTypes.UPDATE_USER_DATA,
+	  type: actionTypes.UPDATE_USER_INFO,
 	  meta: {remote: true},
 	};
 }

@@ -175,8 +175,7 @@ class PrivateChannelContainer extends PureComponent {
 
 const mapStateToProps = function(store) {
     return {
-        privateChannels: store.privateChannelState.get('privateChannels'),
-        currentUserInfo: store.userInfo.get('currentUserInfo'),       
+        privateChannels: store.privateChannelState.get('privateChannels'),    
         currentPrivateChannel: store.privateChannelState.get('currentPrivateChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),

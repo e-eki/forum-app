@@ -8,6 +8,7 @@ import apiConst from '../constants/apiConst';
 import authConst from '../constants/authConst';
 import { getFingerprint } from '../utils/fingerprintUtils';
 import * as authUtils from '../utils/authUtils';
+import { joinRoom, leaveRoom } from '../actions/remoteActions';
 
 export function socialLogin(serviceName) {
 	debugger;
@@ -108,7 +109,7 @@ export function logout() {   //todo!
 			return axios(options);
 		})
 		.then(response => {
-			authUtils.removeTokensData();
+			_resetTokensData();
 
 			return response;
 		})
@@ -176,7 +177,7 @@ export function resetPassword(accessToken, password) {
 			return axios(options);
 		})
 		.then(response => {
-			authUtils.removeTokensData();
+			_resetTokensData();
 
 			return response;
 		})
@@ -194,11 +195,16 @@ export function getActualAccessToken() {
 				return true;
 			}
 			else {
+				if (!refreshToken) {  //todo!!!
+					throw new Error('auth error: invalid tokens data');
+				}
+
 				//get fingerprint
 				return getFingerprint();
 			}
 		})
 		.then(response => {
+			debugger;
 			if (response === true) {
 				return true;
 			}
@@ -212,6 +218,7 @@ export function getActualAccessToken() {
 			}
 		})
 		.then(response => {
+			debugger;
 			if (response === true) {
 				return accessToken;
 			}
@@ -229,14 +236,34 @@ export function getActualAccessToken() {
 };
 
 
-//----
-
 function _setTokensData(tokensData) {
 	debugger;
+	const userId = store.getState().authState.get('userId');
 
-	authUtils.saveTokensData(tokensData);
+	if (!userId || (userId !== tokensData.userId)) {  //?
+		store.dispatch(joinRoom(tokensData.userId));
+	}
 
 	store.dispatch(authActions.setAccessToken(tokensData.accessToken));
 	store.dispatch(authActions.setRefreshToken(tokensData.refreshToken));
 	store.dispatch(authActions.setAccessTokenExpiresIn(tokensData.accessTokenExpiresIn));
+	store.dispatch(authActions.setUserId(tokensData.userId));
+
+	authUtils.saveTokensData(tokensData);
+}
+
+function _resetTokensData() {
+	debugger;
+	const userId = store.getState().authState.get('userId');
+
+	if (userId && (userId === tokensData.userId)) {  //?
+		store.dispatch(leaveRoom(tokensData.userId));
+	}
+
+	store.dispatch(authActions.setAccessToken(null));
+	store.dispatch(authActions.setRefreshToken(null));
+	store.dispatch(authActions.setAccessTokenExpiresIn(null));
+	store.dispatch(authActions.setUserId(null));
+
+	authUtils.removeTokensData();
 }

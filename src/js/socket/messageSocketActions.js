@@ -21,9 +21,7 @@ export function updateMessage(store, action) {
 		const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
 		const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');
 		const modifiableMessage = store.getState().messageState.get('modifiableMessage');
-		const userData = store.getState().userState.get('userData');
-
-		const userId = userData ? userData.id : null;
+		const userId = store.getState().authState.get('userId');
 
 		// если это личное сообщение и мы не в чате, куда оно пришло, - то инкрементим общее кол-во личных сообщений
 		if (action.recipientId &&

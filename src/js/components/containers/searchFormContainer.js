@@ -21,8 +21,6 @@ class SearchFormContainer extends PureComponent {
     }
 
     componentDidUpdate() {
-        debugger;
-
         if (((this.props.searchText || this.props.searchText === '') && (this.searchText || this.searchText === '') && (this.props.searchText !== this.searchText)) ||
             (this.props.searchType && this.searchType && this.props.searchType !== this.searchType)) {
 
@@ -73,8 +71,7 @@ class SearchFormContainer extends PureComponent {
     
     render() {
         //console.log('render SearchFormContainer');
-        debugger;
-
+        
         return (
             <div className=''>
                 <SearchForm

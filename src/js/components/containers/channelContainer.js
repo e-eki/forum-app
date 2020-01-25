@@ -117,8 +117,7 @@ class ChannelContainer extends PureComponent {
 }
 
 const mapStateToProps = function(store) {
-    return {
-        currentUserInfo: store.userInfo.get('currentUserInfo'),      
+    return {  
         currentChannel: store.channelState.get('currentChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),

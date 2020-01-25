@@ -2,6 +2,13 @@
 
 import * as actionTypes from './actionTypes';
 
+export function setUserId(data) {
+	return {
+	  type: actionTypes.SET_USER_ID,
+	  data
+	};
+}
+
 export function setAccessToken(data) {
 	return {
 	  type: actionTypes.SET_ACCESS_TOKEN,

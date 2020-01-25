@@ -12,7 +12,6 @@ export default class Main extends PureComponent {
     }
     
     render() {
-        debugger;
         //console.log('render main');
         const className = 'main ' + (this.props.className ? this.props.className : '');
 
@@ -91,8 +90,6 @@ export default class Main extends PureComponent {
 
                     parentItemsList = {this.props.parentItemsList}
                     resetParentItemsList = {this.props.resetParentItemsList}
-
-                    userData = {this.props.userData}
                 />
             </div>
         )

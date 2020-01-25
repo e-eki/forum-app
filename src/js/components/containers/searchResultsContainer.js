@@ -81,7 +81,6 @@ const mapStateToProps = function(store) {
         searchMessages: store.searchState.get('searchMessages'),
         searchType: store.searchState.get('searchType'),
         searchText: store.searchState.get('searchText'),
-        currentUserInfo: store.userInfo.get('currentUserInfo'),
     };
 };
 

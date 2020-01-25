@@ -76,8 +76,7 @@ class PrivateSubSectionContainer extends PureComponent {
 
 const mapStateToProps = function(store) {
     return {
-        privateChannels: store.privateChannelState.get('privateChannels'),
-        currentUserInfo: store.userInfo.get('currentUserInfo'),      
+        privateChannels: store.privateChannelState.get('privateChannels'),   
     };
 };
 

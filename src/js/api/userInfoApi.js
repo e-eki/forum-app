@@ -6,7 +6,6 @@ import store from '../store/store';
 import apiConst from '../constants/apiConst';
 import { setCurrentUserInfo } from '../actions/userInfoActions';
 import { getActualAccessToken } from '../api/authApi';
-import { updateUserData } from '../actions/remoteActions';
 
 export function getUserInfoById(id) {
 	debugger;
@@ -90,11 +89,6 @@ export function modifyUserInfo(item) {
 			return axios(options);
 		})
 		.then(response => {
-			// если изменилась роль или чс юзера, то изменились данные юзера //?????
-			if (item.role || item.inBlackList) {
-				store.dispatch(updateUserData(item.userId));
-			}
-
 			return true;
 		})
 	}

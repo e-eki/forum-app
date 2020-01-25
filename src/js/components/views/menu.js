@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import appConst from '../../constants/appConst';
 import NewMessagesNotificationForm from './forms/newMessagesNotificationForm';
-import appConst from '../../constants/appConst';
 
 export default class Menu extends PureComponent {
 

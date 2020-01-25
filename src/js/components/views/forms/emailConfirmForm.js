@@ -50,10 +50,10 @@ export default class EmailConfirmForm extends Component {
         debugger;
 
         if (!this.state.email ||
-            (this.state.email === authConst.warningData.email  ||
+            (this.state.email === authConst.warningAuthData.email  ||
             !authUtils.isEmailValid)) {
                 this.setState({
-                    email: authConst.warningData.email,
+                    email: authConst.warningAuthData.email,
                 });
 
                 return true;

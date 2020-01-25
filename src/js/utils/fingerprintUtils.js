@@ -4,36 +4,24 @@ import * as Fingerprint2 from 'fingerprintjs2';
 import Promise from 'bluebird';
 
 export function getFingerprint() {
-	debugger;
-
-    if (window.requestIdleCallback) {
-      requestIdleCallback(() => _getHash());
-    } else {
-      setTimeout(() => getHash(), 500);
+  const options = {
+    excludes: {
+      plugins: true,
+      localStorage: true,
+      adBlock: true,
+      screenResolution: true,
+      availableScreenResolution: true,
+      enumerateDevices: true,
+      pixelRatio: true,
+      doNotTrack: true
     }
-}
+  };
 
-function _getHash() {
-	debugger;
+  return Fingerprint2.getPromise(options)
+    .then(items => {
+      debugger;
+      const values = items.map(component => component.value);
 
-	const options = {
-        excludes: {
-          plugins: true,
-          localStorage: true,
-          adBlock: true,
-          screenResolution: true,
-          availableScreenResolution: true,
-          enumerateDevices: true,
-          pixelRatio: true,
-          doNotTrack: true
-        }
-	};
-	
-	return Fingerprint2.getPromise(options)
-		.then(items => {
-			debugger;
-			const values = items.map(component => component.value);
-
-			return String(Fingerprint2.x64hash128(values.join(''), 31));   //?
-		})
+      return String(Fingerprint2.x64hash128(values.join(''), 31));   //?
+    })
 }

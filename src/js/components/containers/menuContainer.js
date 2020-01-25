@@ -37,6 +37,7 @@ class MenuContainer extends PureComponent {
                 return this.setNewPrivateMessagesCount();
             })
             .catch(error => {
+                debugger;
                 this.isUserAuthenticated = false;
 
                 // const message = baseUtils.getErrorResponseMessage(error);  //?
@@ -107,8 +108,6 @@ class MenuContainer extends PureComponent {
     }
     
     render() {
-        debugger;
-
         return (
             <Menu
                 isUserAuthenticated = {this.isUserAuthenticated}

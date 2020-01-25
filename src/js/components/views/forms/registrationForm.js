@@ -13,10 +13,10 @@ export default class RegistrationForm extends Component {
         super(props);
 
         this.state = {
-            login: '',
-            email: '',
-            password: '',
-            duplicatePassword: '',
+            login: authConst.defaultAuthData.login,
+            email: authConst.defaultAuthData.email,
+            password: authConst.defaultAuthData.password,
+            duplicatePassword: authConst.defaultAuthData.duplicatePassword,
         }
 
         this.changeData = this.changeData.bind(this);
@@ -54,28 +54,32 @@ export default class RegistrationForm extends Component {
         let isDataValid = true;
 
         if (!this.state.login ||
-            (this.state.login === authConst.warningData.login)) {
-                this.state.login = authConst.warningData.login;
+            (this.state.login === authConst.defaultAuthData.login) ||
+            (this.state.login === authConst.warningAuthData.login)) {
+                this.state.login = authConst.warningAuthData.login;
                 isDataValid = false;
         }
 
         if (!this.state.email ||
-            (this.state.email === authConst.warningData.email  ||
+            (this.state.email === authConst.defaultAuthData.email) ||
+            (this.state.email === authConst.warningAuthData.email  ||
             !authUtils.isEmailValid)) {
-                this.state.email = authConst.warningData.email;
+                this.state.email = authConst.warningAuthData.email;
                 isDataValid = false;
         }
 
         if (!this.state.password ||
-            (this.state.password === authConst.warningData.password)) {
-                this.state.password = authConst.warningData.password;
+            (this.state.password === authConst.defaultAuthData.password) ||
+            (this.state.password === authConst.warningAuthData.password)) {
+                this.state.password = authConst.warningAuthData.password;
                 isDataValid = false;
         }
 
         if (!this.state.duplicatePassword ||
-			(this.state.duplicatePassword === authConst.warningData.duplicatePassword) || 
+            (this.state.duplicatePassword === authConst.defaultAuthData.duplicatePassword) ||
+			(this.state.duplicatePassword === authConst.warningAuthData.duplicatePassword) || 
 			(this.state.duplicatePassword !== this.state.password)) {
-				this.state.duplicatePassword = authConst.warningData.duplicatePassword;
+				this.state.duplicatePassword = authConst.warningAuthData.duplicatePassword;
                 isDataValid = false;
 		}
 

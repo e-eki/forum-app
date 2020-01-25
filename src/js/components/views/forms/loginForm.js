@@ -18,8 +18,8 @@ export default class LoginForm extends Component {
 		};
 
         this.state = {
-            email: '',
-            password: '',
+            email: authConst.defaultAuthData.email,
+            password: authConst.defaultAuthData.password,
         }
 
         this.changeData = this.changeData.bind(this);
@@ -58,15 +58,17 @@ export default class LoginForm extends Component {
         let isDataValid = true;
 
         if (!this.state.email ||
-            (this.state.email === authConst.warningData.email  ||
+            (this.state.email === authConst.defaultAuthData.email) ||
+            (this.state.email === authConst.warningAuthData.email  ||
             !authUtils.isEmailValid)) {
-                this.state.email = authConst.warningData.email;
+                this.state.email = authConst.warningAuthData.email;
                 isDataValid = false;
         }
 
         if (!this.state.password ||
-            (this.state.password === authConst.warningData.password)) {
-                this.state.password = authConst.warningData.password;
+            (this.state.password === authConst.defaultAuthData.password) ||
+            (this.state.password === authConst.warningAuthData.password)) {
+                this.state.password = authConst.warningAuthData.password;
                 isDataValid = false;
         }
 

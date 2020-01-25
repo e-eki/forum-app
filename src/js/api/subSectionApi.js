@@ -110,7 +110,7 @@ export function modifySubSection(item) {
 
 
 
-function _createSubSection((subSectionData, accessToken) {
+function _createSubSection(subSectionData, accessToken) {
 	const options = {
 		method: 'POST',
 		headers: { 'Authorization': `Token ${accessToken}` },
@@ -121,7 +121,7 @@ function _createSubSection((subSectionData, accessToken) {
 	return axios(options);
 }
 
-function _updateSubSection((subSectionData, accessToken) {
+function _updateSubSection(subSectionData, accessToken) {
 	const options = {
 		method: 'PUT',
 		headers: { 'Authorization': `Token ${accessToken}` },

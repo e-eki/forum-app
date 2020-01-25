@@ -13,7 +13,7 @@ export default class RecoveryPasswordForm extends Component {
         super(props);
 
         this.state = {
-            email: '',
+            email: authConst.defaultAuthData.email,
         }
 
         this.changeData = this.changeData.bind(this);
@@ -50,10 +50,11 @@ export default class RecoveryPasswordForm extends Component {
         debugger;
 
         if (!this.state.email ||
-            (this.state.email === authConst.warningData.email  ||
-            !authUtils.isEmailValid)) {
+            (this.state.email === authConst.defaultAuthData.email) ||
+            (this.state.email === authConst.warningAuthData.email)  ||
+            !authUtils.isEmailValid) {
                 this.setState({
-                    email: authConst.warningData.email,
+                    email: authConst.warningAuthData.email,
                 });
 
                 return true;

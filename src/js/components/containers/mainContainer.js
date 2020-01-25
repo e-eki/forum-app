@@ -80,8 +80,6 @@ class MainContainer extends PureComponent {
 
                 parentItemsList = {this.props.parentItemsList}
                 resetParentItemsList = {this.props.resetParentItemsList}
-
-                userData = {this.props.userData}
             />
         );
     }
@@ -97,7 +95,6 @@ const mapStateToProps = function(store) {
         modifiableSubSection: store.subSectionState.get('modifiableSubSection'),
         movingSubSection: store.subSectionState.get('movingSubSection'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
-        userData: store.userState.get('userData'),
     };
 };
 
