@@ -19,7 +19,6 @@ export function getFingerprint() {
 
   return Fingerprint2.getPromise(options)
     .then(items => {
-      debugger;
       const values = items.map(component => component.value);
 
       return String(Fingerprint2.x64hash128(values.join(''), 31));   //?

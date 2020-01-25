@@ -62,8 +62,8 @@ export default class RegistrationForm extends Component {
 
         if (!this.state.email ||
             (this.state.email === authConst.defaultAuthData.email) ||
-            (this.state.email === authConst.warningAuthData.email  ||
-            !authUtils.isEmailValid)) {
+            (this.state.email === authConst.warningAuthData.email) ||
+            !authUtils.isEmailValid(this.state.email)) {
                 this.state.email = authConst.warningAuthData.email;
                 isDataValid = false;
         }

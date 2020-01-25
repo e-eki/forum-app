@@ -25,8 +25,9 @@ class RegistrationFormContainer extends PureComponent {
 
                 const alertData = {
                     message: 'Письмо с кодом подтверждения было отправлено на указанный имейл.',   //?
-                    secondaryMessage: 'На главную',
-                    secondaryLink: appConst.defaultLink,
+                    // secondaryMessage: 'На главную',
+                    // secondaryLink: appConst.defaultLink,
+                    link: appConst.defaultLink,
                 };
 
                 this.props.setAlertData(alertData);

@@ -52,7 +52,7 @@ export default class RecoveryPasswordForm extends Component {
         if (!this.state.email ||
             (this.state.email === authConst.defaultAuthData.email) ||
             (this.state.email === authConst.warningAuthData.email)  ||
-            !authUtils.isEmailValid) {
+            !authUtils.isEmailValid(this.state.email)) {
                 this.setState({
                     email: authConst.warningAuthData.email,
                 });
@@ -91,7 +91,7 @@ export default class RecoveryPasswordForm extends Component {
                                             type = "text" 
                                             className = 'auth-utils-form_input' 
                                             maxLength = '40'
-                                            value = {this.state.emailData}
+                                            value = {this.state.email}
                                             onChange = {this.changeData}
                                             onClick = {this.clearData}
                                         />

@@ -13,7 +13,7 @@ export default class EmailConfirmForm extends Component {
         super(props);
 
         this.state = {
-            email: '',
+            email: authConst.defaultAuthData.email,
         }
 
         this.changeData = this.changeData.bind(this);
@@ -50,8 +50,9 @@ export default class EmailConfirmForm extends Component {
         debugger;
 
         if (!this.state.email ||
-            (this.state.email === authConst.warningAuthData.email  ||
-            !authUtils.isEmailValid)) {
+            (this.state.email === authConst.defaultAuthData.email) ||
+            (this.state.email === authConst.warningAuthData.email) ||
+            !authUtils.isEmailValid(this.state.email)) {
                 this.setState({
                     email: authConst.warningAuthData.email,
                 });
@@ -91,7 +92,7 @@ export default class EmailConfirmForm extends Component {
                                         type = "text" 
                                         className = 'auth-utils-form_input' 
                                         maxLength = '40'
-                                        value = {this.state.emailData}
+                                        value = {this.state.email}
                                         onChange = {this.changeData}
                                         onClick = {this.clearData}
                                     />

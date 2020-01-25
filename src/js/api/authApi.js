@@ -70,8 +70,8 @@ export function socialLogin(serviceName) {
 export function login(email, password) {
 	debugger;
 	//get fingerprint
-	return Promise.resolve(getFingerprint())
-		.spread(fingerprint => {
+	return getFingerprint()
+		.then(fingerprint => {
 
 			return axios.post(`${apiConst.loginApi}`, {
 				email: email,
@@ -119,8 +119,8 @@ export function registration(email, login, password) {
 	debugger;
 
 	//get fingerprint
-	return Promise.resolve(getFingerprint())
-		.spread(fingerprint => {
+	return getFingerprint()
+		.then(fingerprint => {
 
 			return axios.post(`${apiConst.registrationApi}`, {
 				email: email,
@@ -135,8 +135,8 @@ export function recoveryPassword(email) {
 	debugger;
 
 	//get fingerprint
-	return Promise.resolve(getFingerprint())
-		.spread(fingerprint => {
+	return getFingerprint()
+		.then(fingerprint => {
 
 			return axios.post(`${apiConst.resetPasswordApi}`, {
 				email: email,
@@ -149,9 +149,8 @@ export function emailConfirm(email) {
 	debugger;
 
 	//get fingerprint
-	return Promise.resolve(getFingerprint())
-		.spread(fingerprint => {
-
+	return getFingerprint()
+		.then(fingerprint => {
 			return axios.post(`${apiConst.emailConfirmApi}`, {
 				email: email,
 				fingerprint: fingerprint,

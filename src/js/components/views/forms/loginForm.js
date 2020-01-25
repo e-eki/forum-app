@@ -60,7 +60,7 @@ export default class LoginForm extends Component {
         if (!this.state.email ||
             (this.state.email === authConst.defaultAuthData.email) ||
             (this.state.email === authConst.warningAuthData.email  ||
-            !authUtils.isEmailValid)) {
+            !authUtils.isEmailValid(this.state.email))) {
                 this.state.email = authConst.warningAuthData.email;
                 isDataValid = false;
         }
