@@ -20,17 +20,21 @@ export default class AlertForm extends PureComponent {
 			const secondaryLink = (this.props.alertData.secondaryMessage && this.props.alertData.secondaryLink)
 									?
 									<Link to = {this.props.alertData.secondaryLink}>
-										{this.props.alertData.secondaryMessage}	
+										{this.props.alertData.secondaryMessage || 'something happened'}	
 									</Link>
 									:
 									null;
 
 			const alertInfo = <div>
-									<p>{this.props.alertData.message || 'something crashed!'}</p>
+									<div>
+										<p>{this.props.alertData.message || 'something happened'}</p>
 
-									<button className = '' >
-										Ok
-									</button>
+										{secondaryLink}
+
+										<button className = '' >
+											Ok
+										</button>
+									</div>
 								</div>;
 
 			if (!secondaryLink && this.props.alertData.link) {
