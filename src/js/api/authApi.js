@@ -79,8 +79,9 @@ export function login(email, password) {
 				fingerprint: fingerprint,
 			});
 		})
-		.then(tokensData => {
+		.then(response => {
 			debugger;
+			const tokensData = response.data;
 
 			if (authUtils.isTokensDataValid(tokensData)) {
 				_setTokensData(response.data);
@@ -111,7 +112,7 @@ export function logout() {   //todo!
 		.then(response => {
 			_resetTokensData();
 
-			return response;
+			return true;
 		})
 };
 
@@ -121,7 +122,6 @@ export function registration(email, login, password) {
 	//get fingerprint
 	return getFingerprint()
 		.then(fingerprint => {
-
 			return axios.post(`${apiConst.registrationApi}`, {
 				email: email,
 				login: login,
@@ -129,6 +129,7 @@ export function registration(email, login, password) {
 				fingerprint: fingerprint,
 			});
 		})
+		.then(response => true)
 };
 
 export function recoveryPassword(email) {
@@ -137,12 +138,12 @@ export function recoveryPassword(email) {
 	//get fingerprint
 	return getFingerprint()
 		.then(fingerprint => {
-
 			return axios.post(`${apiConst.resetPasswordApi}`, {
 				email: email,
 				fingerprint: fingerprint,
 			});
 		})
+		.then(response => true)
 };
 
 export function emailConfirm(email) {
@@ -156,6 +157,7 @@ export function emailConfirm(email) {
 				fingerprint: fingerprint,
 			});
 		})
+		.then(response => true)
 };
 
 export function resetPassword(accessToken, password) {
@@ -178,7 +180,7 @@ export function resetPassword(accessToken, password) {
 		.then(response => {
 			_resetTokensData();
 
-			return response;
+			return true;
 		})
 };
 

@@ -17,14 +17,13 @@ class MenuContainer extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.isUserAuthenticated = false;
-
+        this.getUserAuthenticatedFlag = this.getUserAuthenticatedFlag.bind(this);
         this.setNewPrivateMessagesCount = this.setNewPrivateMessagesCount.bind(this);
         this.doLogout = this.doLogout.bind(this);
         this.showUserInfo = this.showUserInfo.bind(this);
     }
 
-    componentDidMount() {
+    getUserAuthenticatedFlag() {
         debugger;
 
         return Promise.resolve(true)
@@ -32,22 +31,12 @@ class MenuContainer extends PureComponent {
 				return getActualAccessToken();
 			})
 			.then(accessToken => {
-                this.isUserAuthenticated = true;
-                
                 return this.setNewPrivateMessagesCount();
             })
+            .then(result => true)
             .catch(error => {
                 debugger;
-                this.isUserAuthenticated = false;
-
-                // const message = baseUtils.getErrorResponseMessage(error);  //?
-
-                // const alertData = {
-                //     message: message,
-                    
-                // };
-
-				// this.props.setAlertData(alertData);
+                return false;
             })
     }
 
@@ -110,7 +99,7 @@ class MenuContainer extends PureComponent {
     render() {
         return (
             <Menu
-                isUserAuthenticated = {this.isUserAuthenticated}
+                getUserAuthenticatedFlag = {this.getUserAuthenticatedFlag}
                 newPrivateMessagesCount = {this.props.newPrivateMessagesCount}
                 doLogout = {this.doLogout}
                 showUserInfo = {this.showUserInfo}

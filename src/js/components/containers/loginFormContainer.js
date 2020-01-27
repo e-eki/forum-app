@@ -13,11 +13,11 @@ class LoginFormContainer extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.clickLoginButton = this.clickLoginButton.bind(this);
-        this.clickSocialLoginButton = this.clickSocialLoginButton.bind(this);
+        this.doLogin = this.doLogin.bind(this);
+        this.doSocialLogin = this.doSocialLogin.bind(this);
     }
 
-    clickLoginButton(email, password) {
+    doLogin(email, password) {
         debugger;
 
 		return login(email, password)
@@ -52,7 +52,7 @@ class LoginFormContainer extends PureComponent {
 			})
 	}
     
-    clickSocialLoginButton(service) {
+    doSocialLogin(service) {
 		debugger;
 
 		// TODO!!! vkontakte api не отвечает localhost (нет 'Access-Control-Allow-Origin' в заголовке)

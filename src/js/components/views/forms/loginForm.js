@@ -95,8 +95,6 @@ export default class LoginForm extends Component {
 
         debugger;
 
-        let loginBlock = <div></div>;
-
         if (this.props.accessToken &&
             this.props.refreshToken &&
             this.props.accessTokenExpiresIn) {
@@ -108,78 +106,75 @@ export default class LoginForm extends Component {
 
                 this.props.setAlertData(alertData);
         }
-        else {
-            loginBlock = <div className = 'content__auth-utils-form auth-utils-form'>
-
-                            <div className = 'auth-utils-form_title'>Вход</div>
-
-                            <div className = 'auth-utils-form_social'>
-
-                                <img 
-                                    name = "vkontakte"
-                                    className = 'social-icon' 
-                                    src = '/icons/vkontakte-icon_blue.png' 
-                                    alt = {this.titles.vkTitle} 
-                                    title = {this.titles.vkTitle}
-                                    onClick = {this.clickSocialLoginButton}>
-                                </img>
-
-                                <img 
-                                    name = "google"
-                                    className = 'social-icon' 
-                                    src = '/icons/google-icon_red.png' 
-                                    alt = {this.titles.googleTitle} 
-                                    title = {this.titles.googleTitle}
-                                    onClick = {this.clickSocialLoginButton}>
-                                </img>
-                            </div>
-
-                            <input 
-                                name = "email"
-                                type="text" 
-                                className = 'auth-utils-form_input' 
-                                maxLength = '40'
-                                value = {this.state.email}
-                                onChange = {this.changeData}
-                                onClick = {this.clearData}
-                            />
-                            
-                            <input 
-                                name = 'password'
-                                type = "text" 
-                                className = 'auth-utils-form_input' 
-                                maxLength = '40'
-                                value = {this.state.password}
-                                onChange = {this.changeData}
-                                onClick = {this.clearData}
-                            />
-
-                            <button className = 'button button_login auth-utils-form__button' onClick = {this.clickLoginButton}>Войти</button>
-
-                            <div className = 'auth-utils-form_text'>или</div>
-
-                            <Link to = {appConst.registrationLink}>
-                                <button className = 'button button_reg auth-utils-form__button'>Зарегистрироваться</button>
-                            </Link>
-
-                            <Link className = 'auth-utils-form_link' to = {appConst.recoveryPasswordLink}>
-                                Забыли пароль?	
-                            </Link>
-
-                            <Link className = 'auth-utils-form_link' to = {appConst.emailConfirmLink}>
-                                Не пришло письмо?	
-                            </Link>
-
-                            <Link className = 'auth-utils-form_link' to = {appConst.defaultLink}>
-                                На главную	
-                            </Link>
-
-                        </div>;
-        }
 
         return (
             <div className = {className}>
-                {loginBlock}
+                <div className = 'content__auth-utils-form auth-utils-form'>
+
+                    <div className = 'auth-utils-form_title'>Вход</div>
+
+                    <div className = 'auth-utils-form_social'>
+
+                        <img 
+                            name = "vkontakte"
+                            className = 'social-icon' 
+                            src = '/icons/vkontakte-icon_blue.png' 
+                            alt = {this.titles.vkTitle} 
+                            title = {this.titles.vkTitle}
+                            onClick = {this.clickSocialLoginButton}>
+                        </img>
+
+                        <img 
+                            name = "google"
+                            className = 'social-icon' 
+                            src = '/icons/google-icon_red.png' 
+                            alt = {this.titles.googleTitle} 
+                            title = {this.titles.googleTitle}
+                            onClick = {this.clickSocialLoginButton}>
+                        </img>
+                    </div>
+
+                    <input 
+                        name = "email"
+                        type="text" 
+                        className = 'auth-utils-form_input' 
+                        maxLength = '40'
+                        value = {this.state.email}
+                        onChange = {this.changeData}
+                        onClick = {this.clearData}
+                    />
+
+                    <input 
+                        name = 'password'
+                        type = "text" 
+                        className = 'auth-utils-form_input' 
+                        maxLength = '40'
+                        value = {this.state.password}
+                        onChange = {this.changeData}
+                        onClick = {this.clearData}
+                    />
+
+                    <button className = 'button button_login auth-utils-form__button' onClick = {this.clickLoginButton}>Войти</button>
+
+                    <div className = 'auth-utils-form_text'>или</div>
+
+                    <Link to = {appConst.registrationLink}>
+                        <button className = 'button button_reg auth-utils-form__button'>Зарегистрироваться</button>
+                    </Link>
+
+                    <Link className = 'auth-utils-form_link' to = {appConst.recoveryPasswordLink}>
+                        Забыли пароль?	
+                    </Link>
+
+                    <Link className = 'auth-utils-form_link' to = {appConst.emailConfirmLink}>
+                        Не пришло письмо?	
+                    </Link>
+
+                    <Link className = 'auth-utils-form_link' to = {appConst.defaultLink}>
+                        На главную	
+                    </Link>
+
+                </div>
             </div>
         )
     }

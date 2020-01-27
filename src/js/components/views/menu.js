@@ -1,14 +1,39 @@
 'use strict';
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import appConst from '../../constants/appConst';
 import NewMessagesNotificationForm from './forms/newMessagesNotificationForm';
 
-export default class Menu extends PureComponent {
+export default class Menu extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            isUserAuthenticated: false,
+        }
+    }
+
+    shouldComponentUpdate() {
+        return true; //todo
+    }
+
+    componentDidMount() {
+        debugger;
+
+        return this.props.getUserAuthenticatedFlag()
+            .then(isUserAuthenticated => {
+                debugger;
+
+                if (isUserAuthenticated) {
+                    this.setState({
+                        isUserAuthenticated: isUserAuthenticated,
+                    })
+                }
+                
+                return true;
+            })
     }
 
     render() {
@@ -18,7 +43,7 @@ export default class Menu extends PureComponent {
 
         let authContent;
 
-        if (this.props.isUserAuthenticated) {
+        if (this.state.isUserAuthenticated) {
 
             const notificationBlock = this.props.newPrivateMessagesCount
                                         ?

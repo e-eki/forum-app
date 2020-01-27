@@ -70,8 +70,6 @@ export default class EmailConfirmForm extends Component {
 
         debugger;
 
-        let emailConfirmBlock = <div></div>;
-
         if (this.props.accessToken &&
             this.props.refreshToken &&
             this.props.accessTokenExpiresIn) {
@@ -83,32 +81,29 @@ export default class EmailConfirmForm extends Component {
 
                 this.props.setAlertData(alertData);
         }
-        else {
-            emailConfirmBlock = <div className = 'content__auth-utils-form auth-utils-form'>				
-                                    <div className = 'auth-utils-form_title'>Повторная отправка письма</div>
-
-                                    <input 
-                                        name = "email"
-                                        type = "text" 
-                                        className = 'auth-utils-form_input' 
-                                        maxLength = '40'
-                                        value = {this.state.email}
-                                        onChange = {this.changeData}
-                                        onClick = {this.clearData}
-                                    />
-
-                                    <button className = 'button button_send auth-utils-form__button' onClick = {this.clickEmailConfirmButton}>Отправить</button>
-                                    
-                                    <Link className = 'auth-utils-form_link' to={appConst.loginLink}>
-                                        На страницу входа	
-                                    </Link>
-
-                                </div>;
-        }
 
         return (
             <div className = {className}>
-                {emailConfirmBlock}
+                <div className = 'content__auth-utils-form auth-utils-form'>				
+                    <div className = 'auth-utils-form_title'>Повторная отправка письма</div>
+
+                    <input 
+                        name = "email"
+                        type = "text" 
+                        className = 'auth-utils-form_input' 
+                        maxLength = '40'
+                        value = {this.state.email}
+                        onChange = {this.changeData}
+                        onClick = {this.clearData}
+                    />
+
+                    <button className = 'button button_send auth-utils-form__button' onClick = {this.clickEmailConfirmButton}>Отправить</button>
+                    
+                    <Link className = 'auth-utils-form_link' to={appConst.loginLink}>
+                        На страницу входа	
+                    </Link>
+
+                </div>
             </div>
         )
     }

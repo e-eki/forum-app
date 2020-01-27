@@ -17,8 +17,6 @@ export function isTokensDataValid(tokensData) {
 }
 
 export function saveTokensData(tokensData) {
-	debugger;
-
 	localStorage.setItem('refreshToken', tokensData.refreshToken);
 	localStorage.setItem('accessToken', tokensData.accessToken);
 	localStorage.setItem('accessTokenExpiresIn', tokensData.accessTokenExpiresIn);
