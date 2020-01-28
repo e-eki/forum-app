@@ -17,7 +17,7 @@ export function getErrorResponseMessage(error) {
 		message = 'Internal server error';
 	}
 	else {
-		message = 'Some error';  //?
+		message = 'Some client error';  //?
 	}
 
 	return message;

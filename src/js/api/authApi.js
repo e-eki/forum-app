@@ -205,7 +205,6 @@ export function getActualAccessToken() {
 			}
 		})
 		.then(response => {
-			debugger;
 			if (response === true) {
 				return true;
 			}
@@ -219,7 +218,6 @@ export function getActualAccessToken() {
 			}
 		})
 		.then(response => {
-			debugger;
 			if (response === true) {
 				return accessToken;
 			}

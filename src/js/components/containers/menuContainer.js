@@ -81,7 +81,16 @@ class MenuContainer extends PureComponent {
 
         return logout()
 			.then(response => {
-                debugger; 
+                debugger;
+
+                const alertData = {
+                    message: 'Вы успешно разлогинились. Нажмите ссылку для перехода.',
+                    secondaryMessage: 'На главную',
+                    secondaryLink: appConst.defaultLink,
+                };
+
+                this.props.setAlertData(alertData);
+
                 return true;
 			})
 			.catch(error => {
@@ -89,7 +98,8 @@ class MenuContainer extends PureComponent {
 
                 const alertData = {
                     message: message,
-                    
+                    secondaryMessage: 'На главную',
+                    secondaryLink: appConst.defaultLink,
                 };
 
 				this.props.setAlertData(alertData);
@@ -103,6 +113,10 @@ class MenuContainer extends PureComponent {
                 newPrivateMessagesCount = {this.props.newPrivateMessagesCount}
                 doLogout = {this.doLogout}
                 showUserInfo = {this.showUserInfo}
+
+                accessToken = {this.props.accessToken}  // чтобы компонент перерисовывался при изменении токенов
+                refreshToken = {this.props.refreshToken}
+                accessTokenExpiresIn = {this.props.accessTokenExpiresIn}
             />
         );
     }
@@ -110,9 +124,9 @@ class MenuContainer extends PureComponent {
 
 const mapStateToProps = function(store) {
     return {
-        // accessToken: store.authState.get('accessToken'),
-        // refreshToken: store.authState.get('refreshToken'),
-        // accessTokenExpiresIn: store.authState.get('accessTokenExpiresIn'),
+        accessToken: store.authState.get('accessToken'),   // чтобы компонент перерисовывался при изменении токенов
+        refreshToken: store.authState.get('refreshToken'),
+        accessTokenExpiresIn: store.authState.get('accessTokenExpiresIn'),
 
         newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),  
         //todo: check - reset нов.сообщений при переходе в личные сообщения

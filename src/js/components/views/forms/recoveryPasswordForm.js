@@ -69,6 +69,7 @@ export default class RecoveryPasswordForm extends Component {
         const className = 'recovery-form ' + (this.props.className ? this.props.className : '');
 
         debugger;
+        let recoveryPasswordContent = <div></div>;
 
         if (this.props.accessToken &&
             this.props.refreshToken &&
@@ -81,29 +82,32 @@ export default class RecoveryPasswordForm extends Component {
 
                 this.props.setAlertData(alertData);
         }
+        else {
+            recoveryPasswordContent = <div className = 'content__auth-utils-form auth-utils-form'>				
+                                            <div className = 'auth-utils-form_title'>Восстановление пароля</div>
+
+                                            <input 
+                                                name = "email"
+                                                type = "text" 
+                                                className = 'auth-utils-form_input' 
+                                                maxLength = '40'
+                                                value = {this.state.email}
+                                                onChange = {this.changeData}
+                                                onClick = {this.clearData}
+                                            />
+
+                                            <button className = 'button button_send auth-utils-form__button' onClick = {this.clickRecoveryPasswordButton}>Отправить</button>
+                                            
+                                            <Link className = 'auth-utils-form_link' to={appConst.loginLink}>
+                                                На страницу входа	
+                                            </Link>
+
+                                        </div>;
+        }
 
         return (
             <div className = {className}>
-               <div className = 'content__auth-utils-form auth-utils-form'>				
-                    <div className = 'auth-utils-form_title'>Восстановление пароля</div>
-
-                    <input 
-                        name = "email"
-                        type = "text" 
-                        className = 'auth-utils-form_input' 
-                        maxLength = '40'
-                        value = {this.state.email}
-                        onChange = {this.changeData}
-                        onClick = {this.clearData}
-                    />
-
-                    <button className = 'button button_send auth-utils-form__button' onClick = {this.clickRecoveryPasswordButton}>Отправить</button>
-                    
-                    <Link className = 'auth-utils-form_link' to={appConst.loginLink}>
-                        На страницу входа	
-                    </Link>
-
-                </div>
+                {recoveryPasswordContent}
             </div> 
         )
     }

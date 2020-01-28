@@ -35,7 +35,7 @@ class LoginFormContainer extends PureComponent {
 
                 if (error.response && error.response.status && error.response.status === 401) {
                     alertData = {
-                        message: 'Пользователь с указанным имейлом не найден.',
+                        message: 'Имейл или пароль указан неверно.',
                         secondaryMessage: 'Зарегистрироваться',
                         secondaryLink: appConst.registrationLink,
                     };
