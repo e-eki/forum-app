@@ -83,7 +83,7 @@ export default class InfoForm extends PureComponent {
         let movingBlock = null;
         debugger;
 
-        if (this.props.modifiableItem) {
+        if (this.props.modifiableItem && this.props.modifiableItem.canEdit) {   //?
             modifyingBlock = <ModifyForm
                                 modifiableItem = {this.props.modifiableItem}
                                 setModifiableItem = {this.props.setModifiableItem}
@@ -91,7 +91,7 @@ export default class InfoForm extends PureComponent {
                                 type = {this.props.type}
                             />;
         }
-        else if (this.props.movingItem) {
+        else if (this.props.movingItem && this.props.movingItem.canEdit) {  //?
             movingBlock = <MovingForm
                                 movingItem = {this.props.movingItem}
                                 setMovingItem = {this.props.setMovingItem}
@@ -106,6 +106,28 @@ export default class InfoForm extends PureComponent {
                             />
         }
 
+        debugger;
+        let editAndMoveButtonBlock = null;
+        let deleteButtonBlock = null;
+
+        if (this.props.currentInfoItem.canEdit) {   //?
+            editAndMoveButtonBlock = <div>
+                                        <button className = '' onClick = {this.editItem}>
+                                            Редактировать {this.props.type ? this.props.type : null}
+                                        </button>
+
+                                        <button className = '' onClick = {this.moveItem}>
+                                            Переместить {this.props.type ? this.props.type : null}
+                                        </button>
+                                    </div>;
+        }
+
+        if (this.props.currentInfoItem.canDelete) {  //?
+            deleteButtonBlock = <button className = '' onClick = {this.deleteItem}>
+                                    Удалить {this.props.type ? this.props.type : null}
+                                </button>;
+        }
+
         const itemInfo = this.initItemInfo();
         
         return (
@@ -117,17 +139,9 @@ export default class InfoForm extends PureComponent {
 
                 {itemInfo}
 
-                <button className = '' onClick = {this.editItem}>
-                    Редактировать {this.props.type ? this.props.type : null}
-                </button>
+                {editAndMoveButtonBlock}
 
-                <button className = '' onClick = {this.moveItem}>
-                    Переместить {this.props.type ? this.props.type : null}
-                </button>
-
-                <button className = '' onClick = {this.deleteItem}>
-                    Удалить {this.props.type ? this.props.type : null}
-                </button>
+                {deleteButtonBlock}
 
                 <button className = '' onClick = {this.resetInfoItem}>
                     Закрыть

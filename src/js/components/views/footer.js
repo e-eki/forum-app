@@ -15,7 +15,7 @@ export default class Footer extends PureComponent {
         return (
             <div className = {className}>
                  <div className ="footer__title">
-                    &#169; В. А. Дремина, 2018
+                    &#169; В. А. Дремина, 2020
                 </div>
             </div>
         )

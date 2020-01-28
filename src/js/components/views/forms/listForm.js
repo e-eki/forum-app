@@ -73,34 +73,43 @@ export default class ListForm extends PureComponent {
         let itemInfoBlock = null;       
         let modifyingItemBlock = null;
 
-        if (this.props.currentInfoItem) {
-            itemInfoBlock = <InfoForm
-                                currentInfoItem = {this.props.currentInfoItem}
-                                setCurrentInfoItem = {this.props.setCurrentInfoItem}
-                                deleteItem = {this.props.deleteItem}
-                                setMovingItem = {this.props.setMovingItem}
-                                modifiableItem = {this.props.modifiableItem}
-                                movingItem = {this.props.movingItem}
-                                setModifiableItem = {this.props.setModifiableItem}
-                                modifyItem = {this.props.modifyItem}
-                                type = {this.props.type}
-                                setDescriptionMessage = {this.props.setDescriptionMessage}
-                                deletedItemAction = {this.props.deletedItemAction}
-                                
-                                parentItemsList = {this.props.parentItemsList}
-                                resetParentItemsList = {this.props.resetParentItemsList}
-                                parentItemId = {this.props.parentItemId}
-                            />;
+        debugger;
+        if (this.props.currentInfoItem &&
+            (this.props.currentInfoItem.canEdit || this.props.currentInfoItem.canDelete)) {
+                itemInfoBlock = <InfoForm
+                                    currentInfoItem = {this.props.currentInfoItem}
+                                    setCurrentInfoItem = {this.props.setCurrentInfoItem}
+                                    deleteItem = {this.props.deleteItem}
+                                    setMovingItem = {this.props.setMovingItem}
+                                    modifiableItem = {this.props.modifiableItem}
+                                    movingItem = {this.props.movingItem}
+                                    setModifiableItem = {this.props.setModifiableItem}
+                                    modifyItem = {this.props.modifyItem}
+                                    type = {this.props.type}
+                                    setDescriptionMessage = {this.props.setDescriptionMessage}
+                                    deletedItemAction = {this.props.deletedItemAction}
+                                    
+                                    parentItemsList = {this.props.parentItemsList}
+                                    resetParentItemsList = {this.props.resetParentItemsList}
+                                    parentItemId = {this.props.parentItemId}
+                                />;
         }
-
         // добавление нового элемента
-        else if (this.props.modifiableItem) {
+        else if (this.props.modifiableItem && this.props.canAdd) {  //?
             modifyingItemBlock = <ModifyForm
                                     modifiableItem = {this.props.modifiableItem}
                                     setModifiableItem = {this.props.setModifiableItem}
                                     modifyItem = {this.props.modifyItem}
                                     type = {this.props.type}
                                 />;
+        }
+
+        debugger;
+        let addButtonBlock = null;
+        if (this.props.canAdd) {  //?
+            addButtonBlock = <button className = '' onClick = {this.addItem}>
+                                Добавить {this.props.type ? this.props.type : null}
+                            </button>;
         }
 
         let itemsBlock = null;
@@ -128,9 +137,7 @@ export default class ListForm extends PureComponent {
 
                 {itemInfoBlock}
 
-                <button className = '' onClick = {this.addItem}>
-                    Добавить {this.props.type ? this.props.type : null}
-                </button>
+                {addButtonBlock}
 
                 {itemsBlock}
             </div>
