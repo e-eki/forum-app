@@ -215,10 +215,10 @@ const mapDispatchToProps = function(dispatch) {
             dispatch(setCurrentInfoMessage(item));
         },
         joinRoom: function(id) {
-            dispatch(joinRoom(id, roomType, userId);
+            dispatch(joinRoom(id, roomType, userId));
         },
         leaveRoom: function(id) {
-            dispatch(leaveRoom(id, roomType, userId);
+            dispatch(leaveRoom(id, roomType, userId));
         },
     }
 }
