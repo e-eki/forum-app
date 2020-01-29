@@ -23,6 +23,7 @@ class PrivateChannelContainer extends PureComponent {
         this.recipientId = null;
         this.recipientChannelId = null;
         this.channelId = null;
+        this.roomType = forumConst.itemTypes.privateChannel;
 
         this.updateNewPrivateMessagesCount = this.updateNewPrivateMessagesCount.bind(this);
         this.getPrivateChannel = this.getPrivateChannel.bind(this);
@@ -73,7 +74,7 @@ class PrivateChannelContainer extends PureComponent {
                 .then(channel => {
 
                     if (channel) {
-                        this.props.joinRoom(channel.id);
+                        this.props.joinRoom(channel.id, this.roomType, this.props.userId);
                         this.channelId = channel.id;
 
                         this.props.setCurrentPrivateChannel(channel);
@@ -96,7 +97,7 @@ class PrivateChannelContainer extends PureComponent {
                         debugger;
 
                         if (privateChannel) {
-                            this.props.joinRoom(privateChannel.id);
+                            this.props.joinRoom(privateChannel.id, this.roomType, this.props.userId);
                             this.recipientChannelId = privateChannel.id;
 
                             this.props.setCurrentPrivateChannel(privateChannel);
@@ -112,7 +113,7 @@ class PrivateChannelContainer extends PureComponent {
         debugger;
 
         if (this.channelId) {
-            this.props.leaveRoom(this.channelId);
+            this.props.leaveRoom(this.channelId, this.roomType, this.props.userId);
             this.channelId = null;
         }
         else if (this.recipientId && this.recipientChannelId) {  //??
@@ -179,7 +180,8 @@ const mapStateToProps = function(store) {
         currentPrivateChannel: store.privateChannelState.get('currentPrivateChannel'),
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),
-        newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),    
+        newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),
+        userId: store.authState.get('userId'),
     };
 };
 
@@ -213,10 +215,10 @@ const mapDispatchToProps = function(dispatch) {
             dispatch(setCurrentInfoMessage(item));
         },
         joinRoom: function(id) {
-            dispatch(joinRoom(id));
+            dispatch(joinRoom(id, roomType, userId);
         },
         leaveRoom: function(id) {
-            dispatch(leaveRoom(id));
+            dispatch(leaveRoom(id, roomType, userId);
         },
     }
 }

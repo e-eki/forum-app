@@ -20,6 +20,7 @@ class ChannelContainer extends PureComponent {
         super(props);
 
         this.channelId = null;
+        this.roomType = forumConst.itemTypes.channel;
 
         this.setDescriptionMessage = this.setDescriptionMessage.bind(this);
         this.resetDescriptionMessage = this.resetDescriptionMessage.bind(this);
@@ -34,7 +35,7 @@ class ChannelContainer extends PureComponent {
             return getChannelById(channelId)
                 .then(channel => {
                     if (channel && channel.id) {
-                        this.props.joinRoom(channel.id);
+                        this.props.joinRoom(channel.id, this.roomType, this.props.userId);
                         this.channelId = channel.id;
 
                         this.props.setCurrentChannel(channel);
@@ -47,7 +48,7 @@ class ChannelContainer extends PureComponent {
 
     componentWillUnmount() {
         if (this.channelId) {
-            this.props.leaveRoom(this.channelId);
+            this.props.leaveRoom(this.channelId, this.roomType, this.props.userId);
         }
 
         if (this.props.currentUserInfo) {
@@ -123,6 +124,7 @@ const mapStateToProps = function(store) {
         modifiableMessage: store.messageState.get('modifiableMessage'),
         movingMessage: store.messageState.get('movingMessage'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
+        userId: store.authState.get('userId'),
     };
 };
 
@@ -162,10 +164,10 @@ const mapDispatchToProps = function(dispatch) {
             dispatch(setParentItemsList(null));
         },
         joinRoom: function(id) {
-            dispatch(joinRoom(id));
+            dispatch(joinRoom(id, roomType, userId);
         },
         leaveRoom: function(id) {
-            dispatch(leaveRoom(id));
+            dispatch(leaveRoom(id, roomType, userId);
         },
         deleteMessageById: function(messageId, channelId) {
             dispatch(deleteMessageById(messageId, channelId));

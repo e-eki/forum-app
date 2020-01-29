@@ -4,18 +4,22 @@ import * as actionTypes from './actionTypes';
 
 //---ROOM
 
-export function joinRoom(id) {
+export function joinRoom(id, roomType, userId) {
 	return {
 	  type: actionTypes.JOIN_ROOM,
 	  roomId: id,
+	  roomType: roomType || null,
+	  userId: userId || null,
 	  meta: {remote: true},
 	};
 }
 
-export function leaveRoom(id) {
+export function leaveRoom(id, roomType, userId) {
 	return {
 	  type: actionTypes.LEAVE_ROOM,
 	  roomId: id,
+	  roomType: roomType || null,
+	  userId: userId || null,
 	  meta: {remote: true},
 	};
 }
