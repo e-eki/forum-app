@@ -11,17 +11,28 @@ export function getUserInfoById(id) {
 	debugger;
 	return Promise.resolve(true)
 		.then(() => {
-			return getActualAccessToken();
+			return getActualAccessToken()
+				.catch(error => {
+					debugger;
+					return false;
+				})
 		})
 		.then(accessToken => {
 			const options = {
 				method: 'GET',
-				headers: { 'Authorization': `Token ${accessToken}` },
 				url: `${apiConst.userInfoApi}/${id}`,
 			};
+
+			if (accessToken) {
+				options.headers = { 'Authorization': `Token ${accessToken}` };
+			}
 			
 			return axios(options);
 		})
+		.then(response => {
+			debugger;
+            return response.data;
+		});
 }
 
 export function getUserInfoAndSetCurrentUserInfo(id, isOwnInfo) {
@@ -32,22 +43,30 @@ export function getUserInfoAndSetCurrentUserInfo(id, isOwnInfo) {
 				return getActualAccessToken();
 			}
 			else {
-				return false;
+				return getActualAccessToken()
+					.catch(error => {
+						debugger;
+						return false;
+					})
 			}
 		})
 		.then(accessToken => {
+			const options = {
+				method: 'GET',
+			};
+
 			if (accessToken) {
-				const options = {
-					method: 'GET',
-					headers: { 'Authorization': `Token ${accessToken}` },
-					url: `${apiConst.userInfoApi}`
-				};
-				
-				return axios(options);
+				options.headers = { 'Authorization': `Token ${accessToken}` };
+			}
+
+			if (id) {
+				options.url = `${apiConst.userInfoApi}/${id}`;
 			}
 			else {
-				return axios.get(`${apiConst.userInfoApi}/${id}`);
+				options.url = `${apiConst.userInfoApi}`;
 			}
+			
+			return axios(options);
 		})
 		.then(response => {
 			debugger;

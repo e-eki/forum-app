@@ -3,24 +3,61 @@
 import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
-import * as subSectionActions from '../actions/subSectionActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 import { getActualAccessToken } from '../api/authApi';
 
 export function getSubSections() {
-	return axios.get(`${apiConst.subSectionApi}`)
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken()
+				.catch(error => {
+					debugger;
+					return false;
+				})
+		})
+		.then(accessToken => {
+			const options = {
+				method: 'GET',
+				url: `${apiConst.subSectionApi}`
+			};
+
+			if (accessToken) {
+				options.headers = { 'Authorization': `Token ${accessToken}` };
+			}
+			
+			return axios(options);
+		})
 		.then(response => {
 			debugger;
-		    return response.data;
+            return response.data;
 		});
 }
 
 export function getSubSectionById(id) {
-	return axios.get(`${apiConst.subSectionApi}/${id}`)
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken()
+				.catch(error => {
+					debugger;
+					return false;
+				})
+		})
+		.then(accessToken => {
+			const options = {
+				method: 'GET',
+				url: `${apiConst.subSectionApi}/${id}`
+			};
+
+			if (accessToken) {
+				options.headers = { 'Authorization': `Token ${accessToken}` };
+			}
+			
+			return axios(options);
+		})
 		.then(response => {
 			debugger;
-		    return response.data;
+            return response.data;
 		});
 }
 
@@ -53,8 +90,6 @@ export function deleteSubSection(item) {
 		})
 		.spread((subSectionId, sectionId, response) => {
 			debugger;
-		    //store.dispatch(subSectionActions.setCurrentInfoSubSection(null));
-
 			store.dispatch(remoteActions.deleteSubSectionById(subSectionId, sectionId));
 
 			return true;
@@ -99,8 +134,6 @@ export function modifySubSection(item) {
 			if (!subSectionId && response.data && response.data.id) {
 				subSectionId = response.data.id;
 			}
-
-			//store.dispatch(subSectionActions.setModifiableSubSection(null));
 
 			store.dispatch(remoteActions.updateSubSectionById(subSectionId, sectionId));
 

@@ -5,7 +5,6 @@ import Promise from 'bluebird';
 import store from '../store/store';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
-import { getUserInfoById } from './userInfoApi';
 import { getActualAccessToken } from '../api/authApi';
 
 export function getPrivateChannels() {

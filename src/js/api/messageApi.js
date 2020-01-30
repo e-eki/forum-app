@@ -3,7 +3,6 @@
 import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
-import * as actions from '../actions/messageActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 import { getActualAccessToken } from '../api/authApi';
@@ -45,8 +44,6 @@ export function deleteMessage(item) {
 		})
 		.spread((messageId, channelId, response) => {
 			debugger;
-		    //store.dispatch(actions.setCurrentInfoMessage(null));
-
 			store.dispatch(remoteActions.deleteMessageById(messageId, channelId));
 
 			return true;
@@ -93,9 +90,7 @@ export function modifyMessage(item) {
 			if (!messageId && response.data && response.data.id) {
 				messageId = response.data.id;
 			}
-
-			//store.dispatch(actions.setModifiableMessage(null));
-
+			
 			store.dispatch(remoteActions.updateMessageById(messageId, channelId, recipientId));
 
 			return true;

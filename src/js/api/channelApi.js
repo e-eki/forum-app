@@ -3,16 +3,34 @@
 import axios from 'axios';
 import Promise from 'bluebird';
 import store from '../store/store';
-import * as channelActions from '../actions/channelActions';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 import { getActualAccessToken } from '../api/authApi';
 
 export function getChannels() {  //?
-	return axios.get(`${apiConst.channelApi}`)
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken()
+				.catch(error => {
+					debugger;
+					return false;
+				})
+		})
+		.then(accessToken => {
+			const options = {
+				method: 'GET',
+				url: `${apiConst.channelApi}`
+			};
+
+			if (accessToken) {
+				options.headers = { 'Authorization': `Token ${accessToken}` };
+			}
+			
+			return axios(options);
+		})
 		.then(response => {
 			debugger;
-		    return response.data;
+            return response.data;
 		});
 }
 
@@ -25,10 +43,29 @@ export function getChannelsByText(searchText) {
 }
 
 export function getChannelById(id) {
-	return axios.get(`${apiConst.channelApi}/${id}`)
+	return Promise.resolve(true)
+		.then(() => {
+			return getActualAccessToken()
+				.catch(error => {
+					debugger;
+					return false;
+				})
+		})
+		.then(accessToken => {
+			const options = {
+				method: 'GET',
+				url: `${apiConst.channelApi}/${id}`
+			};
+
+			if (accessToken) {
+				options.headers = { 'Authorization': `Token ${accessToken}` };
+			}
+			
+			return axios(options);
+		})
 		.then(response => {
 			debugger;
-		    return response.data;
+            return response.data;
 		});
 }
 
