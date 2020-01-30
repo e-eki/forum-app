@@ -4,7 +4,7 @@ import * as actionTypes from './actionTypes';
 
 //---ROOM
 
-export function joinRoom(id, roomType, userId) {
+export function joinRoom(id, roomType = null, userId = null) {
 	return {
 	  type: actionTypes.JOIN_ROOM,
 	  roomId: id,
@@ -14,7 +14,7 @@ export function joinRoom(id, roomType, userId) {
 	};
 }
 
-export function leaveRoom(id, roomType, userId) {
+export function leaveRoom(id, roomType = null, userId = null) {
 	return {
 	  type: actionTypes.LEAVE_ROOM,
 	  roomId: id,

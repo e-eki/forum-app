@@ -24,20 +24,24 @@ export default class UserInfoForm extends PureComponent {
         //console.log('render UserInfoForm');
         const className = 'user-info ' + (this.props.className ? this.props.className : '');
 
+        debugger;
         let modifyingBlock = null;
 
-        if (this.props.modifiableItem) {
-            modifyingBlock = <ModifyForm
-                                modifiableItem = {this.props.modifiableUserInfo}
-                                setModifiableItem = {this.props.setModifiableUserInfo}
-                                modifyItem = {this.props.modifyUserInfo}
-                                type = {forumConst.itemTypes.userInfo}
-                            />;
+        if (this.props.modifiableItem &&
+            (this.props.userInfo &&
+            (this.props.userInfo.canEdit || this.props.userInfo.canEditRole || this.props.userInfo.canEditBlackList))) {
+                modifyingBlock = <ModifyForm
+                                    modifiableItem = {this.props.modifiableUserInfo}
+                                    setModifiableItem = {this.props.setModifiableUserInfo}
+                                    modifyItem = {this.props.modifyUserInfo}
+                                    type = {forumConst.itemTypes.userInfo}
+                                />;
         }
 
         let userInfoBlock = <div></div>;
 
         if (this.props.userInfo) {
+            debigger;
             const userInfo = this.props.userInfo;
 
             const birthDate = userInfo.birthDate;
@@ -47,7 +51,8 @@ export default class UserInfoForm extends PureComponent {
                 birthDateString = (typeof(birthDate) === 'string') ? new Date(birthDate).toDateString() : birthDate.toDateString();
             }
 
-            const privateMessageBlock = (!userInfo.isOwnInfo && !userInfo.inBlackList)
+            const privateMessageBlock = (!userInfo.isOwnInfo &&
+                                        userInfo.canAddPrivateChannel)
                                             ?
                                             <Link to={`${appConst.privateChannelsLink}/?recipientId=${this.props.userInfo.id}`}>
                                                 <button className = ''>Написать личное сообщение</button>
@@ -55,8 +60,7 @@ export default class UserInfoForm extends PureComponent {
                                             :
                                             null;
 
-            const editBlock = ((userInfo.isOwnInfo || userInfo.canEditRole || userInfo.canEditBlackList) &&
-                                !userInfo.inBlackList)
+            const editBlock = (userInfo.canEdit || userInfo.canEditRole || userInfo.canEditBlackList)
                                     ?
                                     <button className = '' onClick = {this.editItem}>
                                         Редактировать
@@ -69,7 +73,7 @@ export default class UserInfoForm extends PureComponent {
 
                                 <div>{userInfo.role}</div>
 
-                                {userInfo.inBlackList ? <div>В черном списке</div> : null}
+                                {userInfo.inBlackList ? <div>В чёрном списке</div> : null}
 
                                 <div>{userInfo.login}</div>
                                 {userInfo.name ? <div>Имя: {userInfo.name}</div> : null}

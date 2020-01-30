@@ -70,12 +70,13 @@ export default class ListForm extends PureComponent {
         //console.log('render ListForm');
         const className = 'list-form ' + (this.props.className ? this.props.className : '');
 
+        debugger;
         let itemInfoBlock = null;       
         let modifyingItemBlock = null;
 
         debugger;
         if (this.props.currentInfoItem &&
-            (this.props.currentInfoItem.canEdit || this.props.currentInfoItem.canDelete)) {
+            (this.props.currentInfoItem.canEdit || this.props.currentInfoItem.canDelete)) {   //?
                 itemInfoBlock = <InfoForm
                                     currentInfoItem = {this.props.currentInfoItem}
                                     setCurrentInfoItem = {this.props.setCurrentInfoItem}
@@ -115,7 +116,7 @@ export default class ListForm extends PureComponent {
         let itemsBlock = null;
 
         if (this.props.items) {
-            if (this.props.newMessagesCount) {
+            if (this.props.type === forumConst.itemTypes.message && this.props.newMessagesCount) {
                 const newItems = this.props.items.slice(-this.props.newMessagesCount);
                 const oldItems = this.props.items.slice(0, -this.props.newMessagesCount);
 

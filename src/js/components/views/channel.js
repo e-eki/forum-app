@@ -144,6 +144,7 @@ export default class Channel extends PureComponent {
                         {this.props.isCurrent
                             ?
                             <ListForm
+                                canAdd = {this.props.channel ? this.props.channel.canAdd : false}
                                 type = {forumConst.itemTypes.message}
                                 parentItemId = {this.props.channel.id}
                                 recipientId = {this.props.channel.recipientId}
@@ -169,23 +170,34 @@ export default class Channel extends PureComponent {
                     </div>;
         }
 
+        debugger;
         let channelInfoBlock = null;
 
-        if (this.props.isCurrent && isPrivate) {
-            channelInfoBlock = <div>
-                                    <button className = '' onClick = {this.deleteChannel}>
-                                        Удалить диалог
-                                    </button>
+        if (this.props.isCurrent &&
+            isPrivate) {
+                let deletePrivateChannelBlock = null;
 
-                                    <Link to={`${appConst.privateChannelsLink}`}>
-                                        <button className = ''>Перейти в личные сообщения</button>
-                                    </Link>
-                                </div>;
+                if (this.props.channel && this.props.channel.canDelete) {
+                    deletePrivateChannelBlock = <button className = '' onClick = {this.deleteChannel}>
+                                                    Удалить диалог
+                                                </button>;
+                }
+
+                channelInfoBlock = <div>
+                                        {deletePrivateChannelBlock}
+
+                                        <Link to={`${appConst.privateChannelsLink}`}>
+                                            <button className = ''>Перейти в личные сообщения</button>
+                                        </Link>
+                                    </div>;
         }
-        else if (!this.props.isCurrent && !isPrivate && !isSearchResult) { 
-            channelInfoBlock = <button className = '' onClick = {this.showInfo}>
-                                    Информация {this.props.channel ? this.props.channel.name : null}
-                                </button>;
+        else if (!this.props.isCurrent &&
+                !isPrivate &&
+                !isSearchResult &&
+                (this.props.channel && (this.props.channel.canEdit || this.props.channel.canDelete))) { 
+                    channelInfoBlock = <button className = '' onClick = {this.showInfo}>
+                                            Информация {this.props.channel ? this.props.channel.name : null}
+                                        </button>;
         }
         
         return (

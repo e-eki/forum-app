@@ -57,6 +57,7 @@ export default class SubSection extends PureComponent {
                             {this.props.isCurrent
                                 ?
                                 <ListForm
+                                    canAdd = {this.props.subSection ? this.props.subSection.canAdd : false}
                                     type = {forumConst.itemTypes.channel}
                                     parentItemId = {this.props.subSection.id}
                                     items = {channels}
@@ -81,10 +82,11 @@ export default class SubSection extends PureComponent {
 
         let subSectionInfoBlock = null;
 
-        if (!this.props.isCurrent) {
-            subSectionInfoBlock = <button className = '' onClick = {this.showInfo}>
-                                    Информация {this.props.subSection.name ? this.props.subSection.name : null}
-                                </button>;
+        if (!this.props.isCurrent &&
+            (this.props.subSection && (this.props.subSection.canEdit || this.props.subSection.canDelete))) {
+                subSectionInfoBlock = <button className = '' onClick = {this.showInfo}>
+                                        Информация {this.props.subSection.name ? this.props.subSection.name : null}
+                                    </button>;
         }
         
         return (

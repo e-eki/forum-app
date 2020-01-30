@@ -39,8 +39,8 @@ export default class Message extends PureComponent {
 
         if (this.props.type === forumConst.itemTypes.searchMessage && this.props.message.channelId) {
             messageNameBlock = <Link to={`${appConst.channelsLink}/${this.props.message.channelId}`}>
-                                <div>MESSAGE</div>
-                            </Link>;
+                                    <div>MESSAGE</div>
+                                </Link>;
         }
 
         const dateString = getDateTimeString(this.props.message.date);
@@ -50,10 +50,11 @@ export default class Message extends PureComponent {
 
         let messageInfoBlock = null;
 
-        if (!this.props.isCurrent) {
-            messageInfoBlock = <button className = '' onClick = {this.showInfo}>
-                                    Информация
-                                </button>;
+        if (!this.props.isCurrent &&
+            (this.props.message && (this.props.message.canEdit || this.props.message.canDelete))) {
+                messageInfoBlock = <button className = '' onClick = {this.showInfo}>
+                                        Информация
+                                    </button>;
         }
         
         return (

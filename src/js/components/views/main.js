@@ -15,6 +15,7 @@ export default class Main extends PureComponent {
         //console.log('render main');
         const className = 'main ' + (this.props.className ? this.props.className : '');
 
+        debugger;
         const sections = [];
         let key = 0;
 
@@ -77,6 +78,7 @@ export default class Main extends PureComponent {
             <div className = {className}>
 
                 <ListForm
+                    canAdd = {this.props.sections ? this.props.sections.canAdd : false}
                     type = {forumConst.itemTypes.section}
                     items = {sections}
                     currentInfoItem = {this.props.currentInfoSection}

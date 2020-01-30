@@ -163,10 +163,10 @@ const mapDispatchToProps = function(dispatch) {
         resetParentItemsList: function() {
             dispatch(setParentItemsList(null));
         },
-        joinRoom: function(id) {
+        joinRoom: function(id, roomType, userId) {
             dispatch(joinRoom(id, roomType, userId));
         },
-        leaveRoom: function(id) {
+        leaveRoom: function(id, roomType, userId) {
             dispatch(leaveRoom(id, roomType, userId));
         },
         deleteMessageById: function(messageId, channelId) {

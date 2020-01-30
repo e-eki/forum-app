@@ -39,16 +39,14 @@ export default class ModifyForm extends Component {
         const options = [];
         let i = 0;
 
-        // forumConst.userRoles.forEach(item => {
-        //     if (item !== this.props.modifiableItem.role) {  //?
-        //         options.push(<option
-        //                         key={i++}
-        //                         value={forumConst.movingInListTypes.down}
-        //                     >
-        //                         {forumConst.movingInListTypes.down}
-        //                     </option>);
-        //     }
-        // })
+        forumConst.userRoles.forEach(item => {
+            options.push(<option
+                            key={i++}
+                            value={item}
+                        >
+                            {item}
+                        </option>);
+        })
         
         return options;
     }
@@ -114,7 +112,7 @@ export default class ModifyForm extends Component {
                                         null
                                     }
 
-                                    {(this.props.modifiableItem.isOwnInfo && !this.props.modifiableItem.inBlackList)
+                                    {this.props.modifiableItem.isOwnInfo
                                         ?
                                         <div>
                                             <div>
@@ -241,6 +239,9 @@ export default class ModifyForm extends Component {
                     break;
 
                 case forumConst.itemTypes.userInfo:
+                    modifiableItem.role = this.state.role;  //?
+                    modifiableItem.inBlackList = this.state.inBlackList;   //?
+
                     modifiableItem.name = this.state.name;
                     modifiableItem.birthDate = this.state.birthDate;
                     modifiableItem.city = this.state.city;
@@ -258,7 +259,7 @@ export default class ModifyForm extends Component {
 
         return Promise.resolve(this.props.modifyItem(modifiableItem))
             .then(result => {
-                this.resetModifiableItem();   //?
+                this.resetModifiableItem();
             })
     }
 
