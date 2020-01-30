@@ -10,21 +10,21 @@ import { getActualAccessToken } from '../api/authApi';
 export function getSections() {
 	return Promise.resolve(true)
 		.then(() => {
-			return getActualAccessToken()
-				.catch(error => {
-					debugger;
-					return false;
-				})
-		})
-		.then(accessToken => {
+		// 	return getActualAccessToken()
+		// 		.catch(error => {
+		// 			debugger;
+		// 			return false;
+		// 		})
+		// })
+		// .then(accessToken => {
 			const options = {
 				method: 'GET',
 				url: `${apiConst.sectionApi}`
 			};
 
-			if (accessToken) {
-				options.headers = { 'Authorization': `Token ${accessToken}` };
-			}
+			// if (accessToken) {
+			// 	options.headers = { 'Authorization': `Token ${accessToken}` };
+			// }
 			
 			return axios(options);
 		})

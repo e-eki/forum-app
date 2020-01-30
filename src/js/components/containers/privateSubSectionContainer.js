@@ -91,11 +91,11 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentUserInfo: function() {
             dispatch(setCurrentUserInfo(null));
         },
-        joinRoom: function(id, roomType, userId) {
-            dispatch(joinRoom(id, roomType, userId));
+        joinRoom: function(id) {
+            dispatch(joinRoom(id));
         },
-        leaveRoom: function(id, roomType, userId) {
-            dispatch(leaveRoom(id, roomType, userId));
+        leaveRoom: function(id) {
+            dispatch(leaveRoom(id));
         },
     }
 }
