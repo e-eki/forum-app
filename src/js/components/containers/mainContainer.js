@@ -33,6 +33,7 @@ class MainContainer extends PureComponent {
                 if (sections) {
                     this.props.setSections(sections);
                 }
+                debugger;
 
                 this.props.joinRoom(apiConst.defaultRoomId);
                 

@@ -25,6 +25,7 @@ class SectionContainer extends PureComponent {
             return getSectionById(id)
                 .then(section => {
                     if (section) {
+                        debugger;
                         this.props.setCurrentSection(section);
                         
                         this.props.joinRoom(section.id);

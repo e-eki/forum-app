@@ -78,7 +78,7 @@ export default class Main extends PureComponent {
             <div className = {className}>
 
                 <ListForm
-                    canAdd = {this.props.sections ? this.props.sections.canAdd : false}
+                    canAdd = {this.props.canAdd ? this.props.canAdd : false}
                     type = {forumConst.itemTypes.section}
                     items = {sections}
                     currentInfoItem = {this.props.currentInfoSection}

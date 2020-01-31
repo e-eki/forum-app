@@ -84,7 +84,10 @@ export default class Channel extends PureComponent {
             let descriptionMessageBlock = null;
             
             if (this.props.isCurrent) {
-                channelNameBlock = channelName;
+                channelNameBlock = <div>
+                                        {channelName}
+                                        <div>{this.props.channel.description}</div>
+                                    </div>;
 
                 if (this.props.channel.descriptionMessage) {
                     const descriptionMessage = this.props.channel.descriptionMessage;
@@ -113,6 +116,8 @@ export default class Channel extends PureComponent {
                                         <Link to={`${channelsLink}/${this.props.channel.id}`}>
                                             {channelName} {newMessagesNotificationBlock}
                                         </Link>
+
+                                        <div>{this.props.channel.description}</div>
                                         ----
                                         {isPrivate ? <Link to="/" onClick = {this.showUserInfo}>RECIPIENT</Link> : null}
                                     </div>;
