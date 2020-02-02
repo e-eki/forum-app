@@ -9,6 +9,8 @@ export default class Main extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.canAdd = false;
     }
     
     render() {
@@ -20,65 +22,69 @@ export default class Main extends PureComponent {
         let key = 0;
 
         if (this.props.sections) {
-            this.props.sections.forEach(function(item) {
-                let modifiableSubSection = null;
-                let currentInfoSubSection = null;
-                let movingSubSection = null;
+            this.canAdd = this.props.sections.canAdd ? this.props.sections.canAdd : false;
 
-                if (item.id) {
-                    if (this.props.modifiableSubSection) {
-                        const parentId = this.props.modifiableSubSection.parentItemId || this.props.modifiableSubSection.sectionId;
+            if (this.props.sections.items) {
+                this.props.sections.items.forEach(function(item) {
+                    let modifiableSubSection = null;
+                    let currentInfoSubSection = null;
+                    let movingSubSection = null;
 
-                        if (parentId && parentId === item.id) {
-                            modifiableSubSection = this.props.modifiableSubSection;
+                    if (item.id) {
+                        if (this.props.modifiableSubSection) {
+                            const parentId = this.props.modifiableSubSection.parentItemId || this.props.modifiableSubSection.sectionId;
+
+                            if (parentId && parentId === item.id) {
+                                modifiableSubSection = this.props.modifiableSubSection;
+                            }
+                        }
+
+                        if (this.props.currentInfoSubSection) {
+                            const parentId = this.props.currentInfoSubSection.parentItemId || this.props.currentInfoSubSection.sectionId;
+
+                            if (parentId && parentId === item.id) {
+                                currentInfoSubSection = this.props.currentInfoSubSection;
+                            }
+                        }
+
+                        if (this.props.movingSubSection) {
+                            const parentId = this.props.movingSubSection.parentItemId || this.props.movingSubSection.sectionId;
+
+                            if (parentId && parentId === item.id) {
+                                movingSubSection = this.props.movingSubSection;
+                            }
                         }
                     }
 
-                    if (this.props.currentInfoSubSection) {
-                        const parentId = this.props.currentInfoSubSection.parentItemId || this.props.currentInfoSubSection.sectionId;
+                    const section = <Section
+                                        key={key}
+                                        section = {item}
+                                        setCurrentInfoSection = {this.props.setCurrentInfoSection}
 
-                        if (parentId && parentId === item.id) {
-                            currentInfoSubSection = this.props.currentInfoSubSection;
-                        }
-                    }
+                                        currentInfoSubSection = {currentInfoSubSection}
+                                        modifiableSubSection = {modifiableSubSection}
+                                        movingSubSection = {movingSubSection}
+                                        setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
+                                        setModifiableSubSection = {this.props.setModifiableSubSection}
+                                        setMovingSubSection = {this.props.setMovingSubSection}
+                                        modifySubSection = {this.props.modifySubSection}
+                                        deleteSubSection = {this.props.deleteSubSection}
+                                        deleteSubSectionById = {this.props.deleteSubSectionById}
 
-                    if (this.props.movingSubSection) {
-                        const parentId = this.props.movingSubSection.parentItemId || this.props.movingSubSection.sectionId;
-
-                        if (parentId && parentId === item.id) {
-                            movingSubSection = this.props.movingSubSection;
-                        }
-                    }
-                }
-
-                const section = <Section
-                                    key={key}
-                                    section = {item}
-                                    setCurrentInfoSection = {this.props.setCurrentInfoSection}
-
-                                    currentInfoSubSection = {currentInfoSubSection}
-                                    modifiableSubSection = {modifiableSubSection}
-                                    movingSubSection = {movingSubSection}
-                                    setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}
-                                    setModifiableSubSection = {this.props.setModifiableSubSection}
-                                    setMovingSubSection = {this.props.setMovingSubSection}
-                                    modifySubSection = {this.props.modifySubSection}
-                                    deleteSubSection = {this.props.deleteSubSection}
-                                    deleteSubSectionById = {this.props.deleteSubSectionById}
-
-                                    parentItemsList = {this.props.parentItemsList}
-                                    resetParentItemsList = {this.props.resetParentItemsList}
-                                />;
-                sections.push(section);
-                key++;
-            }.bind(this));
+                                        parentItemsList = {this.props.parentItemsList}
+                                        resetParentItemsList = {this.props.resetParentItemsList}
+                                    />;
+                    sections.push(section);
+                    key++;
+                }.bind(this));
+            }
         }
         
         return (
             <div className = {className}>
 
                 <ListForm
-                    canAdd = {this.props.canAdd ? this.props.canAdd : false}
+                    canAdd = {this.canAdd}
                     type = {forumConst.itemTypes.section}
                     items = {sections}
                     currentInfoItem = {this.props.currentInfoSection}

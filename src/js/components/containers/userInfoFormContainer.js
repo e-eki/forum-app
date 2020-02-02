@@ -13,6 +13,8 @@ class UserInfoFormContainer extends PureComponent {
     }
     
     render() {
+        debugger;
+        
         return (
             <UserInfoForm
                 userInfo = {this.props.currentUserInfo}

@@ -27,7 +27,7 @@ export default class UserInfoForm extends PureComponent {
         debugger;
         let modifyingBlock = null;
 
-        if (this.props.modifiableItem &&
+        if (this.props.modifiableUserInfo &&
             (this.props.userInfo &&
             (this.props.userInfo.canEdit || this.props.userInfo.canEditRole || this.props.userInfo.canEditBlackList))) {
                 modifyingBlock = <ModifyForm
@@ -41,7 +41,6 @@ export default class UserInfoForm extends PureComponent {
         let userInfoBlock = <div></div>;
 
         if (this.props.userInfo) {
-            debigger;
             const userInfo = this.props.userInfo;
 
             const birthDate = userInfo.birthDate;
@@ -62,7 +61,7 @@ export default class UserInfoForm extends PureComponent {
 
             const editBlock = (userInfo.canEdit || userInfo.canEditRole || userInfo.canEditBlackList)
                                     ?
-                                    <button className = '' onClick = {this.editItem}>
+                                    <button className = '' onClick = {this.editUserInfo}>
                                         Редактировать
                                     </button>
                                     :

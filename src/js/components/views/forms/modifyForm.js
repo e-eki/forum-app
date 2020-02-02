@@ -127,56 +127,66 @@ export default class ModifyForm extends Component {
                                                 />
                                             </div>
                                             
-                                            Дата рождения
-                                            <input 
-                                                name = "birthDate"
-                                                type="date" 
-                                                className = '' 
-                                                min="1900-01-01"
-                                                max="2019-01-01"
-                                                value = {this.state.birthDate}
-                                                onChange = {this.changeData}
-                                            />
+                                            <div>
+                                                Дата рождения
+                                                <input 
+                                                    name = "birthDate"
+                                                    type="date" 
+                                                    className = '' 
+                                                    min="1900-01-01"
+                                                    max="2019-01-01"
+                                                    value = {this.state.birthDate}
+                                                    onChange = {this.changeData}
+                                                />
+                                            </div>
 
-                                            Город
-                                            <input 
-                                                name = "city"
-                                                type="text" 
-                                                className = '' 
-                                                maxLength = '50'
-                                                value = {this.state.city}
-                                                onChange = {this.changeData}
-                                            />
+                                            <div>
+                                                Город
+                                                <input 
+                                                    name = "city"
+                                                    type="text" 
+                                                    className = '' 
+                                                    maxLength = '50'
+                                                    value = {this.state.city}
+                                                    onChange = {this.changeData}
+                                                />
+                                            </div>
 
-                                            Профессия
-                                            <input 
-                                                name = "profession"
-                                                type="text" 
-                                                className = '' 
-                                                maxLength = '200'
-                                                value = {this.state.profession}
-                                                onChange = {this.changeData}
-                                            />
-
-                                            Хобби
-                                            <input 
-                                                name = "hobby"
-                                                type="text" 
-                                                className = '' 
-                                                maxLength = '300'
-                                                value = {this.state.hobby}
-                                                onChange = {this.changeData}
-                                            />
-
-                                            Подпись под аватаром
-                                            <input 
-                                                name = "captionText"
-                                                type="text" 
-                                                className = '' 
-                                                maxLength = '300'
-                                                value = {this.state.captionText}
-                                                onChange = {this.changeData}
-                                            />
+                                            <div>
+                                                Профессия
+                                                <input 
+                                                    name = "profession"
+                                                    type="text" 
+                                                    className = '' 
+                                                    maxLength = '200'
+                                                    value = {this.state.profession}
+                                                    onChange = {this.changeData}
+                                                />
+                                            </div>
+                                            
+                                            <div>
+                                                Хобби
+                                                <input 
+                                                    name = "hobby"
+                                                    type="text" 
+                                                    className = '' 
+                                                    maxLength = '300'
+                                                    value = {this.state.hobby}
+                                                    onChange = {this.changeData}
+                                                />
+                                            </div>
+                                            
+                                            <div>
+                                                Подпись под аватаром
+                                                <input 
+                                                    name = "captionText"
+                                                    type="text" 
+                                                    className = '' 
+                                                    maxLength = '300'
+                                                    value = {this.state.captionText}
+                                                    onChange = {this.changeData}
+                                                />
+                                            </div>
                                         </div>
                                         :
                                         null
