@@ -124,6 +124,7 @@ export function modifyChannel(item) {
 			tasks.push(item.subSectionId);
 
 			const channelData = {
+				id: item.id,
 				name: item.name,
 				description: item.description,
 				subSectionId: item.subSectionId,
@@ -170,7 +171,7 @@ function _updateChannel(channelData, accessToken) {
 	const options = {
 		method: 'PUT',
 		headers: { 'Authorization': `Token ${accessToken}` },
-		url: `${apiConst.channelApi}/${item.id}`,
+		url: `${apiConst.channelApi}/${channelData.id}`,
 		data: channelData,
 	};
 	

@@ -14,6 +14,7 @@ import { setCurrentPrivateChannel } from '../../actions/privateChannelActions';
 import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
 import forumConst from '../../constants/forumConst';
 import { setDescriptionMessageForChannel } from '../../utils/channelUtils';
+import * as baseUtils from '../../utils/baseUtils';
 
 class PrivateChannelContainer extends PureComponent {
 
@@ -37,6 +38,10 @@ class PrivateChannelContainer extends PureComponent {
         return this.getPrivateChannel()
             .then(result => {
                 this.updateNewPrivateMessagesCount();
+            })
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
             })
     }
 
@@ -66,29 +71,31 @@ class PrivateChannelContainer extends PureComponent {
             const newChannelId = this.props.match.params.id;
 
             if (newChannelId && (newChannelId !== this.channelId)) {
-
                 this.resetPrivateChannelContainer();
                 this.channelId = newChannelId;
 
                 return privateChannelApi.getPrivateChannelById(newChannelId)
-                .then(channel => {
+                    .then(channel => {
 
-                    if (channel) {
-                        this.props.joinRoom(channel.id, this.roomType, this.props.userId);
-                        this.channelId = channel.id;
+                        if (channel) {
+                            this.props.joinRoom(channel.id, this.roomType, this.props.userId);
+                            this.channelId = channel.id;
 
-                        this.props.setCurrentPrivateChannel(channel);
-                    }
+                            this.props.setCurrentPrivateChannel(channel);
+                        }
 
-                    return true;
-                });
+                        return true;
+                    })
+                    .catch(error => {
+                        baseUtils.showErrorMessage(error);
+                        return false;
+                    })
             }
         }
         else if (this.props.location && this.props.location.search) {
             const newRecipientId = new URLSearchParams(this.props.location.search).get("recipientId");
 
             if (newRecipientId && (newRecipientId !== this.recipientId)) {
-
                 this.resetPrivateChannelContainer();
                 this.recipientId = newRecipientId;
 
@@ -104,7 +111,11 @@ class PrivateChannelContainer extends PureComponent {
                         }
 
                         return true;
-                    });
+                    })
+                    .catch(error => {
+                        baseUtils.showErrorMessage(error);
+                        return false;
+                    })
             }
         }
     }
@@ -133,14 +144,22 @@ class PrivateChannelContainer extends PureComponent {
         debugger;
 
         return setDescriptionMessageForChannel(forumConst.itemTypes.privateChannel, message, this.props.currentPrivateChannel)
-            .then(result => true);
+            .then(result => true)
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
 
     resetDescriptionMessage() {
         debugger;
 
         return setDescriptionMessageForChannel(forumConst.itemTypes.privateChannel, null, this.props.currentPrivateChannel)
-            .then(result => true);
+            .then(result => true)
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
     
     render() {

@@ -33,7 +33,7 @@ export default class ListForm extends PureComponent {
                     newItem = {
                         name: '',
                         description: '',
-                        orderNumber: this.props.items ? this.props.items.length : 0,   //?
+                        //orderNumber: this.props.items ? this.props.items.length : 0,   //?
                     };
                     break;
                     

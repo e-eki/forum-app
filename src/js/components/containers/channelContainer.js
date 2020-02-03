@@ -13,6 +13,7 @@ import { joinRoom, leaveRoom, deleteMessageById } from '../../actions/remoteActi
 import { setCurrentInfoChannel, setCurrentChannel } from '../../actions/channelActions';
 import { setDescriptionMessageForChannel } from '../../utils/channelUtils';
 import { setParentItemsList } from '../../actions/modifyingActions';
+import * as baseUtils from '../../utils/baseUtils';
 
 class ChannelContainer extends PureComponent {
 
@@ -42,7 +43,12 @@ class ChannelContainer extends PureComponent {
                     }
 
                     return true;
-                });
+                })
+                .catch(error => {
+                    baseUtils.showErrorMessage(error);
+    
+                    return false;
+                })
         }
     }
 
@@ -56,17 +62,24 @@ class ChannelContainer extends PureComponent {
         }
 
         this.props.resetCurrentChannel();
+        this.props.setParentItemsList(null);
     }
 
     componentDidUpdate() {
         debugger;
 
-        if (this.props.movingMessage) {
-            return getChannels()    //?
-                .then(channels => {
-                    debugger;
-                    this.props.setParentItemsList(channels);
-                })
+        if (this.props.movingMessage &&
+            !this.props.parentItemsList) {
+                return getChannels()    //?
+                    .then(channels => {
+                        debugger;
+                        this.props.setParentItemsList(channels || []);
+                    })
+                    .catch(error => {
+                        baseUtils.showErrorMessage(error);
+        
+                        return false;
+                    })
         }
     }
 
@@ -74,14 +87,22 @@ class ChannelContainer extends PureComponent {
         debugger;
 
         return setDescriptionMessageForChannel(forumConst.itemTypes.channel, message, this.props.currentChannel)
-            .then(result => true);
+            .then(result => true)
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
 
     resetDescriptionMessage() {
         debugger;
 
         return setDescriptionMessageForChannel(forumConst.itemTypes.channel, null, this.props.currentChannel)
-            .then(result => true);
+            .then(result => true)
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
     
     render() {

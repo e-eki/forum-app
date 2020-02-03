@@ -7,6 +7,7 @@ import { getSearchResults } from '../../api/searchApi';
 import * as searchActions from '../../actions/searchActions';
 import SearchForm from '../views/forms/searchForm';
 import forumConst from '../../constants/forumConst';
+import * as baseUtils from '../../utils/baseUtils';
 
 class SearchFormContainer extends PureComponent {
 
@@ -57,7 +58,11 @@ class SearchFormContainer extends PureComponent {
                 }
                 
                 return true;
-            });
+            })
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
 
     resetSearchResults() {

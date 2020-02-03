@@ -35,7 +35,7 @@ class MenuContainer extends PureComponent {
             })
             .then(result => true)
             .catch(error => {
-                debugger;
+                baseUtils.showErrorMessage(error);
                 return false;
             })
     }
@@ -57,7 +57,11 @@ class MenuContainer extends PureComponent {
                 }
 
                 return true;
-            });
+            })
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
 
     showUserInfo() {
@@ -66,14 +70,9 @@ class MenuContainer extends PureComponent {
         return getUserInfoAndSetCurrentUserInfo(null, true)
             .then(result => true)
             .catch(error => {
-                const message = baseUtils.getErrorResponseMessage(error);  //?
-
-                const alertData = {
-                    message: message,
-                };
-
-				this.props.setAlertData(alertData);
-			})
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
 
     doLogout() {
@@ -94,7 +93,7 @@ class MenuContainer extends PureComponent {
                 return true;
 			})
 			.catch(error => {
-                const message = baseUtils.getErrorResponseMessage(error);  //?
+                const message = baseUtils.getErrorResponseMessage(error);
 
                 const alertData = {
                     message: message,

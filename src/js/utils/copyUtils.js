@@ -94,6 +94,8 @@ function _copyBase(sourse) {
 	const result = new Object();
 
 	result.id = sourse.id;
+	result.canEdit = sourse.canEdit;
+	result.canDelete = sourse.canDelete;
 
 	return result;
 }

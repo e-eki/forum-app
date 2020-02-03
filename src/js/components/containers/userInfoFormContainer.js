@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import UserInfoForm from '../views/forms/userInfoForm';
 import { setCurrentUserInfo, setModifiableUserInfo } from '../../actions/userInfoActions';
 import { modifyUserInfo } from '../../api/userInfoApi';
+import * as baseUtils from '../../utils/baseUtils';
 
 class UserInfoFormContainer extends PureComponent {
 

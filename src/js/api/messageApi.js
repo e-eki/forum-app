@@ -69,6 +69,7 @@ export function modifyMessage(item) {
 			tasks.push(item.recipientId);
 
 			const messageData = {
+				id: item.id,
 				date: item.date,
 				text: item.text,
 				senderId: item.senderId,
@@ -114,7 +115,7 @@ function _updateMessage(messageData, accessToken) {
 	const options = {
 		method: 'PUT',
 		headers: { 'Authorization': `Token ${accessToken}` },
-		url: `${apiConst.messageApi}/${item.id}`,
+		url: `${apiConst.messageApi}/${messageData.id}`,
 		data: messageData,
 	};
 	

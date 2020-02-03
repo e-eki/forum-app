@@ -10,6 +10,7 @@ import * as subSectionActions from '../../actions/subSectionActions';
 import { joinRoom, leaveRoom, deleteSubSectionById } from '../../actions/remoteActions';
 import apiConst from '../../constants/apiConst';
 import { setParentItemsList } from '../../actions/modifyingActions';
+import * as baseUtils from '../../utils/baseUtils';
 
 // const mapStateToProps = function(state) {
 //     debugger;
@@ -24,6 +25,8 @@ class MainContainer extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.canAdd = false;
     }
 
     componentDidMount() {
@@ -31,34 +34,43 @@ class MainContainer extends PureComponent {
         return sectionApi.getSections()
             .then(sections => {
                 if (sections) {
-                    this.props.setSections(sections);
+                    this.canAdd = sections.canAdd || false;
+
+                    this.props.setSections(sections.items || []);
                 }
                 debugger;
 
                 this.props.joinRoom(apiConst.defaultRoomId);
                 
                 return true;
-            });
+            })
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
 
     componentWillUnmount() {
         this.props.leaveRoom(apiConst.defaultRoomId);
 
         this.props.resetSections();
+        this.props.setParentItemsList(null);
     }
 
     componentDidUpdate() {
         debugger;
 
-        if (this.props.movingSection || this.props.movingSubSection) {   //?
-            this.props.setParentItemsList(this.props.sections);
+        if ((this.props.movingSection || this.props.movingSubSection) &&
+            !this.props.parentItemsList) {
+                this.props.setParentItemsList(this.props.sections || []);
         }
     }
     
     render() {
         //console.log('render MainContainer');
         return (
-            <Main  
+            <Main
+                canAdd = {this.canAdd}
                 sections = {this.props.sections}
                 currentInfoSection = {this.props.currentInfoSection}
                 setCurrentInfoSection = {this.props.setCurrentInfoSection}

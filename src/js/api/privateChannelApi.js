@@ -148,6 +148,7 @@ export function modifyPrivateChannel(item) {
 			tasks.push(item.recipientId);
 
 			const privateChannelData = {
+				id: item.id,
 				descriptionMessageId: item.descriptionMessageId,
 			};
 
@@ -193,7 +194,7 @@ function _updatePrivateChannel(privateChannelData, accessToken) {
 	const options = {
 		method: 'POST',
 		headers: { 'Authorization': `Token ${accessToken}` },
-		url: `${apiConst.privateChannelApi}/${item.id}`,
+		url: `${apiConst.privateChannelApi}/${privateChannelData.id}`,
 		data: privateChannelData,
 	};
 	

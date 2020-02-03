@@ -9,6 +9,7 @@ import * as subSectionActions from '../../actions/subSectionActions';
 import { joinRoom, leaveRoom, deleteSubSectionById } from '../../actions/remoteActions';
 import { setCurrentInfoSection, setCurrentSection } from '../../actions/sectionActions';
 import { setParentItemsList } from '../../actions/modifyingActions';
+import * as baseUtils from '../../utils/baseUtils';
 
 class SectionContainer extends PureComponent {
 
@@ -33,7 +34,11 @@ class SectionContainer extends PureComponent {
                     }
 
                     return true;
-                });
+                })
+                .catch(error => {
+                    baseUtils.showErrorMessage(error);
+                    return false;
+                })
         }
     }
 
@@ -42,17 +47,23 @@ class SectionContainer extends PureComponent {
             this.props.leaveRoom(this.sectionId);
         }
         this.props.resetCurrentSection();  //?
+        this.props.setParentItemsList(null);
     }
 
     componentDidUpdate() {
         debugger;
 
-        if (this.props.movingSubSection) {
-            return getSections()
-                .then(sections => {
-                    debugger;
-                    this.props.setParentItemsList(sections);
-                })
+        if (this.props.movingSubSection &&
+            !this.props.parentItemsList) {
+                return getSections()
+                    .then(sections => {
+                        debugger;
+                        this.props.setParentItemsList(sections.items || []);
+                    })
+                    .catch(error => {
+                        baseUtils.showErrorMessage(error);
+                        return false;
+                    })
         }
     }
     

@@ -67,13 +67,8 @@ class LoginFormContainer extends PureComponent {
                 this.props.setAlertData(alertData);
             })
             .catch(error => {
-                const message = baseUtils.getErrorResponseMessage(error);  //?
-
-                const alertData = {
-                    message: message,
-                };
-
-                this.props.setAlertData(alertData);
+                baseUtils.showErrorMessage(error);
+                return false;
             })
 	}
     

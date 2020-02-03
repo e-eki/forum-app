@@ -9,6 +9,7 @@ import { setCurrentInfoSubSection, setCurrentSubSection } from '../../actions/su
 import { setModifiableChannel, setCurrentInfoChannel, setMovingChannel } from '../../actions/channelActions';
 import { joinRoom, leaveRoom, deleteChannelById } from '../../actions/remoteActions';
 import { setParentItemsList } from '../../actions/modifyingActions';
+import * as baseUtils from '../../utils/baseUtils';
 
 class SubSectionContainer extends PureComponent {
 
@@ -32,7 +33,11 @@ class SubSectionContainer extends PureComponent {
                     }
 
                     return true;
-                });
+                })
+                .catch(error => {
+                    baseUtils.showErrorMessage(error);
+                    return false;
+                })
         }
     }
 
@@ -42,17 +47,23 @@ class SubSectionContainer extends PureComponent {
         }
         
         this.props.resetCurrentSubSection();  //?
+        this.props.setParentItemsList(null);
     }
 
     componentDidUpdate() {
         debugger;
 
-        if (this.props.movingChannel) {
-            return getSubSections()    //?
-                .then(subSections => {
-                    debugger;
-                    this.props.setParentItemsList(subSections);
-                })
+        if (this.props.movingChannel &&
+            !this.props.parentItemsList) {
+                return getSubSections()    //?
+                    .then(subSections => {
+                        debugger;
+                        this.props.setParentItemsList(subSections || []);
+                    })
+                    .catch(error => {
+                        baseUtils.showErrorMessage(error);
+                        return false;
+                    })
         }
     }
     

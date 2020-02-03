@@ -101,6 +101,7 @@ export function modifySection(item) {
 			tasks.push(item.id);
 
 			const sectionData = {
+				id: item.id,
 				name: item.name,
 				description: item.description,
 				orderNumber: item.orderNumber,
@@ -144,7 +145,7 @@ function _updateSection(sectionData, accessToken) {
 	const options = {
 		method: 'PUT',
 		headers: { 'Authorization': `Token ${accessToken}` },
-		url: `${apiConst.sectionApi}/${item.id}`,
+		url: `${apiConst.sectionApi}/${sectionData.id}`,
 		data: sectionData,
 	};
 	

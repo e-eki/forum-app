@@ -10,6 +10,7 @@ import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
 import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import forumConst from '../../constants/forumConst';
+import * as baseUtils from '../../utils/baseUtils';
 
 class PrivateSubSectionContainer extends PureComponent {
 
@@ -22,11 +23,14 @@ class PrivateSubSectionContainer extends PureComponent {
 
         return getPrivateChannels()
             .then(results => {
-                //this.props.joinRoom(this.userId);  //? один раз в самом начале?
                 this.props.setPrivateChannels(results);
 
                 return true;
-            });
+            })
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
 
     componentWillUnmount() {

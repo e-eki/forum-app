@@ -1,5 +1,8 @@
 'use strict';
 
+import store from '../store/store';
+import { setAlertData } from '../actions/alertDataActions';
+
 export function getErrorResponseMessage(error) {
 	debugger;
 	let message = '';
@@ -21,4 +24,16 @@ export function getErrorResponseMessage(error) {
 	}
 
 	return message;
+}
+
+export function showErrorMessage(error) {
+	debugger;
+
+	const message = getErrorResponseMessage(error);
+
+	const alertData = {
+		message: message,
+	};
+
+	store.dispatch(setAlertData(alertData));
 }

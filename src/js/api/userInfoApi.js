@@ -110,8 +110,5 @@ export function modifyUserInfo(item) {
 		.then(response => {
 			return true;
 		})
-		.catch(error => {
-			//todo!!!!
-		})
 	}
 
