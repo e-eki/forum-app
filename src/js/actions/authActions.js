@@ -9,6 +9,13 @@ export function setUserId(data) {
 	};
 }
 
+export function setUserRole(data) {
+	return {
+	  type: actionTypes.SET_USER_ROLE,
+	  data
+	};
+}
+
 export function setAccessToken(data) {
 	return {
 	  type: actionTypes.SET_ACCESS_TOKEN,

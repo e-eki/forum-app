@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import InfoForm from './infoForm';
 import ModifyForm from './modifyForm';
 import forumConst from '../../../constants/forumConst';
+import * as baseUtils from '../../../utils/baseUtils';
 
 export default class ListForm extends PureComponent {
 

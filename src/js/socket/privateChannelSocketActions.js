@@ -4,6 +4,8 @@ import * as copyUtils from '../utils/copyUtils';
 import { setCurrentPrivateChannel, setPrivateChannels } from '../actions/privateChannelActions';
 import { setAlertData } from '../actions/alertDataActions';
 import appConst from '../constants/appConst';
+import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
+import forumConst from '../constants/forumConst';
 
 // получение по сокетам действий, связанных с приватными чатами
 
@@ -25,7 +27,11 @@ export function updatePrivateChannel(store, action) {
 				privateChannels[index] = newPrivateChannel;
 			}
 			else {
-				privateChannels.push(action.data);
+				debugger;
+				action.data.type = forumConst.itemTypes.privateChannel;
+				const newPrivateChannel = getEditDeleteRightsForItem(action.data);
+
+				privateChannels.push(newPrivateChannel);
 			}
 
 			const newPrivateChannels = privateChannels.slice();

@@ -8,8 +8,8 @@ export function joinRoom(id, roomType = null, userId = null) {
 	return {
 	  type: actionTypes.JOIN_ROOM,
 	  roomId: id,
-	  roomType: roomType || null,
-	  userId: userId || null,
+	  roomType: roomType,
+	  userId: userId,
 	  meta: {remote: true},
 	};
 }
@@ -18,8 +18,8 @@ export function leaveRoom(id, roomType = null, userId = null) {
 	return {
 	  type: actionTypes.LEAVE_ROOM,
 	  roomId: id,
-	  roomType: roomType || null,
-	  userId: userId || null,
+	  roomType: roomType,
+	  userId: userId,
 	  meta: {remote: true},
 	};
 }

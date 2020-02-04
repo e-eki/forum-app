@@ -4,6 +4,8 @@ import * as copyUtils from '../utils/copyUtils';
 import { getSortedItemsByOrderNumber } from '../utils/sortingUtils';
 import { setSections, setCurrentSection } from '../actions/sectionActions';
 import { setAlertData } from '../actions/alertDataActions';
+import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
+import forumConst from '../constants/forumConst';
 
 // получение по сокетам действий, связанных с разделами
 
@@ -33,7 +35,11 @@ export function updateSection(store, action) {
 				sections[index] = newSection;
 			}
 			else {
-				sections.push(action.data);
+				debugger;
+				action.data.type = forumConst.itemTypes.section;
+				const newSection = getEditDeleteRightsForItem(action.data);
+
+				sections.push(newSection);
 			}
 
 			// если был изменен раздел, то порядок разделов мог измениться, сортируем их по номеру

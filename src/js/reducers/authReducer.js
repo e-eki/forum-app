@@ -18,6 +18,9 @@ export default function authReducer(state = Map(), action) {
     case actionTypes.SET_USER_ID:
       return state.set('userId', action.data);
 
+    case actionTypes.SET_USER_ROLE:
+      return state.set('userRole', action.data);
+
     default:
       return state;
     }

@@ -4,6 +4,8 @@ import * as copyUtils from '../utils/copyUtils';
 import { setCurrentSubSection } from '../actions/subSectionActions';
 import * as channelActions from '../actions/channelActions';
 import { setAlertData } from '../actions/alertDataActions';
+import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
+import forumConst from '../constants/forumConst';
 
 // получение по сокетам действий, связанных с чатами
 
@@ -68,7 +70,11 @@ export function updateChannel(store, action) {
 					currentSubSection.channels[index] = newChannel;
 				}
 				else {
-					currentSubSection.channels.push(action.data);
+					debugger;
+					action.data.type = forumConst.itemTypes.channel;
+					const newChannel = getEditDeleteRightsForItem(action.data);
+
+					currentSubSection.channels.push(newChannel);
 				}
 
 				const newCurrentSubSection = copyUtils.copySubSection(currentSubSection);

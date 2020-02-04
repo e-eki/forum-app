@@ -5,6 +5,8 @@ import { getSortedItemsByOrderNumber } from '../utils/sortingUtils';
 import { setSections, setCurrentSection } from '../actions/sectionActions';
 import { setCurrentSubSection } from '../actions/subSectionActions';
 import { setAlertData } from '../actions/alertDataActions';
+import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
+import forumConst from '../constants/forumConst';
 
 // получение по сокетам действий, связанных с подразделами
 
@@ -36,7 +38,11 @@ export function updateSubSection(store, action) {
 					currentSection.subSections[index] = newSubSection;
 				}
 				else {
-					currentSection.subSections.push(action.data);
+					debugger;
+					action.data.type = forumConst.itemTypes.subSection;
+					const newSubSection = getEditDeleteRightsForItem(action.data);
+
+					currentSection.subSections.push(newSubSection);
 				}
 
 				// если был изменен подраздел, то порядок подразделов мог измениться, сортируем их по номеру
@@ -65,7 +71,11 @@ export function updateSubSection(store, action) {
 					section.subSections[index] = newSubSection;	
 				}
 				else {
-					section.subSections.push(action.data);
+					debugger;
+					action.data.type = forumConst.itemTypes.subSection;
+					const newSubSection = getEditDeleteRightsForItem(action.data);
+
+					section.subSections.push(newSubSection);
 				}
 
 				// если был изменен подраздел, то порядок подразделов мог измениться, сортируем их по номеру

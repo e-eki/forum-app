@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import Promise from 'bluebird';
 import forumConst from '../../../constants/forumConst';
+import * as baseUtils from '../../../utils/baseUtils';
 
 // Форма для создания/редактирования раздела
 export default class ModifyForm extends Component {
@@ -39,14 +40,35 @@ export default class ModifyForm extends Component {
         const options = [];
         let i = 0;
 
-        forumConst.userRoles.forEach(item => {
-            options.push(<option
-                            key={i++}
-                            value={item}
-                        >
-                            {item}
-                        </option>);
-        })
+        options.push(<option
+                        key={i++}
+                        value={forumConst.userRoles.admin}
+                    >
+                        {forumConst.userRoles.admin}
+                    </option>);
+
+        options.push(<option
+                        key={i++}
+                        value={forumConst.userRoles.moderator}
+                    >
+                        {forumConst.userRoles.moderator}
+                    </option>);
+
+        options.push(<option
+                        key={i++}
+                        value={forumConst.userRoles.user}
+                    >
+                        {forumConst.userRoles.user}
+                    </option>);
+
+        // forumConst.userRoles.forEach(item => {
+        //     options.push(<option
+        //                     key={i++}
+        //                     value={item}
+        //                 >
+        //                     {item}
+        //                 </option>);
+        // })
         
         return options;
     }
@@ -270,6 +292,10 @@ export default class ModifyForm extends Component {
         return Promise.resolve(this.props.modifyItem(modifiableItem))
             .then(result => {
                 this.resetModifiableItem();
+            })
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
             })
     }
 

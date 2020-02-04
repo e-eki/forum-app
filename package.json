@@ -50,5 +50,9 @@
     "webpack-cli": "^3.0.8",
     "webpack-command": "^0.3.0",
     "webpack-dev-server": "^3.1.4"
-  }
+  },
+  "browserslist": [
+    "ie >= 8",
+    "last 4 version"
+  ]
 }

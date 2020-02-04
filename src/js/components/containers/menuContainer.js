@@ -23,6 +23,12 @@ class MenuContainer extends PureComponent {
         this.showUserInfo = this.showUserInfo.bind(this);
     }
 
+    componentDidMount() {
+        debugger;
+        return this.setNewPrivateMessagesCount()
+            .then(result => true);
+    }
+
     getUserAuthenticatedFlag() {
         debugger;
 
@@ -31,9 +37,12 @@ class MenuContainer extends PureComponent {
 				return getActualAccessToken();
 			})
 			.then(accessToken => {
-                return this.setNewPrivateMessagesCount();
+                //return this.setNewPrivateMessagesCount();
+                if (!accessToken) {
+                    this.props.setNewPrivateMessagesCount(null);   //?
+                }
+                return true;
             })
-            .then(result => true)
             .catch(error => {
                 baseUtils.showErrorMessage(error);
                 return false;

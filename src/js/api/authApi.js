@@ -247,6 +247,7 @@ function _setTokensData(tokensData) {
 	store.dispatch(authActions.setRefreshToken(tokensData.refreshToken));
 	store.dispatch(authActions.setAccessTokenExpiresIn(tokensData.accessTokenExpiresIn));
 	store.dispatch(authActions.setUserId(tokensData.userId));
+	store.dispatch(authActions.setUserRole(tokensData.userRole));
 
 	authUtils.saveTokensData(tokensData);
 }

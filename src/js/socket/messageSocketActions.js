@@ -7,6 +7,8 @@ import * as messageActions from '../actions/messageActions';
 import { setCurrentChannel } from '../actions/channelActions';
 import { setCurrentPrivateChannel } from '../actions/privateChannelActions';
 import { setCurrentSubSection } from '../actions/subSectionActions';
+import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
+import forumConst from '../constants/forumConst';
 
 // получение по сокетам действий, связанных с сообщениями
 
@@ -64,7 +66,11 @@ export function updateMessage(store, action) {
 					currentChannel.messages[index] = newMessage;
 				}
 				else {
-					currentChannel.messages.push(action.data);
+					debugger;
+					action.data.type = forumConst.itemTypes.message;
+					const newMessage = getEditDeleteRightsForItem(action.data);
+
+					currentChannel.messages.push(newMessage);
 				}
 
 				const newCurrentChannel = copyUtils.copyChannel(currentChannel);
@@ -87,7 +93,11 @@ export function updateMessage(store, action) {
 					currentPrivateChannel.messages[index] = newMessage;
 				}
 				else {
-					currentPrivateChannel.messages.push(action.data);
+					debugger;
+					action.data.type = forumConst.itemTypes.message;
+					const newMessage = getEditDeleteRightsForItem(action.data);
+
+					currentPrivateChannel.messages.push(newMessage);
 				}
 
 				const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(currentPrivateChannel);

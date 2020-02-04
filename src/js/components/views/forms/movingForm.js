@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import Promise from 'bluebird';
 import forumConst from '../../../constants/forumConst';
+import * as baseUtils from '../../../utils/baseUtils';
 
 // Форма для перемещения элемента внутри списка/в другой элемент верхнего уровня
 export default class MovingForm extends Component {
@@ -215,6 +216,10 @@ export default class MovingForm extends Component {
 
                 return true;
             })
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
 
     moveItemInList() {
@@ -258,7 +263,11 @@ export default class MovingForm extends Component {
             });
 
             return Promise.all(tasks)
-                .then(result => true);
+                .then(result => true)
+                .catch(error => {
+                    baseUtils.showErrorMessage(error);
+                    return false;
+                })
         }
         else {
             return false;
@@ -303,7 +312,11 @@ export default class MovingForm extends Component {
                 this.props.deletedItemAction(movingItem.id, prevParentId);
 
                 return true;
-            });
+            })
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
 
     render() {
