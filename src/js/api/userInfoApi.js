@@ -6,6 +6,7 @@ import store from '../store/store';
 import apiConst from '../constants/apiConst';
 import { setCurrentUserInfo } from '../actions/userInfoActions';
 import { getActualAccessToken } from '../api/authApi';
+import { showErrorMessage } from '../utils/baseUtils';
 
 export function getUserInfoById(id) {
 	debugger;
@@ -32,7 +33,11 @@ export function getUserInfoById(id) {
 		.then(response => {
 			debugger;
             return response.data;
-		});
+		})
+		.catch(error => {
+			showErrorMessage(error);
+			return false;
+		})
 }
 
 export function getUserInfoAndSetCurrentUserInfo(id, isOwnInfo) {
@@ -76,7 +81,11 @@ export function getUserInfoAndSetCurrentUserInfo(id, isOwnInfo) {
 			store.dispatch(setCurrentUserInfo(userInfo));
 
 			return response.data;
-		});
+		})
+		.catch(error => {
+			showErrorMessage(error);
+			return false;
+		})
 }
 
 export function modifyUserInfo(item) {
@@ -109,6 +118,10 @@ export function modifyUserInfo(item) {
 		})
 		.then(response => {
 			return true;
+		})
+		.catch(error => {
+			showErrorMessage(error);
+			return false;
 		})
 	}
 

@@ -16,10 +16,14 @@ export function updateSection(store, action) {
 	if (action.sectionId && action.data) {
 		const sections = store.getState().sectionState.get('sections');
 		const currentSection = store.getState().sectionState.get('currentSection');
+
+		debugger;
+		action.data.type = forumConst.itemTypes.section;
+		const updatedSection = getEditDeleteRightsForItem(action.data);
 		
 		if (currentSection &&
 			(currentSection.id === action.sectionId)) {
-				let data = action.data;
+				let data = updatedSection;
 				data.subSections = currentSection.subSections;
 
 				store.dispatch(setCurrentSection(data));
@@ -28,18 +32,14 @@ export function updateSection(store, action) {
 			const section = sections.find(item => item.id === action.sectionId);
 			
 			if (section) {
-				const newSection = copyUtils.copySection(action.data);   //! immutable section
+				const newSection = copyUtils.copySection(updatedSection);   //! immutable section
 				newSection.subSections = section.subSections;
 
 				const index = sections.indexOf(section);
 				sections[index] = newSection;
 			}
 			else {
-				debugger;
-				action.data.type = forumConst.itemTypes.section;
-				const newSection = getEditDeleteRightsForItem(action.data);
-
-				sections.push(newSection);
+				sections.push(updatedSection);
 			}
 
 			// если был изменен раздел, то порядок разделов мог измениться, сортируем их по номеру

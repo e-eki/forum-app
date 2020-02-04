@@ -30,15 +30,13 @@ export default class Menu extends Component {
     componentDidUpdate(prevProps) {
         debugger;
         // если изменились данные токенов, проверяем снова, залогинен ли пользователь
-        if ((this.props.accessToken !== prevProps.accessToken) ||
-            (this.props.refreshToken !== prevProps.refreshToken) ||
-            (this.props.accessTokenExpiresIn !== prevProps.accessTokenExpiresIn)) {
-                return this.updateUserAuthenticatedFlag();
-            }
+        if (this.props.accessToken !== prevProps.accessToken) {
+            return this.updateUserAuthenticatedFlag();
+        }
     }
 
     updateUserAuthenticatedFlag() {
-        return this.props.getUserAuthenticatedFlag()
+        return this.props.getUserAuthenticatedFlag()  //todo: вынести в MenuContainer, вызывать оттуда
             .then(isUserAuthenticated => {
                 debugger;
 

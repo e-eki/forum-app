@@ -16,21 +16,14 @@ class PrivateSubSectionContainer extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.getPrivateChannels = this.getPrivateChannels.bind(this);
     }
 
     componentDidMount() {
         debugger;
 
-        return getPrivateChannels()
-            .then(results => {
-                this.props.setPrivateChannels(results);
-
-                return true;
-            })
-            .catch(error => {
-                baseUtils.showErrorMessage(error);
-                return false;
-            })
+        return this.getPrivateChannels();
     }
 
     componentWillUnmount() {
@@ -41,6 +34,25 @@ class PrivateSubSectionContainer extends PureComponent {
         if (this.props.currentUserInfo) {
             this.props.resetCurrentUserInfo();
         }
+    }
+
+    componentDidUpdate(prevProps) {
+        // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
+        if (this.props.accessToken !== prevProps.accessToken) {
+            return this.getPrivateChannels();
+        }
+    }
+
+    getPrivateChannels() {
+        return getPrivateChannels()
+            .then(results => {
+                this.props.setPrivateChannels(results);
+                return true;
+            })
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
     
     render() {
@@ -80,7 +92,8 @@ class PrivateSubSectionContainer extends PureComponent {
 
 const mapStateToProps = function(store) {
     return {
-        privateChannels: store.privateChannelState.get('privateChannels'),   
+        privateChannels: store.privateChannelState.get('privateChannels'),
+        accessToken: store.authState.get('accessToken'), 
     };
 };
 

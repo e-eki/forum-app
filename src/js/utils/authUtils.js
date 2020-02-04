@@ -8,7 +8,9 @@ export function isEmailValid(email) {   //?
 export function isTokensDataValid(tokensData) {
 	if (tokensData.accessToken &&
 		tokensData.refreshToken &&
-		tokensData.accessTokenExpiresIn) {
+		tokensData.accessTokenExpiresIn &&
+		tokensData.userId &&
+		tokensData.userRole) {
 			return true;
 	}
 	else {
@@ -20,12 +22,18 @@ export function saveTokensData(tokensData) {
 	localStorage.setItem('refreshToken', tokensData.refreshToken);
 	localStorage.setItem('accessToken', tokensData.accessToken);
 	localStorage.setItem('accessTokenExpiresIn', tokensData.accessTokenExpiresIn);
+
+	localStorage.setItem('userId', tokensData.userId);
+	localStorage.setItem('userRole', tokensData.userRole);
 }
 
 export function removeTokensData() {
 	localStorage.removeItem("refreshToken");
 	localStorage.removeItem("accessToken");
 	localStorage.removeItem("accessTokenExpiresIn");
+
+	localStorage.removeItem("userId");
+	localStorage.removeItem("userRole");
 }
 
 export function getAccessToken() {
@@ -42,5 +50,13 @@ export function isAccessTokenExpired() {
 
 	return accessTokenExpiresIn <= nowTime;
 };
+
+export function getUserId() {
+	return localStorage.getItem('userId');
+}
+
+export function getUserRole() {
+	return localStorage.getItem('userRole');
+}
 
 

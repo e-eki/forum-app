@@ -49,9 +49,14 @@ class PrivateChannelContainer extends PureComponent {
         this.resetPrivateChannelContainer();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         debugger;
-        this.getPrivateChannel();
+        // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
+        // if (this.props.accessToken !== prevProps.accessToken) {
+        //     return this.getPrivateChannel();
+        // }
+
+        return this.getPrivateChannel();
     }
 
     updateNewPrivateMessagesCount() {
@@ -201,6 +206,7 @@ const mapStateToProps = function(store) {
         modifiableMessage: store.messageState.get('modifiableMessage'),
         newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),
         userId: store.authState.get('userId'),
+        accessToken: store.authState.get('accessToken'),
     };
 };
 

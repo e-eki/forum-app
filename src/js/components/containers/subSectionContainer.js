@@ -17,9 +17,45 @@ class SubSectionContainer extends PureComponent {
         super(props);
 
         this.subSectionId = null;
+
+        this.getSubSection = this.getSubSection.bind(this);
     }
 
     componentDidMount() {
+        return this.getSubSection();
+    }
+
+    componentWillUnmount() {
+        if (this.subSectionId) {
+            this.props.leaveRoom(this.subSectionId);
+        }
+        
+        this.props.resetCurrentSubSection();  //?
+        this.props.setParentItemsList(null);
+    }
+
+    componentDidUpdate(prevProps) {
+        debugger;
+        // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
+        if (this.props.accessToken !== prevProps.accessToken) {
+            return this.getSubSection();
+        }
+
+        if (this.props.movingChannel &&
+            !this.props.parentItemsList) {
+                return getSubSections()    //?
+                    .then(subSections => {
+                        debugger;
+                        this.props.setParentItemsList(subSections || []);
+                    })
+                    .catch(error => {
+                        baseUtils.showErrorMessage(error);
+                        return false;
+                    })
+        }
+    }
+
+    getSubSection() {
         if (this.props.match && this.props.match.params) {
             const id = this.props.match.params.id;
             return getSubSectionById(id)
@@ -38,32 +74,6 @@ class SubSectionContainer extends PureComponent {
                     baseUtils.showErrorMessage(error);
                     return false;
                 })
-        }
-    }
-
-    componentWillUnmount() {
-        if (this.subSectionId) {
-            this.props.leaveRoom(this.subSectionId);
-        }
-        
-        this.props.resetCurrentSubSection();  //?
-        this.props.setParentItemsList(null);
-    }
-
-    componentDidUpdate() {
-        debugger;
-
-        if (this.props.movingChannel &&
-            !this.props.parentItemsList) {
-                return getSubSections()    //?
-                    .then(subSections => {
-                        debugger;
-                        this.props.setParentItemsList(subSections || []);
-                    })
-                    .catch(error => {
-                        baseUtils.showErrorMessage(error);
-                        return false;
-                    })
         }
     }
     
@@ -100,6 +110,7 @@ const mapStateToProps = function(store) {
         modifiableChannel: store.channelState.get('modifiableChannel'),
         movingChannel: store.channelState.get('movingChannel'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
+        accessToken: store.authState.get('accessToken'),
     };
 };
 

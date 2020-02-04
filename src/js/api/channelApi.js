@@ -6,8 +6,9 @@ import store from '../store/store';
 import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 import { getActualAccessToken } from '../api/authApi';
+import { showErrorMessage } from '../utils/baseUtils';
 
-export function getChannels() {  //?
+export function getChannels() {
 	return Promise.resolve(true)
 		.then(() => {
 			return getActualAccessToken()
@@ -98,12 +99,11 @@ export function deleteChannel(item) {
 		})
 		.spread((channelId, subSectionId, response) => {
 			debugger;
-		    //store.dispatch(channelActions.setCurrentInfoChannel(null));
-
 			store.dispatch(remoteActions.deleteChannelById(channelId, subSectionId));
 
 			return true;
-		});
+		})
+		
 }
 
 export function modifyChannel(item) {

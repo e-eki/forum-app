@@ -17,9 +17,44 @@ class SectionContainer extends PureComponent {
         super(props);
 
         this.sectionId = null;
+
+        this.getSection = this.getSection.bind(this);
     }
 
     componentDidMount() {
+        return this.getSection();
+    }
+
+    componentWillUnmount() {
+        if (this.sectionId) {
+            this.props.leaveRoom(this.sectionId);
+        }
+        this.props.resetCurrentSection();  //?
+        this.props.setParentItemsList(null);
+    }
+
+    componentDidUpdate(prevProps) {
+        debugger;
+        // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
+        if (this.props.accessToken !== prevProps.accessToken) {
+            return this.getSection();
+        }
+
+        if (this.props.movingSubSection &&
+            !this.props.parentItemsList) {
+                return getSections()
+                    .then(sections => {
+                        debugger;
+                        this.props.setParentItemsList(sections.items || []);
+                    })
+                    .catch(error => {
+                        baseUtils.showErrorMessage(error);
+                        return false;
+                    })
+        }
+    }
+
+    getSection() {
         if (this.props.match && this.props.match.params) {
             const id = this.props.match.params.id;
             
@@ -40,30 +75,8 @@ class SectionContainer extends PureComponent {
                     return false;
                 })
         }
-    }
-
-    componentWillUnmount() {
-        if (this.sectionId) {
-            this.props.leaveRoom(this.sectionId);
-        }
-        this.props.resetCurrentSection();  //?
-        this.props.setParentItemsList(null);
-    }
-
-    componentDidUpdate() {
-        debugger;
-
-        if (this.props.movingSubSection &&
-            !this.props.parentItemsList) {
-                return getSections()
-                    .then(sections => {
-                        debugger;
-                        this.props.setParentItemsList(sections.items || []);
-                    })
-                    .catch(error => {
-                        baseUtils.showErrorMessage(error);
-                        return false;
-                    })
+        else {
+            return false;
         }
     }
     
@@ -100,6 +113,7 @@ const mapStateToProps = function(store) {
         modifiableSubSection: store.subSectionState.get('modifiableSubSection'),
         movingSubSection: store.subSectionState.get('movingSubSection'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
+        accessToken: store.authState.get('accessToken'),
     };
 };
 

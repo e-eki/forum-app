@@ -17,21 +17,21 @@ export function updatePrivateChannel(store, action) {
 		const privateChannels = store.getState().privateChannelState.get('privateChannels');
 		const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
 
+		debugger;
+		action.data.type = forumConst.itemTypes.privateChannel;
+		const updatedPrivateChannel = getEditDeleteRightsForItem(action.data);
+
 		if (privateChannels) {
 			const privateChannel = privateChannels.find(item => item.id === action.privateChannelId);
 
 			if (privateChannel) {
-				const newPrivateChannel= copyUtils.copyPrivateChannel(action.data);
+				const newPrivateChannel= copyUtils.copyPrivateChannel(updatedPrivateChannel);
 
 				const index = privateChannels.indexOf(privateChannel);
 				privateChannels[index] = newPrivateChannel;
 			}
 			else {
-				debugger;
-				action.data.type = forumConst.itemTypes.privateChannel;
-				const newPrivateChannel = getEditDeleteRightsForItem(action.data);
-
-				privateChannels.push(newPrivateChannel);
+				privateChannels.push(updatedPrivateChannel);
 			}
 
 			const newPrivateChannels = privateChannels.slice();
@@ -39,7 +39,7 @@ export function updatePrivateChannel(store, action) {
 		}
 		else if (currentPrivateChannel &&
 			(currentPrivateChannel.id === action.privateChannelId)) {
-				const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(action.data);
+				const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(updatedPrivateChannel);
 				newCurrentPrivateChannel.messages = currentPrivateChannel.messages;
 
 				store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));

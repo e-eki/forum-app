@@ -196,9 +196,9 @@ export function getActualAccessToken() {
 				return true;
 			}
 			else {
-				if (!refreshToken) {  //todo!!!
-					throw new Error('auth error: invalid tokens data');
-				}
+				// if (!refreshToken) {  //todo!!!
+				// 	throw new Error('auth error: invalid tokens data');
+				// }
 
 				//get fingerprint
 				return getFingerprint();
@@ -237,7 +237,7 @@ export function getActualAccessToken() {
 
 function _setTokensData(tokensData) {
 	debugger;
-	const userId = store.getState().authState.get('userId');
+	const userId = store.getState().authState.get('userId');  //или из localStorage?
 
 	if (!userId || (userId !== tokensData.userId)) {  //?
 		store.dispatch(joinRoom(tokensData.userId));
@@ -254,7 +254,7 @@ function _setTokensData(tokensData) {
 
 function _resetTokensData() {
 	debugger;
-	const userId = store.getState().authState.get('userId');
+	const userId = store.getState().authState.get('userId');   //или из localStorage?
 
 	if (userId && (userId === tokensData.userId)) {  //?
 		store.dispatch(leaveRoom(tokensData.userId));

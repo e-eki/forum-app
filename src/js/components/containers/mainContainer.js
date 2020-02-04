@@ -27,27 +27,12 @@ class MainContainer extends PureComponent {
         super(props);
 
         this.canAdd = false;
+
+        this.getSections = this.getSections.bind(this);
     }
 
     componentDidMount() {
-        debugger;
-        return sectionApi.getSections()
-            .then(sections => {
-                if (sections) {
-                    this.canAdd = sections.canAdd || false;
-
-                    this.props.setSections(sections.items || []);
-                }
-                debugger;
-
-                this.props.joinRoom(apiConst.defaultRoomId);
-                
-                return true;
-            })
-            .catch(error => {
-                baseUtils.showErrorMessage(error);
-                return false;
-            })
+        return this.getSections();
     }
 
     componentWillUnmount() {
@@ -57,13 +42,36 @@ class MainContainer extends PureComponent {
         this.props.setParentItemsList(null);
     }
 
-    componentDidUpdate() {
-        debugger;
-
+    componentDidUpdate(prevProps) {
         if ((this.props.movingSection || this.props.movingSubSection) &&
             !this.props.parentItemsList) {
                 this.props.setParentItemsList(this.props.sections || []);
         }
+
+        // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
+        if (this.props.accessToken !== prevProps.accessToken) {
+            debugger;
+            return this.getSections();
+        }
+    }
+
+    getSections() {
+        return sectionApi.getSections()
+            .then(sections => {
+                if (sections) {
+                    this.canAdd = sections.canAdd || false;
+
+                    this.props.setSections(sections.items || []);
+                }
+
+                this.props.joinRoom(apiConst.defaultRoomId);
+                
+                return true;
+            })
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
     
     render() {
@@ -108,6 +116,7 @@ const mapStateToProps = function(store) {
         modifiableSubSection: store.subSectionState.get('modifiableSubSection'),
         movingSubSection: store.subSectionState.get('movingSubSection'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
+        accessToken: store.authState.get('accessToken'),
     };
 };
 

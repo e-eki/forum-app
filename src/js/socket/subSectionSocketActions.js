@@ -19,9 +19,12 @@ export function updateSubSection(store, action) {
 		const currentSection = store.getState().sectionState.get('currentSection');
 		const currentSubSection = store.getState().subSectionState.get('currentSubSection');
 
+		action.data.type = forumConst.itemTypes.subSection;
+		const updatedSubSection = getEditDeleteRightsForItem(action.data);
+
 		if (currentSubSection &&
 			(currentSubSection.id === action.subSectionId)) {
-				const newSubSection = copyUtils.copySubSection(action.data);
+				const newSubSection = copyUtils.copySubSection(updatedSubSection);
 				newSubSection.channels = currentSubSection.channels;
 
 				store.dispatch(setCurrentSubSection(newSubSection));
@@ -31,18 +34,14 @@ export function updateSubSection(store, action) {
 				const subSection = currentSection.subSections.find(item => item.id === action.subSectionId);
 			
 				if (subSection) {
-					const newSubSection = copyUtils.copySubSection(action.data);
+					const newSubSection = copyUtils.copySubSection(updatedSubSection);
 					newSubSection.channels = subSection.channels;
 
 					const index = currentSection.subSections.indexOf(subSection);
 					currentSection.subSections[index] = newSubSection;
 				}
 				else {
-					debugger;
-					action.data.type = forumConst.itemTypes.subSection;
-					const newSubSection = getEditDeleteRightsForItem(action.data);
-
-					currentSection.subSections.push(newSubSection);
+					currentSection.subSections.push(updatedSubSection);
 				}
 
 				// если был изменен подраздел, то порядок подразделов мог измениться, сортируем их по номеру
@@ -64,20 +63,17 @@ export function updateSubSection(store, action) {
 				const subSection = section.subSections.find(item => item.id === action.subSectionId);
 
 				if (subSection) {
-					const newSubSection = copyUtils.copySubSection(action.data);
+					const newSubSection = copyUtils.copySubSection(updatedSubSection);
 					newSubSection.channels = subSection.channels;
 
 					const index = section.subSections.indexOf(subSection);
 					section.subSections[index] = newSubSection;	
 				}
 				else {
-					debugger;
-					action.data.type = forumConst.itemTypes.subSection;
-					const newSubSection = getEditDeleteRightsForItem(action.data);
-
-					section.subSections.push(newSubSection);
+					section.subSections.push(updatedSubSection);
 				}
 
+				debugger;
 				// если был изменен подраздел, то порядок подразделов мог измениться, сортируем их по номеру
 				const newSubSections = subSection
 										?

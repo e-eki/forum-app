@@ -5,6 +5,7 @@ import Promise from 'bluebird';
 import ModifyForm from './modifyForm';
 import MovingForm from './movingForm';
 import forumConst from '../../../constants/forumConst';
+import * as baseUtils from '../../../utils/baseUtils';
 
 export default class InfoForm extends PureComponent {
 
@@ -55,7 +56,10 @@ export default class InfoForm extends PureComponent {
             .then(result => {
                 this.resetInfoItem();  //?
             })
-            //todo: catch повсюду!
+            .catch(error => {
+                baseUtils.showErrorMessage(error);
+                return false;
+            })
     }
 
     editItem() {

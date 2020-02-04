@@ -25,6 +25,10 @@ export function updateMessage(store, action) {
 		const modifiableMessage = store.getState().messageState.get('modifiableMessage');
 		const userId = store.getState().authState.get('userId');
 
+		debugger;
+		action.data.type = forumConst.itemTypes.message;
+		const updatedMessage = getEditDeleteRightsForItem(action.data);
+
 		// если это личное сообщение и мы не в чате, куда оно пришло, - то инкрементим общее кол-во личных сообщений
 		if (action.recipientId &&
 			!(currentPrivateChannel &&
@@ -32,10 +36,10 @@ export function updateMessage(store, action) {
 				store.dispatch(incrementNewPrivateMessagesCount());
 		}
 
-		if (action.data.senderId !== userId) { //?
+		if (updatedMessage.senderId !== userId) { //?
 			if (currentInfoMessage &&
 				currentInfoMessage.id === action.messageId) {
-					const newMessage = copyUtils.copyMessage(action.data);
+					const newMessage = copyUtils.copyMessage(updatedMessage);
 					store.dispatch(messageActions.setCurrentInfoMessage(newMessage));
 
 					store.dispatch(setAlertData({  //?
@@ -60,23 +64,19 @@ export function updateMessage(store, action) {
 				const message = currentChannel.messages.find(item => item.id === action.messageId);
 			
 				if (message) {
-					const newMessage = copyUtils.copyMessage(action.data);
+					const newMessage = copyUtils.copyMessage(updatedMessage);
 
 					const index = currentChannel.messages.indexOf(message);
 					currentChannel.messages[index] = newMessage;
 				}
 				else {
-					debugger;
-					action.data.type = forumConst.itemTypes.message;
-					const newMessage = getEditDeleteRightsForItem(action.data);
-
-					currentChannel.messages.push(newMessage);
+					currentChannel.messages.push(updatedMessage);
 				}
 
 				const newCurrentChannel = copyUtils.copyChannel(currentChannel);
 
 				if (action.messageId === currentChannel.descriptionMessageId) {   //?
-					newCurrentChannel.descriptionMessage = action.data;
+					newCurrentChannel.descriptionMessage = updatedMessage;
 				}
 
 				store.dispatch(setCurrentChannel(newCurrentChannel));
@@ -87,23 +87,19 @@ export function updateMessage(store, action) {
 				const message = currentPrivateChannel.messages.find(item => item.id === action.messageId);
 			
 				if (message) {
-					const newMessage = copyUtils.copyMessage(action.data);
+					const newMessage = copyUtils.copyMessage(updatedMessage);
 
 					const index = currentPrivateChannel.messages.indexOf(message);
 					currentPrivateChannel.messages[index] = newMessage;
 				}
 				else {
-					debugger;
-					action.data.type = forumConst.itemTypes.message;
-					const newMessage = getEditDeleteRightsForItem(action.data);
-
-					currentPrivateChannel.messages.push(newMessage);
+					currentPrivateChannel.messages.push(updatedMessage);
 				}
 
 				const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(currentPrivateChannel);
 				
 				if (action.messageId === currentPrivateChannel.descriptionMessageId) {  //?
-					newCurrentPrivateChannel.descriptionMessage = action.data;
+					newCurrentPrivateChannel.descriptionMessage = updatedMessage;
 				}
 
 				store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));
@@ -116,7 +112,7 @@ export function updateMessage(store, action) {
 			if (privateChannel) {
 				const newPrivateChannel = copyUtils.copyPrivateChannel(privateChannel);
 
-				newPrivateChannel.lastMessage = action.data;
+				newPrivateChannel.lastMessage = updatedMessage;
 				newPrivateChannel.newMessagesCount = privateChannel.newMessagesCount ? privateChannel.newMessagesCount++ : 1;
 
 				const index = privateChannels.indexOf(privateChannel);
@@ -132,7 +128,7 @@ export function updateMessage(store, action) {
 
 			if (channel) {
 				const newChannel = copyUtils.copyChannel(channel);
-				newChannel.lastMessage = action.data;
+				newChannel.lastMessage = updatedMessage;
 				newChannel.newMessagesCount = channel.newMessagesCount ? channel.newMessagesCount++ : 1;
 
 				const index = currentSubSection.channels.indexOf(channel);

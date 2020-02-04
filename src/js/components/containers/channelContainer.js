@@ -23,6 +23,7 @@ class ChannelContainer extends PureComponent {
         this.channelId = null;
         this.roomType = forumConst.itemTypes.channel;
 
+        this.getChannel = this.getChannel.bind(this);
         this.setDescriptionMessage = this.setDescriptionMessage.bind(this);
         this.resetDescriptionMessage = this.resetDescriptionMessage.bind(this);
     }
@@ -30,26 +31,7 @@ class ChannelContainer extends PureComponent {
     componentDidMount() {
         debugger;
 
-        if (this.props.match && this.props.match.params && this.props.match.params.id) {
-            const channelId = this.props.match.params.id;
-
-            return getChannelById(channelId)
-                .then(channel => {
-                    if (channel && channel.id) {
-                        this.props.joinRoom(channel.id, this.roomType, this.props.userId);
-                        this.channelId = channel.id;
-
-                        this.props.setCurrentChannel(channel);
-                    }
-
-                    return true;
-                })
-                .catch(error => {
-                    baseUtils.showErrorMessage(error);
-    
-                    return false;
-                })
-        }
+        return this.getChannel();
     }
 
     componentWillUnmount() {
@@ -66,20 +48,46 @@ class ChannelContainer extends PureComponent {
     }
 
     componentDidUpdate() {
-        debugger;
+        // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
+        if (this.props.accessToken !== prevProps.accessToken) {
+            return this.getChannel();
+        }
 
         if (this.props.movingMessage &&
             !this.props.parentItemsList) {
-                return getChannels()    //?
+                return getChannels()
                     .then(channels => {
-                        debugger;
                         this.props.setParentItemsList(channels || []);
                     })
                     .catch(error => {
                         baseUtils.showErrorMessage(error);
-        
                         return false;
                     })
+        }
+    }
+
+    getChannel() {
+        if (this.props.match && this.props.match.params && this.props.match.params.id) {
+            const channelId = this.props.match.params.id;
+
+            return getChannelById(channelId)
+                .then(channel => {
+                    if (channel && channel.id) {
+                        this.props.joinRoom(channel.id, this.roomType, this.props.userId);
+                        this.channelId = channel.id;
+
+                        this.props.setCurrentChannel(channel);
+                    }
+
+                    return true;
+                })
+                .catch(error => {
+                    baseUtils.showErrorMessage(error);
+                    return false;
+                })
+        }
+        else {
+            return false;
         }
     }
 
@@ -146,6 +154,7 @@ const mapStateToProps = function(store) {
         movingMessage: store.messageState.get('movingMessage'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
         userId: store.authState.get('userId'),
+        accessToken: store.authState.get('accessToken'),
     };
 };
 

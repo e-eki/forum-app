@@ -20,13 +20,17 @@ export function updateChannel(store, action) {
 		const modifiableChannel = store.getState().channelState.get('modifiableChannel');
 		const userId = store.getState().authState.get('userId');
 
-		if (action.data.senderId !== userId) { //?
+		debugger;
+		action.data.type = forumConst.itemTypes.channel;
+		const updatedChannel = getEditDeleteRightsForItem(action.data);
+
+		if (updatedChannel.senderId !== userId) { //?
 			if (currentInfoChannel &&
 				currentInfoChannel.id === action.channelId) {
 					// если изменилось имя или описание чата
-					if (action.data.name !== currentInfoChannel.name ||
-						action.data.description !== currentInfoChannel.description) {
-							const newChannel = copyUtils.copyChannel(action.data);
+					if (updatedChannel.name !== currentInfoChannel.name ||
+						updatedChannel.description !== currentInfoChannel.description) {
+							const newChannel = copyUtils.copyChannel(updatedChannel);
 							store.dispatch(channelActions.setCurrentInfoChannel(newChannel));
 
 							store.dispatch(setAlertData({
@@ -39,8 +43,8 @@ export function updateChannel(store, action) {
 			if (modifiableChannel &&
 				modifiableChannel.id === action.channelId) {
 					// если изменилось имя или описание чата
-					if (action.data.name !== currentInfoChannel.name ||
-						action.data.description !== currentInfoChannel.description) {
+					if (updatedChannel.name !== currentInfoChannel.name ||
+						updatedChannel.description !== currentInfoChannel.description) {
 							store.dispatch(channelActions.setModifiableChannel(null));
 
 							store.dispatch(setAlertData({
@@ -53,7 +57,7 @@ export function updateChannel(store, action) {
 
 		if (currentChannel &&
 			(currentChannel.id === action.channelId)) {
-				const newCurrentChannel = copyUtils.copyChannel(action.data);
+				const newCurrentChannel = copyUtils.copyChannel(updatedChannel);
 				newCurrentChannel.messages = currentChannel.messages;
 
 				store.dispatch(channelActions.setCurrentChannel(newCurrentChannel));
@@ -63,18 +67,14 @@ export function updateChannel(store, action) {
 				const channel = currentSubSection.channels.find(item => item.id === action.channelId);
 			
 				if (channel) {
-					const newChannel = copyUtils.copyChannel(action.data);
+					const newChannel = copyUtils.copyChannel(updatedChannel);
 					newChannel.messages = channel.messages;
 
 					const index = currentSubSection.channels.indexOf(channel);
 					currentSubSection.channels[index] = newChannel;
 				}
 				else {
-					debugger;
-					action.data.type = forumConst.itemTypes.channel;
-					const newChannel = getEditDeleteRightsForItem(action.data);
-
-					currentSubSection.channels.push(newChannel);
+					currentSubSection.channels.push(updatedChannel);
 				}
 
 				const newCurrentSubSection = copyUtils.copySubSection(currentSubSection);

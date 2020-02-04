@@ -44,7 +44,7 @@ class MenuContainer extends PureComponent {
                 return true;
             })
             .catch(error => {
-                baseUtils.showErrorMessage(error);
+                //baseUtils.showErrorMessage(error); //?
                 return false;
             })
     }
@@ -68,7 +68,7 @@ class MenuContainer extends PureComponent {
                 return true;
             })
             .catch(error => {
-                baseUtils.showErrorMessage(error);
+                //baseUtils.showErrorMessage(error);  //?
                 return false;
             })
     }
@@ -123,8 +123,6 @@ class MenuContainer extends PureComponent {
                 showUserInfo = {this.showUserInfo}
 
                 accessToken = {this.props.accessToken}  // чтобы компонент перерисовывался при изменении токенов
-                refreshToken = {this.props.refreshToken}
-                accessTokenExpiresIn = {this.props.accessTokenExpiresIn}
             />
         );
     }
@@ -133,8 +131,6 @@ class MenuContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         accessToken: store.authState.get('accessToken'),   // чтобы компонент перерисовывался при изменении токенов
-        refreshToken: store.authState.get('refreshToken'),
-        accessTokenExpiresIn: store.authState.get('accessTokenExpiresIn'),
 
         newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),  
         //todo: check - reset нов.сообщений при переходе в личные сообщения
