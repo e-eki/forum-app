@@ -47,7 +47,7 @@ class ChannelContainer extends PureComponent {
         this.props.setParentItemsList(null);
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
         if (this.props.accessToken !== prevProps.accessToken) {
             return this.getChannel();
