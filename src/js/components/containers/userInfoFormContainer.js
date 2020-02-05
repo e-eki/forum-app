@@ -13,6 +13,8 @@ class UserInfoFormContainer extends PureComponent {
         super(props);
     }
     
+    //todo: сделать обновление по изменению аксесс токена или роли юзера
+    
     render() {
         debugger;
         

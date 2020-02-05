@@ -239,7 +239,7 @@ function _setTokensData(tokensData) {
 	debugger;
 	const userId = store.getState().authState.get('userId');  //или из localStorage?
 
-	if (!userId || (userId !== tokensData.userId)) {  //?
+	if (!userId || (userId !== tokensData.userId)) {  //? todo!
 		store.dispatch(joinRoom(tokensData.userId));
 	}
 

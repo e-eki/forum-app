@@ -38,8 +38,9 @@ class PrivateSubSectionContainer extends PureComponent {
 
     componentDidUpdate(prevProps) {
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
-        if (this.props.accessToken !== prevProps.accessToken) {
-            return this.getPrivateChannels();
+        if (this.props.accessToken !== prevProps.accessToken  ||
+            this.props.userRole !== prevProps.userRole) {
+                return this.getPrivateChannels();
         }
     }
 
@@ -93,7 +94,9 @@ class PrivateSubSectionContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         privateChannels: store.privateChannelState.get('privateChannels'),
-        accessToken: store.authState.get('accessToken'), 
+
+        accessToken: store.authState.get('accessToken'),
+        userRole: store.authState.get('userRole'),
     };
 };
 

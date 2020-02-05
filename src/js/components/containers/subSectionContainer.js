@@ -37,8 +37,9 @@ class SubSectionContainer extends PureComponent {
     componentDidUpdate(prevProps) {
         debugger;
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
-        if (this.props.accessToken !== prevProps.accessToken) {
-            return this.getSubSection();
+        if (this.props.accessToken !== prevProps.accessToken  ||
+            this.props.userRole !== prevProps.userRole) {
+                return this.getSubSection();
         }
 
         if (this.props.movingChannel &&
@@ -110,7 +111,9 @@ const mapStateToProps = function(store) {
         modifiableChannel: store.channelState.get('modifiableChannel'),
         movingChannel: store.channelState.get('movingChannel'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
+
         accessToken: store.authState.get('accessToken'),
+        userRole: store.authState.get('userRole'),
     };
 };
 

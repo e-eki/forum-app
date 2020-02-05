@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Promise from 'bluebird';
 import forumConst from '../../../constants/forumConst';
 import * as baseUtils from '../../../utils/baseUtils';
+import { getDateStringForInput } from '../../../utils/dateUtils';
 
 // Форма для создания/редактирования раздела
 export default class ModifyForm extends Component {
@@ -15,13 +16,13 @@ export default class ModifyForm extends Component {
             name: this.props.modifiableItem.name || '',
             description: this.props.modifiableItem.description || '',
             text: this.props.modifiableItem.text || '',  //?
-            birthDate: this.props.modifiableItem.birthDate || null,
-            city: this.props.modifiableItem.city || null,
-            profession: this.props.modifiableItem.profession || null,
-            hobby: this.props.modifiableItem.hobby || null,
-            captionText: this.props.modifiableItem.captionText || null,
+            birthDate: this.props.modifiableItem.birthDate ? getDateStringForInput(this.props.modifiableItem.birthDate) : null,
+            city: this.props.modifiableItem.city || '',
+            profession: this.props.modifiableItem.profession || '',
+            hobby: this.props.modifiableItem.hobby || '',
+            captionText: this.props.modifiableItem.captionText || '',
             role: this.props.modifiableItem.role || null,
-            inBlackList: this.props.modifiableItem.inBlackList || null,
+            inBlackList: this.props.modifiableItem.inBlackList || false,
         }
 
         this.changeData = this.changeData.bind(this);

@@ -49,9 +49,10 @@ class MainContainer extends PureComponent {
         }
 
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
-        if (this.props.accessToken !== prevProps.accessToken) {
-            debugger;
-            return this.getSections();
+        if (this.props.accessToken !== prevProps.accessToken ||
+            this.props.userRole !== prevProps.userRole) {
+                debugger;
+                return this.getSections();
         }
     }
 
@@ -116,7 +117,9 @@ const mapStateToProps = function(store) {
         modifiableSubSection: store.subSectionState.get('modifiableSubSection'),
         movingSubSection: store.subSectionState.get('movingSubSection'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
+
         accessToken: store.authState.get('accessToken'),
+        userRole: store.authState.get('userRole'),
     };
 };
 

@@ -49,8 +49,9 @@ class ChannelContainer extends PureComponent {
 
     componentDidUpdate(prevProps) {
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
-        if (this.props.accessToken !== prevProps.accessToken) {
-            return this.getChannel();
+        if (this.props.accessToken !== prevProps.accessToken  ||
+            this.props.userRole !== prevProps.userRole) {
+                return this.getChannel();
         }
 
         if (this.props.movingMessage &&
@@ -154,7 +155,9 @@ const mapStateToProps = function(store) {
         movingMessage: store.messageState.get('movingMessage'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
         userId: store.authState.get('userId'),
+
         accessToken: store.authState.get('accessToken'),
+        userRole: store.authState.get('userRole'),
     };
 };
 

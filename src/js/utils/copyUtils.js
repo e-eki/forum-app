@@ -64,8 +64,8 @@ export function copyUserInfo(sourse) {
 	result.profession = sourse.profession || '';
 	result.hobby = sourse.hobby || '';
 	result.captionText = sourse.captionText || '';
-	result.role = sourse.role || '';
-	result.inBlackList = sourse.inBlackList || '';
+	result.role = sourse.role || null;
+	result.inBlackList = sourse.inBlackList || false;
 
 	return result;
 };

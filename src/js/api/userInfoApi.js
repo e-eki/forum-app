@@ -7,6 +7,7 @@ import apiConst from '../constants/apiConst';
 import { setCurrentUserInfo } from '../actions/userInfoActions';
 import { getActualAccessToken } from '../api/authApi';
 import { showErrorMessage } from '../utils/baseUtils';
+import { updateUser } from '../actions/remoteActions';
 
 export function getUserInfoById(id) {
 	debugger;
@@ -117,6 +118,11 @@ export function modifyUserInfo(item) {
 			return axios(options);
 		})
 		.then(response => {
+			debugger;
+			if (item.role) {
+				store.dispatch(updateUser(item.userId));   //?
+			}
+
 			return true;
 		})
 		.catch(error => {

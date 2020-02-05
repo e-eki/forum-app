@@ -36,8 +36,9 @@ class SectionContainer extends PureComponent {
     componentDidUpdate(prevProps) {
         debugger;
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
-        if (this.props.accessToken !== prevProps.accessToken) {
-            return this.getSection();
+        if (this.props.accessToken !== prevProps.accessToken  ||
+            this.props.userRole !== prevProps.userRole) {
+                return this.getSection();
         }
 
         if (this.props.movingSubSection &&
@@ -113,7 +114,9 @@ const mapStateToProps = function(store) {
         modifiableSubSection: store.subSectionState.get('modifiableSubSection'),
         movingSubSection: store.subSectionState.get('movingSubSection'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
+
         accessToken: store.authState.get('accessToken'),
+        userRole: store.authState.get('userRole'),
     };
 };
 

@@ -123,6 +123,7 @@ class MenuContainer extends PureComponent {
                 showUserInfo = {this.showUserInfo}
 
                 accessToken = {this.props.accessToken}  // чтобы компонент перерисовывался при изменении токенов
+                // userRole = {this.props.userRole}
             />
         );
     }
@@ -131,6 +132,7 @@ class MenuContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         accessToken: store.authState.get('accessToken'),   // чтобы компонент перерисовывался при изменении токенов
+        // userRole: store.authState.get('userRole'),
 
         newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),  
         //todo: check - reset нов.сообщений при переходе в личные сообщения
