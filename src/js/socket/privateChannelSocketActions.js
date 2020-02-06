@@ -21,6 +21,10 @@ export function updatePrivateChannel(store, action) {
 		action.data.type = forumConst.itemTypes.privateChannel;
 		const updatedPrivateChannel = getEditDeleteRightsForItem(action.data);
 
+		if (!updatedPrivateChannel.messages) {  //?
+			updatedPrivateChannel.messages = [];
+		}
+
 		if (privateChannels) {
 			const privateChannel = privateChannels.find(item => item.id === action.privateChannelId);
 

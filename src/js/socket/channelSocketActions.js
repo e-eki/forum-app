@@ -25,6 +25,10 @@ export function updateChannel(store, action) {
 		action.data.type = forumConst.itemTypes.channel;
 		const updatedChannel = getEditDeleteRightsForItem(action.data);
 
+		if (!updatedChannel.messages) {  //?
+			updatedChannel.messages = [];
+		}
+
 		if (updatedChannel.senderId !== userId) { //?
 			if (currentInfoChannel &&
 				currentInfoChannel.id === action.channelId) {

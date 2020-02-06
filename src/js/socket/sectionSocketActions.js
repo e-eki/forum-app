@@ -20,6 +20,10 @@ export function updateSection(store, action) {
 		debugger;
 		action.data.type = forumConst.itemTypes.section;
 		const updatedSection = getEditDeleteRightsForItem(action.data);
+
+		if (!updatedSection.subSections) {  //?
+			updatedSection.subSections = [];
+		}
 		
 		if (currentSection &&
 			(currentSection.id === action.sectionId)) {

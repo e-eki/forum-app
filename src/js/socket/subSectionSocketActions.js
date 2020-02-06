@@ -22,6 +22,10 @@ export function updateSubSection(store, action) {
 		action.data.type = forumConst.itemTypes.subSection;
 		const updatedSubSection = getEditDeleteRightsForItem(action.data);
 
+		if (!updatedSubSection.channels) {  //?
+			updatedSubSection.channels = [];
+		}
+
 		if (currentSubSection &&
 			(currentSubSection.id === action.subSectionId)) {
 				const newSubSection = copyUtils.copySubSection(updatedSubSection);
