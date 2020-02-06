@@ -127,10 +127,11 @@ export function deletePrivateChannelById(privateChannelId, senderId, recipientId
 
 //---USER
 
-export function updateUser(userId) {  //?
+export function updateUser(userId, senderId) {  //?
 	return {
 	  type: actionTypes.UPDATE_USER,
 	  userId: userId,
+	  senderId: senderId,
 	  meta: {remote: true},
 	};
 }

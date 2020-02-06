@@ -9,6 +9,7 @@ import { setCurrentPrivateChannel } from '../actions/privateChannelActions';
 import { setCurrentSubSection } from '../actions/subSectionActions';
 import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
 import forumConst from '../constants/forumConst';
+import { getUserId } from '../utils/authUtils';
 
 // получение по сокетам действий, связанных с сообщениями
 
@@ -23,7 +24,8 @@ export function updateMessage(store, action) {
 		const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
 		const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');
 		const modifiableMessage = store.getState().messageState.get('modifiableMessage');
-		const userId = store.getState().authState.get('userId');
+		//const userId = store.getState().authState.get('userId');
+		const userId = getUserId();
 
 		debugger;
 		action.data.type = forumConst.itemTypes.message;

@@ -6,6 +6,7 @@ import * as channelActions from '../actions/channelActions';
 import { setAlertData } from '../actions/alertDataActions';
 import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
 import forumConst from '../constants/forumConst';
+import { getUserId } from '../utils/authUtils';
 
 // получение по сокетам действий, связанных с чатами
 
@@ -18,9 +19,9 @@ export function updateChannel(store, action) {
 		const currentChannel = store.getState().channelState.get('currentChannel');
 		const currentInfoChannel = store.getState().channelState.get('currentInfoChannel');
 		const modifiableChannel = store.getState().channelState.get('modifiableChannel');
-		const userId = store.getState().authState.get('userId');
+		//const userId = store.getState().authState.get('userId');
+		const userId = getUserId();  //?
 
-		debugger;
 		action.data.type = forumConst.itemTypes.channel;
 		const updatedChannel = getEditDeleteRightsForItem(action.data);
 

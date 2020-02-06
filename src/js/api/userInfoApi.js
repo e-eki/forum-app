@@ -8,6 +8,7 @@ import { setCurrentUserInfo } from '../actions/userInfoActions';
 import { getActualAccessToken } from '../api/authApi';
 import { showErrorMessage } from '../utils/baseUtils';
 import { updateUser } from '../actions/remoteActions';
+import { getUserId } from '../utils/authUtils';
 
 export function getUserInfoById(id) {
 	debugger;
@@ -119,8 +120,10 @@ export function modifyUserInfo(item) {
 		})
 		.then(response => {
 			debugger;
-			if (item.role) {
-				store.dispatch(updateUser(item.userId));   //?
+			const senderId = getUserId();
+
+			if (item.role || item.inBlackList) {  //todo: сделать и для исключения из ЧС
+				store.dispatch(updateUser(item.userId, senderId));   //?
 			}
 
 			return true;

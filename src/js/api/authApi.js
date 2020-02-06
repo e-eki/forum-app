@@ -58,6 +58,7 @@ export function socialLogin(serviceName) {
 			debugger;
 
 			if (authUtils.isTokensDataValid(tokensData)) {
+				_joinUserRoom(tokensData.userId);
 				_setTokensData(response.data);
 				return true;
 			}
@@ -84,6 +85,7 @@ export function login(email, password) {
 			const tokensData = response.data;
 
 			if (authUtils.isTokensDataValid(tokensData)) {
+				_joinUserRoom(tokensData.userId);
 				_setTokensData(response.data);
 				return true;
 			}
@@ -178,6 +180,7 @@ export function resetPassword(accessToken, password) {
 			return axios(options);
 		})
 		.then(response => {
+			_leaveUserRoom();
 			_resetTokensData();
 
 			return true;
@@ -218,6 +221,9 @@ export function getActualAccessToken() {
 			}
 		})
 		.then(response => {
+			const userId = response.data ? response.data.userId : null;
+			_joinUserRoom(userId);  //?
+
 			if (response === true) {
 				return accessToken;
 			}
@@ -234,14 +240,39 @@ export function getActualAccessToken() {
 		})
 };
 
+export function setUserRole(role) {
+	debugger;
+	store.dispatch(authActions.setUserRole(role));
+	authUtils.saveUserRole(role);
+}
+
+
+function _joinUserRoom(userId) {
+	debugger;
+
+	const userIdFromStore = store.getState().authState.get('userId');
+	const userIdFromLocalStorage = authUtils.getUserId();
+
+	const actualUserId = userId || userIdFromLocalStorage;
+
+	if (actualUserId &&
+		(!userIdFromStore || userIdFromStore !== actualUserId)) {
+			store.dispatch(joinRoom(actualUserId));
+			store.dispatch(authActions.setUserId(actualUserId));
+	}
+}
+
+function _leaveUserRoom() {
+	debugger;
+	const userId = authUtils.getUserId();
+
+	if (userId) {
+		store.dispatch(leaveRoom(userId));
+	}
+}
 
 function _setTokensData(tokensData) {
 	debugger;
-	const userId = store.getState().authState.get('userId');  //или из localStorage?
-
-	if (!userId || (userId !== tokensData.userId)) {  //? todo!
-		store.dispatch(joinRoom(tokensData.userId));
-	}
 
 	store.dispatch(authActions.setAccessToken(tokensData.accessToken));
 	store.dispatch(authActions.setRefreshToken(tokensData.refreshToken));
@@ -254,11 +285,6 @@ function _setTokensData(tokensData) {
 
 function _resetTokensData() {
 	debugger;
-	const userId = store.getState().authState.get('userId');   //или из localStorage?
-
-	if (userId && (userId === tokensData.userId)) {  //?
-		store.dispatch(leaveRoom(tokensData.userId));
-	}
 
 	store.dispatch(authActions.setAccessToken(null));
 	store.dispatch(authActions.setRefreshToken(null));

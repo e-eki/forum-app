@@ -272,8 +272,8 @@ export default class ModifyForm extends Component {
                     break;
 
                 case forumConst.itemTypes.userInfo:
-                    modifiableItem.role = this.state.role;  //?
-                    modifiableItem.inBlackList = this.state.inBlackList;   //?
+                    modifiableItem.role = this.state.role;
+                    modifiableItem.inBlackList = (this.state.inBlackList ? true : false);  //т.к. значения 'on'/'off'
 
                     modifiableItem.name = this.state.name;
                     modifiableItem.birthDate = this.state.birthDate;

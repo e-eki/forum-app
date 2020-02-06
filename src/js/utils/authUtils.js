@@ -27,6 +27,10 @@ export function saveTokensData(tokensData) {
 	localStorage.setItem('userRole', tokensData.userRole);
 }
 
+export function saveUserRole(role) {
+	localStorage.setItem('userRole', role);
+}
+
 export function removeTokensData() {
 	localStorage.removeItem("refreshToken");
 	localStorage.removeItem("accessToken");
