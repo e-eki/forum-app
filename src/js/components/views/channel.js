@@ -86,7 +86,7 @@ export default class Channel extends PureComponent {
             if (this.props.isCurrent) {
                 channelNameBlock = <div>
                                         {channelName}
-                                        <div>{this.props.channel.description}</div>
+                                        {/* <div>{this.props.channel.description}</div> */}
                                     </div>;
 
                 if (this.props.channel.descriptionMessage) {

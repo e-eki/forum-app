@@ -70,7 +70,7 @@ export function modifyMessage(item) {
 
 			const messageData = {
 				id: item.id,
-				date: item.date,
+				//date: item.date,
 				text: item.text,
 				senderId: item.senderId,
 				recipientId: item.recipientId,
