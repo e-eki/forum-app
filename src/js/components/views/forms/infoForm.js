@@ -111,10 +111,17 @@ export default class InfoForm extends PureComponent {
         }
 
         debugger;
+        let descriptionButtonBlock = null;
         let editAndMoveButtonBlock = null;
         let deleteButtonBlock = null;
 
-        if (this.props.currentInfoItem.canEdit) {   //?
+        if (this.props.currentInfoItem.canEditChannel) {
+            descriptionButtonBlock = <button className = '' onClick = {this.setDescriptionMessage}>
+                                        Закрепить сообщение
+                                    </button>;
+        }
+
+        if (this.props.currentInfoItem.canEdit) {
             editAndMoveButtonBlock = <div>
                                         <button className = '' onClick = {this.editItem}>
                                             Редактировать {this.props.type ? this.props.type : null}
@@ -126,7 +133,7 @@ export default class InfoForm extends PureComponent {
                                     </div>;
         }
 
-        if (this.props.currentInfoItem.canDelete) {  //?
+        if (this.props.currentInfoItem.canDelete) {
             deleteButtonBlock = <button className = '' onClick = {this.deleteItem}>
                                     Удалить {this.props.type ? this.props.type : null}
                                 </button>;
@@ -142,6 +149,8 @@ export default class InfoForm extends PureComponent {
                 {movingBlock}
 
                 {itemInfo}
+
+                {descriptionButtonBlock}
 
                 {editAndMoveButtonBlock}
 

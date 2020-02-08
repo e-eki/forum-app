@@ -53,7 +53,7 @@ export default class UserInfoForm extends PureComponent {
             const privateMessageBlock = (!userInfo.isOwnInfo &&
                                         userInfo.canAddPrivateChannel)
                                             ?
-                                            <Link to={`${appConst.privateChannelsLink}/?recipientId=${this.props.userInfo.id}`}>
+                                            <Link to={`${appConst.privateChannelsLink}/?recipientId=${this.props.userInfo.userId}`}>
                                                 <button className = ''>Написать личное сообщение</button>
                                             </Link>
                                             :

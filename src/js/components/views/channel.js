@@ -119,7 +119,7 @@ export default class Channel extends PureComponent {
 
                                         <div>{this.props.channel.description}</div>
                                         ----
-                                        {isPrivate ? <Link to="/" onClick = {this.showUserInfo}>RECIPIENT</Link> : null}
+                                        {isPrivate ? <Link to="/" onClick = {this.showUserInfo}>Получатель</Link> : null}
                                     </div>;
 
                 if (this.props.channel.lastMessage) {

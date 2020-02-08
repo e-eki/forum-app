@@ -29,13 +29,17 @@ export function updateChannel(store, action) {
 			updatedChannel.messages = [];
 		}
 
-		if (updatedChannel.senderId !== userId) { //?
+		if (updatedChannel.senderId !== userId) {
 			if (currentInfoChannel &&
 				currentInfoChannel.id === action.channelId) {
 					// если изменилось имя или описание чата
 					if (updatedChannel.name !== currentInfoChannel.name ||
 						updatedChannel.description !== currentInfoChannel.description) {
 							const newChannel = copyUtils.copyChannel(updatedChannel);
+							newCurrentChannel.messages = currentChannel.messages;  //?
+							newCurrentChannel.parentSection = currentChannel.parentSection;
+							newCurrentChannel.parentSubSection = currentChannel.parentSubSection;
+
 							store.dispatch(channelActions.setCurrentInfoChannel(newChannel));
 
 							store.dispatch(setAlertData({
@@ -64,6 +68,8 @@ export function updateChannel(store, action) {
 			(currentChannel.id === action.channelId)) {
 				const newCurrentChannel = copyUtils.copyChannel(updatedChannel);
 				newCurrentChannel.messages = currentChannel.messages;
+				newCurrentChannel.parentSection = currentChannel.parentSection;
+				newCurrentChannel.parentSubSection = currentChannel.parentSubSection;
 
 				store.dispatch(channelActions.setCurrentChannel(newCurrentChannel));
 		}
@@ -74,6 +80,8 @@ export function updateChannel(store, action) {
 				if (channel) {
 					const newChannel = copyUtils.copyChannel(updatedChannel);
 					newChannel.messages = channel.messages;
+					newChannel.parentSection = channel.parentSection;
+					newChannel.parentSubSection = channel.parentSubSection;
 
 					const index = currentSubSection.channels.indexOf(channel);
 					currentSubSection.channels[index] = newChannel;

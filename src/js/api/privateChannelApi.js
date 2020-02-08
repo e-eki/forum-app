@@ -150,6 +150,7 @@ export function modifyPrivateChannel(item) {
 			const privateChannelData = {
 				id: item.id,
 				descriptionMessageId: item.descriptionMessageId,
+				recipientId: item.recipientId,
 			};
 
 			if (item.id) {
@@ -192,7 +193,7 @@ function _createPrivateChannel(privateChannelData, accessToken) {
 function _updatePrivateChannel(privateChannelData, accessToken) {
 	debugger;
 	const options = {
-		method: 'POST',
+		method: 'PUT',
 		headers: { 'Authorization': `Token ${accessToken}` },
 		url: `${apiConst.privateChannelApi}/${privateChannelData.id}`,
 		data: privateChannelData,

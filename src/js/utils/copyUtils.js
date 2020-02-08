@@ -21,6 +21,7 @@ export function copySubSection(sourse) {
 	result.channels = sourse.channels || [];
 	result.senderId = sourse.senderId;
 	result.orderNumber = sourse.orderNumber;
+	result.parentSection = sourse.parentSection || null;
 
 	return result;
 };
@@ -30,6 +31,8 @@ export function copyChannel(sourse) {
 
 	result.description = sourse.description || '';
 	result.subSectionId = sourse.subSectionId || null;
+	result.parentSection = sourse.parentSection || null;
+	result.parentSubSection = sourse.parentSubSection || null;
 
 	return result;
 };

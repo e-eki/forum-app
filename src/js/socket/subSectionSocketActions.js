@@ -29,6 +29,7 @@ export function updateSubSection(store, action) {
 		if (currentSubSection &&
 			(currentSubSection.id === action.subSectionId)) {
 				const newSubSection = copyUtils.copySubSection(updatedSubSection);
+				newSubSection.parentSection = currentSubSection.parentSection;
 				newSubSection.channels = currentSubSection.channels;
 
 				store.dispatch(setCurrentSubSection(newSubSection));
@@ -40,6 +41,7 @@ export function updateSubSection(store, action) {
 				if (subSection) {
 					const newSubSection = copyUtils.copySubSection(updatedSubSection);
 					newSubSection.channels = subSection.channels;
+					newSubSection.parentSection = currentSubSection.parentSection;
 
 					const index = currentSection.subSections.indexOf(subSection);
 					currentSection.subSections[index] = newSubSection;
@@ -69,6 +71,7 @@ export function updateSubSection(store, action) {
 				if (subSection) {
 					const newSubSection = copyUtils.copySubSection(updatedSubSection);
 					newSubSection.channels = subSection.channels;
+					newSubSection.parentSection = currentSubSection.parentSection;
 
 					const index = section.subSections.indexOf(subSection);
 					section.subSections[index] = newSubSection;	
