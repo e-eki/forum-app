@@ -12,6 +12,7 @@ export function getEditDeleteRightsForItem(item) {
 	let canEdit = false;
 	let canDelete = false;
 	let canAdd = false;
+	let canMove = false;
 
 	// const userId = store.getState().authState.get('userId');
 	// const userRole = store.getState().authState.get('userRole');
@@ -25,6 +26,7 @@ export function getEditDeleteRightsForItem(item) {
 				canEdit = true;
 				canDelete = true;
 				canAdd = true;
+				canMove = true;
 			}
 			break;
 
@@ -33,6 +35,7 @@ export function getEditDeleteRightsForItem(item) {
 				canEdit = true;
 				canDelete = true;
 				canAdd = true;
+				canMove = true;
 			}
 			else if (userRole === forumConst.itemTypes.moderator) {
 				canAdd = true;
@@ -40,11 +43,16 @@ export function getEditDeleteRightsForItem(item) {
 			break;
 
 		case forumConst.itemTypes.channel:
-			if (userRole === forumConst.userRoles.admin ||
-				userRole === forumConst.userRoles.moderator) {
-					canEdit = true;
-					canDelete = true;
-					canAdd = true;
+			if (userRole === forumConst.admin) {
+				canMove = true;
+				canEdit = true;
+				canDelete = true;
+				canAdd = true;
+			}
+			else if (userRole === forumConst.userRoles.moderator) {
+				canEdit = true;
+				canDelete = true;
+				canAdd = true;
 			}
 			else if (userRole === forumConst.userRoles.user) {
 				canAdd = true;
@@ -64,10 +72,14 @@ export function getEditDeleteRightsForItem(item) {
 			break;
 
 		case forumConst.itemTypes.message:
-			if (userRole === forumConst.userRoles.admin ||
-				userRole === forumConst.userRoles.moderator) {
-					canEdit = true;
-					canDelete = true;
+			if (userRole === forumConst.userRoles.admin) {
+				canMove = true;
+				canEdit = true;
+				canDelete = true;
+			}
+			else if (userRole === forumConst.userRoles.moderator) {
+				canEdit = true;
+				canDelete = true;
 			}
 			else if (userRole === forumConst.userRoles.user && (item.senderId === userId)) {
 				canEdit = true;
@@ -79,6 +91,7 @@ export function getEditDeleteRightsForItem(item) {
 	item.canEdit = canEdit;
 	item.canDelete = canDelete;
 	item.canAdd = canAdd;
+	item.canMove = canMove;
 
 	return item;
 };

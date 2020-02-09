@@ -95,7 +95,7 @@ export default class InfoForm extends PureComponent {
                                 type = {this.props.type}
                             />;
         }
-        else if (this.props.movingItem && this.props.movingItem.canEdit) {  //?
+        else if (this.props.movingItem && this.props.movingItem.canMove) {  //?
             movingBlock = <MovingForm
                                 movingItem = {this.props.movingItem}
                                 setMovingItem = {this.props.setMovingItem}
@@ -112,7 +112,8 @@ export default class InfoForm extends PureComponent {
 
         debugger;
         let descriptionButtonBlock = null;
-        let editAndMoveButtonBlock = null;
+        let editButtonBlock = null;
+        let moveButtonBlock = null;
         let deleteButtonBlock = null;
 
         if (this.props.currentInfoItem.canEditChannel) {
@@ -122,15 +123,15 @@ export default class InfoForm extends PureComponent {
         }
 
         if (this.props.currentInfoItem.canEdit) {
-            editAndMoveButtonBlock = <div>
-                                        <button className = '' onClick = {this.editItem}>
-                                            Редактировать {this.props.type ? this.props.type : null}
-                                        </button>
+            editButtonBlock = <button className = '' onClick = {this.editItem}>
+                                    Редактировать {this.props.type ? this.props.type : null}
+                                </button>;
+        }
 
-                                        <button className = '' onClick = {this.moveItem}>
-                                            Переместить {this.props.type ? this.props.type : null}
-                                        </button>
-                                    </div>;
+        if (this.props.currentInfoItem.canMove) {
+            moveButtonBlock = <button className = '' onClick = {this.moveItem}>
+                                    Переместить {this.props.type ? this.props.type : null}
+                                </button>;
         }
 
         if (this.props.currentInfoItem.canDelete) {
@@ -152,7 +153,9 @@ export default class InfoForm extends PureComponent {
 
                 {descriptionButtonBlock}
 
-                {editAndMoveButtonBlock}
+                {editButtonBlock}
+
+                {moveButtonBlock}
 
                 {deleteButtonBlock}
 

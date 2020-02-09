@@ -92,14 +92,22 @@ export default class Channel extends PureComponent {
                 if (this.props.channel.descriptionMessage) {
                     const descriptionMessage = this.props.channel.descriptionMessage;
 
+                    const resetDescriptionMessageBlock = this.props.channel.canEdit
+                                                            ?
+                                                            <div>
+                                                                <button className = '' onClick = {this.props.resetDescriptionMessage}>
+                                                                    Открепить
+                                                                </button>
+                                                            </div>
+                                                            :
+                                                            null;
+
                     descriptionMessageBlock = <div>
                                                 ---description-message----
                                                 <div>{descriptionMessage.senderName || 'NoName'}</div>
                                                 <div>{descriptionMessage.text || ''}</div>
                                                 -----
-                                                <button className = '' onClick = {this.props.resetDescriptionMessage}>
-                                                    Открепить
-                                                </button>
+                                                {resetDescriptionMessageBlock}
                                             </div>;
                 }
             }
