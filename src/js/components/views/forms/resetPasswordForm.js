@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import appConst from '../../../constants/appConst';
 import authConst from '../../../constants/authConst';
-import * as authUtils from '../../../utils/authUtils';
 
 // Форма сброса пароля
 export default class ResetPasswordForm extends Component {

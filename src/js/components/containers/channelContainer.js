@@ -14,6 +14,7 @@ import { setCurrentInfoChannel, setCurrentChannel } from '../../actions/channelA
 import { setDescriptionMessageForChannel } from '../../utils/channelUtils';
 import { setParentItemsList } from '../../actions/modifyingActions';
 import * as baseUtils from '../../utils/baseUtils';
+import { getUserId } from '../../utils/authUtils';
 
 class ChannelContainer extends PureComponent {
 
@@ -34,7 +35,8 @@ class ChannelContainer extends PureComponent {
 
     componentWillUnmount() {
         if (this.channelId) {
-            this.props.leaveRoom(this.channelId, this.roomType, this.props.userId);
+            const userId = getUserId();
+            this.props.leaveRoom(this.channelId, this.roomType, userId);
         }
 
         if (this.props.currentUserInfo) {
@@ -72,7 +74,8 @@ class ChannelContainer extends PureComponent {
             return getChannelById(channelId)
                 .then(channel => {
                     if (channel && channel.id) {
-                        this.props.joinRoom(channel.id, this.roomType, this.props.userId);
+                        const userId = getUserId();
+                        this.props.joinRoom(channel.id, this.roomType, userId);
                         this.channelId = channel.id;
 
                         this.props.setCurrentChannel(channel);
@@ -148,7 +151,7 @@ const mapStateToProps = function(store) {
         modifiableMessage: store.messageState.get('modifiableMessage'),
         movingMessage: store.messageState.get('movingMessage'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
-        userId: store.authState.get('userId'),
+        //userId: store.authState.get('userId'),
 
         accessToken: store.authState.get('accessToken'),
         userRole: store.authState.get('userRole'),

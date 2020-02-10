@@ -68,7 +68,7 @@ export default class EmailConfirmForm extends Component {
         let emailConfirmContent = <div></div>;
 
         if (this.props.accessToken &&
-            this.props.refreshToken &&
+            //this.props.refreshToken &&
             this.props.accessTokenExpiresIn) {
                 const alertData = {
                     message: 'Вы успешно вошли на сайт. Нажмите ссылку для перехода.',

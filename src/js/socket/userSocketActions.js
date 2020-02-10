@@ -15,12 +15,10 @@ export function updateUser(store, action) {
 	if (action.userId && action.data) {
 		const currentUserInfo = store.getState().userInfoState.get('currentUserInfo');
 		const modifiableUserInfo = store.getState().userInfoState.get('modifiableUserInfo');
-		// const userId = store.getState().authState.get('userId');  //??
-		// const userRole = store.getState().authState.get('userRole');  //?
 		const userId = getUserId();
 		const userRole = getUserRole();
 
-		if (currentUserInfo && (action.userId === currentUserInfo.userId)) {  //?
+		if (currentUserInfo && (action.userId === currentUserInfo.userId)) {
 			const newUserInfo = copyUtils.copyUserInfo(currentUserInfo);
 			newUserInfo.role = action.data.role;
 			newUserInfo.inBlackList = action.data.inBlackList;

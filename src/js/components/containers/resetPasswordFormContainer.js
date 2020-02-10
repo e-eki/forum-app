@@ -3,7 +3,7 @@
 import Promise from 'bluebird';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import ResetPasswordForm from '../views/forms/emailConfirmForm';
+import ResetPasswordForm from '../views/forms/resetPasswordForm';
 import { resetPassword } from '../../api/authApi';
 import { setAlertData } from '../../actions/alertDataActions';
 import appConst from '../../constants/appConst';

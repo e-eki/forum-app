@@ -20,8 +20,8 @@ export function isTokensDataValid(tokensData) {
 
 export function saveTokensData(tokensData) {
 	localStorage.setItem('refreshToken', tokensData.refreshToken);
-	localStorage.setItem('accessToken', tokensData.accessToken);
-	localStorage.setItem('accessTokenExpiresIn', tokensData.accessTokenExpiresIn);
+	//localStorage.setItem('accessToken', tokensData.accessToken);
+	//localStorage.setItem('accessTokenExpiresIn', tokensData.accessTokenExpiresIn);
 
 	localStorage.setItem('userId', tokensData.userId);
 	localStorage.setItem('userRole', tokensData.userRole);
@@ -33,23 +33,24 @@ export function saveUserRole(role) {
 
 export function removeTokensData() {
 	localStorage.removeItem("refreshToken");
-	localStorage.removeItem("accessToken");
-	localStorage.removeItem("accessTokenExpiresIn");
+	//localStorage.removeItem("accessToken");
+	//localStorage.removeItem("accessTokenExpiresIn");
 
 	localStorage.removeItem("userId");
 	localStorage.removeItem("userRole");
 }
 
-export function getAccessToken() {
-	return localStorage.getItem('accessToken');
-}
+// export function getAccessToken() {
+// 	return localStorage.getItem('accessToken');
+// }
 
 export function getRefreshToken() {
 	return localStorage.getItem('refreshToken');
 }
 
-export function isAccessTokenExpired() {
-	const accessTokenExpiresIn = localStorage.getItem('accessTokenExpiresIn');
+export function isAccessTokenExpired(accessTokenExpiresIn) {
+	debugger;
+	//const accessTokenExpiresIn = localStorage.getItem('accessTokenExpiresIn');
 	const nowTime = new Date().getTime();
 
 	return accessTokenExpiresIn <= nowTime;

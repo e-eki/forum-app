@@ -23,12 +23,12 @@ export function setAccessToken(data) {
 	};
 }
 
-export function setRefreshToken(data) {
-	return {
-	  type: actionTypes.SET_REFRESH_TOKEN,
-	  data
-	};
-}
+// export function setRefreshToken(data) {
+// 	return {
+// 	  type: actionTypes.SET_REFRESH_TOKEN,
+// 	  data
+// 	};
+// }
 
 export function setAccessTokenExpiresIn(data) {
 	return {

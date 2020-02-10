@@ -38,7 +38,13 @@ class PrivateSubSectionContainer extends PureComponent {
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
         if (this.props.accessToken !== prevProps.accessToken  ||
             this.props.userRole !== prevProps.userRole) {
-                return this.getPrivateChannels();
+                if (this.props.accessToken) {
+                    return this.getPrivateChannels();
+                }
+                else {
+                    this.props.setPrivateChannels([]);  //??
+                    return true;
+                }
         }
     }
 
@@ -49,7 +55,8 @@ class PrivateSubSectionContainer extends PureComponent {
                 return true;
             })
             .catch(error => {
-                baseUtils.showErrorMessage(error);
+                baseUtils.showErrorMessage(error);  //??
+                //this.props.setPrivateChannels([]);
                 return false;
             })
     }

@@ -98,7 +98,7 @@ export default class RegistrationForm extends Component {
         let registrationContent = <div></div>;
 
         if (this.props.accessToken &&
-            this.props.refreshToken &&
+            //this.props.refreshToken &&
             this.props.accessTokenExpiresIn) {
                 const alertData = {
                     message: 'Вы успешно вошли на сайт. Нажмите ссылку для перехода.',

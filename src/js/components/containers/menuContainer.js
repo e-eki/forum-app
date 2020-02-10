@@ -11,6 +11,7 @@ import * as baseUtils from '../../utils/baseUtils';
 import appConst from '../../constants/appConst';
 import { getActualAccessToken, logout } from '../../api/authApi';
 import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
+import { isAccessTokenExpired } from '../../utils/authUtils';
 
 class MenuContainer extends PureComponent {
 
@@ -116,7 +117,7 @@ class MenuContainer extends PureComponent {
     
     render() {
         debugger;
-        
+
         return (
             <Menu
                 // getUserAuthenticatedFlag = {this.getUserAuthenticatedFlag}
@@ -124,6 +125,7 @@ class MenuContainer extends PureComponent {
                 newPrivateMessagesCount = {this.props.newPrivateMessagesCount}
                 doLogout = {this.doLogout}
                 showUserInfo = {this.showUserInfo}
+                isAccessTokenExpired = {isAccessTokenExpired}
 
                 accessToken = {this.props.accessToken}  // чтобы компонент перерисовывался при изменении токенов
                 accessTokenExpiresIn = {this.props.accessTokenExpiresIn}

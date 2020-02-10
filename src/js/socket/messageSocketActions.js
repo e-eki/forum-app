@@ -24,7 +24,6 @@ export function updateMessage(store, action) {
 		const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
 		const currentInfoMessage = store.getState().messageState.get('currentInfoMessage');
 		const modifiableMessage = store.getState().messageState.get('modifiableMessage');
-		//const userId = store.getState().authState.get('userId');
 		const userId = getUserId();
 
 		debugger;

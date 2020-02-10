@@ -95,7 +95,7 @@ export function login(email, password) {
 		})
 };
 
-export function logout() {   //todo!
+export function logout() {
 	debugger;
 
 	return Promise.resolve(true)
@@ -189,13 +189,16 @@ export function resetPassword(accessToken, password) {
 
 export function getActualAccessToken() {
 	debugger;
-	const accessToken = authUtils.getAccessToken();
+	//const accessToken = authUtils.getAccessToken();
 	const refreshToken = authUtils.getRefreshToken();
-	const accessTokenExpired = authUtils.isAccessTokenExpired();
+	//const accessTokenExpired = authUtils.isAccessTokenExpired();
+
+	const accessToken = store.getState().authState.get('accessToken');
+	const accessTokenExpired = store.getState().authState.get('accessTokenExpired');
 
 	return Promise.resolve(true)
 		.then(() => {
-			if (!accessTokenExpired) {
+			if (accessToken && !accessTokenExpired) {
 				return true;
 			}
 			else {
@@ -275,7 +278,7 @@ function _setTokensData(tokensData) {
 	debugger;
 
 	store.dispatch(authActions.setAccessToken(tokensData.accessToken));
-	store.dispatch(authActions.setRefreshToken(tokensData.refreshToken));
+	//store.dispatch(authActions.setRefreshToken(tokensData.refreshToken));
 	store.dispatch(authActions.setAccessTokenExpiresIn(tokensData.accessTokenExpiresIn));
 	store.dispatch(authActions.setUserId(tokensData.userId));
 	store.dispatch(authActions.setUserRole(tokensData.userRole));
@@ -287,7 +290,7 @@ function _resetTokensData() {
 	debugger;
 
 	store.dispatch(authActions.setAccessToken(null));
-	store.dispatch(authActions.setRefreshToken(null));
+	//store.dispatch(authActions.setRefreshToken(null));
 	store.dispatch(authActions.setAccessTokenExpiresIn(null));
 	store.dispatch(authActions.setUserId(null));
 

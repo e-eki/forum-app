@@ -70,7 +70,7 @@ export default class RecoveryPasswordForm extends Component {
         let recoveryPasswordContent = <div></div>;
 
         if (this.props.accessToken &&
-            this.props.refreshToken &&
+            //this.props.refreshToken &&
             this.props.accessTokenExpiresIn) {
                 const alertData = {
                     message: 'Вы успешно вошли на сайт. Нажмите ссылку для перехода.',

@@ -15,6 +15,7 @@ import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
 import forumConst from '../../constants/forumConst';
 import { setDescriptionMessageForChannel } from '../../utils/channelUtils';
 import * as baseUtils from '../../utils/baseUtils';
+import { getUserId } from '../../utils/authUtils';
 
 class PrivateChannelContainer extends PureComponent {
 
@@ -52,7 +53,14 @@ class PrivateChannelContainer extends PureComponent {
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
         if (this.props.accessToken !== prevProps.accessToken  ||
             this.props.userRole !== prevProps.userRole) {
-                return this.getPrivateChannel();  //???
+                if (this.props.accessToken) {
+                    return this.getPrivateChannel();
+                }
+                else {
+                    this.props.setCurrentPrivateChannel(null);  //??
+                    return true;
+                }
+                
         }
 
         //return this.getPrivateChannel();
@@ -82,7 +90,8 @@ class PrivateChannelContainer extends PureComponent {
                     .then(channel => {
 
                         if (channel) {
-                            this.props.joinRoom(channel.id, this.roomType, this.props.userId);
+                            const userId = getUserId();
+                            this.props.joinRoom(channel.id, this.roomType, userId);
                             this.channelId = channel.id;
 
                             this.props.setCurrentPrivateChannel(channel);
@@ -108,7 +117,8 @@ class PrivateChannelContainer extends PureComponent {
                         debugger;
 
                         if (privateChannel) {
-                            this.props.joinRoom(privateChannel.id, this.roomType, this.props.userId);
+                            const userId = getUserId();
+                            this.props.joinRoom(privateChannel.id, this.roomType, userId);
                             this.recipientChannelId = privateChannel.id;
 
                             this.props.setCurrentPrivateChannel(privateChannel);
@@ -128,7 +138,8 @@ class PrivateChannelContainer extends PureComponent {
         debugger;
 
         if (this.channelId) {
-            this.props.leaveRoom(this.channelId, this.roomType, this.props.userId);
+            const userId = getUserId();
+            this.props.leaveRoom(this.channelId, this.roomType, userId);
             this.channelId = null;
         }
         else if (this.recipientId && this.recipientChannelId) {  //??
@@ -200,7 +211,7 @@ const mapStateToProps = function(store) {
         currentInfoMessage: store.messageState.get('currentInfoMessage'),
         modifiableMessage: store.messageState.get('modifiableMessage'),
         newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),
-        userId: store.authState.get('userId'),
+        //userId: store.authState.get('userId'),
 
         accessToken: store.authState.get('accessToken'),
         userRole: store.authState.get('userRole'),

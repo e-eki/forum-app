@@ -41,7 +41,7 @@ class RegistrationFormContainer extends PureComponent {
                 doRegistration = {this.doRegistration}
 
                 accessToken = {this.props.accessToken}
-                refreshToken = {this.props.refreshToken}
+                //refreshToken = {this.props.refreshToken}
                 accessTokenExpiresIn = {this.props.accessTokenExpiresIn}
             />
         );
@@ -51,7 +51,7 @@ class RegistrationFormContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         accessToken: store.authState.get('accessToken'),
-        refreshToken: store.authState.get('refreshToken'),
+        //refreshToken: store.authState.get('refreshToken'),
         accessTokenExpiresIn: store.authState.get('accessTokenExpiresIn'),
     };
 };

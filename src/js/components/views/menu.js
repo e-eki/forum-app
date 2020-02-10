@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import appConst from '../../constants/appConst';
 import NewMessagesNotificationForm from './forms/newMessagesNotificationForm';
-import { isAccessTokenExpired } from '../../utils/authUtils';
 
 export default class Menu extends PureComponent {
 
@@ -66,31 +65,31 @@ export default class Menu extends PureComponent {
 
         if (this.props.accessToken &&
             this.props.accessTokenExpiresIn &&
-            !isAccessTokenExpired(this.props.accessTokenExpiresIn)) {
+            !this.props.isAccessTokenExpired()) {
+                
+                const notificationBlock = this.props.newPrivateMessagesCount
+                                            ?
+                                            <NewMessagesNotificationForm
+                                                newMessagesCount = {this.props.newPrivateMessagesCount}
+                                            />
+                                            :
+                                            null;
 
-            const notificationBlock = this.props.newPrivateMessagesCount
-                                        ?
-                                        <NewMessagesNotificationForm
-                                            newMessagesCount = {this.props.newPrivateMessagesCount}
-                                        />
-                                        :
-                                        null;
-
-            authContent = <div>
-                                <button className = 'bar__button button button_lk' onClick = {this.props.showUserInfo}>
-                                    Личный кабинет
-                                </button>
-
-                                <Link to={appConst.privateChannelsLink}>
-                                    <button className = 'bar__button button button_lk'>
-                                        Личные сообщения {notificationBlock}
+                authContent = <div>
+                                    <button className = 'bar__button button button_lk' onClick = {this.props.showUserInfo}>
+                                        Личный кабинет
                                     </button>
-                                </Link>              
 
-                                <button className = 'bar__button button button_lk' onClick = {this.props.doLogout}>
-                                    Выйти
-                                </button>
-                            </div>;
+                                    <Link to={appConst.privateChannelsLink}>
+                                        <button className = 'bar__button button button_lk'>
+                                            Личные сообщения {notificationBlock}
+                                        </button>
+                                    </Link>              
+
+                                    <button className = 'bar__button button button_lk' onClick = {this.props.doLogout}>
+                                        Выйти
+                                    </button>
+                                </div>;
         }
         else {
             authContent = <div>
