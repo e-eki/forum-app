@@ -17,12 +17,10 @@ export default class Message extends PureComponent {
     }
 
     showInfo() {
-        debugger;
         this.props.setCurrentInfoMessage(this.props.message);
     }
 
     showUserInfo(event) {
-        debugger;
         event.preventDefault();
 
         if (this.props.message.senderId) {

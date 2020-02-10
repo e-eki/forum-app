@@ -20,8 +20,6 @@ class SearchResultsContainer extends PureComponent {
     }
 
     componentDidUpdate() {
-        debugger;
-
         if (this.props.location && this.props.location.search) {
             const searchParams = new URLSearchParams(this.props.location.search);
             const searchText = searchParams.get("searchText");

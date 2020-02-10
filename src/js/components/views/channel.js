@@ -21,17 +21,14 @@ export default class Channel extends PureComponent {
     }
 
     showInfo() {
-        debugger;
         this.props.setCurrentInfoChannel(this.props.channel);
     }
 
     deleteChannel() {
-        debugger;
         this.props.deleteChannel(this.props.channel);
     }
 
     showUserInfo(event) {
-        debugger;
         event.preventDefault();
 
         if (this.props.channel.recipientId) {
@@ -183,7 +180,6 @@ export default class Channel extends PureComponent {
                     </div>;
         }
 
-        debugger;
         let channelInfoBlock = null;
 
         if (this.props.isCurrent &&

@@ -16,7 +16,6 @@ export default class UserInfoForm extends PureComponent {
     }
 
     editUserInfo() {
-        debugger;
         this.props.setModifiableUserInfo(this.props.userInfo);
     }
 

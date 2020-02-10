@@ -51,7 +51,6 @@ class MainContainer extends PureComponent {
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
         if (this.props.accessToken !== prevProps.accessToken ||
             this.props.userRole !== prevProps.userRole) {
-                debugger;
                 return this.getSections();
         }
     }
@@ -77,6 +76,8 @@ class MainContainer extends PureComponent {
     
     render() {
         //console.log('render MainContainer');
+        debugger;
+        
         return (
             <Main
                 canAdd = {this.canAdd}

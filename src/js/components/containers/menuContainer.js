@@ -17,7 +17,7 @@ class MenuContainer extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.getUserAuthenticatedFlag = this.getUserAuthenticatedFlag.bind(this);
+        //this.getUserAuthenticatedFlag = this.getUserAuthenticatedFlag.bind(this);
         this.setNewPrivateMessagesCount = this.setNewPrivateMessagesCount.bind(this);
         this.doLogout = this.doLogout.bind(this);
         this.showUserInfo = this.showUserInfo.bind(this);
@@ -25,29 +25,29 @@ class MenuContainer extends PureComponent {
 
     componentDidMount() {
         debugger;
-        return this.setNewPrivateMessagesCount()
+        return this.setNewPrivateMessagesCount()  // здесь же происходит рефреш токенов, если он нужен
             .then(result => true);
     }
 
-    getUserAuthenticatedFlag() {
-        debugger;
+    // getUserAuthenticatedFlag() {
+    //     debugger;
 
-        return Promise.resolve(true)
-			.then(() => {
-				return getActualAccessToken();
-			})
-			.then(accessToken => {
-                //return this.setNewPrivateMessagesCount();
-                if (!accessToken) {
-                    this.props.setNewPrivateMessagesCount(null);   //?
-                }
-                return true;
-            })
-            .catch(error => {
-                //baseUtils.showErrorMessage(error); //?
-                return false;
-            })
-    }
+    //     return Promise.resolve(true)
+	// 		.then(() => {
+	// 			return getActualAccessToken();
+	// 		})
+	// 		.then(accessToken => {
+    //             //return this.setNewPrivateMessagesCount();
+    //             if (!accessToken) {
+    //                 this.props.setNewPrivateMessagesCount(null);   //?
+    //             }
+    //             return true;
+    //         })
+    //         .catch(error => {
+    //             //baseUtils.showErrorMessage(error); //?
+    //             return false;
+    //         })
+    // }
 
     setNewPrivateMessagesCount() {
         debugger;
@@ -115,14 +115,18 @@ class MenuContainer extends PureComponent {
     }
     
     render() {
+        debugger;
+        
         return (
             <Menu
-                getUserAuthenticatedFlag = {this.getUserAuthenticatedFlag}
+                // getUserAuthenticatedFlag = {this.getUserAuthenticatedFlag}
+                // setNewPrivateMessagesCount = {this.setNewPrivateMessagesCount}
                 newPrivateMessagesCount = {this.props.newPrivateMessagesCount}
                 doLogout = {this.doLogout}
                 showUserInfo = {this.showUserInfo}
 
                 accessToken = {this.props.accessToken}  // чтобы компонент перерисовывался при изменении токенов
+                accessTokenExpiresIn = {this.props.accessTokenExpiresIn}
                 // userRole = {this.props.userRole}
             />
         );
@@ -132,6 +136,7 @@ class MenuContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         accessToken: store.authState.get('accessToken'),   // чтобы компонент перерисовывался при изменении токенов
+        accessTokenExpiresIn: store.authState.get('accessTokenExpiresIn'),
         // userRole: store.authState.get('userRole'),
 
         newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),  

@@ -52,8 +52,7 @@ export default class SearchForm extends Component {
     }
 
     // ввод данных
-	changeData(event) {  //todo! вынести в lib
-        debugger;
+	changeData(event) {  //todo: вынести в utils
         const name = event.target.name;
         const value = event.target.value;
 

@@ -19,8 +19,6 @@ class ResetPasswordFormContainer extends PureComponent {
     }
 
     doResetPassword(password) {
-        debugger;
-
         return Promise.resolve(true)
 			.then(() => {
 				// если на форму попали по ссылке из письма, то аксесс токен должен быть в параметрах
@@ -36,8 +34,6 @@ class ResetPasswordFormContainer extends PureComponent {
 				return resetPassword(accessToken, password);
             })
             .then(response => {
-                debugger; 
-
                 const alertData = {
                     message: 'Пароль успешно изменен.',   //?
                     secondaryMessage: 'На страницу входа',

@@ -1,55 +1,61 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import appConst from '../../constants/appConst';
 import NewMessagesNotificationForm from './forms/newMessagesNotificationForm';
+import { isAccessTokenExpired } from '../../utils/authUtils';
 
-export default class Menu extends Component {
+export default class Menu extends PureComponent {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            isUserAuthenticated: false,
-        }
+        // this.state = {
+        //     isUserAuthenticated: false,
+        // }
 
-        this.updateUserAuthenticatedFlag = this.updateUserAuthenticatedFlag.bind(this);
+        // this.updateUserAuthenticatedFlag = this.updateUserAuthenticatedFlag.bind(this);
     }
 
-    shouldComponentUpdate() {
-        return true; //todo
-    }
+    // shouldComponentUpdate() {
+    //     return true; //todo
+    // }
 
-    componentDidMount() {
-        debugger;
+    // componentDidMount() {
+    //     debugger;
 
-        return this.updateUserAuthenticatedFlag();
-    }
+    //     return this.updateUserAuthenticatedFlag()
+    //         .then(result => {
+    //             return this.props.setNewPrivateMessagesCount();
+    //         })
+    // }
 
-    componentDidUpdate(prevProps) {
-        debugger;
-        // если изменились данные токенов, проверяем снова, залогинен ли пользователь
-        if (this.props.accessToken !== prevProps.accessToken /*||
-            this.props.userRole !== prevProps.userRole*/) {
-                return this.updateUserAuthenticatedFlag();
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     debugger;
+    //     // если изменились данные токенов, проверяем снова, залогинен ли пользователь
+    //     if (this.props.accessToken !== prevProps.accessToken /*||
+    //         this.props.userRole !== prevProps.userRole*/) {
+    //             return this.updateUserAuthenticatedFlag();
+    //     }
+    // }
 
-    // этот метод должен вызываться отсюда, а не из MenuContainer,
-    // потому что иначе флаг isUserAuthenticated придется поместить в store
-    updateUserAuthenticatedFlag() {
-        return this.props.getUserAuthenticatedFlag()
-            .then(isUserAuthenticated => {
-                debugger;
+    // // этот метод вызывается отсюда, а не из MenuContainer,
+    // // потому что иначе флаг isUserAuthenticated придется поместить в store
+    // // и setNewPrivateMessagesCount тоже, всё это д.б. в контейнере
+    // // todo: сделать нормально!
+    // updateUserAuthenticatedFlag() {
+    //     return this.props.getUserAuthenticatedFlag()
+    //         .then(isUserAuthenticated => {
+    //             debugger;
 
-                this.setState({
-                    isUserAuthenticated: isUserAuthenticated,
-                })
+    //             this.setState({
+    //                 isUserAuthenticated: isUserAuthenticated,
+    //             })
                 
-                return true;
-            })
-    }
+    //             return true;
+    //         })
+    // }
 
     render() {
         //console.log('render menu');
@@ -58,7 +64,9 @@ export default class Menu extends Component {
 
         let authContent;
 
-        if (this.state.isUserAuthenticated) {
+        if (this.props.accessToken &&
+            this.props.accessTokenExpiresIn &&
+            !isAccessTokenExpired(this.props.accessTokenExpiresIn)) {
 
             const notificationBlock = this.props.newPrivateMessagesCount
                                         ?

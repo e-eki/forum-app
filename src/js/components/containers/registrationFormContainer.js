@@ -17,12 +17,8 @@ class RegistrationFormContainer extends PureComponent {
     }
 
     doRegistration(email, login, password) {
-        debugger;
-
         return registration(email, login, password)
 			.then(response => {
-                debugger; 
-
                 const alertData = {
                     message: 'Письмо с кодом подтверждения было отправлено на указанный имейл. Для завершения регистрации перейдите по ссылке из письма.',   //?
                     // secondaryMessage: 'На главную',

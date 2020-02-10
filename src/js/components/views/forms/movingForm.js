@@ -36,7 +36,6 @@ export default class MovingForm extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        debugger;
         if (nextProps.parentItemsList !== this.parentItemsList) {
             this.parentItemsList = nextProps.parentItemsList;
 
@@ -58,7 +57,6 @@ export default class MovingForm extends Component {
     }
 
     componentWillUnmount() {
-        debugger;
         this.props.resetParentItemsList();
     }
 
@@ -85,7 +83,6 @@ export default class MovingForm extends Component {
     }
 
     getParentItemOptions(parentItemsList) {
-        debugger;
         const options = [];
         let i = 0;
 
@@ -105,8 +102,6 @@ export default class MovingForm extends Component {
     }
 
     getItemsList(parentItemsList) {
-        debugger;
-
         if (parentItemsList) {
             const parentItem = this.props.parentItemId
                                 ?
@@ -134,7 +129,6 @@ export default class MovingForm extends Component {
     }
 
     getMovingInListTypeOptions() {
-        debugger;
         const options = [];
         let i = 0;
 
@@ -172,12 +166,10 @@ export default class MovingForm extends Component {
     }
 
     resetMovingItem() {
-        debugger;
         this.props.setMovingItem(null);
     }
 
 	changeData(event) {
-        debugger;
         const name = event.target.name;
         const value = event.target.value;
 
@@ -197,8 +189,7 @@ export default class MovingForm extends Component {
         }
     }
 
-    moveItem() {  //?как вынести эту логику в контейнер?
-        debugger;
+    moveItem() {  //todo: ?как вынести эту логику в контейнер?
         const tasks = []
 
         if (this.state.movingInListType) {
@@ -210,7 +201,6 @@ export default class MovingForm extends Component {
 
         return Promise.all(tasks)
             .then(result => {
-                debugger;
                 this.resetMovingItem();
                 this.props.resetInfoItem();
 
@@ -223,7 +213,6 @@ export default class MovingForm extends Component {
     }
 
     moveItemInList() {
-        debugger;
         const movingItems = [];
         
         if (this.itemsList && (this.itemsList.length > 1)) {
@@ -275,7 +264,6 @@ export default class MovingForm extends Component {
     }
 
     moveItemOtsideList() {
-        debugger;
         const tasks = [];
 
         const movingItem = this.props.movingItem;

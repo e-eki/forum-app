@@ -21,8 +21,6 @@ class PrivateSubSectionContainer extends PureComponent {
     }
 
     componentDidMount() {
-        debugger;
-
         return this.getPrivateChannels();
     }
 

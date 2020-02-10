@@ -16,8 +16,6 @@ export default class ListForm extends PureComponent {
     }
 
     initNewItem() {
-        debugger;
-
         let newItem;
 
         if (this.props.type) {
@@ -51,8 +49,6 @@ export default class ListForm extends PureComponent {
     }
 
     addItem() {
-        debugger;
-
         const newItem = this.initNewItem();
 
         if (newItem) {
@@ -75,7 +71,6 @@ export default class ListForm extends PureComponent {
         let itemInfoBlock = null;       
         let modifyingItemBlock = null;
 
-        debugger;
         if (this.props.currentInfoItem &&
             (this.props.currentInfoItem.canEdit || this.props.currentInfoItem.canDelete)) {   //?
                 itemInfoBlock = <InfoForm
@@ -106,7 +101,6 @@ export default class ListForm extends PureComponent {
                                 />;
         }
 
-        debugger;
         let addButtonBlock = null;
         if (this.props.canAdd) {  //?
             addButtonBlock = <button className = '' onClick = {this.addItem}>

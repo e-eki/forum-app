@@ -28,7 +28,6 @@ export default class ResetPasswordForm extends Component {
 
     // ввод данных
 	changeData(event) {
-        debugger;
         const name = event.target.name;
         const value = event.target.value;
 
@@ -39,7 +38,6 @@ export default class ResetPasswordForm extends Component {
 
     // по клику на инпуте он очищается
 	clearData(event) {   //todo: check!
-        debugger;
 		const name = event.target.name;
 
 		this.setState({

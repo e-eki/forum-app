@@ -17,12 +17,8 @@ class EmailConfirmFormContainer extends PureComponent {
     }
 
     doEmailConfirm(email) {
-        debugger;
-
         return emailConfirm(email)
 			.then(response => {
-                debugger; 
-
                 const alertData = {
                     message: 'Письмо с кодом подтверждения отправлено на указанный адрес электронной почты.',   //?
                     secondaryMessage: 'На главную',

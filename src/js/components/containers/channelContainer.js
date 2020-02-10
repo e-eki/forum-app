@@ -29,8 +29,6 @@ class ChannelContainer extends PureComponent {
     }
 
     componentDidMount() {
-        debugger;
-
         return this.getChannel();
     }
 
@@ -93,8 +91,6 @@ class ChannelContainer extends PureComponent {
     }
 
     setDescriptionMessage(message) {
-        debugger;
-
         return setDescriptionMessageForChannel(forumConst.itemTypes.channel, message, this.props.currentChannel)
             .then(result => true)
             .catch(error => {
@@ -104,8 +100,6 @@ class ChannelContainer extends PureComponent {
     }
 
     resetDescriptionMessage() {
-        debugger;
-
         return setDescriptionMessageForChannel(forumConst.itemTypes.channel, null, this.props.currentChannel)
             .then(result => true)
             .catch(error => {

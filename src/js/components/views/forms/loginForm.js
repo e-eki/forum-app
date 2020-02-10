@@ -34,7 +34,6 @@ export default class LoginForm extends Component {
 
     // ввод данных
 	changeData(event) {
-        debugger;
         const name = event.target.name;
         const value = event.target.value;
 
@@ -45,7 +44,6 @@ export default class LoginForm extends Component {
 
     // по клику на инпуте он очищается
 	clearData(event) {   //todo: check!
-        debugger;
 		const name = event.target.name;
 
 		this.setState({
@@ -54,7 +52,6 @@ export default class LoginForm extends Component {
     }
 
     clickLoginButton(event) {
-        debugger;
         let isDataValid = true;
 
         if (!this.state.email ||

@@ -16,7 +16,6 @@ export default class SubSection extends PureComponent {
     }
 
     showInfo() {
-        debugger;
         this.props.setCurrentInfoSubSection(this.props.subSection);
     }
 

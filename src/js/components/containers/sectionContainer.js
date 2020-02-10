@@ -34,7 +34,6 @@ class SectionContainer extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        debugger;
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
         if (this.props.accessToken !== prevProps.accessToken  ||
             this.props.userRole !== prevProps.userRole) {
@@ -45,7 +44,6 @@ class SectionContainer extends PureComponent {
             !this.props.parentItemsList) {
                 return getSections()
                     .then(sections => {
-                        debugger;
                         this.props.setParentItemsList(sections.items || []);
                     })
                     .catch(error => {
@@ -62,7 +60,6 @@ class SectionContainer extends PureComponent {
             return getSectionById(id)
                 .then(section => {
                     if (section) {
-                        debugger;
                         this.props.setCurrentSection(section);
                         
                         this.props.joinRoom(section.id);

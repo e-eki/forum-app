@@ -17,12 +17,8 @@ class RecoveryPasswordFormContainer extends PureComponent {
     }
 
     doRecoveryPassword(email) {
-        debugger;
-
         return recoveryPassword(email)
 			.then(response => {
-                debugger; 
-
                 const alertData = {
                     message: 'Инструкции по восстановлению пароля отправлены на указанный адрес электронной почты.',   //?
                     secondaryMessage: 'На главную',

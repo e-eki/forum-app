@@ -35,7 +35,6 @@ class SubSectionContainer extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        debugger;
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
         if (this.props.accessToken !== prevProps.accessToken  ||
             this.props.userRole !== prevProps.userRole) {
@@ -46,7 +45,6 @@ class SubSectionContainer extends PureComponent {
             !this.props.parentItemsList) {
                 return getSubSections()    //?
                     .then(subSections => {
-                        debugger;
                         this.props.setParentItemsList(subSections || []);
                     })
                     .catch(error => {

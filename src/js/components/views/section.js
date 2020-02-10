@@ -15,7 +15,6 @@ export default class Section extends PureComponent {
     }
 
     showInfo() {
-        debugger;
         this.props.setCurrentInfoSection(this.props.section);
     }
 
@@ -77,7 +76,6 @@ export default class Section extends PureComponent {
 
         let sectionInfoBlock = null;
 
-        debugger;
         if (!this.props.isCurrent &&
             (this.props.section && (this.props.section.canEdit || this.props.section.canDelete))) {
                 sectionInfoBlock = <button className = '' onClick = {this.showInfo}>

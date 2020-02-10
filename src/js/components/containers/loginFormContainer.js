@@ -18,7 +18,6 @@ class LoginFormContainer extends PureComponent {
     }
 
     doLogin(email, password) {
-        debugger;
 
 		return login(email, password)
 			.then(response => {

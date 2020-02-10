@@ -27,7 +27,6 @@ export default class EmailConfirmForm extends Component {
 
     // ввод данных
 	changeData(event) {
-        debugger;
         const name = event.target.name;
         const value = event.target.value;
 
@@ -38,7 +37,6 @@ export default class EmailConfirmForm extends Component {
 
     // по клику на инпуте он очищается
 	clearData(event) {   //todo: check!
-        debugger;
 		const name = event.target.name;
 
 		this.setState({
@@ -47,8 +45,6 @@ export default class EmailConfirmForm extends Component {
     }
 
     clickEmailConfirmButton(event) {
-        debugger;
-
         if (!this.state.email ||
             (this.state.email === authConst.defaultAuthData.email) ||
             (this.state.email === authConst.warningAuthData.email) ||

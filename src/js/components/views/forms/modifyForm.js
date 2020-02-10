@@ -37,7 +37,6 @@ export default class ModifyForm extends Component {
     }
 
     getRoleOptions() {
-        debugger;
         const options = [];
         let i = 0;
 
@@ -75,7 +74,6 @@ export default class ModifyForm extends Component {
     }
 
     initItemInputs() {
-        debugger;
         let itemInputs;      
 
         if (this.props.type) {
@@ -251,7 +249,6 @@ export default class ModifyForm extends Component {
 
     // ввод данных
 	changeData(event) {
-        debugger;
         const name = event.target.name;
         const value = event.target.value;
 
@@ -261,7 +258,6 @@ export default class ModifyForm extends Component {
     }
     
     modifyItem() {
-        debugger;
         const modifiableItem = this.props.modifiableItem;
 
         if (this.props.type) {
@@ -301,7 +297,6 @@ export default class ModifyForm extends Component {
     }
 
     resetModifiableItem() {
-        debugger;
         this.props.setModifiableItem(null);
     }
 

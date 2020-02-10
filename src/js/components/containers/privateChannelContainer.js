@@ -34,7 +34,6 @@ class PrivateChannelContainer extends PureComponent {
     }
 
     componentDidMount() {
-        debugger;
         return this.getPrivateChannel()
             .then(result => {
                 this.updateNewPrivateMessagesCount();
@@ -50,7 +49,6 @@ class PrivateChannelContainer extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        debugger;
         // если изменились данные токенов, могли измениться доступные элементы управления, перерисоваем изменившиеся
         if (this.props.accessToken !== prevProps.accessToken  ||
             this.props.userRole !== prevProps.userRole) {
@@ -147,8 +145,6 @@ class PrivateChannelContainer extends PureComponent {
     }
 
     setDescriptionMessage(message) {
-        debugger;
-
         return setDescriptionMessageForChannel(forumConst.itemTypes.privateChannel, message, this.props.currentPrivateChannel)
             .then(result => true)
             .catch(error => {
@@ -158,8 +154,6 @@ class PrivateChannelContainer extends PureComponent {
     }
 
     resetDescriptionMessage() {
-        debugger;
-
         return setDescriptionMessageForChannel(forumConst.itemTypes.privateChannel, null, this.props.currentPrivateChannel)
             .then(result => true)
             .catch(error => {

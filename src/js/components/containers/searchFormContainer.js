@@ -30,8 +30,6 @@ class SearchFormContainer extends PureComponent {
     }
 
     doSearch(searchText, searchType) {
-        debugger;
-
         this.searchText = searchText;
         this.searchType = searchType;
 
@@ -42,8 +40,6 @@ class SearchFormContainer extends PureComponent {
 
         return getSearchResults(searchText, searchType)
             .then(results => {
-                debugger;
-
                 if (results) {
                     switch (searchType) {
 

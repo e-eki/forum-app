@@ -46,12 +46,10 @@ export default class InfoForm extends PureComponent {
     }
 
     resetInfoItem() {
-        debugger;
         this.props.setCurrentInfoItem(null);
     }
 
     deleteItem() {
-        debugger;
         return Promise.resolve(this.props.deleteItem(this.props.currentInfoItem))
             .then(result => {
                 this.resetInfoItem();  //?
@@ -63,17 +61,14 @@ export default class InfoForm extends PureComponent {
     }
 
     editItem() {
-        debugger;
         this.props.setModifiableItem(this.props.currentInfoItem);
     }
 
     moveItem() {
-        debugger;
         this.props.setMovingItem(this.props.currentInfoItem);
     }
 
     setDescriptionMessage() {
-        debugger;
         if (this.props.setDescriptionMessage) {
             this.props.setDescriptionMessage(this.props.currentInfoItem);
         }
@@ -110,7 +105,6 @@ export default class InfoForm extends PureComponent {
                             />
         }
 
-        debugger;
         let descriptionButtonBlock = null;
         let editButtonBlock = null;
         let moveButtonBlock = null;
