@@ -67,8 +67,8 @@ export function getPrivateChannelByRecipientId(recipientId) {
 			debugger;
 			const tasks = [];
 
-			if (response.data && response.data.length) {
-				const privateChannel = response.data[0];
+			if (response.data) {
+				const privateChannel = response.data;
 				
 				tasks.push(privateChannel);
 			}

@@ -152,6 +152,7 @@ const mapStateToProps = function(store) {
         movingMessage: store.messageState.get('movingMessage'),
         parentItemsList: store.modifyingState.get('parentItemsList'),
         //userId: store.authState.get('userId'),
+        currentUserInfo: store.userInfoState.get('currentUserInfo'),
 
         accessToken: store.authState.get('accessToken'),
         userRole: store.authState.get('userRole'),
