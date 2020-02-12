@@ -7,6 +7,7 @@ import { setCurrentSubSection } from '../actions/subSectionActions';
 import { setAlertData } from '../actions/alertDataActions';
 import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
 import forumConst from '../constants/forumConst';
+import appConst from '../constants/appConst';
 
 // получение по сокетам действий, связанных с подразделами
 

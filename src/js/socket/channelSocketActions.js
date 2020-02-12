@@ -6,6 +6,7 @@ import * as channelActions from '../actions/channelActions';
 import { setAlertData } from '../actions/alertDataActions';
 import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
 import forumConst from '../constants/forumConst';
+import appConst from '../constants/appConst';
 import { getUserId } from '../utils/authUtils';
 
 // получение по сокетам действий, связанных с чатами

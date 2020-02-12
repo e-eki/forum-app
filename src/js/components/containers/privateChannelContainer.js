@@ -63,8 +63,7 @@ class PrivateChannelContainer extends PureComponent {
                 else {
                     this.props.setCurrentPrivateChannel(null);  //??
                     return true;
-                }
-                
+                }  
         }
 
         //return this.getPrivateChannel();
@@ -72,10 +71,15 @@ class PrivateChannelContainer extends PureComponent {
 
     updateNewPrivateMessagesCount() {
         debugger;
-        if (this.props.newPrivateMessagesCount &&   //todo: check!
+        if (this.props.newPrivateMessagesCount &&
             this.props.currentPrivateChannel &&
             this.props.currentPrivateChannel.newMessagesCount) {
-                const newCount = this.props.newPrivateMessagesCount - this.props.currentPrivateChannel.newMessagesCount;
+                let newCount = this.props.newPrivateMessagesCount - this.props.currentPrivateChannel.newMessagesCount;
+
+                if (newCount < 0) {   // костылик от багов
+                    newCount = 0;
+                }
+
                 this.props.setNewPrivateMessagesCount(newCount);
         }
     }

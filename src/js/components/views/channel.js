@@ -31,8 +31,8 @@ export default class Channel extends PureComponent {
     showUserInfo(event) {
         event.preventDefault();
 
-        if (this.props.channel.recipientId) {
-            this.props.showUserInfoById(this.props.channel.recipientId);
+        if (this.props.channel.senderId) {
+            this.props.showUserInfoById(this.props.channel.senderId);
         }
     }
 
@@ -124,7 +124,7 @@ export default class Channel extends PureComponent {
 
                                         <div>{this.props.channel.description}</div>
                                         ----
-                                        {isPrivate ? <Link to="/" onClick = {this.showUserInfo}>Получатель</Link> : null}
+                                        {isPrivate ? <Link to="/" onClick = {this.showUserInfo}>Отправитель</Link> : null}
                                     </div>;
 
                 if (this.props.channel.lastMessage) {

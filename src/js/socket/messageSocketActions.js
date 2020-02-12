@@ -5,10 +5,11 @@ import { incrementNewPrivateMessagesCount } from '../actions/notificationActions
 import { setAlertData } from '../actions/alertDataActions';
 import * as messageActions from '../actions/messageActions';
 import { setCurrentChannel } from '../actions/channelActions';
-import { setCurrentPrivateChannel } from '../actions/privateChannelActions';
+import { setCurrentPrivateChannel, setPrivateChannels } from '../actions/privateChannelActions';
 import { setCurrentSubSection } from '../actions/subSectionActions';
 import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
 import forumConst from '../constants/forumConst';
+import appConst from '../constants/appConst';
 import { getUserId } from '../utils/authUtils';
 
 // получение по сокетам действий, связанных с сообщениями
@@ -30,8 +31,10 @@ export function updateMessage(store, action) {
 		action.data.type = forumConst.itemTypes.message;
 		const updatedMessage = getEditDeleteRightsForItem(action.data);
 
-		// если это личное сообщение и мы не в чате, куда оно пришло, - то инкрементим общее кол-во личных сообщений
+		// если это личное сообщение и мы не в чате, куда оно пришло, и юзер не отправитель
+		// - то инкрементим общее кол-во личных сообщений
 		if (action.recipientId &&
+			(updatedMessage.senderId !== userId) &&
 			!(currentPrivateChannel &&
 			(currentPrivateChannel.id === action.channelId))) {
 				store.dispatch(incrementNewPrivateMessagesCount());
@@ -98,6 +101,9 @@ export function updateMessage(store, action) {
 				}
 
 				const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(currentPrivateChannel);
+
+				// newCurrentPrivateChannel.newMessagesCount++;
+				// newCurrentPrivateChannel.lastMessage = updatedMessage;
 				
 				if (action.messageId === currentPrivateChannel.descriptionMessageId) {  //?
 					newCurrentPrivateChannel.descriptionMessage = updatedMessage;
@@ -117,7 +123,9 @@ export function updateMessage(store, action) {
 				newPrivateChannel.newMessagesCount = privateChannel.newMessagesCount ? privateChannel.newMessagesCount++ : 1;
 
 				const index = privateChannels.indexOf(privateChannel);
-				privateChannels[index] = newPrivateChannel;
+				//privateChannels[index] = newPrivateChannel;
+				privateChannels.splice(index, 1);
+				privateChannels.unshift(newPrivateChannel);
 
 				const newPrivateChannels = privateChannels.slice();
 				store.dispatch(setPrivateChannels(newPrivateChannels));
@@ -130,10 +138,13 @@ export function updateMessage(store, action) {
 			if (channel) {
 				const newChannel = copyUtils.copyChannel(channel);
 				newChannel.lastMessage = updatedMessage;
-				newChannel.newMessagesCount = channel.newMessagesCount ? channel.newMessagesCount++ : 1;
+				newChannel.newMessagesCount = channel.newMessagesCount ? (channel.newMessagesCount + 1) : 1;
 
+				debugger;
 				const index = currentSubSection.channels.indexOf(channel);
-				currentSubSection.channels[index] = newChannel;
+				// currentSubSection.channels[index] = newChannel;
+				currentSubSection.channels.splice(index, 1);
+				currentSubSection.channels.unshift(newChannel);
 
 				const newCurrentSubSection = copyUtils.copySubSection(currentSubSection);
 				store.dispatch(setCurrentSubSection(newCurrentSubSection));

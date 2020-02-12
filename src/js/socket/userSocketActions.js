@@ -5,6 +5,7 @@ import { setAlertData } from '../actions/alertDataActions';
 import * as userInfoActions from '../actions/userInfoActions';
 import { setUserRole } from '../api/authApi';
 import { getUserId, getUserRole } from '../utils/authUtils';
+import appConst from '../constants/appConst';
 
 // получение по сокетам действий, связанных с данными юзера
 

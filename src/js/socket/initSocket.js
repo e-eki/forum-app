@@ -2,6 +2,7 @@
 
 import io from 'socket.io-client';
 import apiConst from '../constants/apiConst';
+import appConst from '../constants/appConst';
 import * as actionTypes from '../actions/actionTypes';
 import store from '../store/store';
 import * as sectionSocketActions from './sectionSocketActions';
