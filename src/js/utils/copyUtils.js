@@ -52,6 +52,7 @@ export function copyMessage(sourse) {
 	result.date = sourse.date || null;
 	result.channelId = sourse.channelId || null;
 	result.senderId = sourse.senderId;
+	result.senderName = sourse.senderName;
 	result.recipientId = sourse.recipientId;
 
 	return result;

@@ -17,6 +17,8 @@ import { getUserId } from '../utils/authUtils';
 // обновление сообщения
 export function updateMessage(store, action) {
 	debugger;
+	//todo: после редактирования закрепленного сообщения у отправителя появляется оповещение об изменении, его не должно быть
+	// todo: и после этого пропадает название чата (?)
 
 	if (action.messageId && action.channelId && action.data) {
 		const currentSubSection = store.getState().subSectionState.get('currentSubSection');

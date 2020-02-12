@@ -15,8 +15,8 @@ export default class ModifyForm extends Component {
         this.state = {
             name: this.props.modifiableItem.name || '',
             description: this.props.modifiableItem.description || '',
-            text: this.props.modifiableItem.text || '',  //?
-            birthDate: this.props.modifiableItem.birthDate ? getDateStringForInput(this.props.modifiableItem.birthDate) : null,
+            text: this.props.modifiableItem.text || '',
+            birthDate: this.props.modifiableItem.birthDate ? getDateStringForInput(this.props.modifiableItem.birthDate) : '',
             city: this.props.modifiableItem.city || '',
             profession: this.props.modifiableItem.profession || '',
             hobby: this.props.modifiableItem.hobby || '',

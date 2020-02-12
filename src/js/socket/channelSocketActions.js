@@ -108,6 +108,8 @@ export function deleteChannel(store, action) {
 		const modifiableChannel = store.getState().channelState.get('modifiableChannel');
 		const movingChannel = store.getState().channelState.get('movingChannel');
 
+		//todo: при перемещении чата тоже приходит действие о его удалении,
+		// сделать, чтоб сообщение выводилось - о перемещении
 		if (currentInfoChannel &&
 			currentInfoChannel.id === action.channelId) {
 				store.dispatch(channelActions.setCurrentInfoChannel(null));

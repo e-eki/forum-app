@@ -81,9 +81,9 @@ export function deleteSection(store, action) {
 			(currentSection.id === action.sectionId)) {
 				store.dispatch(setCurrentSection(null));
 
-				store.dispatch(setAlertData({  //?
+				store.dispatch(setAlertData({
 					message: 'Этот раздел был удалён.',
-					link: appConst.appConst.defaultLink,
+					link: appConst.defaultLink,
 				}));
 		}
 		else if (sections) {
