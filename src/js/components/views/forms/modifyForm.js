@@ -249,8 +249,13 @@ export default class ModifyForm extends Component {
 
     // ввод данных
 	changeData(event) {
+        debugger;
         const name = event.target.name;
-        const value = event.target.value;
+        let value = event.target.value;
+
+        if (name === 'inBlackList') {
+            value = !this.state.inBlackList;
+        }
 
         this.setState({
             [name]: value
@@ -269,7 +274,8 @@ export default class ModifyForm extends Component {
 
                 case forumConst.itemTypes.userInfo:
                     modifiableItem.role = this.state.role;
-                    modifiableItem.inBlackList = (this.state.inBlackList ? true : false);  //т.к. значения 'on'/'off'
+                    // modifiableItem.inBlackList = ((this.state.inBlackList === 'on') ? true : false);  //т.к. значения 'on'/'off'
+                    modifiableItem.inBlackList = this.state.inBlackList;
 
                     modifiableItem.name = this.state.name;
                     modifiableItem.birthDate = this.state.birthDate;

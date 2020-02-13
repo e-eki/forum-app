@@ -60,6 +60,9 @@ export function getEditDeleteRightsForItem(item) {
 				if (item.senderId === userId) {
 					canEdit = true;
 				}
+
+				//todo: в созданном юзером чате юзер не может закрепить только что созданное сообщение,
+				// для этого надо перезайти в чат. Убрать баг.
 			}
 			break;
 

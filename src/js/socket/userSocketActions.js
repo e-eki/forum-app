@@ -13,6 +13,10 @@ import appConst from '../constants/appConst';
 export function updateUser(store, action) {
 	debugger;
 
+	// todo: сделать обновление данных юзера
+	// todo: сделать обновление страницы при изменении внесения юзера в ЧС и роли юезра
+	//todo: оповещение 'Редактируемые данные пользователя были изменены.' появляется не всегда
+
 	if (action.userId && action.data) {
 		const currentUserInfo = store.getState().userInfoState.get('currentUserInfo');
 		const modifiableUserInfo = store.getState().userInfoState.get('modifiableUserInfo');
@@ -47,6 +51,8 @@ export function updateUser(store, action) {
 			if (userRole !== action.data.role) {
 				setUserRole(action.data.role);
 			}
+
+			// todo: сделать корректное оповещение при удалении из ЧС
 			if (action.data.inBlackList) {
 				const alertData = {
 					message: 'Вы были добавлены в чёрный список пользователей форума. Ваши возможности на форуме будут ограничены.',
