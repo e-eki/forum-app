@@ -155,9 +155,9 @@ export default class RegistrationForm extends Component {
 
                                         <button className = 'button button_reg auth-utils-form__button' onClick = {this.clickRegistrationButton}>Зарегистрироваться</button>
 
-                                        <Link className = 'auth-utils-form_link' to={appConst.recoveryPasswordLink}>
+                                        {/* <Link className = 'auth-utils-form_link' to={appConst.recoveryPasswordLink}>
                                             Забыли пароль?	
-                                        </Link>
+                                        </Link> */}
 
                                         <Link className = 'auth-utils-form_link' to={appConst.emailConfirmLink}>
                                             Не пришло письмо?	

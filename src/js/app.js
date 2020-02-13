@@ -48,6 +48,8 @@ export default class App extends Component {
 
         //todo: <Route exact path="/sections" component={MainContainer} />
         //todo: <Redirect to="/sections" />
+
+        // todo: ???не переходит в ResetPasswordFormContainer по ссылке из письма со сбросом пароля.
         return (
           <div className="app">
             <Header className = 'content__header '/>
@@ -72,7 +74,7 @@ export default class App extends Component {
                   <Route path="/registration" component={RegistrationFormContainer} />
                   <Route path="/recovery-password" component={RecoveryPasswordFormContainer} />
                   <Route path="/email-confirm" component={EmailConfirmFormContainer} />
-                  <Route path="/reset-password" component={ResetPasswordFormContainer} /> 
+                  <Route exact path="/reset-password/:access" component={ResetPasswordFormContainer} />
 
                   <Route exact path="/sections/:id" component={SectionContainer} />
                   <Route exact path="/subsections/:id" component={SubSectionContainer} />
