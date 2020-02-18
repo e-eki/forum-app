@@ -2,6 +2,7 @@
 
 import * as actionTypes from './actionTypes';
 
+// список разделов
 export function setSections(data) {
 	return {
 	  type: actionTypes.SET_SECTIONS,
@@ -9,6 +10,7 @@ export function setSections(data) {
 	};
 }
 
+// просматриваемый раздел
 export function setCurrentSection(data) {
 	return {
 	  type: actionTypes.SET_CURRENT_SECTION,
@@ -16,6 +18,7 @@ export function setCurrentSection(data) {
 	};
 }
 
+// раздел, информация которого открыта для просмотра
 export function setCurrentInfoSection(data) {
 	return {
 	  type: actionTypes.SET_CURRENT_INFO_SECTION,
@@ -23,6 +26,7 @@ export function setCurrentInfoSection(data) {
 	};
 }
 
+// раздел, информация которого открыта для редактирования
 export function setModifiableSection(data) {
 	return {
 	  type: actionTypes.SET_MODIFIABLE_SECTION,
@@ -30,6 +34,7 @@ export function setModifiableSection(data) {
 	};
 }
 
+// раздел, местоположение которого на форуме редактируется
 export function setMovingSection(data) {
 	return {
 	  type: actionTypes.SET_MOVING_SECTION,

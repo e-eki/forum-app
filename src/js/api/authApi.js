@@ -10,6 +10,7 @@ import { getFingerprint } from '../utils/fingerprintUtils';
 import * as authUtils from '../utils/authUtils';
 import { joinRoom, leaveRoom } from '../actions/remoteActions';
 
+// вход через соцсеть
 export function socialLogin(serviceName) {
 	debugger;
 	let socialLink;
@@ -68,6 +69,7 @@ export function socialLogin(serviceName) {
 		})
 };
 
+// вход через сайт
 export function login(email, password) {
 	debugger;
 	//get fingerprint
@@ -95,6 +97,7 @@ export function login(email, password) {
 		})
 };
 
+// выход с сайта
 export function logout() {
 	debugger;
 
@@ -118,6 +121,7 @@ export function logout() {
 		})
 };
 
+// регистрация на сайте
 export function registration(email, login, password) {
 	debugger;
 
@@ -134,6 +138,7 @@ export function registration(email, login, password) {
 		.then(response => true)
 };
 
+// запрос на письмо с инструкциями по смене пароля
 export function recoveryPassword(email) {
 	debugger;
 
@@ -148,6 +153,7 @@ export function recoveryPassword(email) {
 		.then(response => true)
 };
 
+// запрос на повторное письмо для подтверждения имейла
 export function emailConfirm(email) {
 	debugger;
 
@@ -162,6 +168,7 @@ export function emailConfirm(email) {
 		.then(response => true)
 };
 
+// сброс пароля
 export function resetPassword(accessToken, password) {
 	debugger;
 	return Promise.resolve(true)
@@ -187,6 +194,8 @@ export function resetPassword(accessToken, password) {
 		})
 };
 
+// получение аксесс токена с неистекшим сроком жизни или выброс ошибки
+// (если текущий аксесс токен не протух, то берем его. Если протух, то отправляем на сервер запрос на рефреш токенов.)
 export function getActualAccessToken() {
 	debugger;
 	//const accessToken = authUtils.getAccessToken();
@@ -243,6 +252,7 @@ export function getActualAccessToken() {
 		})
 };
 
+// сохранить роль юзера
 export function setUserRole(role) {
 	debugger;
 	store.dispatch(authActions.setUserRole(role));

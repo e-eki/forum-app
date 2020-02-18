@@ -4,6 +4,7 @@ import * as actionTypes from './actionTypes';
 
 //---ROOM
 
+// присоединиться к комнате (с использованием сокетов на сервере)
 export function joinRoom(id, roomType = null, userId = null) {
 	return {
 	  type: actionTypes.JOIN_ROOM,
@@ -14,6 +15,7 @@ export function joinRoom(id, roomType = null, userId = null) {
 	};
 }
 
+// выйти из комнаты (с использованием сокетов на сервере)
 export function leaveRoom(id, roomType = null, userId = null) {
 	return {
 	  type: actionTypes.LEAVE_ROOM,
@@ -26,6 +28,7 @@ export function leaveRoom(id, roomType = null, userId = null) {
 
 //---SECTION
 
+// добавление или редактирование раздела
 export function updateSectionById(sectionId) {
 	return {
 	  type: actionTypes.UPDATE_SECTION_BY_ID,
@@ -34,6 +37,7 @@ export function updateSectionById(sectionId) {
 	};
 }
 
+// удаление раздела
 export function deleteSectionById(sectionId) {
 	return {
 	  type: actionTypes.DELETE_SECTION_BY_ID,
@@ -44,6 +48,7 @@ export function deleteSectionById(sectionId) {
 
 //---SUBSECTION
 
+// добавление или редактирование подраздела
 export function updateSubSectionById(subSectionId, sectionId) {
 	return {
 	  type: actionTypes.UPDATE_SUBSECTION_BY_ID,
@@ -53,6 +58,7 @@ export function updateSubSectionById(subSectionId, sectionId) {
 	};
 }
 
+// удаление подраздела
 export function deleteSubSectionById(subSectionId, sectionId) {
 	return {
 	  type: actionTypes.DELETE_SUBSECTION_BY_ID,
@@ -64,6 +70,7 @@ export function deleteSubSectionById(subSectionId, sectionId) {
 
 //---CHANNEL
 
+// добавление или редактирование чата
 export function updateChannelById(channelId, subSectionId) {
 	return {
 	  type: actionTypes.UPDATE_CHANNEL_BY_ID,
@@ -73,6 +80,7 @@ export function updateChannelById(channelId, subSectionId) {
 	};
 }
 
+// удаление чата
 export function deleteChannelById(channelId, subSectionId) {
 	return {
 	  type: actionTypes.DELETE_CHANNEL_BY_ID,
@@ -84,6 +92,7 @@ export function deleteChannelById(channelId, subSectionId) {
 
 //---MESSAGE
 
+// добавление или редактирование сообщения
 export function updateMessageById(messageId, channelId, recipientId) {
 	return {
 	  type: actionTypes.UPDATE_MESSAGE_BY_ID,
@@ -94,6 +103,7 @@ export function updateMessageById(messageId, channelId, recipientId) {
 	};
 }
 
+// удаление сообщения
 export function deleteMessageById(messageId, channelId) {
 	return {
 	  type: actionTypes.DELETE_MESSAGE_BY_ID,
@@ -105,6 +115,7 @@ export function deleteMessageById(messageId, channelId) {
 
 //---PRIVATE-CHANNEL
 
+// добавление или редактирование личного чата
 export function updatePrivateChannelById(privateChannelId, senderId, recipientId) {
 	return {
 	  type: actionTypes.UPDATE_PRIVATE_CHANNEL_BY_ID,
@@ -115,6 +126,7 @@ export function updatePrivateChannelById(privateChannelId, senderId, recipientId
 	};
 }
 
+// удаление личного чата
 export function deletePrivateChannelById(privateChannelId, senderId, recipientId) {
 	return {
 	  type: actionTypes.DELETE_PRIVATE_CHANNEL_BY_ID,
@@ -127,6 +139,7 @@ export function deletePrivateChannelById(privateChannelId, senderId, recipientId
 
 //---USER
 
+// редактирование данных юзера
 export function updateUser(userId, senderId) {  //?
 	return {
 	  type: actionTypes.UPDATE_USER,

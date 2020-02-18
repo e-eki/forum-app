@@ -2,6 +2,7 @@
 
 import * as actionTypes from './actionTypes';
 
+// просматриваемый подраздел
 export function setCurrentSubSection(data) {
 	return {
 	  type: actionTypes.SET_CURRENT_SUBSECTION,
@@ -9,6 +10,7 @@ export function setCurrentSubSection(data) {
 	};
 }
 
+// подраздел, информация которого открыта для просмотра
 export function setCurrentInfoSubSection(data) {
 	return {
 	  type: actionTypes.SET_CURRENT_INFO_SUBSECTION,
@@ -16,6 +18,7 @@ export function setCurrentInfoSubSection(data) {
 	};
 }
 
+// подраздел, информация которого открыта для редактирования
 export function setModifiableSubSection(data) {
 	return {
 	  type: actionTypes.SET_MODIFIABLE_SUBSECTION,
@@ -23,6 +26,7 @@ export function setModifiableSubSection(data) {
 	};
 }
 
+// подраздел, местоположение которого на форуме редактируется
 export function setMovingSubSection(data) {
 	return {
 	  type: actionTypes.SET_MOVING_SUBSECTION,

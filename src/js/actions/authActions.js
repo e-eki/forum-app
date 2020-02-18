@@ -2,6 +2,7 @@
 
 import * as actionTypes from './actionTypes';
 
+// id юзера
 export function setUserId(data) {
 	return {
 	  type: actionTypes.SET_USER_ID,
@@ -9,6 +10,7 @@ export function setUserId(data) {
 	};
 }
 
+// роль юзера
 export function setUserRole(data) {
 	return {
 	  type: actionTypes.SET_USER_ROLE,
@@ -16,6 +18,7 @@ export function setUserRole(data) {
 	};
 }
 
+// аксесс токен
 export function setAccessToken(data) {
 	return {
 	  type: actionTypes.SET_ACCESS_TOKEN,
@@ -30,6 +33,7 @@ export function setAccessToken(data) {
 // 	};
 // }
 
+// время жизни аксесс токена
 export function setAccessTokenExpiresIn(data) {
 	return {
 	  type: actionTypes.SET_ACCESS_TOKEN_EXPIRES_IN,
