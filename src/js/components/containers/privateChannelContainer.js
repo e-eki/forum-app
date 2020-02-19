@@ -17,14 +17,19 @@ import { setDescriptionMessageForChannel } from '../../utils/channelUtils';
 import * as baseUtils from '../../utils/baseUtils';
 import { getUserId } from '../../utils/authUtils';
 
+// контейнер для личного чата
 class PrivateChannelContainer extends PureComponent {
 
     constructor(props) {
         super(props);
 
+        // id юзера-получателя
         this.recipientId = null;
+        // id личного чата с юзером-получателем (если переходили из информации юзера - "Написать личное сообщение")
         this.recipientChannelId = null;
+        // id личного чата (если переходили из "Личных сообщений")
         this.channelId = null;
+        // тип комнаты (для отправки событий на сервер)
         this.roomType = forumConst.itemTypes.privateChannel;
 
         this.updateNewPrivateMessagesCount = this.updateNewPrivateMessagesCount.bind(this);
@@ -65,10 +70,10 @@ class PrivateChannelContainer extends PureComponent {
                     return true;
                 }  
         }
-
-        //return this.getPrivateChannel();
     }
 
+    // обновить кол-во новых личных сообщений (отображается в меню)
+    // (при просмотре чата должно уменьшиться на кол-во новых сообщений в этом чате)
     updateNewPrivateMessagesCount() {
         debugger;
         if (this.props.newPrivateMessagesCount &&
@@ -84,21 +89,26 @@ class PrivateChannelContainer extends PureComponent {
         }
     }
 
+    // получить личный чат
     getPrivateChannel() {
         debugger;
 
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             const newChannelId = this.props.match.params.id;
 
+            // если есть id личного чата
             if (newChannelId && (newChannelId !== this.channelId)) {
                 this.resetPrivateChannelContainer();
                 this.channelId = newChannelId;
 
+                // то получаем личный чат по id
                 return privateChannelApi.getPrivateChannelById(newChannelId)
                     .then(channel => {
 
                         if (channel) {
                             const userId = getUserId();
+
+                            // отправляем на сервер событие о присоединении к комнате с id личного чата
                             this.props.joinRoom(channel.id, this.roomType, userId);
                             this.channelId = channel.id;
 
@@ -113,6 +123,7 @@ class PrivateChannelContainer extends PureComponent {
                     })
             }
         }
+        // если есть id юзера-получателя
         else if (this.props.location && this.props.location.search) {
             const newRecipientId = new URLSearchParams(this.props.location.search).get("recipientId");
 
@@ -120,12 +131,15 @@ class PrivateChannelContainer extends PureComponent {
                 this.resetPrivateChannelContainer();
                 this.recipientId = newRecipientId;
 
+                // то получаем личный чат по recipientId
                 return privateChannelApi.getPrivateChannelByRecipientId(newRecipientId)
                     .then(privateChannel => {
                         debugger;
 
                         if (privateChannel) {
                             const userId = getUserId();
+
+                            // отправляем на сервер событие о присоединении к комнате с id личного чата
                             this.props.joinRoom(privateChannel.id, this.roomType, userId);
                             this.recipientChannelId = privateChannel.id;
 
@@ -142,6 +156,7 @@ class PrivateChannelContainer extends PureComponent {
         }
     }
 
+    // сброс контейнера (?нужен для корректного перехода вперед-назад по страницам)
     resetPrivateChannelContainer() {
         debugger;
 
@@ -163,6 +178,7 @@ class PrivateChannelContainer extends PureComponent {
         this.props.resetCurrentPrivateChannel();
     }
 
+    // закрепить сообщение в чате
     setDescriptionMessage(message) {
         return setDescriptionMessageForChannel(forumConst.itemTypes.privateChannel, message, this.props.currentPrivateChannel)
             .then(result => true)
@@ -172,6 +188,7 @@ class PrivateChannelContainer extends PureComponent {
             })
     }
 
+    // открепить сообщение в чате
     resetDescriptionMessage() {
         return setDescriptionMessageForChannel(forumConst.itemTypes.privateChannel, null, this.props.currentPrivateChannel)
             .then(result => true)
@@ -182,12 +199,10 @@ class PrivateChannelContainer extends PureComponent {
     }
     
     render() {
-        //console.log('render privateChannelContainer');
         debugger;
 
         return (
             <div>
-
                 <Channel
                     channel = {this.props.currentPrivateChannel}
                     type = {forumConst.itemTypes.privateChannel}
@@ -244,12 +259,6 @@ const mapDispatchToProps = function(dispatch) {
         setNewPrivateMessagesCount: function(data) {
             dispatch(setNewPrivateMessagesCount(data));
         },
-        // modifyMessage: function(item) {
-        //     messageApi.modifyMessage(item);
-        // },
-        // deleteMessage: function(item) {
-        //     messageApi.deleteMessage(item);
-        // },
         setModifiableMessage: function(item) {
             dispatch(setModifiableMessage(item));
         },

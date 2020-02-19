@@ -20,7 +20,6 @@ export default class UserInfoForm extends PureComponent {
     }
 
     render() {
-        //console.log('render UserInfoForm');
         const className = 'user-info ' + (this.props.className ? this.props.className : '');
 
         debugger;

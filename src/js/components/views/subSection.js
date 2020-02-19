@@ -20,7 +20,6 @@ export default class SubSection extends PureComponent {
     }
 
     render() {
-        //console.log('render subSection');
         const className = 'subsection ' + (this.props.className ? this.props.className : '');
 
         debugger;

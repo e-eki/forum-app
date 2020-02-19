@@ -6,22 +6,32 @@ import forumConst from '../../../constants/forumConst';
 import * as baseUtils from '../../../utils/baseUtils';
 import { getDateStringForInput } from '../../../utils/dateUtils';
 
-// Форма для создания/редактирования раздела
+// Форма для создания/редактирования элемента
 export default class ModifyForm extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            // наименование/имя-фамилия
             name: this.props.modifiableItem.name || '',
+            // описание
             description: this.props.modifiableItem.description || '',
+            // текст
             text: this.props.modifiableItem.text || '',
+            // дата рождения
             birthDate: this.props.modifiableItem.birthDate ? getDateStringForInput(this.props.modifiableItem.birthDate) : '',
+            // город
             city: this.props.modifiableItem.city || '',
+            // профессия
             profession: this.props.modifiableItem.profession || '',
+            // хобби
             hobby: this.props.modifiableItem.hobby || '',
+            // подпись под аватаром
             captionText: this.props.modifiableItem.captionText || '',
+            // роль юзера
             role: this.props.modifiableItem.role || null,
+            // находится ли юзер в черном списке форума
             inBlackList: this.props.modifiableItem.inBlackList || false,
         }
 
@@ -36,6 +46,7 @@ export default class ModifyForm extends Component {
         return true; //todo??
     }
 
+    // получить список ролей юзера для выпадайки
     getRoleOptions() {
         const options = [];
         let i = 0;
@@ -73,6 +84,7 @@ export default class ModifyForm extends Component {
         return options;
     }
 
+    // 
     initItemInputs() {
         let itemInputs;      
 
@@ -307,7 +319,6 @@ export default class ModifyForm extends Component {
     }
 
     render() {
-        //console.log('render modifyForm');
         const className = 'modify-form ' + (this.props.className ? this.props.className : '');
 
         debugger;

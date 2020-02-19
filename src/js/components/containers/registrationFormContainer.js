@@ -8,6 +8,7 @@ import { setAlertData } from '../../actions/alertDataActions';
 import appConst from '../../constants/appConst';
 import * as baseUtils from '../../utils/baseUtils';
 
+// контейнер для формы регистрации на форуме
 class RegistrationFormContainer extends PureComponent {
 
     constructor(props) {
@@ -16,6 +17,7 @@ class RegistrationFormContainer extends PureComponent {
         this.doRegistration = this.doRegistration.bind(this);
     }
 
+    // отправить запрос на регистрацию
     doRegistration(email, login, password) {
         return registration(email, login, password)
 			.then(response => {

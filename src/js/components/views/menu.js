@@ -57,7 +57,6 @@ export default class Menu extends PureComponent {
     // }
 
     render() {
-        //console.log('render menu');
         debugger;
         const className = 'menu ' + (this.props.className ? this.props.className : '');
 

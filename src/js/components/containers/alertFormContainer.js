@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import AlertForm from '../views/forms/alertForm';
 import { setAlertData } from '../../actions/alertDataActions';
 
+// контейнер для формы с оповещениями для юзера
 class AlertFormContainer extends PureComponent {
 
     constructor(props) {

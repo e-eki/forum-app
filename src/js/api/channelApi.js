@@ -8,6 +8,7 @@ import apiConst from '../constants/apiConst';
 import { getActualAccessToken } from '../api/authApi';
 import { showErrorMessage } from '../utils/baseUtils';
 
+// получить список всех чатов (для списка чатов для перемещения сообщения)
 export function getChannels() {
 	return Promise.resolve(true)
 		.then(() => {
@@ -35,6 +36,7 @@ export function getChannels() {
 		});
 }
 
+// получить список чатов, в названии или описании которых содержится данный текст
 export function getChannelsByText(searchText) {
 	return axios.get(`${apiConst.channelApi}?searchText=${searchText}`)
 		.then(response => {
@@ -43,6 +45,7 @@ export function getChannelsByText(searchText) {
 		});
 }
 
+// получить чат по его id
 export function getChannelById(id) {
 	return Promise.resolve(true)
 		.then(() => {
@@ -70,6 +73,7 @@ export function getChannelById(id) {
 		});
 }
 
+// удалить чат
 export function deleteChannel(item) {
 	debugger;
 	return Promise.resolve(true)
@@ -99,6 +103,7 @@ export function deleteChannel(item) {
 		})
 		.spread((channelId, subSectionId, response) => {
 			debugger;
+			// отправляем на сервер событие об удалении чата
 			store.dispatch(remoteActions.deleteChannelById(channelId, subSectionId));
 
 			return true;
@@ -106,6 +111,7 @@ export function deleteChannel(item) {
 		
 }
 
+// создание или редактирование чата
 export function modifyChannel(item) {
 	debugger;
 	return Promise.resolve(true)
@@ -146,8 +152,7 @@ export function modifyChannel(item) {
 				channelId = response.data.id;
 			}
 			
-			//store.dispatch(channelActions.setModifiableChannel(null));
-
+			// отправляем на сервер событие об изменении чата
 			store.dispatch(remoteActions.updateChannelById(channelId, subSectionId));
 
 			return true;
@@ -155,7 +160,7 @@ export function modifyChannel(item) {
 }
 
 
-
+// создать чат
 function _createChannel(channelData, accessToken) {
 	const options = {
 		method: 'POST',
@@ -167,6 +172,7 @@ function _createChannel(channelData, accessToken) {
 	return axios(options);
 }
 
+// редактировать чат
 function _updateChannel(channelData, accessToken) {
 	const options = {
 		method: 'PUT',

@@ -10,6 +10,7 @@ import appConst from '../../constants/appConst';
 import { getActualAccessToken } from '../../api/authApi';
 import * as baseUtils from '../../utils/baseUtils';
 
+// контейнер для формы сброса пароля
 class ResetPasswordFormContainer extends PureComponent {
 
     constructor(props) {
@@ -18,6 +19,7 @@ class ResetPasswordFormContainer extends PureComponent {
         this.doResetPassword = this.doResetPassword.bind(this);
     }
 
+    // изменить пароль
     doResetPassword(password) {
         debugger;
 
@@ -61,7 +63,7 @@ class ResetPasswordFormContainer extends PureComponent {
                 setAlertData = {this.props.setAlertData}
                 doResetPassword = {this.doResetPassword}
 
-                // accessToken = {this.props.accessToken}
+                // accessToken = {this.props.accessToken}  //?
                 // refreshToken = {this.props.refreshToken}
                 // accessTokenExpiresIn = {this.props.accessTokenExpiresIn}
             />

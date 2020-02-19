@@ -73,7 +73,6 @@ export default class ResetPasswordForm extends Component {
 	}
    
     render() {
-        //console.log('render resetPasswordForm');
         const className = 'reset-form ' + (this.props.className ? this.props.className : '');
 
         debugger;

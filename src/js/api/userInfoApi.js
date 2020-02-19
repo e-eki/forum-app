@@ -10,6 +10,7 @@ import { showErrorMessage } from '../utils/baseUtils';
 import { updateUser } from '../actions/remoteActions';
 import { getUserId } from '../utils/authUtils';
 
+// получить информацию юзеру по id юзера
 export function getUserInfoById(id) {
 	debugger;
 	return Promise.resolve(true)
@@ -42,6 +43,7 @@ export function getUserInfoById(id) {
 		})
 }
 
+// получить информацию юзера (по id, если чужая, или аксесс токену, если своя) и отобразить ее
 export function getUserInfoAndSetCurrentUserInfo(id, isOwnInfo) {
 	debugger;
 	return Promise.resolve(true)
@@ -90,6 +92,7 @@ export function getUserInfoAndSetCurrentUserInfo(id, isOwnInfo) {
 		})
 }
 
+// создание или редактирование информации юзера
 export function modifyUserInfo(item) {
 	debugger;
 
@@ -122,7 +125,9 @@ export function modifyUserInfo(item) {
 			debugger;
 			const senderId = getUserId();
 
-			if (item.role || item.inBlackList) {  //todo: сделать и для исключения из ЧС
+			// отправляем на сервер событие об изменении информации юзера
+			//todo: сделать и для исключения из ЧС
+			if (item.role || item.inBlackList) {
 				store.dispatch(updateUser(item.userId, senderId));   //?
 			}
 

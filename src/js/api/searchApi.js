@@ -8,6 +8,7 @@ import { getChannelsByText } from './channelApi';
 import { getMessagesByText } from './messageApi';
 import * as searchActions from '../actions/searchActions';
 
+// поиск по указанному тексту в выбранном типе (чаты или сообщения)
 export function getSearchResults(searchText, searchType) {
 	debugger;
 		

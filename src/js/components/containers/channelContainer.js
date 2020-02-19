@@ -10,18 +10,21 @@ import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import * as messageApi from '../../api/messageApi';
 import { setModifiableMessage, setCurrentInfoMessage, setMovingMessage } from '../../actions/messageActions';
 import { joinRoom, leaveRoom, deleteMessageById } from '../../actions/remoteActions';
-import { setCurrentInfoChannel, setCurrentChannel } from '../../actions/channelActions';
+import { setCurrentChannel } from '../../actions/channelActions';
 import { setDescriptionMessageForChannel } from '../../utils/channelUtils';
 import { setParentItemsList } from '../../actions/modifyingActions';
 import * as baseUtils from '../../utils/baseUtils';
 import { getUserId } from '../../utils/authUtils';
 
+// контейнер для чата
 class ChannelContainer extends PureComponent {
 
     constructor(props) {
         super(props);
 
+        // id чата
         this.channelId = null;
+        // тип комнаты (для отправки на сервер события)
         this.roomType = forumConst.itemTypes.channel;
 
         this.getChannel = this.getChannel.bind(this);
@@ -34,11 +37,13 @@ class ChannelContainer extends PureComponent {
     }
 
     componentWillUnmount() {
+        // при уходе со страницы чата отправляем на сервер событие о выходе из комнаты с id чата
         if (this.channelId) {
             const userId = getUserId();
             this.props.leaveRoom(this.channelId, this.roomType, userId);
         }
 
+        // и больше не показываем отображаемую информацию юзера
         if (this.props.currentUserInfo) {
             this.props.resetCurrentUserInfo();
         }
@@ -54,6 +59,7 @@ class ChannelContainer extends PureComponent {
                 return this.getChannel();
         }
 
+        // если сообщение в чате выбрано для перемещения, то нужно установить список чатов (для перемещения в нем)
         if (this.props.movingMessage &&
             !this.props.parentItemsList) {
                 return getChannels()
@@ -67,6 +73,7 @@ class ChannelContainer extends PureComponent {
         }
     }
 
+    // получить текущий чат
     getChannel() {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             const channelId = this.props.match.params.id;
@@ -75,9 +82,12 @@ class ChannelContainer extends PureComponent {
                 .then(channel => {
                     if (channel && channel.id) {
                         const userId = getUserId();
+
+                        // отправляем на сервер событие о присоединении к комнате с id чата
                         this.props.joinRoom(channel.id, this.roomType, userId);
                         this.channelId = channel.id;
 
+                        // устанавливаем текущий чат
                         this.props.setCurrentChannel(channel);
                     }
 
@@ -93,6 +103,7 @@ class ChannelContainer extends PureComponent {
         }
     }
 
+    // закрепить сообщение в чате
     setDescriptionMessage(message) {
         return setDescriptionMessageForChannel(forumConst.itemTypes.channel, message, this.props.currentChannel)
             .then(result => true)
@@ -102,6 +113,7 @@ class ChannelContainer extends PureComponent {
             })
     }
 
+    // открепить сообщение в чате
     resetDescriptionMessage() {
         return setDescriptionMessageForChannel(forumConst.itemTypes.channel, null, this.props.currentChannel)
             .then(result => true)
@@ -112,7 +124,6 @@ class ChannelContainer extends PureComponent {
     }
     
     render() {
-        //console.log('render ChannelContainer');
         debugger;
 
         return (
@@ -121,7 +132,6 @@ class ChannelContainer extends PureComponent {
                     channel = {this.props.currentChannel}
                     type = {forumConst.itemTypes.channel}
                     isCurrent = {true}
-                    //setCurrentInfoChannel = {this.props.setCurrentInfoChannel}    //????
 
                     currentInfoMessage = {this.props.currentInfoMessage}
                     modifiableMessage = {this.props.modifiableMessage}
@@ -170,15 +180,6 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentUserInfo: function() {
             dispatch(setCurrentUserInfo(null));
         },
-        // setCurrentInfoChannel: function(item) {
-        //     dispatch(setCurrentInfoChannel(item));
-        // },
-        // modifyMessage: function(item) {
-        //     messageApi.modifyMessage(item);
-        // },
-        // deleteMessage: function(item) {
-        //     messageApi.deleteMessage(item);
-        // },
         setModifiableMessage: function(item) {
             dispatch(setModifiableMessage(item));
         },

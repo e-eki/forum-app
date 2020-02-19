@@ -10,12 +10,15 @@ import Message from '../views/message';
 import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
 
+// контейнер для результатов поиска по форуму
 class SearchResultsContainer extends PureComponent {
 
     constructor(props) {
         super(props);
 
+        // тип поиска
         this.searchType = '';
+        // текст, по которому поиск
         this.searchText = '';
     }
 
@@ -35,7 +38,6 @@ class SearchResultsContainer extends PureComponent {
     }
     
     render() {
-        //console.log('render SearchResultsContainer');
         debugger;
 
         const items = [];

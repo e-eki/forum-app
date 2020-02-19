@@ -7,15 +7,17 @@ import { getSectionById, getSections } from '../../api/sectionApi';
 import * as subSectionApi from '../../api/subSectionApi';
 import * as subSectionActions from '../../actions/subSectionActions';
 import { joinRoom, leaveRoom, deleteSubSectionById } from '../../actions/remoteActions';
-import { setCurrentInfoSection, setCurrentSection } from '../../actions/sectionActions';
+import { setCurrentSection } from '../../actions/sectionActions';
 import { setParentItemsList } from '../../actions/modifyingActions';
 import * as baseUtils from '../../utils/baseUtils';
 
+// контейнер для раздела
 class SectionContainer extends PureComponent {
 
     constructor(props) {
         super(props);
 
+        // id раздела
         this.sectionId = null;
 
         this.getSection = this.getSection.bind(this);
@@ -26,10 +28,11 @@ class SectionContainer extends PureComponent {
     }
 
     componentWillUnmount() {
+        // при уходе со страницы раздела отправляем на сервер событие о выходе из комнаты с id раздела
         if (this.sectionId) {
             this.props.leaveRoom(this.sectionId);
         }
-        this.props.resetCurrentSection();  //?
+        this.props.resetCurrentSection();
         this.props.setParentItemsList(null);
     }
 
@@ -40,6 +43,7 @@ class SectionContainer extends PureComponent {
                 return this.getSection();
         }
 
+        // если подраздел в разделе выбран для перемещения, то нужно установить список разделов (для перемещения в нем)
         if (this.props.movingSubSection &&
             !this.props.parentItemsList) {
                 return getSections()
@@ -53,6 +57,7 @@ class SectionContainer extends PureComponent {
         }
     }
 
+    // получить раздел
     getSection() {
         if (this.props.match && this.props.match.params) {
             const id = this.props.match.params.id;
@@ -62,6 +67,7 @@ class SectionContainer extends PureComponent {
                     if (section) {
                         this.props.setCurrentSection(section);
                         
+                        // отправляем на сервер событие о присоединении к комнате с id раздела
                         this.props.joinRoom(section.id);
                         this.sectionId = section.id;
                     }
@@ -79,13 +85,11 @@ class SectionContainer extends PureComponent {
     }
     
     render() {
-        //console.log('render SectionContainer');
         debugger;
         return (
             <Section
                 section = {this.props.currentSection}
                 isCurrent = {true}
-                //setCurrentInfoSection = {this.props.setCurrentInfoSection}   //???
 
                 currentInfoSubSection = {this.props.currentInfoSubSection}
                 modifiableSubSection = {this.props.modifiableSubSection}
@@ -119,15 +123,6 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        // setCurrentInfoSection: function(item) {
-        //     dispatch(setCurrentInfoSection(item));
-        // },
-        // modifySubSection: function(item) {
-        //     subSectionApi.modifySubSection(item);
-        // },
-        // deleteSubSection: function(item) {
-        //     subSectionApi.deleteSubSection(item);
-        // },
         setModifiableSubSection: function(item) {
             dispatch(subSectionActions.setModifiableSubSection(item));
         },

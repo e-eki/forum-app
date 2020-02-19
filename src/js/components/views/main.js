@@ -14,7 +14,6 @@ export default class Main extends PureComponent {
     }
     
     render() {
-        //console.log('render main');
         const className = 'main ' + (this.props.className ? this.props.className : '');
 
         debugger;

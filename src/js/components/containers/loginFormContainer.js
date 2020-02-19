@@ -8,6 +8,7 @@ import { setAlertData } from '../../actions/alertDataActions';
 import * as baseUtils from '../../utils/baseUtils';
 import appConst from '../../constants/appConst';
 
+// контейнер для формы входа на форум
 class LoginFormContainer extends PureComponent {
 
     constructor(props) {
@@ -17,6 +18,7 @@ class LoginFormContainer extends PureComponent {
         this.doSocialLogin = this.doSocialLogin.bind(this);
     }
 
+    // вход через форум
     doLogin(email, password) {
 
 		return login(email, password)
@@ -51,6 +53,7 @@ class LoginFormContainer extends PureComponent {
 			})
 	}
     
+    // вход через соцсети
     doSocialLogin(service) {
 		debugger;
 

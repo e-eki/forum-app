@@ -308,7 +308,6 @@ export default class MovingForm extends Component {
     }
 
     render() {
-        //console.log('render movingForm');
         const className = 'moving-form ' + (this.props.className ? this.props.className : '');
         debugger;
 

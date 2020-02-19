@@ -8,6 +8,7 @@ import { setAlertData } from '../../actions/alertDataActions';
 import appConst from '../../constants/appConst';
 import * as baseUtils from '../../utils/baseUtils';
 
+// контейнер для формы отправки запроса на письмо с инструкциями по восстановлению пароля
 class RecoveryPasswordFormContainer extends PureComponent {
 
     constructor(props) {
@@ -16,6 +17,7 @@ class RecoveryPasswordFormContainer extends PureComponent {
         this.doRecoveryPassword = this.doRecoveryPassword.bind(this);
     }
 
+    // отправить письмо с инструкциями по восстановлению пароля
     doRecoveryPassword(email) {
         return recoveryPassword(email)
 			.then(response => {

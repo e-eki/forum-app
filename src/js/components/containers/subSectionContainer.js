@@ -5,17 +5,19 @@ import { connect } from 'react-redux';
 import SubSection from '../views/subSection';
 import { getSubSectionById, getSubSections } from '../../api/subSectionApi';
 import * as channelApi from '../../api/channelApi';
-import { setCurrentInfoSubSection, setCurrentSubSection } from '../../actions/subSectionActions';
+import { setCurrentSubSection } from '../../actions/subSectionActions';
 import { setModifiableChannel, setCurrentInfoChannel, setMovingChannel } from '../../actions/channelActions';
 import { joinRoom, leaveRoom, deleteChannelById } from '../../actions/remoteActions';
 import { setParentItemsList } from '../../actions/modifyingActions';
 import * as baseUtils from '../../utils/baseUtils';
 
+// контейнер для подраздела
 class SubSectionContainer extends PureComponent {
 
     constructor(props) {
         super(props);
 
+        // id подраздела
         this.subSectionId = null;
 
         this.getSubSection = this.getSubSection.bind(this);
@@ -26,11 +28,12 @@ class SubSectionContainer extends PureComponent {
     }
 
     componentWillUnmount() {
+        // при уходе со страницы подраздела отправляем на сервер событие о выходе из комнаты с id подраздела
         if (this.subSectionId) {
             this.props.leaveRoom(this.subSectionId);
         }
         
-        this.props.resetCurrentSubSection();  //?
+        this.props.resetCurrentSubSection();
         this.props.setParentItemsList(null);
     }
 
@@ -41,9 +44,10 @@ class SubSectionContainer extends PureComponent {
                 return this.getSubSection();
         }
 
+        // если чат в подразделе выбран для перемещения, то нужно установить список подразделов (для перемещения в нем)
         if (this.props.movingChannel &&
             !this.props.parentItemsList) {
-                return getSubSections()    //?
+                return getSubSections()
                     .then(subSections => {
                         this.props.setParentItemsList(subSections || []);
                     })
@@ -54,6 +58,7 @@ class SubSectionContainer extends PureComponent {
         }
     }
 
+    // получить подраздел
     getSubSection() {
         if (this.props.match && this.props.match.params) {
             const id = this.props.match.params.id;
@@ -63,6 +68,7 @@ class SubSectionContainer extends PureComponent {
                     if (subSection) {
                         this.props.setCurrentSubSection(subSection);
 
+                        // отправляем на сервер событие о присоединении к комнате с id подраздела
                         this.props.joinRoom(subSection.id);
                         this.subSectionId = subSection.id;
                     }
@@ -77,13 +83,10 @@ class SubSectionContainer extends PureComponent {
     }
     
     render() {
-        //console.log('render SubSectionContainer');
-
         return (
             <SubSection
                 subSection = {this.props.currentSubSection}
                 isCurrent = {true}
-                //setCurrentInfoSubSection = {this.props.setCurrentInfoSubSection}   //todo: info|modify check!!!
 
                 currentInfoChannel = {this.props.currentInfoChannel}
                 modifiableChannel = {this.props.modifiableChannel}
@@ -123,15 +126,6 @@ const mapDispatchToProps = function(dispatch) {
         resetCurrentSubSection: function() {
             dispatch(setCurrentSubSection(null));
         },
-        // setCurrentInfoSubSection: function(item) {
-        //     dispatch(setCurrentInfoSubSection(item));
-        // },
-        // modifyChannel: function(item) {
-        //     channelApi.modifyChannel(item);
-        // },
-        // deleteChannel: function(item) {
-        //     channelApi.deleteChannel(item);
-        // },
         setModifiableChannel: function(item) {
             dispatch(setModifiableChannel(item));
         },

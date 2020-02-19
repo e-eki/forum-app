@@ -19,7 +19,6 @@ export default class Section extends PureComponent {
     }
 
     render() {
-        //console.log('render section');
         const className = 'section ' + (this.props.className ? this.props.className : '');
         
         debugger;

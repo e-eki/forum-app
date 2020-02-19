@@ -12,7 +12,6 @@ export default class Header extends PureComponent {
     }
 
     render() {
-        //console.log('render header');
         const className = 'header ' + (this.props.className ? this.props.className : '');
         
         return (

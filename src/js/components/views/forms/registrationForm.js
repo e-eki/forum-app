@@ -91,7 +91,6 @@ export default class RegistrationForm extends Component {
 	}
    
     render() {
-        //console.log('render registrationForm');
         const className = 'registration-form ' + (this.props.className ? this.props.className : '');
 
         debugger;

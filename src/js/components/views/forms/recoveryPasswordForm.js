@@ -63,7 +63,6 @@ export default class RecoveryPasswordForm extends Component {
 	}
    
     render() {
-        //console.log('render recoveryForm');
         const className = 'recovery-form ' + (this.props.className ? this.props.className : '');
 
         debugger;

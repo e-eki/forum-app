@@ -7,6 +7,7 @@ import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 import { getActualAccessToken } from '../api/authApi';
 
+// получить список сообщений, в тексте которых содержится данный текст
 export function getMessagesByText(searchText) {
 	return axios.get(`${apiConst.messageApi}?searchText=${searchText}`)
 		.then(response => {
@@ -15,6 +16,7 @@ export function getMessagesByText(searchText) {
 		});
 }
 
+// удалить сообщение
 export function deleteMessage(item) {
 	debugger;
 	return Promise.resolve(true)
@@ -44,12 +46,15 @@ export function deleteMessage(item) {
 		})
 		.spread((messageId, channelId, response) => {
 			debugger;
+
+			// отправляем на сервер событие об удалении сообщения
 			store.dispatch(remoteActions.deleteMessageById(messageId, channelId));
 
 			return true;
 		});
 }
 
+// создание или редактирование сообщения
 export function modifyMessage(item) {
 	debugger;
 	return Promise.resolve(true)
@@ -92,6 +97,7 @@ export function modifyMessage(item) {
 				messageId = response.data.id;
 			}
 			
+			// отправляем на сервер событие об изменении сообщения
 			store.dispatch(remoteActions.updateMessageById(messageId, channelId, recipientId));
 
 			return true;
@@ -99,7 +105,7 @@ export function modifyMessage(item) {
 }
 
 
-
+// создать сообщение
 function _createMessage(messageData, accessToken) {
 	const options = {
 		method: 'POST',
@@ -111,6 +117,7 @@ function _createMessage(messageData, accessToken) {
 	return axios(options);
 }
 
+// редактировать сообщение
 function _updateMessage(messageData, accessToken) {
 	const options = {
 		method: 'PUT',

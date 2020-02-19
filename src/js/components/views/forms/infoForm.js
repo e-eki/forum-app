@@ -7,6 +7,7 @@ import MovingForm from './movingForm';
 import forumConst from '../../../constants/forumConst';
 import * as baseUtils from '../../../utils/baseUtils';
 
+// форма для просмотра информации и управления элементом
 export default class InfoForm extends PureComponent {
 
     constructor(props) {
@@ -20,18 +21,21 @@ export default class InfoForm extends PureComponent {
         this.setDescriptionMessage = this.setDescriptionMessage.bind(this);
     }
 
+    // создание полей с информацией элемента
     initItemInfo() {
         let itemInfo = null;
 
         if (this.props.type && this.props.currentInfoItem) {
             switch (this.props.type) {
 
+                // у сообщения доступен только текст
                 case forumConst.itemTypes.message:
                     itemInfo = <div>
                                     <div>{this.props.currentInfoItem.text}</div>
                                 </div>;
                     break;
                     
+                // у всех остальных элементов (раздел/подраздел/чат) доступно название и описание
                 default:
                     itemInfo = <div>
                                     <div>{this.props.currentInfoItem.name}</div>
@@ -45,10 +49,12 @@ export default class InfoForm extends PureComponent {
         return itemInfo;
     }
 
+    // сброс полей с информацией элемента
     resetInfoItem() {
         this.props.setCurrentInfoItem(null);
     }
 
+    // удалить элемент
     deleteItem() {
         return Promise.resolve(this.props.deleteItem(this.props.currentInfoItem))
             .then(result => {
@@ -60,14 +66,17 @@ export default class InfoForm extends PureComponent {
             })
     }
 
+    // назначить элемент редактируемым (редактирование в новом окне)
     editItem() {
         this.props.setModifiableItem(this.props.currentInfoItem);
     }
 
+    // назначить элемент перемещаемым (перемещение в новом окне)
     moveItem() {
         this.props.setMovingItem(this.props.currentInfoItem);
     }
 
+    // закрепить сообщение (в чате)
     setDescriptionMessage() {
         if (this.props.setDescriptionMessage) {
             this.props.setDescriptionMessage(this.props.currentInfoItem);
@@ -75,14 +84,15 @@ export default class InfoForm extends PureComponent {
     }
 
     render() {
-        //console.log('render infoForm');
         const className = 'info-form ' + (this.props.className ? this.props.className : '');
 
         let modifyingBlock = null;
         let movingBlock = null;
         debugger;
 
-        if (this.props.modifiableItem && this.props.modifiableItem.canEdit) {   //?
+        // если элемент был назначен редактируемым и есть права на его редактирование
+        if (this.props.modifiableItem && this.props.modifiableItem.canEdit) {
+            // то показываем окно для редактирования элемента
             modifyingBlock = <ModifyForm
                                 modifiableItem = {this.props.modifiableItem}
                                 setModifiableItem = {this.props.setModifiableItem}
@@ -90,7 +100,9 @@ export default class InfoForm extends PureComponent {
                                 type = {this.props.type}
                             />;
         }
-        else if (this.props.movingItem && this.props.movingItem.canMove) {  //?
+        // если элемент был назначен перемещаемым и есть права на его перемещение
+        else if (this.props.movingItem && this.props.movingItem.canMove) {
+            // то показываем окно для перемещения элемента
             movingBlock = <MovingForm
                                 movingItem = {this.props.movingItem}
                                 setMovingItem = {this.props.setMovingItem}
@@ -110,24 +122,28 @@ export default class InfoForm extends PureComponent {
         let moveButtonBlock = null;
         let deleteButtonBlock = null;
 
+        // если есть права редактирования чата (в сообщении), то показываем кнопку "Закрепить сообщение"
         if (this.props.currentInfoItem.canEditChannel) {
             descriptionButtonBlock = <button className = '' onClick = {this.setDescriptionMessage}>
                                         Закрепить сообщение
                                     </button>;
         }
 
+        // если есть права редактирования элемента. то показываем кнопку "Редактировать"
         if (this.props.currentInfoItem.canEdit) {
             editButtonBlock = <button className = '' onClick = {this.editItem}>
                                     Редактировать {this.props.type ? this.props.type : null}
                                 </button>;
         }
 
+        // если есть права перемещения элемента, то показываем кнопку "Переместить"
         if (this.props.currentInfoItem.canMove) {
             moveButtonBlock = <button className = '' onClick = {this.moveItem}>
                                     Переместить {this.props.type ? this.props.type : null}
                                 </button>;
         }
 
+        // если есть права удаления элемента, то показываем кнопку "Удалить"
         if (this.props.currentInfoItem.canDelete) {
             deleteButtonBlock = <button className = '' onClick = {this.deleteItem}>
                                     Удалить {this.props.type ? this.props.type : null}

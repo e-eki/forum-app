@@ -7,6 +7,7 @@ import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 import { getActualAccessToken } from '../api/authApi';
 
+// получить список всех подразделов (для списка подразделов для перемещения чата)
 export function getSubSections() {
 	return Promise.resolve(true)
 		.then(() => {
@@ -34,6 +35,7 @@ export function getSubSections() {
 		});
 }
 
+// получить подраздел по id
 export function getSubSectionById(id) {
 	return Promise.resolve(true)
 		.then(() => {
@@ -61,6 +63,7 @@ export function getSubSectionById(id) {
 		});
 }
 
+// удалить подраздел
 export function deleteSubSection(item) {
 	debugger;
 	return Promise.resolve(true)
@@ -90,12 +93,15 @@ export function deleteSubSection(item) {
 		})
 		.spread((subSectionId, sectionId, response) => {
 			debugger;
+
+			// отправляем на сервер событие об удалении подраздела
 			store.dispatch(remoteActions.deleteSubSectionById(subSectionId, sectionId));
 
 			return true;
 		});
 }
 
+// создание или редактирование подраздела
 export function modifySubSection(item) {
 	debugger;
 	return Promise.resolve(true)
@@ -136,6 +142,7 @@ export function modifySubSection(item) {
 				subSectionId = response.data.id;
 			}
 
+			// отправляем на сервер событие об изменении подраздела
 			store.dispatch(remoteActions.updateSubSectionById(subSectionId, sectionId));
 
 			return true;
@@ -143,7 +150,7 @@ export function modifySubSection(item) {
 }
 
 
-
+// создать подраздел
 function _createSubSection(subSectionData, accessToken) {
 	const options = {
 		method: 'POST',
@@ -155,6 +162,7 @@ function _createSubSection(subSectionData, accessToken) {
 	return axios(options);
 }
 
+// редактировать подраздел
 function _updateSubSection(subSectionData, accessToken) {
 	const options = {
 		method: 'PUT',

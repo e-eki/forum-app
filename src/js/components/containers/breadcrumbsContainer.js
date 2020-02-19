@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Breadcrumbs from '../views/breadcrumbs';
 
+// контейнер для "хлебных крошек" (путь к текущему элементу)
 class BreadcrumbsContainer extends PureComponent {
 
     constructor(props) {
@@ -13,6 +14,7 @@ class BreadcrumbsContainer extends PureComponent {
     render() {
         let breadcrumbs = null;
 
+        // "хлебные крошки" нужны, если мы находимся в разделе/подразделе/чате
         if (this.props.currentSection ||
             this.props.currentSubSection ||
             this.props.currentChannel) {
@@ -39,7 +41,7 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        //?
+        //
     }
 }
 

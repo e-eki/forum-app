@@ -68,7 +68,6 @@ export default class SearchForm extends Component {
     }
 
     render() {
-        //console.log('render searchBar');
         const className = 'search-bar ' + (this.props.className ? this.props.className : '');
         
         return (

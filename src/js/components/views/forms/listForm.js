@@ -4,8 +4,8 @@ import React, { PureComponent } from 'react';
 import InfoForm from './infoForm';
 import ModifyForm from './modifyForm';
 import forumConst from '../../../constants/forumConst';
-import * as baseUtils from '../../../utils/baseUtils';
 
+// форма для просмотра и управления списком элементов
 export default class ListForm extends PureComponent {
 
     constructor(props) {
@@ -15,6 +15,7 @@ export default class ListForm extends PureComponent {
         this.initNewItem = this.initNewItem.bind(this);
     }
 
+    // инициализация полей нового элемента (для добавления)
     initNewItem() {
         let newItem;
 
@@ -48,6 +49,7 @@ export default class ListForm extends PureComponent {
         return newItem;
     }
 
+    // добавить элемент
     addItem() {
         const newItem = this.initNewItem();
 
@@ -59,18 +61,20 @@ export default class ListForm extends PureComponent {
                 newItem.recipientId = this.props.recipientId;
             }
 
+            // назначаем новый элемент с полями по умолчанию редактируемым
             this.props.setModifiableItem(newItem);
         }
     }
 
     render() {
-        //console.log('render ListForm');
         const className = 'list-form ' + (this.props.className ? this.props.className : '');
 
         debugger;
         let itemInfoBlock = null;       
         let modifyingItemBlock = null;
 
+        // если был назначен элемент для просмотра его информации/управления,
+        // и есть права для его редактирования либо удаления, то показываем форму для просмотра информации/управления
         if (this.props.currentInfoItem &&
             (this.props.currentInfoItem.canEdit || this.props.currentInfoItem.canDelete)) {   //?
                 itemInfoBlock = <InfoForm
@@ -102,15 +106,18 @@ export default class ListForm extends PureComponent {
         }
 
         let addButtonBlock = null;
-        if (this.props.canAdd) {  //?
+        // если есть права для добавления новых элементов, то показываем кнопку "Добавить"
+        if (this.props.canAdd) {
             addButtonBlock = <button className = '' onClick = {this.addItem}>
                                 Добавить {this.props.type ? this.props.type : null}
                             </button>;
         }
 
+        // список элементов
         let itemsBlock = null;
 
         if (this.props.items) {
+            // если это список сообщений, то нужно найти новые
             if (this.props.type === forumConst.itemTypes.message && this.props.newMessagesCount) {
                 const newItems = this.props.items.slice(-this.props.newMessagesCount);
                 const oldItems = this.props.items.slice(0, -this.props.newMessagesCount);

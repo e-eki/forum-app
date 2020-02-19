@@ -6,13 +6,14 @@ import appConst from '../../../constants/appConst';
 import authConst from '../../../constants/authConst';
 import * as authUtils from '../../../utils/authUtils';
 
-// Форма подтверждения имейла
+// форма отправки запроса на повторное письмо для подтверждения имейла
 export default class EmailConfirmForm extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            // имейл
             email: authConst.defaultAuthData.email,
         }
 
@@ -36,7 +37,7 @@ export default class EmailConfirmForm extends Component {
     }
 
     // по клику на инпуте он очищается
-	clearData(event) {   //todo: check!
+	clearData(event) {
 		const name = event.target.name;
 
 		this.setState({
@@ -44,6 +45,7 @@ export default class EmailConfirmForm extends Component {
         });
     }
 
+    // обработчик кнопки "Отправить"
     clickEmailConfirmButton(event) {
         if (!this.state.email ||
             (this.state.email === authConst.defaultAuthData.email) ||
@@ -61,12 +63,12 @@ export default class EmailConfirmForm extends Component {
 	}
    
     render() {
-        //console.log('render confirmForm');
         const className = 'confirm-form ' + (this.props.className ? this.props.className : '');
 
         debugger;
         let emailConfirmContent = <div></div>;
 
+        // если есть аксесс токен, то значит юзер уже залогинился, и не показываем ему форму
         if (this.props.accessToken &&
             //this.props.refreshToken &&
             this.props.accessTokenExpiresIn) {

@@ -9,7 +9,6 @@ export default class Logo extends PureComponent {
     }
 
     render() {
-        //console.log('render logo');
         const className = 'logo ' + (this.props.className ? this.props.className : '');
         
         return (

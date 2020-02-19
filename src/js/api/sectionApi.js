@@ -7,6 +7,7 @@ import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 import { getActualAccessToken } from '../api/authApi';
 
+// получить разделы
 export function getSections() {
 	return Promise.resolve(true)
 		.then(() => {
@@ -34,6 +35,7 @@ export function getSections() {
 		});
 }
 
+// получить раздел по id
 export function getSectionById(id) {
 	return Promise.resolve(true)
 		.then(() => {
@@ -61,6 +63,7 @@ export function getSectionById(id) {
 		});
 }
 
+// удалить раздел
 export function deleteSection(item) {
 	return Promise.resolve(true)
 		.then(() => {
@@ -83,12 +86,14 @@ export function deleteSection(item) {
 		})
 		.spread((sectionId, response) => {
 			debugger;
+			// отправляем на сервер событие об удалении раздела
 			store.dispatch(remoteActions.deleteSectionById(sectionId));
 
 			return true;
 		});
 }
 
+// создание или редактирование раздела
 export function modifySection(item) {
 	debugger;
 	return Promise.resolve(true)
@@ -122,6 +127,7 @@ export function modifySection(item) {
 				sectionId = response.data.id;
 			}
 
+			// отправляем на сервер событие об изменении раздела
 			store.dispatch(remoteActions.updateSectionById(sectionId));
 
 			return true;
@@ -129,7 +135,7 @@ export function modifySection(item) {
 }
 
 
-
+// создать раздел
 function _createSection(sectionData, accessToken) {
 	const options = {
 		method: 'POST',
@@ -141,6 +147,7 @@ function _createSection(sectionData, accessToken) {
 	return axios(options);
 }
 
+// редактировать раздел
 function _updateSection(sectionData, accessToken) {
 	const options = {
 		method: 'PUT',

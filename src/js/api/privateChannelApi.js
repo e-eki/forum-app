@@ -7,6 +7,7 @@ import * as remoteActions from '../actions/remoteActions';
 import apiConst from '../constants/apiConst';
 import { getActualAccessToken } from '../api/authApi';
 
+// получить все личные чаты для юзера (по его аксесс токену)
 export function getPrivateChannels() {
 	return Promise.resolve(true)
 		.then(() => {
@@ -27,6 +28,7 @@ export function getPrivateChannels() {
 		})
 }
 
+// получить личный чат по его id
 export function getPrivateChannelById(id) {
 	return Promise.resolve(true)
 		.then(() => {
@@ -47,6 +49,8 @@ export function getPrivateChannelById(id) {
 		});
 }
 
+// получить личный чат (если он есть) для юзера-отправителя (определяется по аксесс токену)
+// и юзера-получателя (recipientId)
 export function getPrivateChannelByRecipientId(recipientId) {
 	debugger;
 
@@ -72,6 +76,7 @@ export function getPrivateChannelByRecipientId(recipientId) {
 				
 				tasks.push(privateChannel);
 			}
+			// если нет такого личного чата, то создаем его
 			else {
 				tasks.push(false);
 
@@ -104,6 +109,7 @@ export function getPrivateChannelByRecipientId(recipientId) {
 		})
 }
 
+// удалить личный чат
 export function deletePrivateChannel(item) {
 	debugger;
 	return Promise.resolve(true)
@@ -128,12 +134,14 @@ export function deletePrivateChannel(item) {
 			return Promise.all(tasks);
 		})
 		.spread((privateChannelId, senderId, recipientId, response) => {
+			// отправляем на сервер событие об удалении личного чата
 			store.dispatch(remoteActions.deletePrivateChannelById(privateChannelId, senderId, recipientId));
 
 			return true;
 		})
 }
 
+// создание или редактирование личного чата
 export function modifyPrivateChannel(item) {
 	debugger;
 	return Promise.resolve(true)
@@ -171,6 +179,7 @@ export function modifyPrivateChannel(item) {
 				senderId = response.data.senderId;
 			}
 			
+			// отправляем на сервер событие об изменении личного чата
 			store.dispatch(remoteActions.updatePrivateChannelById(privateChannelId, senderId, recipientId));
 
 			return privateChannelId;
@@ -178,6 +187,7 @@ export function modifyPrivateChannel(item) {
 }
 
 
+// создание личного чата
 function _createPrivateChannel(privateChannelData, accessToken) {
 	debugger;
 	const options = {
@@ -190,6 +200,7 @@ function _createPrivateChannel(privateChannelData, accessToken) {
 	return axios(options);
 }
 
+// редактирование личного чата
 function _updatePrivateChannel(privateChannelData, accessToken) {
 	debugger;
 	const options = {

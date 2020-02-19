@@ -8,6 +8,7 @@ import { setAlertData } from '../../actions/alertDataActions';
 import appConst from '../../constants/appConst';
 import * as baseUtils from '../../utils/baseUtils';
 
+// контейнер для формы отправки запроса на повторное письмо для подтверждения имейла
 class EmailConfirmFormContainer extends PureComponent {
 
     constructor(props) {
@@ -16,6 +17,7 @@ class EmailConfirmFormContainer extends PureComponent {
         this.doEmailConfirm = this.doEmailConfirm.bind(this);
     }
 
+    // отправить письмо для подтверждения имейла
     doEmailConfirm(email) {
         return emailConfirm(email)
 			.then(response => {

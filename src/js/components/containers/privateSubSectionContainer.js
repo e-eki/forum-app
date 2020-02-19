@@ -6,12 +6,12 @@ import Channel from '../views/channel';
 import { getPrivateChannels, deletePrivateChannel } from '../../api/privateChannelApi';
 import { setPrivateChannels } from '../../actions/privateChannelActions';
 import { setCurrentUserInfo } from '../../actions/userInfoActions';
-import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
 import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import { joinRoom, leaveRoom } from '../../actions/remoteActions';
 import forumConst from '../../constants/forumConst';
 import * as baseUtils from '../../utils/baseUtils';
 
+// контейнер для страницы с личными чатами
 class PrivateSubSectionContainer extends PureComponent {
 
     constructor(props) {
@@ -48,6 +48,7 @@ class PrivateSubSectionContainer extends PureComponent {
         }
     }
 
+    // получить личные чаты юзера
     getPrivateChannels() {
         return getPrivateChannels()
             .then(results => {
@@ -62,7 +63,6 @@ class PrivateSubSectionContainer extends PureComponent {
     }
     
     render() {
-        //console.log('render privateSubSectionContainer');
         debugger;
         const className = '';
 

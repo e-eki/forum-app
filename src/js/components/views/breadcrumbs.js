@@ -11,7 +11,6 @@ export default class Breadcrumbs extends PureComponent {
     }
 
     render() {
-        //console.log('render breadcrumbs');
         const className = 'breadcrumbs ' + (this.props.className ? this.props.className : '');
 
         const paths = [];

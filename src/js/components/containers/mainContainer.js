@@ -21,11 +21,14 @@ import * as baseUtils from '../../utils/baseUtils';
 
 // export default connect(mapStateToProps, actions)(Content);
 
+
+// контейнер для главной страницы форума (список разделов)
 class MainContainer extends PureComponent {
 
     constructor(props) {
         super(props);
 
+        // флаг, есть ли у юзера права добавлять новые разделы (костылик)
         this.canAdd = false;
 
         this.getSections = this.getSections.bind(this);
@@ -36,6 +39,7 @@ class MainContainer extends PureComponent {
     }
 
     componentWillUnmount() {
+        // при уходе с главной страницы отправляем на сервер событие о выходе из комнаты с defaultRoomId
         this.props.leaveRoom(apiConst.defaultRoomId);
 
         this.props.resetSections();
@@ -43,6 +47,8 @@ class MainContainer extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
+        // если подраздел из раздела в списке выбран для перемещения,
+        // то нужно установить список разделов (для перемещения в нем)
         if ((this.props.movingSection || this.props.movingSubSection) &&
             !this.props.parentItemsList) {
                 this.props.setParentItemsList(this.props.sections || []);
@@ -55,6 +61,7 @@ class MainContainer extends PureComponent {
         }
     }
 
+    // получить список разделов
     getSections() {
         return sectionApi.getSections()
             .then(sections => {
@@ -75,7 +82,6 @@ class MainContainer extends PureComponent {
     }
     
     render() {
-        //console.log('render MainContainer');
         debugger;
         
         return (
@@ -132,12 +138,6 @@ const mapDispatchToProps = function(dispatch) {
         resetSections: function() {
             dispatch(sectionActions.setSections(null));
         },
-        // modifySection: function(item) {
-        //     sectionApi.modifySection(item);
-        // },
-        // deleteSection: function(item) {
-        //     sectionApi.deleteSection(item);
-        // },
         setModifiableSection: function(item) {
             dispatch(sectionActions.setModifiableSection(item));
         },
@@ -147,12 +147,6 @@ const mapDispatchToProps = function(dispatch) {
         setCurrentInfoSection: function(item) {
             dispatch(sectionActions.setCurrentInfoSection(item));
         },
-        // modifySubSection: function(item) {
-        //     subSectionApi.modifySubSection(item);
-        // },
-        // deleteSubSection: function(item) {
-        //     subSectionApi.deleteSubSection(item);
-        // },
         setModifiableSubSection: function(item) {
             dispatch(subSectionActions.setModifiableSubSection(item));
         },

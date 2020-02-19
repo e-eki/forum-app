@@ -3,7 +3,7 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
-// форма вывода сообщений для юзера
+// форма с оповещениями для юзера
 export default class AlertForm extends PureComponent {
 
 	constructor(props) {
@@ -11,12 +11,13 @@ export default class AlertForm extends PureComponent {
 	}
 
 	render() {
-		//console.log('--------render alertForm--------------');
 		const className = 'alert-form ' + (this.props.className ? this.props.className : '');
 
 		let alertBlock = <div></div>;
 
 		if (this.props.alertData) {
+
+			// дополнительная ссылка, которая выводится под основным сообщением
 			const secondaryLink = (this.props.alertData.secondaryMessage && this.props.alertData.secondaryLink)
 									?
 									<Link to = {this.props.alertData.secondaryLink}>
@@ -37,6 +38,7 @@ export default class AlertForm extends PureComponent {
 									</div>
 								</div>;
 
+			// если нет доп.ссылки, то помещаем блок с оповещением в главную ссылку
 			if (!secondaryLink && this.props.alertData.link) {
 				alertBlock = <Link to = {this.props.alertData.link}>
 								{alertInfo}	

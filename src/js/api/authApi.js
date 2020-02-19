@@ -259,7 +259,10 @@ export function setUserRole(role) {
 	authUtils.saveUserRole(role);
 }
 
-
+// присоединиться к комнате с id юзера (для того, чтобы подписаться на получение оповещений с сервера, связанных с
+// новыми личными сообщениями и изменением данных юзера)
+// тк при перезагрузке страницы юзер выходит из комнаты, то нужно периодически проверять и заново его присоединять.
+// делается при каждом получении аксесс токена, тк это происходит очень часто. Возможно, нужно лучшее решение (?).
 function _joinUserRoom(userId) {
 	debugger;
 
@@ -275,6 +278,7 @@ function _joinUserRoom(userId) {
 	}
 }
 
+// выйти из комнаты с id юзера
 function _leaveUserRoom() {
 	debugger;
 	const userId = authUtils.getUserId();
@@ -284,6 +288,7 @@ function _leaveUserRoom() {
 	}
 }
 
+// сохранить токены и сопутствующую информацию
 function _setTokensData(tokensData) {
 	debugger;
 
@@ -296,6 +301,7 @@ function _setTokensData(tokensData) {
 	authUtils.saveTokensData(tokensData);
 }
 
+// удалить токены и сопутствующую информацию
 function _resetTokensData() {
 	debugger;
 

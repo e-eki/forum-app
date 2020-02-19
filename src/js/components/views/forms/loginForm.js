@@ -6,19 +6,22 @@ import appConst from '../../../constants/appConst';
 import authConst from '../../../constants/authConst';
 import * as authUtils from '../../../utils/authUtils';
 
-// Форма для входа на сайт
+// форма для входа на сайт
 export default class LoginForm extends Component {
 
     constructor(props) {
         super(props);
 
+        // названия кнопок для входа через соцсети
         this.titles = {
 			vkTitle: 'Войти с помощью Вконтакте',
 			googleTitle: 'Войти с помощью Google',
 		};
 
         this.state = {
+            // имейл
             email: authConst.defaultAuthData.email,
+            // пароль
             password: authConst.defaultAuthData.password,
         }
 
@@ -43,7 +46,7 @@ export default class LoginForm extends Component {
     }
 
     // по клику на инпуте он очищается
-	clearData(event) {   //todo: check!
+	clearData(event) {
 		const name = event.target.name;
 
 		this.setState({
@@ -51,6 +54,7 @@ export default class LoginForm extends Component {
         });
     }
 
+    // обработчик лика по кнопке входа
     clickLoginButton(event) {
         let isDataValid = true;
 
@@ -79,6 +83,7 @@ export default class LoginForm extends Component {
         }
     }
 
+    // обработчик клика по кнопке входа через соцсеть
     clickSocialLoginButton(event) {
         debugger;
         const service = event.target.name;
@@ -87,12 +92,12 @@ export default class LoginForm extends Component {
     }
 
     render() {
-        //console.log('render loginForm');
         const className = 'login-form ' + (this.props.className ? this.props.className : '');
 
         debugger;
         let loginContent = <div></div>;
 
+        // если есть аксесс токен, то значит юзер уже залогинился, и не показываем ему форму
         if (this.props.accessToken &&
             //this.props.refreshToken &&
             this.props.accessTokenExpiresIn) {

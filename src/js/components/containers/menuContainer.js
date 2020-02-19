@@ -13,12 +13,12 @@ import { getActualAccessToken, logout } from '../../api/authApi';
 import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import { isAccessTokenExpired } from '../../utils/authUtils';
 
+// контейнер для меню
 class MenuContainer extends PureComponent {
 
     constructor(props) {
         super(props);
 
-        //this.getUserAuthenticatedFlag = this.getUserAuthenticatedFlag.bind(this);
         this.setNewPrivateMessagesCount = this.setNewPrivateMessagesCount.bind(this);
         this.doLogout = this.doLogout.bind(this);
         this.showUserInfo = this.showUserInfo.bind(this);
@@ -26,30 +26,12 @@ class MenuContainer extends PureComponent {
 
     componentDidMount() {
         debugger;
-        return this.setNewPrivateMessagesCount()  // здесь же происходит рефреш токенов, если он нужен
+        return this.setNewPrivateMessagesCount()
             .then(result => true);
     }
 
-    // getUserAuthenticatedFlag() {
-    //     debugger;
-
-    //     return Promise.resolve(true)
-	// 		.then(() => {
-	// 			return getActualAccessToken();
-	// 		})
-	// 		.then(accessToken => {
-    //             //return this.setNewPrivateMessagesCount();
-    //             if (!accessToken) {
-    //                 this.props.setNewPrivateMessagesCount(null);   //?
-    //             }
-    //             return true;
-    //         })
-    //         .catch(error => {
-    //             //baseUtils.showErrorMessage(error); //?
-    //             return false;
-    //         })
-    // }
-
+    // получить кол-во новых личных сообщений (для уведомления в меню)
+    // !!! здесь же происходит рефреш токенов, если он нужен
     setNewPrivateMessagesCount() {
         debugger;
 
@@ -74,6 +56,7 @@ class MenuContainer extends PureComponent {
             })
     }
 
+    // показать информацию юзера (личный кабинет)
     showUserInfo() {
         debugger;
 
@@ -85,6 +68,7 @@ class MenuContainer extends PureComponent {
             })
     }
 
+    // разлогиниться на форуме
     doLogout() {
         debugger;
 
@@ -120,8 +104,6 @@ class MenuContainer extends PureComponent {
 
         return (
             <Menu
-                // getUserAuthenticatedFlag = {this.getUserAuthenticatedFlag}
-                // setNewPrivateMessagesCount = {this.setNewPrivateMessagesCount}
                 newPrivateMessagesCount = {this.props.newPrivateMessagesCount}
                 doLogout = {this.doLogout}
                 showUserInfo = {this.showUserInfo}
@@ -142,7 +124,6 @@ const mapStateToProps = function(store) {
         // userRole: store.authState.get('userRole'),
 
         newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),  
-        //todo: check - reset нов.сообщений при переходе в личные сообщения
     };
 };
 

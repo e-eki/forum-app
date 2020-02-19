@@ -9,12 +9,15 @@ import SearchForm from '../views/forms/searchForm';
 import forumConst from '../../constants/forumConst';
 import * as baseUtils from '../../utils/baseUtils';
 
+// контейнер для формы поиска по форуму
 class SearchFormContainer extends PureComponent {
 
     constructor(props) {
         super(props);
 
+        // тип поиска
         this.searchType = '';
+        // текст, по которому поиск
         this.searchText = '';
 
         this.resetSearchResults = this.resetSearchResults.bind(this);
@@ -29,6 +32,7 @@ class SearchFormContainer extends PureComponent {
         }
     }
 
+    // поиск
     doSearch(searchText, searchType) {
         this.searchText = searchText;
         this.searchType = searchType;
@@ -70,9 +74,7 @@ class SearchFormContainer extends PureComponent {
         }
     }
     
-    render() {
-        //console.log('render SearchFormContainer');
-        
+    render() {      
         return (
             <div className=''>
                 <SearchForm

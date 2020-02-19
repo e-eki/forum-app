@@ -10,7 +10,6 @@ export default class NewMessagesNotificationForm extends PureComponent {
 	}
 
 	render() {
-		//console.log('--------render NewMessagesNotificationForm--------------');
 		const className = 'notification-form ' + (this.props.className ? this.props.className : '');
 
 		debugger;

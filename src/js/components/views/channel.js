@@ -37,7 +37,6 @@ export default class Channel extends PureComponent {
     }
 
     render() {
-        //console.log('render channel');
         let className = 'channel ' + (this.props.className ? this.props.className : '');
 
         debugger;
