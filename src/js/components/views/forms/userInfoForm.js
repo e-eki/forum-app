@@ -6,7 +6,7 @@ import appConst from '../../../constants/appConst';
 import forumConst from '../../../constants/forumConst';
 import ModifyForm from './modifyForm';
 
-// Форма с информацией о юзере
+// форма с информацией о юзере
 export default class UserInfoForm extends PureComponent {
 
     constructor(props) {
@@ -15,6 +15,7 @@ export default class UserInfoForm extends PureComponent {
         this.editUserInfo  =this.editUserInfo.bind(this);
     }
 
+    // открыть информацию юзера для редактирования
     editUserInfo() {
         this.props.setModifiableUserInfo(this.props.userInfo);
     }
@@ -25,6 +26,7 @@ export default class UserInfoForm extends PureComponent {
         debugger;
         let modifyingBlock = null;
 
+        // если информация юзера была назначена редактируемой и есть права на ее редактирование
         if (this.props.modifiableUserInfo &&
             (this.props.userInfo &&
             (this.props.userInfo.canEdit || this.props.userInfo.canEditRole || this.props.userInfo.canEditBlackList))) {

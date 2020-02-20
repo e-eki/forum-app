@@ -3,6 +3,7 @@
 import {Map} from 'immutable';
 import * as actionTypes from '../actions/actionTypes';
 
+// управление данными аутентификации
 export default function authReducer(state = Map(), action) {
   
   switch (action.type) {

@@ -5,11 +5,13 @@ import ListForm from './forms/listForm';
 import Section from './section';
 import forumConst from '../../constants/forumConst';
 
+// главная страница (список разделов)
 export default class Main extends PureComponent {
 
     constructor(props) {
         super(props);
 
+        // флаг, что юзер может добавлять элементы (костылик)
         this.canAdd = false;
     }
     
@@ -21,6 +23,9 @@ export default class Main extends PureComponent {
         let key = 0;
 
         if (this.props.sections) {
+
+            // для каждого раздела ищем подраздел, который назначен для
+            // просмотра информации/редактирования/перемещения, если он есть
             this.props.sections.forEach(function(item) {
                 let modifiableSubSection = null;
                 let currentInfoSubSection = null;

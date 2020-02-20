@@ -1,5 +1,6 @@
 'use strict';
 
+// названия роутов
 module.exports = {
 	defaultLink: '/',
 	channelsLink: '/channels',

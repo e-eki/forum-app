@@ -9,7 +9,7 @@ import appConst from '../../constants/appConst';
 import { getDateTimeString } from '../../utils/dateStringUtils';
 import NewMessagesNotificationForm from './forms/newMessagesNotificationForm';
 
-// Чат
+// чат
 export default class Channel extends PureComponent {
 
     constructor(props) {
@@ -20,14 +20,17 @@ export default class Channel extends PureComponent {
         this.showUserInfo = this.showUserInfo.bind(this);
     }
 
+    // показать информацию и элементы управления чатом
     showInfo() {
         this.props.setCurrentInfoChannel(this.props.channel);
     }
 
+    // удалить чат
     deleteChannel() {
         this.props.deleteChannel(this.props.channel);
     }
 
+    // показать информацию юзера - отправителя чата
     showUserInfo(event) {
         event.preventDefault();
 
@@ -45,7 +48,9 @@ export default class Channel extends PureComponent {
         //     className += 'channel_transparent ';  //todo
         // }
 
+        // является ли чат личным
         const isPrivate = this.props.type === forumConst.itemTypes.privateChannel;
+        // отображается ли чат в списке результатов поиска
         const isSearchResult = this.props.type === forumConst.itemTypes.searchChannel;
 
         let channel = <div></div>;
@@ -69,15 +74,19 @@ export default class Channel extends PureComponent {
                 }.bind(this));
             }
 
+            // наименование чата
             let channelNameBlock;
 
+            // последнее сообщение в чате
             let lastMessageBlock;
 
+            // кол-во новых сообщений в чате
             let newMessagesNotificationBlock;
 
-            const channelName = this.props.channel.name || 'NoName channel';
-
+            // управление закрепленным в чате сообщением 
             let descriptionMessageBlock = null;
+
+            const channelName = this.props.channel.name || 'NoName channel';
             
             if (this.props.isCurrent) {
                 channelNameBlock = <div>
@@ -179,6 +188,7 @@ export default class Channel extends PureComponent {
                     </div>;
         }
 
+        // информация и элементы управления чатом
         let channelInfoBlock = null;
 
         if (this.props.isCurrent &&

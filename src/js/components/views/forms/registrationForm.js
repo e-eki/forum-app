@@ -13,9 +13,13 @@ export default class RegistrationForm extends Component {
         super(props);
 
         this.state = {
+            // логин
             login: authConst.defaultAuthData.login,
+            // имейл
             email: authConst.defaultAuthData.email,
+            // пароль
             password: authConst.defaultAuthData.password,
+            // повторение пароля
             duplicatePassword: authConst.defaultAuthData.duplicatePassword,
         }
 
@@ -39,7 +43,7 @@ export default class RegistrationForm extends Component {
     }
 
     // по клику на инпуте он очищается
-	clearData(event) {   //todo: check!
+	clearData(event) {
 		const name = event.target.name;
 
 		this.setState({
@@ -47,6 +51,7 @@ export default class RegistrationForm extends Component {
         });
     }
 
+    // зарегистрироваться
     clickRegistrationButton(event) {
         debugger;
         let isDataValid = true;
@@ -96,6 +101,7 @@ export default class RegistrationForm extends Component {
         debugger;
         let registrationContent = <div></div>;
 
+        // если есть аксесс токен, то значит юзер уже залогинился, и не показываем ему форму
         if (this.props.accessToken &&
             //this.props.refreshToken &&
             this.props.accessTokenExpiresIn) {

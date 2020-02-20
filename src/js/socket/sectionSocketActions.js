@@ -22,17 +22,19 @@ export function updateSection(store, action) {
 		action.data.type = forumConst.itemTypes.section;
 		const updatedSection = getEditDeleteRightsForItem(action.data);
 
-		if (!updatedSection.subSections) {  //?
+		if (!updatedSection.subSections) {
 			updatedSection.subSections = [];
 		}
 		
+		// если юзер на странице этого раздела
 		if (currentSection &&
 			(currentSection.id === action.sectionId)) {
 				let data = updatedSection;
 				data.subSections = currentSection.subSections;
 
 				store.dispatch(setCurrentSection(data));
-		}	
+		}
+		// если юзер на странице со списком разделов
 		else if (sections) {
 			const section = sections.find(item => item.id === action.sectionId);
 			
@@ -77,6 +79,8 @@ export function deleteSection(store, action) {
 		// 	(currentSubSection.id === action.subSectionId)) {
 		// 		store.dispatch(setCurrentSubSection(null));  //todo: alert message
 		// }
+
+		// если юзер на странице этого раздела
 		if (currentSection &&
 			(currentSection.id === action.sectionId)) {
 				store.dispatch(setCurrentSection(null));
@@ -86,6 +90,7 @@ export function deleteSection(store, action) {
 					link: appConst.defaultLink,
 				}));
 		}
+		// если юзер на странице со списком разделов
 		else if (sections) {
 			const newSections = sections.filter(item => item.id !== action.sectionId);
 			store.dispatch(setSections(newSections));

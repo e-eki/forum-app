@@ -6,7 +6,7 @@ import Channel from './channel';
 import ListForm from './forms/listForm';
 import forumConst from '../../constants/forumConst';
 
-// Подраздел
+// подраздел
 export default class SubSection extends PureComponent {
 
     constructor(props) {
@@ -15,6 +15,7 @@ export default class SubSection extends PureComponent {
         this.showInfo = this.showInfo.bind(this);
     }
 
+    // показать информацию и элементы управления подразделом
     showInfo() {
         this.props.setCurrentInfoSubSection(this.props.subSection);
     }
@@ -29,7 +30,6 @@ export default class SubSection extends PureComponent {
         let key = 0;
 
         if (this.props.subSection) {
-
                 if (this.props.subSection.channels) {
                     this.props.subSection.channels.forEach(function(item) {
                         const channel = <Channel

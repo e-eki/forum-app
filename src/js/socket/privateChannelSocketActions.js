@@ -7,9 +7,9 @@ import appConst from '../constants/appConst';
 import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
 import forumConst from '../constants/forumConst';
 
-// получение по сокетам действий, связанных с приватными чатами
+// получение по сокетам действий, связанных с личными чатами
 
-// обновление приватного чата
+// обновление личного чата
 export function updatePrivateChannel(store, action) {
 	debugger;
 
@@ -21,10 +21,11 @@ export function updatePrivateChannel(store, action) {
 		action.data.type = forumConst.itemTypes.privateChannel;
 		const updatedPrivateChannel = getEditDeleteRightsForItem(action.data);
 
-		if (!updatedPrivateChannel.messages) {  //?
+		if (!updatedPrivateChannel.messages) {
 			updatedPrivateChannel.messages = [];
 		}
 
+		// если юзер на странице со своими личными чатами
 		if (privateChannels) {
 			const privateChannel = privateChannels.find(item => item.id === action.privateChannelId);
 
@@ -41,6 +42,7 @@ export function updatePrivateChannel(store, action) {
 			const newPrivateChannels = privateChannels.slice();
 			store.dispatch(setPrivateChannels(newPrivateChannels));
 		}
+		// если юзер на странице с этим личным чатом
 		else if (currentPrivateChannel &&
 			(currentPrivateChannel.id === action.privateChannelId)) {
 				const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(updatedPrivateChannel);
@@ -52,17 +54,19 @@ export function updatePrivateChannel(store, action) {
 };
 
 
-// удаление приватного чата
+// удаление личного чата
 export function deletePrivateChannel(store, action) {
 	debugger;
 	if (action.privateChannelId) {
 		const privateChannels = store.getState().privateChannelState.get('privateChannels');
 		const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
 
+		// если юзер на странице со своими личными чатами
 		if (privateChannels) {
 			const newPrivateChannels = privateChannels.filter(item => item.id !== action.privateChannelId);
 			store.dispatch(setPrivateChannels(newPrivateChannels));
 		}
+		// если юзер на странице с этим личным чатом
 		else if (currentPrivateChannel &&
 			(currentPrivateChannel.id === action.privateChannelId)) {
 				store.dispatch(setCurrentPrivateChannel(null));     //?

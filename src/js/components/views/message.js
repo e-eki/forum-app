@@ -6,7 +6,7 @@ import forumConst from '../../constants/forumConst';
 import appConst from '../../constants/appConst';
 import { getDateTimeString } from '../../utils/dateStringUtils';
 
-// Сообщение
+// сообщение
 export default class Message extends PureComponent {
 
     constructor(props) {
@@ -16,10 +16,12 @@ export default class Message extends PureComponent {
         this.showInfo = this.showInfo.bind(this);
     }
 
+    // показать информацию и элементы управления сообщением
     showInfo() {
         this.props.setCurrentInfoMessage(this.props.message);
     }
 
+    // показать информацию юзера - отправителя сообщения
     showUserInfo(event) {
         event.preventDefault();
 
@@ -32,6 +34,7 @@ export default class Message extends PureComponent {
         const className = 'message ' + (this.props.className ? this.props.className : '');
 
         debugger;
+
         let messageNameBlock = <div>MESSAGE</div>;
 
         if (this.props.type === forumConst.itemTypes.searchMessage && this.props.message.channelId) {

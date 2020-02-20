@@ -8,17 +8,6 @@ import App from './app';
 import store from './store/store';
 
 
-//const store = createStore(reducer);
-// store.dispatch(setSections(testSectionsData));
-
-// const socket = io(`${apiConst.serverUrl}`);
-// socket.on('state', state => {
-//     //store.dispatch(setState(state))
-// });
-
-
-
-
 ReactDOM.render(
     (
         <Provider store={store}>

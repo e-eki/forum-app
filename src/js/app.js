@@ -28,27 +28,6 @@ export default class App extends Component {
     render() {
         const history = createBrowserHistory();
 
-        // return (
-        //     <Router history={history}>
-
-        //         <Route component={MainLayout}>
-        //           <Route exact path="/" component={MainContainer} />
-
-        //           <Route path="/sections/:id" component={SectionContainer} />
-        //           <Route path="/subsections/:id" component={SubSectionContainer} />
-        //           <Route path="/channels/:id" component={ChannelContainer} />
-                  
-        //           <Route path="/userChannels/:userId" component={ChannelContainer} />
-        //         </Route>
-
-               
-        //     </Router>
-        // )
-
-
-        //todo: <Route exact path="/sections" component={MainContainer} />
-        //todo: <Redirect to="/sections" />
-
         // todo: ???не переходит в ResetPasswordFormContainer по ссылке из письма со сбросом пароля.
         return (
           <div className="app">

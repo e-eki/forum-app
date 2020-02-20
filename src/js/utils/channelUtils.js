@@ -4,6 +4,7 @@ import forumConst from '../constants/forumConst';
 import { modifyChannel } from '../api/channelApi';
 import { modifyPrivateChannel } from '../api/privateChannelApi';
 
+// закрепить/открепить сообщение в чате/личном чате
 export function setDescriptionMessageForChannel(itemType, message, channel) {
 	debugger;
 

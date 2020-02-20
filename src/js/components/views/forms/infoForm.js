@@ -49,7 +49,7 @@ export default class InfoForm extends PureComponent {
         return itemInfo;
     }
 
-    // сброс полей с информацией элемента
+    // отмена просмотра информации элемента
     resetInfoItem() {
         this.props.setCurrentInfoItem(null);
     }

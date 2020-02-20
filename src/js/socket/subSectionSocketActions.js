@@ -23,10 +23,11 @@ export function updateSubSection(store, action) {
 		action.data.type = forumConst.itemTypes.subSection;
 		const updatedSubSection = getEditDeleteRightsForItem(action.data);
 
-		if (!updatedSubSection.channels) {  //?
+		if (!updatedSubSection.channels) {
 			updatedSubSection.channels = [];
 		}
 
+		// если юзер на странице этого подраздела
 		if (currentSubSection &&
 			(currentSubSection.id === action.subSectionId)) {
 				const newSubSection = copyUtils.copySubSection(updatedSubSection);
@@ -35,6 +36,7 @@ export function updateSubSection(store, action) {
 
 				store.dispatch(setCurrentSubSection(newSubSection));
 		}
+		// если юзер на странице раздела, в котором этот подраздел
 		else if (currentSection &&
 			(currentSection.id === action.sectionId)) {
 				const subSection = currentSection.subSections.find(item => item.id === action.subSectionId);
@@ -63,6 +65,7 @@ export function updateSubSection(store, action) {
 
 				store.dispatch(setCurrentSection(newSection));
 		}
+		// если юзер на странице со списком разделов
 		else if (sections) {
 			const section = sections.find(item => item.id === action.sectionId);
 
@@ -116,6 +119,8 @@ export function deleteSubSection(store, action) {
 		// 	(currentChannel.id === action.channelId)) {
 		// 		store.dispatch(setCurrentChannel(null));  //todo: alert message
 		// }
+
+		// если юзер на странице этого подраздела
 		if (currentSubSection &&
 			(currentSubSection.id === action.subSectionId)) {
 				store.dispatch(setCurrentSubSection(null));
@@ -125,6 +130,7 @@ export function deleteSubSection(store, action) {
 					link: appConst.defaultLink,
 				}));
 		}
+		// если юзер на странице раздела, в котором этот подраздел
 		else if (currentSection &&
 			(currentSection.id === action.sectionId)) {
 				const newSubSections = currentSection.subSections.filter(item => item.id !== action.subSectionId);
@@ -134,6 +140,7 @@ export function deleteSubSection(store, action) {
 
 				store.dispatch(setCurrentSection(newCurrentSection));
 		}
+		// если юзер на странице со списком разделов
 		else if (sections) {
 			const section = sections.find(item => item.id === action.sectionId);
 

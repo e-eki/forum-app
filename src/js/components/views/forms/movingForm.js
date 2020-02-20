@@ -14,14 +14,21 @@ export default class MovingForm extends Component {
         this.defaultValue = '';
 
         this.state = {
+            // тип перемещения внутри списка (вверх/вниз)
             movingInListType: this.defaultValue,
+            // наименование родительского элемента
             parentItemName: this.defaultValue,
         };
 
+        // список элементов верхнего уровня
         this.parentItemsList = null;
+        // тип родительского элемента
         this.parentItemType = null;
+        // список элементов верхнего уровня для выпадайки
         this.parentItemOptions = [];
+        // список элементов в родительского элементе
         this.itemsList = null;
+        // список типов перемещения внутри списка (вверх/вниз)
         this.movingInListTypeOptions = [];
 
         this.resetMovingItem = this.resetMovingItem.bind(this);
@@ -36,6 +43,7 @@ export default class MovingForm extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        // определяем список родительских элементов и, в зависимости от типа элемента, доступные выпадайки
         if (nextProps.parentItemsList !== this.parentItemsList) {
             this.parentItemsList = nextProps.parentItemsList;
 
@@ -60,6 +68,7 @@ export default class MovingForm extends Component {
         this.props.resetParentItemsList();
     }
 
+    // определить тип родительского элемента
     getParentItemType() {
         let parentItemType = null;
 
@@ -82,6 +91,7 @@ export default class MovingForm extends Component {
         return parentItemType;
     }
 
+    // получить список элементов верхнего уровня для выпадайки
     getParentItemOptions(parentItemsList) {
         const options = [];
         let i = 0;
@@ -101,6 +111,7 @@ export default class MovingForm extends Component {
         return options;
     }
 
+    // получить список элементов в родительского элементе
     getItemsList(parentItemsList) {
         if (parentItemsList) {
             const parentItem = this.props.parentItemId
@@ -128,6 +139,7 @@ export default class MovingForm extends Component {
         return null; //?
     }
 
+    // полчуить список доступных типов перемещения внутри списка (вверх/вниз)
     getMovingInListTypeOptions() {
         const options = [];
         let i = 0;
@@ -165,14 +177,18 @@ export default class MovingForm extends Component {
         return options;
     }
 
+    // отмена перемещения элемента
     resetMovingItem() {
         this.props.setMovingItem(null);
     }
 
+    // ввод данных
 	changeData(event) {
         const name = event.target.name;
         const value = event.target.value;
 
+        // одновременно переместить элемент внутри списка и в другой элемент верхнего уровня нельзя,
+        // поэтому при выборе одного типа, сбрасывается другой
         if (value !== this.defaultValue) {
             if (name === 'movingInListType') {
                 this.setState({
@@ -189,6 +205,7 @@ export default class MovingForm extends Component {
         }
     }
 
+    // переместить элемент
     moveItem() {  //todo: ?как вынести эту логику в контейнер?
         const tasks = []
 
@@ -212,6 +229,7 @@ export default class MovingForm extends Component {
             })
     }
 
+    // переместить элемент внутри спсика
     moveItemInList() {
         const movingItems = [];
         
@@ -220,6 +238,7 @@ export default class MovingForm extends Component {
 
             switch (this.state.movingInListType) {
 
+                // при перемещении элемента вверх редактируется номер в списке у всех предшествующих элементов
                 case forumConst.movingInListTypes.up:
                     const prevItem = this.itemsList[index - 1];
 
@@ -231,6 +250,7 @@ export default class MovingForm extends Component {
 
                     break;
 
+                // при перемещении элемента вниз редактируется номер в списке у всех последующих элементов
                 case forumConst.movingInListTypes.down:
                     const nextItem = this.itemsList[index + 1];
 
@@ -263,6 +283,7 @@ export default class MovingForm extends Component {
         }
     }
 
+    // перемещение элемента в другой элемент верхнего уровня
     moveItemOtsideList() {
         const tasks = [];
 

@@ -2,6 +2,7 @@
 
 import React, { PureComponent } from 'react';
 
+// логотип
 export default class Logo extends PureComponent {
 
     constructor(props) {

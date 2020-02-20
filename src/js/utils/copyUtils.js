@@ -1,5 +1,6 @@
 'use strict';
 
+// копировать раздел
 export function copySection(sourse) {
 	const result = _copyBase(sourse);	
 
@@ -12,6 +13,7 @@ export function copySection(sourse) {
 	return result;
 };
 
+// копировать подраздел
 export function copySubSection(sourse) {
 	const result = _copyBase(sourse);	
 
@@ -26,6 +28,7 @@ export function copySubSection(sourse) {
 	return result;
 };
 
+// копировать чат
 export function copyChannel(sourse) {
 	const result = _copyChannelBase(sourse);	
 
@@ -37,6 +40,7 @@ export function copyChannel(sourse) {
 	return result;
 };
 
+// копировать личный чат
 export function copyPrivateChannel(sourse) {
 	const result = _copyChannelBase(sourse);
 
@@ -45,6 +49,7 @@ export function copyPrivateChannel(sourse) {
 	return result;
 };
 
+// копировать сообщение
 export function copyMessage(sourse) {
 	const result = _copyBase(sourse);	
 
@@ -58,6 +63,7 @@ export function copyMessage(sourse) {
 	return result;
 };
 
+// копировать информацию юзера
 export function copyUserInfo(sourse) {
 	const result = _copyBase(sourse);	
 
@@ -74,7 +80,7 @@ export function copyUserInfo(sourse) {
 	return result;
 };
 
-
+// копировать общие поля для всех элементов
 function _copyBase(sourse) {
 	const result = new Object();
 
@@ -86,6 +92,7 @@ function _copyBase(sourse) {
 	return result;
 }
 
+// копировать общие поля для чата и личного чата
 function _copyChannelBase(sourse) {
 	const result = _copyBase(sourse);	
 

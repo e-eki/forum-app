@@ -3,6 +3,7 @@
 import {Map} from 'immutable';
 import * as actionTypes from '../actions/actionTypes';
 
+// управление разделом
 export default function sectionReducer(state = Map(), action) {
 
   switch (action.type) {

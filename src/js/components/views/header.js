@@ -2,13 +2,16 @@
 
 import React, { PureComponent } from 'react';
 import Logo from './logo';
+import forumConst from '../../constants/forumConst';
 
+// хэдер
 export default class Header extends PureComponent {
 
     constructor(props) {
         super(props);
 
-        this.forumName = 'Сферический форум в вакууме';
+        // название форума
+        this.forumName = forumConst.forumName;
     }
 
     render() {

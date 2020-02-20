@@ -15,7 +15,7 @@ export function updateUser(store, action) {
 
 	// todo: сделать обновление данных юзера
 	// todo: сделать обновление страницы при изменении внесения юзера в ЧС и роли юезра
-	//todo: оповещение 'Редактируемые данные пользователя были изменены.' появляется не всегда
+	// todo: оповещение 'Редактируемые данные пользователя были изменены.' появляется не всегда
 
 	if (action.userId && action.data) {
 		const currentUserInfo = store.getState().userInfoState.get('currentUserInfo');
@@ -23,6 +23,7 @@ export function updateUser(store, action) {
 		const userId = getUserId();
 		const userRole = getUserRole();
 
+		// если это информация юзера, и юзер ее просматривает
 		if (currentUserInfo && (action.userId === currentUserInfo.userId)) {
 			const newUserInfo = copyUtils.copyUserInfo(currentUserInfo);
 			newUserInfo.role = action.data.role;
@@ -37,7 +38,8 @@ export function updateUser(store, action) {
 			}
 		}
 
-		if (modifiableUserInfo && (action.userId === modifiableUserInfo.userId)) {  //?
+		// если это информация юзера, и юзер ее редактирует 
+		if (modifiableUserInfo && (action.userId === modifiableUserInfo.userId)) {
 			store.dispatch(userInfoActions.setModifiableUserInfo(null));
 
 			if (action.senderId !== userId) {
@@ -47,6 +49,7 @@ export function updateUser(store, action) {
 			}
 		}
 
+		// если это информация юзера
 		if (userId === action.userId) {
 			if (userRole !== action.data.role) {
 				setUserRole(action.data.role);

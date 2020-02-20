@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 
-// уведомление о новых сообщениях
+// форма уведомлений о новых сообщениях
 export default class NewMessagesNotificationForm extends PureComponent {
 
 	constructor(props) {

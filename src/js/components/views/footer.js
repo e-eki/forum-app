@@ -2,6 +2,7 @@
 
 import React, { PureComponent } from 'react';
 
+// футер
 export default class Footer extends PureComponent {
 
     constructor(props) {

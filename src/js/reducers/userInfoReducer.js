@@ -3,6 +3,7 @@
 import {Map} from 'immutable';
 import * as actionTypes from '../actions/actionTypes';
 
+// управление информацией юзера
 export default function userInfoReducer(state = Map(), action) {
 
   switch (action.type) {

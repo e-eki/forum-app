@@ -3,6 +3,7 @@
 import {Map} from 'immutable';
 import * as actionTypes from '../actions/actionTypes';
 
+// управление чатом
 export default function channelReducer(state = Map(), action) {
   
   switch (action.type) {

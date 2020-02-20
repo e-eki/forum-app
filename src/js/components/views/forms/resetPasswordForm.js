@@ -12,7 +12,9 @@ export default class ResetPasswordForm extends Component {
         super(props);
 
         this.state = {
+            // пароль
             password: authConst.defaultAuthData.password,
+            // повторение пароля
             duplicatePassword: authConst.defaultAuthData.duplicatePassword,
         }
 
@@ -36,7 +38,7 @@ export default class ResetPasswordForm extends Component {
     }
 
     // по клику на инпуте он очищается
-	clearData(event) {   //todo: check!
+	clearData(event) {
 		const name = event.target.name;
 
 		this.setState({
@@ -44,6 +46,7 @@ export default class ResetPasswordForm extends Component {
         });
     }
 
+    // изменить пароль
     clickResetPasswordButton(event) {
         debugger;
         let isDataValid = true;

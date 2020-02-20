@@ -42,18 +42,22 @@ export function updateMessage(store, action) {
 				store.dispatch(incrementNewPrivateMessagesCount());
 		}
 
-		if (updatedMessage.senderId !== userId) { //?
+		// если юзер не является отправителем сообщения
+		if (updatedMessage.senderId !== userId) {
+
+			// если юзер просматривает информацию сообщения
 			if (currentInfoMessage &&
 				currentInfoMessage.id === action.messageId) {
 					const newMessage = copyUtils.copyMessage(updatedMessage);
 					store.dispatch(messageActions.setCurrentInfoMessage(newMessage));
 
-					store.dispatch(setAlertData({  //?
+					store.dispatch(setAlertData({
 						message: 'Редактируемое сообщение было изменено.',
 						//link: appConst.defaultLink,
 					}));
 			}
 
+			// если юзер редактирует сообщение
 			if (modifiableMessage &&
 				modifiableMessage.id === action.messageId) {
 					store.dispatch(messageActions.setModifiableMessage(null));
@@ -65,6 +69,7 @@ export function updateMessage(store, action) {
 			}
 		}
 
+		// если юзер на странице чата, в котором сообщение
 		if (currentChannel &&
 			(currentChannel.id === action.channelId)) {
 				const message = currentChannel.messages.find(item => item.id === action.messageId);
@@ -87,7 +92,7 @@ export function updateMessage(store, action) {
 
 				store.dispatch(setCurrentChannel(newCurrentChannel));
 		}
-		
+		// если юзер на странице личного чата, в котором сообщение
 		else if (currentPrivateChannel &&
 			(currentPrivateChannel.id === action.channelId)) {
 				const message = currentPrivateChannel.messages.find(item => item.id === action.messageId);
@@ -113,8 +118,8 @@ export function updateMessage(store, action) {
 
 				store.dispatch(setCurrentPrivateChannel(newCurrentPrivateChannel));
 		}
-		
 		// для уведомлений о новых личных сообщениях
+		// если юзер на странице со своими личными чатами
 		else if (privateChannels) {
 			const privateChannel = privateChannels.find(item => item.id === action.channelId);
 
@@ -134,9 +139,11 @@ export function updateMessage(store, action) {
 			}
 		}
 		// для уведомлений о новых сообщениях
+		// если юзер на странице подраздела
 		else if (currentSubSection) {
 			const channel = currentSubSection.channels.find(item => item.id === action.channelId);
 
+			// и в этом подразделе чат, в котором сообщение
 			if (channel) {
 				const newChannel = copyUtils.copyChannel(channel);
 				newChannel.lastMessage = updatedMessage;
@@ -155,7 +162,6 @@ export function updateMessage(store, action) {
 	}
 };
 
-
 // удаление сообщения
 export function deleteMessage(store, action) {
 	debugger;
@@ -166,6 +172,7 @@ export function deleteMessage(store, action) {
 		const modifiableMessage = store.getState().messageState.get('modifiableMessage');
 		const movingMessage = store.getState().messageState.get('movingMessage');
 
+		// если юзер просматривает информацию сообщения
 		if (currentInfoMessage &&
 			currentInfoMessage.id === action.messageId) {
 				store.dispatch(messageActions.setCurrentInfoMessage(null));
@@ -176,6 +183,7 @@ export function deleteMessage(store, action) {
 				}));
 		}
 
+		// если юзер редактирует сообщение
 		if (modifiableMessage &&
 			modifiableMessage.id === action.messageId) {
 				store.dispatch(messageActions.setModifiableMessage(null));
@@ -186,6 +194,7 @@ export function deleteMessage(store, action) {
 				}));
 		}
 
+		// если юзер перемещает сообщение
 		if (movingMessage &&
 			movingMessage.id === action.messageId) {
 				store.dispatch(messageActions.setMovingMessage(null));
@@ -196,6 +205,7 @@ export function deleteMessage(store, action) {
 				}));
 		}
 		
+		// если юзер на странице чата, в котором сообщение
 		if (currentChannel &&
 			(currentChannel.id === action.channelId)) {
 				const newMessages = currentChannel.messages.filter(item => item.id !== action.messageId)
@@ -210,6 +220,7 @@ export function deleteMessage(store, action) {
 
 				store.dispatch(setCurrentChannel(newCurrentChannel));
 		}
+		// если юзер на странице личного чата, в котором сообщение
 		else if (currentPrivateChannel &&
 			(currentPrivateChannel.id === action.channelId)) {
 				const newMessages = currentPrivateChannel.messages.filter(item => item.id !== action.messageId)

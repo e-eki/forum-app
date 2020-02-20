@@ -45,7 +45,7 @@ export default class EmailConfirmForm extends Component {
         });
     }
 
-    // обработчик кнопки "Отправить"
+    // отправить повторное письмо с подтверждением имейла
     clickEmailConfirmButton(event) {
         if (!this.state.email ||
             (this.state.email === authConst.defaultAuthData.email) ||

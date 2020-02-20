@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Promise from 'bluebird';
 import forumConst from '../../../constants/forumConst';
 import * as baseUtils from '../../../utils/baseUtils';
-import { getDateStringForInput } from '../../../utils/dateUtils';
+import { getDateStringForInput } from '../../../utils/dateStringUtils';
 
 // Форма для создания/редактирования элемента
 export default class ModifyForm extends Component {
@@ -84,7 +84,7 @@ export default class ModifyForm extends Component {
         return options;
     }
 
-    // 
+    // создание полей ввода с информацией элемента
     initItemInputs() {
         let itemInputs;      
 
@@ -112,6 +112,9 @@ export default class ModifyForm extends Component {
                         roleOptions = this.getRoleOptions();
                     }
 
+                    // если есть права редактировать роль юзера, то доступна выпадайка с ролями
+                    // если есть права редактировать черный список форума, то доступен чекбокс с ЧС
+                    // если юзер смотрит свою собственную информацию, то у него есть права редактировать все остальные поля
                     itemInputs = <div>
                                     {this.props.modifiableItem.canEditRole
                                         ?
@@ -228,9 +231,9 @@ export default class ModifyForm extends Component {
                                 </div>;
                     break;
                     
+                // поля для раздела/подраздела/чата
                 default:
                     itemInputs = <div>
-
                                     Название
                                     <input 
                                         name = "name"
@@ -274,6 +277,7 @@ export default class ModifyForm extends Component {
         });
     }
     
+    // редактировать элемент
     modifyItem() {
         const modifiableItem = this.props.modifiableItem;
 
@@ -314,6 +318,7 @@ export default class ModifyForm extends Component {
             })
     }
 
+    // отмена редактирования элемента
     resetModifiableItem() {
         this.props.setModifiableItem(null);
     }

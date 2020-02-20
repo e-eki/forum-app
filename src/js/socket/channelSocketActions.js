@@ -30,10 +30,12 @@ export function updateChannel(store, action) {
 			updatedChannel.messages = [];
 		}
 
+		// если юзер не является отправителем чата
 		if (updatedChannel.senderId !== userId) {
+			// если юзер просматривает информацию чата
 			if (currentInfoChannel &&
 				currentInfoChannel.id === action.channelId) {
-					// если изменилось имя или описание чата
+					// если изменилось название или описание чата
 					if (updatedChannel.name !== currentInfoChannel.name ||
 						updatedChannel.description !== currentInfoChannel.description) {
 							const newChannel = copyUtils.copyChannel(updatedChannel);
@@ -50,9 +52,10 @@ export function updateChannel(store, action) {
 						}
 			}
 
+			// если юзер редактирует чат
 			if (modifiableChannel &&
 				modifiableChannel.id === action.channelId) {
-					// если изменилось имя или описание чата
+					// если изменилось название или описание чата
 					if (updatedChannel.name !== currentInfoChannel.name ||
 						updatedChannel.description !== currentInfoChannel.description) {
 							store.dispatch(channelActions.setModifiableChannel(null));
@@ -65,6 +68,7 @@ export function updateChannel(store, action) {
 			}
 		}
 
+		// если юзер на странице чата
 		if (currentChannel &&
 			(currentChannel.id === action.channelId)) {
 				const newCurrentChannel = copyUtils.copyChannel(updatedChannel);
@@ -74,6 +78,7 @@ export function updateChannel(store, action) {
 
 				store.dispatch(channelActions.setCurrentChannel(newCurrentChannel));
 		}
+		// если юзер на странице подраздела, в котором чат
 		else if (currentSubSection &&
 			(currentSubSection.id === action.subSectionId)) {
 				const channel = currentSubSection.channels.find(item => item.id === action.channelId);
@@ -110,6 +115,8 @@ export function deleteChannel(store, action) {
 
 		//todo: при перемещении чата тоже приходит действие о его удалении,
 		// сделать, чтоб сообщение выводилось - о перемещении
+
+		// если юзер смотрит информацию о чате
 		if (currentInfoChannel &&
 			currentInfoChannel.id === action.channelId) {
 				store.dispatch(channelActions.setCurrentInfoChannel(null));
@@ -120,6 +127,7 @@ export function deleteChannel(store, action) {
 				}));
 		}
 
+		// если юзер редактирует чат
 		if (modifiableChannel &&
 			modifiableChannel.id === action.channelId) {
 				store.dispatch(channelActions.setModifiableChannel(null));
@@ -130,6 +138,7 @@ export function deleteChannel(store, action) {
 				}));
 		}
 
+		// если юзер перемещает чат
 		if (movingChannel &&
 			movingChannel.id === action.channelId) {
 				store.dispatch(channelActions.setMovingChannel(null));
@@ -139,6 +148,7 @@ export function deleteChannel(store, action) {
 				}));
 		}
 		
+		// если юзер на странице чата
 		if (currentChannel &&
 			(currentChannel.id === action.channelId)) {
 				store.dispatch(channelActions.setCurrentChannel(null));
@@ -148,6 +158,7 @@ export function deleteChannel(store, action) {
 					link: appConst.defaultLink,
 				}));
 		}
+		// если юзер на странице подраздела, в котором чат
 		else if (currentSubSection &&
 			(currentSubSection.id === action.subSectionId)) {
 				const newChannels = currentSubSection.channels.filter(item => item.id !== action.channelId);

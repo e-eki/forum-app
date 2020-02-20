@@ -6,13 +6,14 @@ import appConst from '../../../constants/appConst';
 import authConst from '../../../constants/authConst';
 import * as authUtils from '../../../utils/authUtils';
 
-// Форма восстановления пароля
+// форма восстановления пароля
 export default class RecoveryPasswordForm extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            // имейл
             email: authConst.defaultAuthData.email,
         }
 
@@ -36,7 +37,7 @@ export default class RecoveryPasswordForm extends Component {
     }
 
     // по клику на инпуте он очищается
-	clearData(event) {   //todo: check!
+	clearData(event) {
 		const name = event.target.name;
 
 		this.setState({
@@ -44,6 +45,7 @@ export default class RecoveryPasswordForm extends Component {
         });
     }
 
+    // отправить письмо с инструкциями по восстановлению пароля
     clickRecoveryPasswordButton(event) {
         debugger;
 
@@ -68,6 +70,7 @@ export default class RecoveryPasswordForm extends Component {
         debugger;
         let recoveryPasswordContent = <div></div>;
 
+        // если есть аксесс токен, то значит юзер уже залогинился, и не показываем ему форму
         if (this.props.accessToken &&
             //this.props.refreshToken &&
             this.props.accessTokenExpiresIn) {

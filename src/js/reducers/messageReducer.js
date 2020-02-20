@@ -3,6 +3,7 @@
 import {Map} from 'immutable';
 import * as actionTypes from '../actions/actionTypes';
 
+// управление сообщением
 export default function messageReducer(state = Map(), action) {
 
   switch (action.type) {

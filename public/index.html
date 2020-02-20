@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="content-language" content="ru" />
-        <!-- Сообщает Internet Explorer использовать самый новый движок для рендера -->
+        <!-- чтобы Internet Explorer использовал самый новый движок для рендера -->
         <meta http-equiv="x-ua-compatible" content="IE=EmulateIE9">
         <!-- Задание тега Viewport для адаптивного отображения страницы -->
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -62,15 +62,14 @@
         <noscript>
             You need to enable JavaScript to run this app.
             Включите поддержку JavaScript в своём браузере для корректного отображения страницы.
-				</noscript>
+        </noscript>
 
-				<div id="root"></div>
+        <div id="root"></div>
 
-				<!--[if IE]><script src="http://phpbbex.com/oldies/oldies.js" charset="utf-8"></script><![endif]-->
+        <!--[if IE]><script src="http://phpbbex.com/oldies/oldies.js" charset="utf-8"></script><![endif]-->
 
-				<![if !IE]>
-					<script src="./bundle.js"></script>
-				<![endif]>
-
+        <![if !IE]>
+            <script src="./bundle.js"></script>
+        <![endif]>
     </body>
 </html>

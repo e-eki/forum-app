@@ -5,13 +5,16 @@ import { Link } from 'react-router-dom';
 import appConst from '../../../constants/appConst';
 import forumConst from '../../../constants/forumConst';
 
+// форма для поиска по форуму
 export default class SearchForm extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            // текст для поиска
             searchText: this.props.searchText || '',
+            // тип поиска (по чатам / по сообщениям)
             searchType: this.props.searchType || forumConst.searchTypes.channels,
         };
 
@@ -61,6 +64,7 @@ export default class SearchForm extends Component {
         });
     }
 
+    // поиск
     doSearch() {
         //todo: validate??
 

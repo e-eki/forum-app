@@ -3,6 +3,7 @@
 import {Map} from 'immutable';
 import * as actionTypes from '../actions/actionTypes';
 
+// управление перемещением элементов
 export default function modifyingReducer(state = Map(), action) {
   
   switch (action.type) {

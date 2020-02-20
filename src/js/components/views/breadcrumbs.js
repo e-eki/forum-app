@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import appConst from '../../constants/appConst';
 
+// "хлебные крошки" - путь к текущему элементу
 export default class Breadcrumbs extends PureComponent {
 
     constructor(props) {

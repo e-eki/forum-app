@@ -1,29 +1,37 @@
 'use strict';
 
 module.exports = {
+	// название форума
+	forumName: 'Сферический форум в вакууме',
+
+	// типы элементов форума
 	itemTypes: {
-		section: 'section',
-		subSection: 'subSection',
-		channel: 'channel',
-		message: 'message',
-		privateChannel: 'privateChannel',
-		searchChannel: 'searchChannel',
-		searchMessage: 'searchMessage',
-		userInfo: 'userInfo',
+		section: 'section',  // раздел
+		subSection: 'subSection',   // подраздел
+		channel: 'channel',   // чат
+		message: 'message',   // сообщение
+		privateChannel: 'privateChannel',   // личный чат
+		searchChannel: 'searchChannel',   // чат в списке результатов поиска
+		searchMessage: 'searchMessage',   // сообщение в списке результатов поиска
+		userInfo: 'userInfo',   // информация юзера
 	},
 
+	// типы поиска по форуму
 	searchTypes: {
 		channels: 'по темам',
 		messages: 'по сообщениям',
 	},
 
+	// кол-во символов последнего сообщения, отображаемое в превью под названием чата
 	lastMessageTextLength: 10,
 
+	// типы перемещения элементы в списке
 	movingInListTypes: {
 		up: 'вверх',
 		down: 'вниз',
 	},
 
+	// роли юзера
 	userRoles: {
 		admin: 'admin',
 		moderator: 'moderator',

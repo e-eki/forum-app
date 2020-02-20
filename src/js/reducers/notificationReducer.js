@@ -3,6 +3,7 @@
 import {Map} from 'immutable';
 import * as actionTypes from '../actions/actionTypes';
 
+// управление оповещениями о новых сообщениях
 export default function notificationReducer(state = Map(), action) {
   
   switch (action.type) {

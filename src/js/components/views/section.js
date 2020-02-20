@@ -6,6 +6,7 @@ import SubSection from './subSection';
 import ListForm from './forms/listForm';
 import forumConst from '../../constants/forumConst';
 
+// раздел
 export default class Section extends PureComponent {
 
     constructor(props) {
@@ -14,6 +15,7 @@ export default class Section extends PureComponent {
         this.showInfo = this.showInfo.bind(this);
     }
 
+    // показать информацию и элементы управления разделом
     showInfo() {
         this.props.setCurrentInfoSection(this.props.section);
     }

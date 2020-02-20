@@ -9,7 +9,7 @@ const createStoreWithMiddleware = applyMiddleware(
     remoteActionMiddleware(socket)
 )(createStore);
 
+// хранилище
 const store = createStoreWithMiddleware(reducer);
 
-//const store = createStore(reducer);
 export default store;

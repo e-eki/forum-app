@@ -3,6 +3,7 @@
 import * as Fingerprint2 from 'fingerprintjs2';
 import Promise from 'bluebird';
 
+// получить fingerprint устройства юзера
 export function getFingerprint() {
   const options = {
     excludes: {

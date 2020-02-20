@@ -3,6 +3,7 @@
 import store from '../store/store';
 import { setAlertData } from '../actions/alertDataActions';
 
+// получить сообщение об ошибке
 export function getErrorResponseMessage(error) {
 	debugger;
 	let message = '';
@@ -26,6 +27,7 @@ export function getErrorResponseMessage(error) {
 	return message;
 }
 
+// показать сообщение об ошибке
 export function showErrorMessage(error) {
 	debugger;
 

@@ -5,56 +5,12 @@ import { Link } from 'react-router-dom';
 import appConst from '../../constants/appConst';
 import NewMessagesNotificationForm from './forms/newMessagesNotificationForm';
 
+// меню
 export default class Menu extends PureComponent {
 
     constructor(props) {
         super(props);
-
-        // this.state = {
-        //     isUserAuthenticated: false,
-        // }
-
-        // this.updateUserAuthenticatedFlag = this.updateUserAuthenticatedFlag.bind(this);
     }
-
-    // shouldComponentUpdate() {
-    //     return true; //todo
-    // }
-
-    // componentDidMount() {
-    //     debugger;
-
-    //     return this.updateUserAuthenticatedFlag()
-    //         .then(result => {
-    //             return this.props.setNewPrivateMessagesCount();
-    //         })
-    // }
-
-    // componentDidUpdate(prevProps) {
-    //     debugger;
-    //     // если изменились данные токенов, проверяем снова, залогинен ли пользователь
-    //     if (this.props.accessToken !== prevProps.accessToken /*||
-    //         this.props.userRole !== prevProps.userRole*/) {
-    //             return this.updateUserAuthenticatedFlag();
-    //     }
-    // }
-
-    // // этот метод вызывается отсюда, а не из MenuContainer,
-    // // потому что иначе флаг isUserAuthenticated придется поместить в store
-    // // и setNewPrivateMessagesCount тоже, всё это д.б. в контейнере
-    // // todo: сделать нормально!
-    // updateUserAuthenticatedFlag() {
-    //     return this.props.getUserAuthenticatedFlag()
-    //         .then(isUserAuthenticated => {
-    //             debugger;
-
-    //             this.setState({
-    //                 isUserAuthenticated: isUserAuthenticated,
-    //             })
-                
-    //             return true;
-    //         })
-    // }
 
     render() {
         debugger;
@@ -62,6 +18,7 @@ export default class Menu extends PureComponent {
 
         let authContent;
 
+        // если есть аксесс токен и его срок жизни не истек, то есть юзер залогинен
         if (this.props.accessToken &&
             this.props.accessTokenExpiresIn &&
             !this.props.isAccessTokenExpired()) {
@@ -90,6 +47,7 @@ export default class Menu extends PureComponent {
                                     </button>
                                 </div>;
         }
+        // если нет аксесс токена, то есть юзер не залогинен
         else {
             authContent = <div>
                                 <Link to={appConst.loginLink}>
