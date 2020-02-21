@@ -12,6 +12,8 @@ import searchReducer from './searchReducer';
 import notificationReducer from './notificationReducer';
 import modifyingReducer from './modifyingReducer';
 import authReducer from './authReducer';
+import colorThemeReducer from './colorThemeReducer';
+
 
 const reducer = combineReducers({
   sectionState: sectionReducer,
@@ -25,6 +27,7 @@ const reducer = combineReducers({
   notificationState: notificationReducer,
   modifyingState: modifyingReducer,
   authState: authReducer,
+  colorThemeState: colorThemeReducer,
 });
 
 export default reducer;

@@ -36,5 +36,17 @@ module.exports = {
 		admin: 'admin',
 		moderator: 'moderator',
 		user: 'user',
+	},
+
+	// цветовые темы оформления
+	colorThemes: {
+		day: 'day',
+		night: 'night',
+	},
+
+	// названия цветовых тем оформления
+	colorThemeTitles: {
+		day: 'дневной режим',
+		night: 'ночной режим',
 	}
 }

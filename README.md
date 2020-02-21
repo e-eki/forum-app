@@ -1,4 +1,5 @@
-## Forum App
+## Frontend форума
 
-Front-end форума. Полное описание проекта [здесь](https://github.com/e-eki/forum-api).
+ReactJS + Redux + Socket.io + LESS
+Полное описание проекта [здесь](https://github.com/e-eki/forum-api).
 

@@ -55,6 +55,9 @@ export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 //export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN';
 export const SET_ACCESS_TOKEN_EXPIRES_IN = 'SET_ACCESS_TOKEN_EXPIRES_IN';
 
+//---Color theme actions
+export const SET_COLOR_THEME = 'SET_COLOR_THEME';
+
 //---Remote actions (отправляются на сервер и приходят с сервера)
 export const JOIN_ROOM = 'JOIN_ROOM';
 export const LEAVE_ROOM = 'LEAVE_ROOM';

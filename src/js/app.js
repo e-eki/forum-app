@@ -22,58 +22,108 @@ import RegistrationFormContainer from './components/containers/RegistrationFormC
 import RecoveryPasswordFormContainer from './components/containers/RecoveryPasswordFormContainer';
 import EmailConfirmFormContainer from './components/containers/EmailConfirmFormContainer';
 import ResetPasswordFormContainer from './components/containers/ResetPasswordFormContainer';
+import forumConst from './constants/forumConst';
 
 export default class App extends Component {
 
-    render() {
-        const history = createBrowserHistory();
+  constructor(props) {
+    super(props);
 
-        // todo: ???не переходит в ResetPasswordFormContainer по ссылке из письма со сбросом пароля.
-        return (
-          <div className="app">
-            <Header className = 'content__header '/>
+    this.history = createBrowserHistory();
 
-            <div className = 'content'>
-              <Router history={history}>
+    this.state = {
+      // 
+      modeClassName: 'page_day-mode',
+    };
 
-                <AlertFormContainer/>
+    this.changePageColorTheme = this.changePageColorTheme.bind(this);
+  }
 
-                <UserInfoFormContainer/>
+  componentDidMount() {
+    debugger;
+    document.body.style.backgroundImage = "url('/images/kola_day.jpg')";  //todo!
+  }
 
-                <MenuContainer/>
+  // изменить тему оформления
+  changePageColorTheme(colorTheme) {
+    debugger;
+    let modeClassName;
 
-                <SearchFormContainer/>
+    switch (colorTheme) {
+      case forumConst.colorThemes.day:
+        modeClassName = 'page_day-mode';
+        break;
 
-                <BreadcrumbsContainer/>
+      case forumConst.colorThemes.night:
+        modeClassName = 'page_night-mode';
+        break;
 
-                <Switch>
-                  <Route exact path="/" component={MainContainer} />
-
-                  <Route path="/login" component={LoginFormContainer} />
-                  <Route path="/registration" component={RegistrationFormContainer} />
-                  <Route path="/recovery-password" component={RecoveryPasswordFormContainer} />
-                  <Route path="/email-confirm" component={EmailConfirmFormContainer} />
-                  <Route exact path="/reset-password/:access" component={ResetPasswordFormContainer} />
-
-                  <Route exact path="/sections/:id" component={SectionContainer} />
-                  <Route exact path="/subsections/:id" component={SubSectionContainer} />
-                  <Route exact path="/channels/:id" component={ChannelContainer} />
-
-                  <Route exact strict path="/private-channels" component={PrivateSubSectionContainer} />
-                  <Route exact path="/private-channels/:id" component={PrivateChannelContainer} />
-                  <Route strict path="/private-channels/" component={PrivateChannelContainer} />
-
-                  <Route strict path="/search" component={SearchResultsContainer} />
-                  
-                  <Redirect to="/" />
-                </Switch>
-              </Router>
-            </div>
-
-            <Footer />
-          </div>
-        )  
+      default:
+        modeClassName = 'page_day-mode';
+        break;
     }
+
+    this.setState({
+      modeClassName: modeClassName,
+    });
+  }
+
+  render() {
+    debugger;
+    //const history = createBrowserHistory();
+
+      // document.body.style.backgroundImage = "url('/images/kola_day.jpg')";  //todo!
+
+    const pageClassName = 'page ' + this.state.modeClassName;
+
+    // todo: ???не переходит в ResetPasswordFormContainer по ссылке из письма со сбросом пароля.
+      return (
+        <div className = {pageClassName}>
+          <Header className = 'content__header '/>
+
+          <div className = 'content'>
+            <Router history={this.history}>
+
+              <AlertFormContainer/>
+
+              <UserInfoFormContainer/>
+
+              <MenuContainer
+                changePageColorTheme = {this.changePageColorTheme}
+              />
+
+              <SearchFormContainer/>
+
+              <BreadcrumbsContainer/>
+
+              <Switch>
+                <Route exact path="/" component={MainContainer} />
+
+                <Route path="/login" component={LoginFormContainer} />
+                <Route path="/registration" component={RegistrationFormContainer} />
+                <Route path="/recovery-password" component={RecoveryPasswordFormContainer} />
+                <Route path="/email-confirm" component={EmailConfirmFormContainer} />
+                <Route exact path="/reset-password/:access" component={ResetPasswordFormContainer} />
+
+                <Route exact path="/sections/:id" component={SectionContainer} />
+                <Route exact path="/subsections/:id" component={SubSectionContainer} />
+                <Route exact path="/channels/:id" component={ChannelContainer} />
+
+                <Route exact strict path="/private-channels" component={PrivateSubSectionContainer} />
+                <Route exact path="/private-channels/:id" component={PrivateChannelContainer} />
+                <Route strict path="/private-channels/" component={PrivateChannelContainer} />
+
+                <Route strict path="/search" component={SearchResultsContainer} />
+                
+                <Redirect to="/" />
+              </Switch>
+            </Router>
+          </div>
+
+          <Footer />
+        </div>
+      )  
+  }
 }
 
 

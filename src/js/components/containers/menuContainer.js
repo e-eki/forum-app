@@ -9,9 +9,11 @@ import { setNewPrivateMessagesCount } from '../../actions/notificationActions';
 import { setAlertData } from '../../actions/alertDataActions';
 import * as baseUtils from '../../utils/baseUtils';
 import appConst from '../../constants/appConst';
+import forumConst from '../../constants/forumConst';
 import { getActualAccessToken, logout } from '../../api/authApi';
 import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import { isAccessTokenExpired } from '../../utils/authUtils';
+import { setColorTheme } from '../../actions/colorThemeActions';
 
 // контейнер для меню
 class MenuContainer extends PureComponent {
@@ -22,6 +24,8 @@ class MenuContainer extends PureComponent {
         this.setNewPrivateMessagesCount = this.setNewPrivateMessagesCount.bind(this);
         this.doLogout = this.doLogout.bind(this);
         this.showUserInfo = this.showUserInfo.bind(this);
+        this.changeColorTheme = this.changeColorTheme.bind(this);
+        this.getColorThemeButtonTitle = this.getColorThemeButtonTitle.bind(this);
     }
 
     componentDidMount() {
@@ -98,9 +102,54 @@ class MenuContainer extends PureComponent {
 				this.props.setAlertData(alertData);
 			})
     }
+
+    // изменение темы оформления
+    changeColorTheme() {
+        debugger;
+
+        switch (this.props.colorTheme) {
+            case forumConst.colorThemes.day:
+                this.props.setColorTheme(forumConst.colorThemes.night);
+                this.props.changePageColorTheme(forumConst.colorThemes.night);
+                break;
+
+            case forumConst.colorThemes.night:
+                this.props.setColorTheme(forumConst.colorThemes.day);
+                this.props.changePageColorTheme(forumConst.colorThemes.day);
+                break;
+        
+            default:
+                this.props.setColorTheme(forumConst.colorThemes.night);
+                this.props.changePageColorTheme(forumConst.colorThemes.night);
+                break;
+        }
+    }
+
+    // получить название кнопки для переключения темы оформления
+    getColorThemeButtonTitle() {
+        debugger;
+        let title;
+
+        switch (this.props.colorTheme) {
+            case forumConst.colorThemes.day:
+              title = forumConst.colorThemeTitles.night;
+              break;
+
+            case forumConst.colorThemes.night:
+                title = forumConst.colorThemeTitles.day;
+                break;
+        
+            default:
+                title = forumConst.colorThemeTitles.night;
+                break;
+        }
+
+        return title;
+    }
     
     render() {
         debugger;
+        const colorThemeTitle = this.getColorThemeButtonTitle();
 
         return (
             <Menu
@@ -108,6 +157,8 @@ class MenuContainer extends PureComponent {
                 doLogout = {this.doLogout}
                 showUserInfo = {this.showUserInfo}
                 isAccessTokenExpired = {isAccessTokenExpired}
+                colorThemeTitle = {colorThemeTitle}
+                changeColorTheme = {this.changeColorTheme}
 
                 accessToken = {this.props.accessToken}  // чтобы компонент перерисовывался при изменении токенов
                 accessTokenExpiresIn = {this.props.accessTokenExpiresIn}
@@ -122,6 +173,7 @@ const mapStateToProps = function(store) {
         accessToken: store.authState.get('accessToken'),   // чтобы компонент перерисовывался при изменении токенов
         accessTokenExpiresIn: store.authState.get('accessTokenExpiresIn'),
         // userRole: store.authState.get('userRole'),
+        colorTheme: store.colorThemeState.get('colorTheme'),
 
         newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),  
     };
@@ -135,6 +187,9 @@ const mapDispatchToProps = function(dispatch) {
         setNewPrivateMessagesCount: function(data) {
             dispatch(setNewPrivateMessagesCount(data));
         },
+        setColorTheme: function(data) {
+            dispatch(setColorTheme(data));
+        }
     }
 }
 
