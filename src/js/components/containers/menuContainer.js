@@ -13,7 +13,7 @@ import forumConst from '../../constants/forumConst';
 import { getActualAccessToken, logout } from '../../api/authApi';
 import { getUserInfoAndSetCurrentUserInfo } from '../../api/userInfoApi';
 import { isAccessTokenExpired } from '../../utils/authUtils';
-import { setColorTheme } from '../../actions/colorThemeActions';
+import { setColorTheme } from '../../actions/forumDesignActions';
 
 // контейнер для меню
 class MenuContainer extends PureComponent {
@@ -173,7 +173,7 @@ const mapStateToProps = function(store) {
         accessToken: store.authState.get('accessToken'),   // чтобы компонент перерисовывался при изменении токенов
         accessTokenExpiresIn: store.authState.get('accessTokenExpiresIn'),
         // userRole: store.authState.get('userRole'),
-        colorTheme: store.colorThemeState.get('colorTheme'),
+        colorTheme: store.forumDesignState.get('colorTheme'),
 
         newPrivateMessagesCount: store.notificationState.get('newPrivateMessagesCount'),  
     };

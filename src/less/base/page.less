@@ -1,25 +1,31 @@
 
 .page {    
-    height: 107vh;
+    height: 110vh;
 	//width: 100%;
-	// background: @black;
-	opacity: 0.8;
-	margin: 2vh 15vw;   //?
-	padding: 0 2vw;
+	margin: 0vh 15vw;   //?
+	//padding: 0 2vw;
 	position: relative;  //?
 	border-radius: 5px;
-	// box-shadow: 0 0 6px 8px black;
+
+	// background: @seagreen;
+	opacity: 0.8;
+
+	&__footer {
+		position: absolute;
+		bottom: 1.5%;
+		left: 40%;
+	}
 	
 	&_day-mode {
 		color: @black;
-		background: @creamy;
-		box-shadow: 0 0 6px 8px @creamy;
+		background: @mintcream;
+		//box-shadow: 0 0 6px 8px @creamy;
 	}
 
 	&_night-mode {
-		color: @creamy;
+		color: @navajowhite;
 		background: @black;
-		box-shadow: 0 0 6px 8px @black;
+		//box-shadow: 0 0 6px 8px @black;
 	}
 	
 	// &__content {

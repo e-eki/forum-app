@@ -79,9 +79,10 @@ export default class App extends Component {
     // todo: ???не переходит в ResetPasswordFormContainer по ссылке из письма со сбросом пароля.
       return (
         <div className = {pageClassName}>
-          <Header className = 'content__header '/>
+          {/* <Header className = 'content__header '/> */}
+          <Header/>
 
-          <div className = 'content'>
+          {/* <div className = 'content'> */}
             <Router history={this.history}>
 
               <AlertFormContainer/>
@@ -118,9 +119,9 @@ export default class App extends Component {
                 <Redirect to="/" />
               </Switch>
             </Router>
-          </div>
+          {/* </div> */}
 
-          <Footer />
+          <Footer className = 'page__footer '/>
         </div>
       )  
   }

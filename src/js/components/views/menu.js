@@ -66,9 +66,6 @@ export default class Menu extends PureComponent {
         
         return (
             <div className = {className}>
-                -----
-                <div>Menu</div>
-
                 <Link to={appConst.defaultLink}>
                     <div>Главная</div>
                 </Link>
@@ -78,7 +75,6 @@ export default class Menu extends PureComponent {
                 </button>
 
                 {authContent}
-                -----
             </div>
         )
     }

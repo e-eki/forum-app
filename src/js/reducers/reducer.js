@@ -12,7 +12,7 @@ import searchReducer from './searchReducer';
 import notificationReducer from './notificationReducer';
 import modifyingReducer from './modifyingReducer';
 import authReducer from './authReducer';
-import colorThemeReducer from './colorThemeReducer';
+import forumDesignReducer from './forumDesignReducer';
 
 
 const reducer = combineReducers({
@@ -27,7 +27,7 @@ const reducer = combineReducers({
   notificationState: notificationReducer,
   modifyingState: modifyingReducer,
   authState: authReducer,
-  colorThemeState: colorThemeReducer,
+  forumDesignState: forumDesignReducer,
 });
 
 export default reducer;
