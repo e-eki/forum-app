@@ -9,12 +9,25 @@
 
 @import './blocks/logo';
 @import './blocks/menu';
+@import './blocks/search-bar';
+@import './blocks/section';
+@import './blocks/subsection';
+@import './blocks/channel';
+@import './blocks/message';
 
 
-// .header__title, .menu {
-//     font-variant: small-caps;
-//     //font-family: @font-family;
-// }
+.header__title, .menu, .search-bar {
+	font-family: cursive;
+	
+	button {
+		background: @blue;
+    	border-color: @greyblue;
+	}
+}
+
+button {
+	cursor: pointer;
+}
 
 // a {
 //     color: @link-color;

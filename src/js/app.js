@@ -41,7 +41,7 @@ export default class App extends Component {
 
   componentDidMount() {
     debugger;
-    document.body.style.backgroundImage = "url('/images/kola_day.jpg')";  //todo!
+    document.body.style.backgroundImage = "url('/images/kola_starlight_night.jpg')";  //todo!
   }
 
   // изменить тему оформления
@@ -71,8 +71,6 @@ export default class App extends Component {
   render() {
     debugger;
     //const history = createBrowserHistory();
-
-      // document.body.style.backgroundImage = "url('/images/kola_day.jpg')";  //todo!
 
     const pageClassName = 'page ' + this.state.modeClassName;
 

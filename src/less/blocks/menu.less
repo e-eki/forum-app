@@ -1,37 +1,16 @@
 
 .menu {
-    font-family: cursive;  //?
+    //font-family: cursive;  //?
+    padding: 1vh;
+    //border-top: 1px solid #112e2f;
+    background:@snowwhite;
 
-    border-top: 1px solid @main-background-color;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    justify-content: space-between;
 
     @media (max-width: @screen-md) {
         flex-direction: column;
     }       
 
-    &__item {
-        width: 18vw;
-        text-align: center;
-        font-size: @menu-font-size;
-        letter-spacing: @menu-letter-spacing;
-        line-height: @menu-line-height;
-        font-weight: bold;
-        -webkit-perspective: 1000px;
-        perspective: 1000px;
-
-        @media (max-width: @screen-md) {
-            width: 100%;
-        }
-
-        &_active .item-decor {
-            -webkit-transform: rotateX(90deg) translateY(-22px);
-            transform: rotateX(90deg) translateY(-22px);
-        }
-    }
 }
 

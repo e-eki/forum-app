@@ -80,12 +80,17 @@ export default class SearchForm extends Component {
                     name = "searchText"
                     type="text" 
                     className = '' 
-                    maxLength = '30'
+                    maxLength = '40'
                     value = {this.state.searchText}
                     onChange = {this.changeData}
                 />
 
-                <select name="searchType" className = '' onChange = {this.changeData} value = {this.state.searchType}>
+                <select
+                    name="searchType"
+                    className = "search-bar__select"
+                    onChange = {this.changeData}
+                    value = {this.state.searchType}
+                >
                     <option value={forumConst.searchTypes.channels}>{forumConst.searchTypes.channels}</option>
                     <option value={forumConst.searchTypes.messages}>{forumConst.searchTypes.messages}</option>
                 </select>

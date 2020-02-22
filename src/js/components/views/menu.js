@@ -67,14 +67,16 @@ export default class Menu extends PureComponent {
         return (
             <div className = {className}>
                 <Link to={appConst.defaultLink}>
-                    <div>Главная</div>
+                    <button className = 'button'>
+                        Главная
+                    </button>
                 </Link>
+
+                {authContent}
 
                 <button onClick={this.props.changeColorTheme} className = 'button'>
                     {this.props.colorThemeTitle}
                 </button>
-
-                {authContent}
             </div>
         )
     }

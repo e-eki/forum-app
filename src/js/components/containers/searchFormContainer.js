@@ -76,13 +76,11 @@ class SearchFormContainer extends PureComponent {
     
     render() {      
         return (
-            <div className=''>
-                <SearchForm
-                    doSearch = {this.doSearch}
-                    searchType = {this.props.searchType}
-                    searchText = {this.props.searchText}
-                />
-            </div>
+            <SearchForm
+                doSearch = {this.doSearch}
+                searchType = {this.props.searchType}
+                searchText = {this.props.searchText}
+            />
         );
     }
 }
