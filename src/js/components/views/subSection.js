@@ -21,11 +21,7 @@ export default class SubSection extends PureComponent {
     }
 
     render() {
-        let className = 'subsection forum-item ' + (this.props.className ? this.props.className : '');
-
-        // if (this.props.isCurrent) {
-        //     className += ' forum-item_not-link';
-        // }
+        const className = 'subsection forum-item ' + (this.props.className ? this.props.className : '');
 
         debugger;
 
@@ -47,39 +43,43 @@ export default class SubSection extends PureComponent {
                 }
 
                 subSection = <div>
-                            {this.props.isCurrent 
-                                ?
-                                this.props.subSection.name
-                                :
-                                <Link to={`/subsections/${this.props.subSection.id}`}>{this.props.subSection.name}</Link>
-                            }
-                            
-                            <div>{this.props.subSection.description}</div>
+                                <div className = 'forum-item__title'>
+                                    {this.props.isCurrent 
+                                        ?
+                                        this.props.subSection.name
+                                        :
+                                        <Link to={`/subsections/${this.props.subSection.id}`}>{this.props.subSection.name}</Link>
+                                    }
+                                </div>
 
-                            {this.props.isCurrent
-                                ?
-                                <ListForm
-                                    canAdd = {this.props.subSection ? this.props.subSection.canAdd : false}
-                                    type = {forumConst.itemTypes.channel}
-                                    parentItemId = {this.props.subSection.id}
-                                    items = {channels}
-                                    currentInfoItem = {this.props.currentInfoChannel}
-                                    setCurrentInfoItem = {this.props.setCurrentInfoChannel}
-                                    modifiableItem = {this.props.modifiableChannel}
-                                    movingItem = {this.props.movingChannel}
-                                    setModifiableItem = {this.props.setModifiableChannel}
-                                    setMovingItem = {this.props.setMovingChannel}
-                                    modifyItem = {this.props.modifyChannel}
-                                    deleteItem = {this.props.deleteChannel}
-                                    deletedItemAction = {this.props.deleteChannelById}
+                                <div className = 'forum-item__description'>
+                                    {this.props.subSection.description}
+                                </div>
 
-                                    parentItemsList = {this.props.parentItemsList}
-                                    resetParentItemsList = {this.props.resetParentItemsList}
-                                />
-                                :
-                                channels
-                            }
-                        </div>;
+                                {this.props.isCurrent
+                                    ?
+                                    <ListForm
+                                        canAdd = {this.props.subSection ? this.props.subSection.canAdd : false}
+                                        type = {forumConst.itemTypes.channel}
+                                        parentItemId = {this.props.subSection.id}
+                                        items = {channels}
+                                        currentInfoItem = {this.props.currentInfoChannel}
+                                        setCurrentInfoItem = {this.props.setCurrentInfoChannel}
+                                        modifiableItem = {this.props.modifiableChannel}
+                                        movingItem = {this.props.movingChannel}
+                                        setModifiableItem = {this.props.setModifiableChannel}
+                                        setMovingItem = {this.props.setMovingChannel}
+                                        modifyItem = {this.props.modifyChannel}
+                                        deleteItem = {this.props.deleteChannel}
+                                        deletedItemAction = {this.props.deleteChannelById}
+
+                                        parentItemsList = {this.props.parentItemsList}
+                                        resetParentItemsList = {this.props.resetParentItemsList}
+                                    />
+                                    :
+                                    channels
+                                }
+                            </div>;
         }
 
         let subSectionInfoBlock = null;

@@ -16,7 +16,7 @@ export default class Logo extends PureComponent {
         return (
             <div className = {className}>
                 <img 
-                    name = {forumConst.forumName}
+                    name = 'logo'
                     className = 'logo' 
                     src = '/images/trekking_logo.png' 
                     alt = {forumConst.forumName} 

@@ -40,13 +40,9 @@ export default class Channel extends PureComponent {
     }
 
     render() {
-        let className = 'channel forum-item ' + (this.props.className ? this.props.className : '');
+        const className = 'channel forum-item ' + (this.props.className ? this.props.className : '');
 
         debugger;
-
-        // if (this.props.isCurrent) {
-        //     className += ' forum-item_not-link';
-        // }
 
         // является ли чат личным
         const isPrivate = this.props.type === forumConst.itemTypes.privateChannel;
@@ -83,21 +79,43 @@ export default class Channel extends PureComponent {
             // кол-во новых сообщений в чате
             let newMessagesNotificationBlock;
 
-            // управление закрепленным в чате сообщением 
-            let descriptionMessageBlock = null;
+            // закрепленное в чате сообщение
+            let descriptionMessage = null;
+
+            // открепить закрепленное сообщение
+            let resetDescriptionMessageBlock = null;
 
             const channelName = this.props.channel.name || 'NoName channel';
+
+            const descriptionBlock = this.props.channel.description
+                                    ?
+                                    <div className = 'forum-item__description'>
+                                        {this.props.channel.description}
+                                    </div>
+                                    :
+                                    null;
+
+            // {isPrivate ? <Link to="/" onClick = {this.showUserInfo}>Отправитель</Link> : null
+            const senderNameBlock = (!this.props.isCurrent && isPrivate)
+                                    ?
+                                    <div className = 'user-info__login'>
+                                        <Link to="/" onClick = {this.showUserInfo}>Отправитель</Link>
+                                    </div>
+                                    :
+                                    null;    
             
             if (this.props.isCurrent) {
-                channelNameBlock = <div>
-                                        {channelName}
-                                        {/* <div>{this.props.channel.description}</div> */}
-                                    </div>;
+                channelNameBlock = channelName;
 
                 if (this.props.channel.descriptionMessage) {
-                    const descriptionMessage = this.props.channel.descriptionMessage;
+                    //const descriptionMessage = this.props.channel.descriptionMessage;
 
-                    const resetDescriptionMessageBlock = this.props.channel.canEdit
+                    descriptionMessage = <Message
+                                                message = {this.props.channel.descriptionMessage}
+                                                showUserInfoById = {this.props.showUserInfoById}
+                                            />
+
+                    resetDescriptionMessageBlock = this.props.channel.canEdit
                                                             ?
                                                             <div>
                                                                 <button className = '' onClick = {this.props.resetDescriptionMessage}>
@@ -107,33 +125,24 @@ export default class Channel extends PureComponent {
                                                             :
                                                             null;
 
-                    descriptionMessageBlock = <div>
-                                                ---description-message----
-                                                <div>{descriptionMessage.senderName || 'NoName'}</div>
-                                                <div>{descriptionMessage.text || ''}</div>
-                                                -----
-                                                {resetDescriptionMessageBlock}
-                                            </div>;
+                    // descriptionMessageBlock = <div>
+                    //                                 <div className = 'user-info__login'>
+                    //                                     {descriptionMessage.senderName || 'NoName'}
+                    //                                 </div>
+                    //                                 <div className = 'message__text'>
+                    //                                     {descriptionMessage.text || ''}
+                    //                                 </div>
+
+                    //                                 {resetDescriptionMessageBlock}
+                    //                             </div>;
                 }
             }
             else {
                 const channelsLink = (!isPrivate) ? appConst.channelsLink : appConst.privateChannelsLink;
 
-                if (this.props.channel.newMessagesCount) {
-                    newMessagesNotificationBlock = <NewMessagesNotificationForm
-                                                        newMessagesCount = {this.props.channel.newMessagesCount}
-                                                    />
-                }
-
-                channelNameBlock = <div>
-                                        <Link to={`${channelsLink}/${this.props.channel.id}`}>
-                                            {channelName} {newMessagesNotificationBlock}
-                                        </Link>
-
-                                        <div>{this.props.channel.description}</div>
-                                        ----
-                                        {isPrivate ? <Link to="/" onClick = {this.showUserInfo}>Отправитель</Link> : null}
-                                    </div>;
+                channelNameBlock = <Link to={`${channelsLink}/${this.props.channel.id}`}>
+                                        {channelName}
+                                    </Link>;
 
                 if (this.props.channel.lastMessage) {
                     let text = this.props.channel.lastMessage.text;
@@ -146,18 +155,43 @@ export default class Channel extends PureComponent {
 
                     const senderName = this.props.channel.lastMessage.senderName || 'NoName';
 
-                    lastMessageBlock = <div>------------
-                                            {senderName} : {text} <span>{dateString}</span>
+                    lastMessageBlock = <div className = 'channel__last-message'>
+                                            <span className = 'user-info__login'>{senderName}: </span>
+                                            <span className = 'message__text message_preview'>{text}...</span>
+                                            <span className = 'message__date message_preview'>{dateString}</span>
                                         </div>;
+                }
+
+                if (!this.props.channel.newMessagesCount) {  //todo!
+                    newMessagesNotificationBlock = <NewMessagesNotificationForm
+                                                        newMessagesCount = {this.props.channel.newMessagesCount + 1}
+                                                    />
                 }
             }
 
             channel = <div>
-                        {channelNameBlock}
+                        <div className = 'forum-item__title'>
+                            {channelNameBlock}
+                        </div>
                         
-                        {((this.props.isCurrent && !isPrivate) || isSearchResult) ? <div>{this.props.channel.description}</div> : null}
+                        {/* <div className = 'forum-item__description'>
+                            {((this.props.isCurrent && !isPrivate) || isSearchResult)
+                                ?
+                                <div>{this.props.channel.description}</div>
+                                :
+                                null
+                            }
+                        </div> */}
 
-                        {descriptionMessageBlock}
+                        {descriptionBlock}
+
+                        {senderNameBlock}
+                        
+                        <div className = 'channel__description-message'>
+                            {descriptionMessage}
+
+                            {resetDescriptionMessageBlock}
+                        </div>
 
                         {this.props.isCurrent
                             ?
@@ -183,7 +217,11 @@ export default class Channel extends PureComponent {
                                 resetParentItemsList = {this.props.resetParentItemsList}
                             />
                             :
-                            lastMessageBlock
+                            <div className = 'channel__messages-preview'>
+                                {lastMessageBlock}
+                                
+                                {newMessagesNotificationBlock}
+                            </div>
                         }
                     </div>;
         }

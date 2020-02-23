@@ -31,25 +31,39 @@ export default class Message extends PureComponent {
     }
 
     render() {
-        let className = 'message forum-item ' + (this.props.className ? this.props.className : '');
+        const className = 'message forum-item ' + (this.props.className ? this.props.className : '');
 
         debugger;
 
-        let messageNameBlock = <div>MESSAGE</div>;
+        let messageNameBlock = null;
 
         if (this.props.type === forumConst.itemTypes.searchMessage && this.props.message.channelId) {
-            messageNameBlock = <Link to={`${appConst.channelsLink}/${this.props.message.channelId}`}>
-                                    <div>MESSAGE</div>
-                                </Link>;
+            messageNameBlock = <div className = 'message__title'>
+                                    <Link to={`${appConst.channelsLink}/${this.props.message.channelId}`}>
+                                        <div>Перейти в чат</div>
+                                    </Link>
+                                </div>;
         }
-        // else {
-        //     className += ' forum-item_not-link';
-        // }
 
-        const dateString = getDateTimeString(this.props.message.date);
+        const dateString = this.props.message.date ? getDateTimeString(this.props.message.date) : null;
 
         const senderName = this.props.message.senderName || 'NoName';
-        const userInfoBlock = <Link to="/" onClick = {this.showUserInfo}>{senderName}</Link> 
+        const userInfoBlock = <div className = 'user-info'>
+                                    <img
+                                        className = 'user-info__avatar' 
+                                        src = '/images/avatar.jpg' 
+                                        alt = {senderName} 
+                                        title = {senderName}
+                                    >
+                                    </img>
+
+                                    <div className = 'user-info__login'>
+                                        <Link to="/" onClick = {this.showUserInfo}>
+                                            {senderName}
+                                        </Link>
+                                    </div>
+                                </div>;
+                            
 
         let messageInfoBlock = null;
 
@@ -66,8 +80,13 @@ export default class Message extends PureComponent {
                 
                 <div>{userInfoBlock}</div>
 
-                <div>{dateString}</div>
-                <div>{this.props.message.text}</div>
+                <div className = 'message__date'>
+                    {dateString}
+                </div>
+
+                <div className = 'message__text'>
+                    {this.props.message.text}
+                </div>
 
                 {messageInfoBlock}
             </div>

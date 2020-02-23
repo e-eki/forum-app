@@ -21,11 +21,7 @@ export default class Section extends PureComponent {
     }
 
     render() {
-        let className = 'section forum-item ' + (this.props.className ? this.props.className : '');
-
-        // if (this.props.isCurrent) {
-        //     className += ' forum-item_not-link';
-        // }
+        const className = 'section forum-item ' + (this.props.className ? this.props.className : '');
         
         debugger;
 
@@ -49,14 +45,18 @@ export default class Section extends PureComponent {
             }
 
             section = <div>
-                        {this.props.isCurrent
-                            ?
-                            this.props.section.name
-                            :
-                            <Link to={`/sections/${this.props.section.id}`}>{this.props.section.name}</Link>
-                        }
-                        
-                        {this.props.isCurrent ? <div>{this.props.section.description}</div> : null}
+                        <div className = 'forum-item__title'>
+                            {this.props.isCurrent
+                                ?
+                                this.props.section.name
+                                :
+                                <Link to={`/sections/${this.props.section.id}`}>{this.props.section.name}</Link>
+                            }
+                        </div>
+
+                        <div className = 'forum-item__description'>
+                            {this.props.isCurrent ? <div>{this.props.section.description}</div> : null}
+                        </div>
 
                         <ListForm
                             canAdd = {this.props.section ? this.props.section.canAdd : false}
