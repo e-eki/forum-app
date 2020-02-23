@@ -40,12 +40,12 @@ export default class Channel extends PureComponent {
     }
 
     render() {
-        let className = 'channel ' + (this.props.className ? this.props.className : '');
+        let className = 'channel forum-item ' + (this.props.className ? this.props.className : '');
 
         debugger;
 
-        // if (this.props.userInfo) {
-        //     className += 'channel_transparent ';  //todo
+        // if (this.props.isCurrent) {
+        //     className += ' forum-item_not-link';
         // }
 
         // является ли чат личным

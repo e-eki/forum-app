@@ -21,7 +21,11 @@ export default class Section extends PureComponent {
     }
 
     render() {
-        const className = 'section ' + (this.props.className ? this.props.className : '');
+        let className = 'section forum-item ' + (this.props.className ? this.props.className : '');
+
+        // if (this.props.isCurrent) {
+        //     className += ' forum-item_not-link';
+        // }
         
         debugger;
 
@@ -45,7 +49,7 @@ export default class Section extends PureComponent {
             }
 
             section = <div>
-                        {this.props.isCurrent 
+                        {this.props.isCurrent
                             ?
                             this.props.section.name
                             :

@@ -31,7 +31,7 @@ export default class Message extends PureComponent {
     }
 
     render() {
-        const className = 'message ' + (this.props.className ? this.props.className : '');
+        let className = 'message forum-item ' + (this.props.className ? this.props.className : '');
 
         debugger;
 
@@ -42,6 +42,9 @@ export default class Message extends PureComponent {
                                     <div>MESSAGE</div>
                                 </Link>;
         }
+        // else {
+        //     className += ' forum-item_not-link';
+        // }
 
         const dateString = getDateTimeString(this.props.message.date);
 

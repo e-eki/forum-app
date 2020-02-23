@@ -21,7 +21,11 @@ export default class SubSection extends PureComponent {
     }
 
     render() {
-        const className = 'subsection ' + (this.props.className ? this.props.className : '');
+        let className = 'subsection forum-item ' + (this.props.className ? this.props.className : '');
+
+        // if (this.props.isCurrent) {
+        //     className += ' forum-item_not-link';
+        // }
 
         debugger;
 
