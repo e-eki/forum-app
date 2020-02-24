@@ -24,15 +24,15 @@ export default class SearchForm extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {  //??todo
         debugger;
-        if ((nextProps.searchText || nextProps.searchText === '') &&
-            (this.state.searchText || this.state.searchText === '') &&
-            (!nextState || !nextState.searchText) &&   //?
-            (nextProps.searchText !== this.state.searchText)) {
-                this.setState({searchText : nextProps.searchText});
-        }
-        if (nextProps.searchType && this.state.searchType && (nextProps.searchType !== this.state.searchType)) {
-            this.setState({searchType : nextProps.searchType});
-        }
+        // if ((nextProps.searchText || nextProps.searchText === '') &&
+        //     (this.state.searchText || this.state.searchText === '') &&
+        //     (!nextState || !nextState.searchText) &&   //?
+        //     (nextProps.searchText !== this.state.searchText)) {
+        //         this.setState({searchText : nextProps.searchText});
+        // }
+        // if (nextProps.searchType && this.state.searchType && (nextProps.searchType !== this.state.searchType)) {
+        //     this.setState({searchType : nextProps.searchType});
+        // }
 
         return true;
 

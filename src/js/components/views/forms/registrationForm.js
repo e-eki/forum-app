@@ -114,7 +114,7 @@ export default class RegistrationForm extends Component {
                 this.props.setAlertData(alertData);
         }
         else {
-            registrationContent = <div className = 'content__auth-utils-form auth-utils-form'>
+            registrationContent = <div className = 'content__auth-utils-form auth-form'>
 
                                         <div className = 'auth-utils-form_title'>Регистрация</div>
 

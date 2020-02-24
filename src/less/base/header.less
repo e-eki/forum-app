@@ -3,9 +3,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2.5vh 0vw;
+    padding: 2vh 0;
     background: @darkslategrey;
-    
+    border-radius: 5px 5px 0 0;
+    opacity: 0.95;
 
     &__logo {
         margin: 0 3vw 0 2vw;
@@ -15,8 +16,10 @@
         color: @snowwhite;
         letter-spacing: 0.5vw;
         width: 33vw;
-        min-width: 298px;
         font-variant: small-caps;
-        //font-family: cursive;  //?
+
+        @media (max-width: @screen-lg) {
+			display: none;
+		}
     }
 }

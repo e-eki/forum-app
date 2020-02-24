@@ -84,7 +84,7 @@ export default class InfoForm extends PureComponent {
     }
 
     render() {
-        const className = 'info-form ' + (this.props.className ? this.props.className : '');
+        const className = 'popup-form info-form ' + (this.props.className ? this.props.className : '');
 
         let modifyingBlock = null;
         let movingBlock = null;

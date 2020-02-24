@@ -11,7 +11,7 @@ export default class AlertForm extends PureComponent {
 	}
 
 	render() {
-		const className = 'alert-form ' + (this.props.className ? this.props.className : '');
+		const className = 'popup-form alert-form ' + (this.props.className ? this.props.className : '');
 
 		let alertBlock = <div></div>;
 

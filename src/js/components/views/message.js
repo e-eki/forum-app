@@ -35,16 +35,6 @@ export default class Message extends PureComponent {
 
         debugger;
 
-        let messageNameBlock = null;
-
-        if (this.props.type === forumConst.itemTypes.searchMessage && this.props.message.channelId) {
-            messageNameBlock = <div className = 'message__title'>
-                                    <Link to={`${appConst.channelsLink}/${this.props.message.channelId}`}>
-                                        <div>Перейти в чат</div>
-                                    </Link>
-                                </div>;
-        }
-
         const dateString = this.props.message.date ? getDateTimeString(this.props.message.date) : null;
 
         const senderName = this.props.message.senderName || 'NoName';
@@ -76,16 +66,15 @@ export default class Message extends PureComponent {
         
         return (
             <div className = {className}>
-                {messageNameBlock}
                 
                 <div>{userInfoBlock}</div>
 
-                <div className = 'message__date'>
-                    {dateString}
-                </div>
-
                 <div className = 'message__text'>
                     {this.props.message.text}
+                </div>
+
+                <div className = 'message__date'>
+                    {dateString}
                 </div>
 
                 {messageInfoBlock}

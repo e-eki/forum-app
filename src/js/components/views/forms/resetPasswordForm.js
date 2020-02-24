@@ -82,7 +82,7 @@ export default class ResetPasswordForm extends Component {
 
         return (
             <div className = {className}>
-               <div className = 'content__auth-utils-form auth-utils-form'>				
+               <div className = 'content__auth-utils-form auth-form'>				
                     <div className = 'auth-utils-form_title'>Восстановление пароля</div>
                     
                     <input 

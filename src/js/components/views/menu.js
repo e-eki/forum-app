@@ -74,7 +74,7 @@ export default class Menu extends PureComponent {
 
                 {authContent}
 
-                <button onClick={this.props.changeColorTheme} className = 'button'>
+                <button onClick={this.props.changeColorTheme} className = 'menu__mode-button button'>
                     {this.props.colorThemeTitle}
                 </button>
             </div>

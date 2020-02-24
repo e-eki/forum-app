@@ -158,13 +158,13 @@ export default class Channel extends PureComponent {
                     lastMessageBlock = <div className = 'channel__last-message'>
                                             <span className = 'user-info__login'>{senderName}: </span>
                                             <span className = 'message__text message_preview'>{text}...</span>
-                                            <span className = 'message__date message_preview'>{dateString}</span>
+                                            <span className = 'message__date message_preview message_date-preview'>{dateString}</span>
                                         </div>;
                 }
 
-                if (!this.props.channel.newMessagesCount) {  //todo!
+                if (this.props.channel.newMessagesCount) {
                     newMessagesNotificationBlock = <NewMessagesNotificationForm
-                                                        newMessagesCount = {this.props.channel.newMessagesCount + 1}
+                                                        newMessagesCount = {this.props.channel.newMessagesCount}
                                                     />
                 }
             }

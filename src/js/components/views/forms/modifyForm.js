@@ -324,7 +324,7 @@ export default class ModifyForm extends Component {
     }
 
     render() {
-        const className = 'modify-form ' + (this.props.className ? this.props.className : '');
+        const className = 'popup-form modify-form ' + (this.props.className ? this.props.className : '');
 
         debugger;
 

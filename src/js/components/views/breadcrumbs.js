@@ -51,16 +51,19 @@ export default class Breadcrumbs extends PureComponent {
 
         i = 0;
         paths.forEach(item => {
-            breadcrumbs.push(<span key={i++} className=''>{item}</span>);
+            breadcrumbs.push(<div
+                                className = 'breadcrumbs__item'
+                                key={i++}
+                            >
+                                » {item}
+                            </div>);
         })
         
         return (
             <div className = {className}>
-                -----
-                <div>Breadcrumbs</div>
 
                 {breadcrumbs}
-                -----
+
             </div>
         )
     }

@@ -1,16 +1,29 @@
 .message {
-    cursor: default;
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: @screen-md) {
+        flex-direction: column;
+    }
 
     &__date {
-        width: 100px;
-        text-align: left;
+        //width: 100%;
+        text-align: center;
+        font-size: @message-date-font-size;
+        margin: 1vh 2vw;
     }
 
     &__text {
-
+        word-break: break-word;
     }
 
     &_preview {
         padding: 0 2vmin;
+    }
+
+    &_date-preview {
+        @media (max-width: @screen-md) {
+            display: none;
+        }
     }
 }

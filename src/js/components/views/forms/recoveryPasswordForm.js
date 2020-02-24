@@ -83,7 +83,7 @@ export default class RecoveryPasswordForm extends Component {
                 this.props.setAlertData(alertData);
         }
         else {
-            recoveryPasswordContent = <div className = 'content__auth-utils-form auth-utils-form'>				
+            recoveryPasswordContent = <div className = 'content__auth-utils-form auth-form'>				
                                             <div className = 'auth-utils-form_title'>Восстановление пароля</div>
 
                                             <input 

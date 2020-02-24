@@ -39,10 +39,10 @@ export default class App extends Component {
     this.changePageColorTheme = this.changePageColorTheme.bind(this);
   }
 
-  componentDidMount() {
-    debugger;
-    document.body.style.backgroundImage = "url('/images/kola_starlight_night.jpg')";  //todo!
-  }
+  // componentDidMount() {
+  //   debugger;
+  //   document.body.style.backgroundImage = "url('/images/kola_day.jpg')";  //todo!
+  // }
 
   // изменить тему оформления
   changePageColorTheme(colorTheme) {

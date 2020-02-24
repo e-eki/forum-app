@@ -13,22 +13,25 @@ export default class NewMessagesNotificationForm extends PureComponent {
 		const className = 'notification-form ' + (this.props.className ? this.props.className : '');
 
 		debugger;
-		let description;
+		// let description;
 
-		switch (this.props.newMessagesCount) {
-			case 1:
-				description = 'новое';
-				break;
+		// switch (this.props.newMessagesCount) {
+		// 	case 1:
+		// 		description = 'новое';
+		// 		break;
 
-			default:
-				description = 'новых';
-				break;
-		}
+		// 	default:
+		// 		description = 'новых';
+		// 		break;
+		// }
 
 		return (
 			<div className = {className}>
 
-				{this.props.newMessagesCount} {description}
+				{/* {this.props.newMessagesCount} {description} */}
+				<div className = 'notification-form__title'>
+					{this.props.newMessagesCount}
+				</div>
 
 			</div>
 		)

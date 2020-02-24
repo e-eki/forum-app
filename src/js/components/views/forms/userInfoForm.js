@@ -21,7 +21,7 @@ export default class UserInfoForm extends PureComponent {
     }
 
     render() {
-        const className = 'user-info ' + (this.props.className ? this.props.className : '');
+        const className = 'popup-form user-info ' + (this.props.className ? this.props.className : '');
 
         debugger;
         let modifyingBlock = null;

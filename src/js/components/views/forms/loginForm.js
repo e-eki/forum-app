@@ -110,7 +110,7 @@ export default class LoginForm extends Component {
                 this.props.setAlertData(alertData);
         }
         else {
-            loginContent = <div className = 'content__auth-utils-form auth-utils-form'>
+            loginContent = <div className = 'content__auth-utils-form auth-form'>
 
                                 <div className = 'auth-utils-form_title'>Вход</div>
 

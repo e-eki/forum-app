@@ -81,7 +81,7 @@ export default class EmailConfirmForm extends Component {
                 this.props.setAlertData(alertData);
         }
         else {
-            emailConfirmContent = <div className = 'content__auth-utils-form auth-utils-form'>				
+            emailConfirmContent = <div className = 'content__auth-utils-form auth-form'>				
                                         <div className = 'auth-utils-form_title'>Повторная отправка письма</div>
 
                                         <input 

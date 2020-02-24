@@ -13,11 +13,17 @@ class AlertFormContainer extends PureComponent {
     }
     
     render() {
+        const alertForm = this.props.alertData
+                            ?
+                            <AlertForm
+                                alertData = {this.props.alertData}
+                                resetAlertData = {this.props.resetAlertData}
+                            />
+                            :
+                            null;
+
         return (
-            <AlertForm
-                alertData = {this.props.alertData}
-                resetAlertData = {this.props.resetAlertData}
-            />
+            <div>{alertForm}</div>
         );
     }
 }

@@ -329,7 +329,7 @@ export default class MovingForm extends Component {
     }
 
     render() {
-        const className = 'moving-form ' + (this.props.className ? this.props.className : '');
+        const className = 'popup-form moving-form ' + (this.props.className ? this.props.className : '');
         debugger;
 
         const movingOutsideListBlock = (this.props.type && (this.props.type !== forumConst.itemTypes.section)) 

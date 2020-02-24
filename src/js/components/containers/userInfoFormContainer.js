@@ -16,14 +16,20 @@ class UserInfoFormContainer extends PureComponent {
     //todo: сделать обновление по изменению аксесс токена или роли юзера
     
     render() {
+        const userInfoForm = this.props.currentUserInfo
+                                ?
+                                <UserInfoForm
+                                    userInfo = {this.props.currentUserInfo}
+                                    modifiableUserInfo = {this.props.modifiableUserInfo}
+                                    resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
+                                    setModifiableUserInfo = {this.props.setModifiableUserInfo}
+                                    modifyUserInfo = {modifyUserInfo}
+                                />
+                                :
+                                null;
+
         return (
-            <UserInfoForm
-                userInfo = {this.props.currentUserInfo}
-                modifiableUserInfo = {this.props.modifiableUserInfo}
-                resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
-                setModifiableUserInfo = {this.props.setModifiableUserInfo}
-                modifyUserInfo = {modifyUserInfo}
-            />
+            <div>{userInfoForm}</div>
         );
     }
 }

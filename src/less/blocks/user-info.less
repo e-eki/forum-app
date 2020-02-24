@@ -1,13 +1,23 @@
 .user-info {
+    margin: 1vh 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     
     &__login {
         font-weight: bolder;
-        padding: 0 2vmin;
+        text-align: center;
+        width: @avatar-size;
     }
 
     &__avatar {
-        height: 80px;
-        width: 80px;
+        height: @avatar-size;
+        width: @avatar-size;
+        border-radius: 15%;
+
+        @media (max-width: @screen-md) {
+			display: none;
+		}
     }
 
     &__caption-text {

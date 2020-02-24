@@ -70919,7 +70919,7 @@ var EmailConfirmForm = function (_Component) {
             } else {
                 emailConfirmContent = _react2.default.createElement(
                     'div',
-                    { className: 'content__auth-utils-form auth-utils-form' },
+                    { className: 'content__auth-utils-form auth-form' },
                     _react2.default.createElement(
                         'div',
                         { className: 'auth-utils-form_title' },
@@ -71558,7 +71558,7 @@ var LoginForm = function (_Component) {
             } else {
                 loginContent = _react2.default.createElement(
                     'div',
-                    { className: 'content__auth-utils-form auth-utils-form' },
+                    { className: 'content__auth-utils-form auth-form' },
                     _react2.default.createElement(
                         'div',
                         { className: 'auth-utils-form_title' },
@@ -72714,7 +72714,7 @@ var RecoveryPasswordForm = function (_Component) {
             } else {
                 recoveryPasswordContent = _react2.default.createElement(
                     'div',
-                    { className: 'content__auth-utils-form auth-utils-form' },
+                    { className: 'content__auth-utils-form auth-form' },
                     _react2.default.createElement(
                         'div',
                         { className: 'auth-utils-form_title' },
@@ -72907,7 +72907,7 @@ var RegistrationForm = function (_Component) {
             } else {
                 registrationContent = _react2.default.createElement(
                     'div',
-                    { className: 'content__auth-utils-form auth-utils-form' },
+                    { className: 'content__auth-utils-form auth-form' },
                     _react2.default.createElement(
                         'div',
                         { className: 'auth-utils-form_title' },
@@ -73110,7 +73110,7 @@ var ResetPasswordForm = function (_Component) {
                 { className: className },
                 _react2.default.createElement(
                     'div',
-                    { className: 'content__auth-utils-form auth-utils-form' },
+                    { className: 'content__auth-utils-form auth-form' },
                     _react2.default.createElement(
                         'div',
                         { className: 'auth-utils-form_title' },

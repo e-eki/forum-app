@@ -2,8 +2,10 @@
 
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Promise from 'bluebird';
 import forumConst from '../../constants/forumConst';
+import appConst from '../../constants/appConst';
 import * as searchActions from '../../actions/searchActions';
 import Channel from '../views/channel';
 import Message from '../views/message';
@@ -46,23 +48,48 @@ class SearchResultsContainer extends PureComponent {
         if (this.props.searchChannels) {
             this.props.searchChannels.forEach(item => {
                 const channel = <Channel
-                                    key={key}
                                     channel = {item}
                                     type = {forumConst.itemTypes.searchChannel}
                                 />;
-                items.push(channel);
+
+                const searchResult = <div 
+                                        key={key}
+                                        className = 'search-result'
+                                    >
+                                        {channel}
+                                    </div>;
+
+                items.push(searchResult);
                 key++;
             })
         }
         else if (this.props.searchMessages) {
             this.props.searchMessages.forEach(item => {
+                const searchResultTitle = item.channelId
+                                            ?
+                                            <div className = 'search-result__title'>
+                                                <Link to={`${appConst.channelsLink}/${item.channelId}`}>
+                                                    <div>Перейти в чат</div>
+                                                </Link>
+                                            </div>
+                                            :
+                                            null;
+
                 const message = <Message
-                                    key={key}
                                     message = {item}
                                     type = {forumConst.itemTypes.searchMessage}
                                     showUserInfoById = {getUserInfoAndSetCurrentUserInfo}
                                 />;
-                items.push(message);
+
+                const searchResult = <div
+                                        className = 'search-result'
+                                        key={key}
+                                    >
+                                        {searchResultTitle}
+                                        {message}
+                                    </div>;
+
+                items.push(searchResult);
                 key++;
             })
         }
