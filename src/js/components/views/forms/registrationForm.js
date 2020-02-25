@@ -96,7 +96,7 @@ export default class RegistrationForm extends Component {
 	}
    
     render() {
-        const className = 'registration-form ' + (this.props.className ? this.props.className : '');
+        const className = (this.props.className ? this.props.className : '');
 
         debugger;
         let registrationContent = <div></div>;
@@ -114,14 +114,13 @@ export default class RegistrationForm extends Component {
                 this.props.setAlertData(alertData);
         }
         else {
-            registrationContent = <div className = 'content__auth-utils-form auth-form'>
-
-                                        <div className = 'auth-utils-form_title'>Регистрация</div>
+            registrationContent = <div className = 'auth-form'>
+                                        <div className = 'auth-form__title'>Регистрация</div>
 
                                         <input 
                                             name = "email"
                                             type="text" 
-                                            className = 'auth-utils-form_input' 
+                                            className = '' 
                                             maxLength = '40'
                                             value = {this.state.email}
                                             onChange = {this.changeData}
@@ -131,7 +130,7 @@ export default class RegistrationForm extends Component {
                                         <input 
                                             name = "login"
                                             type="text" 
-                                            className = 'auth-utils-form_input' 
+                                            className = '' 
                                             maxLength = '40'
                                             value = {this.state.login}
                                             onChange = {this.changeData}
@@ -141,7 +140,7 @@ export default class RegistrationForm extends Component {
                                         <input 
                                             name = 'password'
                                             type = "text" 
-                                            className = 'auth-utils-form_input' 
+                                            className = '' 
                                             maxLength = '40'
                                             value = {this.state.password}
                                             onChange = {this.changeData}
@@ -151,27 +150,31 @@ export default class RegistrationForm extends Component {
                                         <input 
                                             name = "duplicatePassword"
                                             type = "text" 
-                                            className = 'auth-utils-form_input' 
+                                            className = '' 
                                             maxLength = '40'
                                             value = {this.state.duplicatePassword}
                                             onChange = {this.changeData}
                                             onClick = {this.clearData}
                                         />
 
-                                        <button className = 'button button_reg auth-utils-form__button' onClick = {this.clickRegistrationButton}>Зарегистрироваться</button>
+                                        <button
+                                            className = 'auth-form__button'
+                                            onClick = {this.clickRegistrationButton}
+                                        >
+                                            Зарегистрироваться
+                                        </button>
 
-                                        <Link className = 'auth-utils-form_link' to={appConst.recoveryPasswordLink}>
+                                        {/* <Link className = 'auth-form__link' to={appConst.recoveryPasswordLink}>
                                             Забыли пароль?	
-                                        </Link>
+                                        </Link> */}
 
-                                        <Link className = 'auth-utils-form_link' to={appConst.emailConfirmLink}>
+                                        <Link className = 'auth-form__link' to={appConst.emailConfirmLink}>
                                             Не пришло письмо?	
                                         </Link>
 
-                                        <Link className = 'auth-utils-form_link' to={appConst.defaultLink}>
+                                        <Link className = 'auth-form__link' to={appConst.defaultLink}>
                                             На главную	
                                         </Link>
-
                                     </div>;
         }
 

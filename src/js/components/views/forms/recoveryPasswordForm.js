@@ -65,7 +65,7 @@ export default class RecoveryPasswordForm extends Component {
 	}
    
     render() {
-        const className = 'recovery-form ' + (this.props.className ? this.props.className : '');
+        const className = (this.props.className ? this.props.className : '');
 
         debugger;
         let recoveryPasswordContent = <div></div>;
@@ -83,25 +83,29 @@ export default class RecoveryPasswordForm extends Component {
                 this.props.setAlertData(alertData);
         }
         else {
-            recoveryPasswordContent = <div className = 'content__auth-utils-form auth-form'>				
-                                            <div className = 'auth-utils-form_title'>Восстановление пароля</div>
+            recoveryPasswordContent = <div className = 'auth-form'>				
+                                            <div className = 'auth-form__title'>Восстановление пароля</div>
 
                                             <input 
                                                 name = "email"
                                                 type = "text" 
-                                                className = 'auth-utils-form_input' 
+                                                className = '' 
                                                 maxLength = '40'
                                                 value = {this.state.email}
                                                 onChange = {this.changeData}
                                                 onClick = {this.clearData}
                                             />
 
-                                            <button className = 'button button_send auth-utils-form__button' onClick = {this.clickRecoveryPasswordButton}>Отправить</button>
+                                            <button
+                                                className = 'auth-form__button'
+                                                onClick = {this.clickRecoveryPasswordButton}
+                                            >
+                                                Отправить
+                                            </button>
                                             
-                                            <Link className = 'auth-utils-form_link' to={appConst.loginLink}>
+                                            <Link className = 'auth-form__link' to={appConst.loginLink}>
                                                 На страницу входа	
                                             </Link>
-
                                         </div>;
         }
 

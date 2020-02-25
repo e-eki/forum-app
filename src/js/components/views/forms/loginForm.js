@@ -92,7 +92,7 @@ export default class LoginForm extends Component {
     }
 
     render() {
-        const className = 'login-form ' + (this.props.className ? this.props.className : '');
+        const className = (this.props.className ? this.props.className : '');
 
         debugger;
         let loginContent = <div></div>;
@@ -110,12 +110,10 @@ export default class LoginForm extends Component {
                 this.props.setAlertData(alertData);
         }
         else {
-            loginContent = <div className = 'content__auth-utils-form auth-form'>
+            loginContent = <div className = 'auth-form'>
+                                <div className = 'auth-form__title'>Вход</div>
 
-                                <div className = 'auth-utils-form_title'>Вход</div>
-
-                                <div className = 'auth-utils-form_social'>
-
+                                <div className = 'auth-form__social-icon'>
                                     <img 
                                         name = "vkontakte"
                                         className = 'social-icon' 
@@ -138,7 +136,7 @@ export default class LoginForm extends Component {
                                 <input 
                                     name = "email"
                                     type="text" 
-                                    className = 'auth-utils-form_input' 
+                                    className = '' 
                                     maxLength = '40'
                                     value = {this.state.email}
                                     onChange = {this.changeData}
@@ -148,33 +146,41 @@ export default class LoginForm extends Component {
                                 <input 
                                     name = 'password'
                                     type = "text" 
-                                    className = 'auth-utils-form_input' 
+                                    className = '' 
                                     maxLength = '40'
                                     value = {this.state.password}
                                     onChange = {this.changeData}
                                     onClick = {this.clearData}
                                 />
 
-                                <button className = 'button button_login auth-utils-form__button' onClick = {this.clickLoginButton}>Войти</button>
+                                <button
+                                    className = 'auth-form__button'
+                                    onClick = {this.clickLoginButton}
+                                >
+                                    Войти
+                                </button>
 
-                                <div className = 'auth-utils-form_text'>или</div>
+                                <div
+                                    className = 'auth-form__text'
+                                >
+                                    или
+                                </div>
 
                                 <Link to = {appConst.registrationLink}>
-                                    <button className = 'button button_reg auth-utils-form__button'>Зарегистрироваться</button>
+                                    <button className = 'auth-form__button'>Зарегистрироваться</button>
                                 </Link>
 
-                                {/* <Link className = 'auth-utils-form_link' to = {appConst.recoveryPasswordLink}>
+                                {/* <Link className = 'auth-form__link' to = {appConst.recoveryPasswordLink}>
                                     Забыли пароль?	
                                 </Link> */}
 
-                                <Link className = 'auth-utils-form_link' to = {appConst.emailConfirmLink}>
+                                <Link className = 'auth-form__link' to = {appConst.emailConfirmLink}>
                                     Не пришло письмо?	
                                 </Link>
 
-                                <Link className = 'auth-utils-form_link' to = {appConst.defaultLink}>
+                                <Link className = 'auth-form__link' to = {appConst.defaultLink}>
                                     На главную	
                                 </Link>
-
                             </div>;
         }
 

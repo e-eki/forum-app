@@ -63,7 +63,7 @@ export default class EmailConfirmForm extends Component {
 	}
    
     render() {
-        const className = 'confirm-form ' + (this.props.className ? this.props.className : '');
+        const className = (this.props.className ? this.props.className : '');
 
         debugger;
         let emailConfirmContent = <div></div>;
@@ -81,25 +81,29 @@ export default class EmailConfirmForm extends Component {
                 this.props.setAlertData(alertData);
         }
         else {
-            emailConfirmContent = <div className = 'content__auth-utils-form auth-form'>				
-                                        <div className = 'auth-utils-form_title'>Повторная отправка письма</div>
+            emailConfirmContent = <div className = 'auth-form'>				
+                                        <div className = 'auth-form__title'>Повторная отправка письма</div>
 
                                         <input 
                                             name = "email"
                                             type = "text" 
-                                            className = 'auth-utils-form_input' 
+                                            className = '' 
                                             maxLength = '40'
                                             value = {this.state.email}
                                             onChange = {this.changeData}
                                             onClick = {this.clearData}
                                         />
 
-                                        <button className = 'button button_send auth-utils-form__button' onClick = {this.clickEmailConfirmButton}>Отправить</button>
+                                        <button
+                                            className = 'auth-form__button'
+                                            onClick = {this.clickEmailConfirmButton}
+                                        >
+                                            Отправить
+                                        </button>
                                         
-                                        <Link className = 'auth-utils-form_link' to={appConst.loginLink}>
+                                        <Link className = 'auth-form__link' to={appConst.loginLink}>
                                             На страницу входа	
                                         </Link>
-
                                     </div>;
         }
 
