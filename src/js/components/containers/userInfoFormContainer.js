@@ -16,6 +16,8 @@ class UserInfoFormContainer extends PureComponent {
     //todo: сделать обновление по изменению аксесс токена или роли юзера
     
     render() {
+        debugger;
+
         const userInfoForm = this.props.currentUserInfo
                                 ?
                                 <UserInfoForm

@@ -1,6 +1,32 @@
 .popup-form {
     position: absolute;
+    left: 16vw;
+    background: #f5fffa;
+    border: 2px solid grey;
+    box-shadow: 0 0 4px 2px grey;
+    border-radius: 5px;
+    padding: 3vmin;
+    z-index: 1;
+
+    @media (min-width: @screen-ll) {
+        left: 23vw;
+    }
+
+    @media (max-width: @screen-lg) {
+        left: 10vw;
+    }
+
+    @media (max-width: @screen-md) {
+        left: 0;
+    }
     
     background: grey;
     padding: 3vmin;
 }
+
+// position: absolute;
+//     top: 0px;
+//     width: 100%;
+//     height: 100%;
+//     background: grey;
+//     opacity: 0.5;

@@ -21,9 +21,19 @@ export default class UserInfoForm extends PureComponent {
     }
 
     render() {
+        debugger;
         const className = 'popup-form user-info ' + (this.props.className ? this.props.className : '');
 
-        debugger;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = document.documentElement.clientHeight;
+
+        // const scrollLeft = document.documentElement.scrollLeft;
+        // const clientWidth = document.documentElement.clientWidth;
+
+        const top = clientHeight/2 - 90 + scrollTop;
+        // const left = clientWidth/2 - 270 + scrollLeft;
+        const style = {top: top};
+        
         let modifyingBlock = null;
 
         // если информация юзера была назначена редактируемой и есть права на ее редактирование
@@ -93,7 +103,8 @@ export default class UserInfoForm extends PureComponent {
         }
 
         return (
-            <div className = {className}>
+            <div className = {className} style={style}>
+            {/* <div className = {className}> */}
                 {modifyingBlock}
 
                 {userInfoBlock}

@@ -15,15 +15,15 @@ export default class Logo extends PureComponent {
         
         return (
             <div className = {className}>
-                {/* <img 
+                <img 
                     name = 'logo'
                     className = 'logo__img' 
                     src = '/images/trekking_logo.png' 
                     alt = {forumConst.forumName} 
                     title = {forumConst.forumName}
                 >
-                </img> */}
-                Logo
+                </img>
+                {/* Logo */}
             </div>
         )
     }

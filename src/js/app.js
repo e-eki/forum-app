@@ -32,7 +32,7 @@ export default class App extends Component {
     this.history = createBrowserHistory();
 
     this.state = {
-      // 
+      // стиль оформления страницы
       modeClassName: 'page_day-mode',
     };
 
