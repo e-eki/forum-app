@@ -331,11 +331,9 @@ export default class ModifyForm extends Component {
 
         const itemInputs = this.initItemInputs();
 
-        const modifyingHeader = this.props.modifiableItem.id
-                                ?
-                                'Редактирование'
-                                :
-                                'Добавление';
+        const modifyingHeader = this.props.modifiableItem.id ? 'Редактирование' : 'Добавление';
+
+        const popupType = this.props.modifiableItem.id ? forumConst.popupTypes.modifying : forumConst.popupTypes.adding;
 
         const data = <div className = {className}>
                         <div className = 'popup-form__title'>{modifyingHeader}</div>
@@ -357,6 +355,7 @@ export default class ModifyForm extends Component {
             <PopupForm
                 data = {data}
                 colorTheme = {this.props.colorTheme}
+                popupType = {popupType}
             />
         )
     }

@@ -47,6 +47,8 @@ export default class UserInfoForm extends PureComponent {
                                     setModifiableItem = {this.props.setModifiableUserInfo}
                                     modifyItem = {this.props.modifyUserInfo}
                                     type = {forumConst.itemTypes.userInfo}
+                                    popupType = {forumConst.popupTypes.modifying}
+                                    colorTheme = {this.props.colorTheme}
                                 />;
         }
 
@@ -117,6 +119,7 @@ export default class UserInfoForm extends PureComponent {
             <PopupForm
                 data = {data}
                 colorTheme = {this.props.colorTheme}
+                popupType = {forumConst.popupTypes.userInfo}
             />
         )
     }

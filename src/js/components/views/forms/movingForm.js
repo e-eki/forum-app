@@ -220,7 +220,7 @@ export default class MovingForm extends Component {
         return Promise.all(tasks)
             .then(result => {
                 debugger;
-                
+
                 this.resetMovingItem();
                 this.props.setCurrentInfoItem(null);
 
@@ -401,6 +401,7 @@ export default class MovingForm extends Component {
             <PopupForm
                 data = {data}
                 colorTheme = {this.props.colorTheme}
+                popupType = {forumConst.popupTypes.moving}
             />
         )
     }

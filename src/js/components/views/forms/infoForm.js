@@ -111,7 +111,7 @@ export default class InfoForm extends PureComponent {
                                 setModifiableItem = {this.props.setModifiableItem}
                                 modifyItem = {this.props.modifyItem}
                                 type = {this.props.type}
-
+                                popupType = {forumConst.popupTypes.modifying}
                                 colorTheme = {this.props.colorTheme}
                             />;
         }
@@ -194,15 +194,18 @@ export default class InfoForm extends PureComponent {
 
                         {buttonsBlock}
 
-                        <button className = '' onClick = {this.resetInfoItem}>
-                            Закрыть
-                        </button>
+                        <div className = 'popup-form__buttons-block'>
+                            <button className = '' onClick = {this.resetInfoItem}>
+                                Закрыть
+                            </button>
+                        </div>
                     </div>;
         
         return (
             <PopupForm
                 data = {data}
                 colorTheme = {this.props.colorTheme}
+                type = {forumConst.popupTypes.info}
             />
         )
     }

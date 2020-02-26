@@ -8,9 +8,33 @@ export default class PopupForm extends PureComponent {
 
 	constructor(props) {
 		super(props);
+
+		this.getStyle = this.getStyle.bind(this);
+	}
+
+	// получить координаты окна, приписанные в стиле
+	getStyle() {
+		let style = null;
+
+		// окна редактирования и перемещения вызывается из окон, поэтому координата отсчитывается от родительского окна
+		if (this.props.popupType !== forumConst.popupTypes.modifying &&
+			this.props.popupType !== forumConst.popupTypes.moving) {
+				const scrollTop = document.documentElement.scrollTop;
+				const clientHeight = document.documentElement.clientHeight;
+
+				// const scrollLeft = document.documentElement.scrollLeft;
+				// const clientWidth = document.documentElement.clientWidth;
+
+				const top = clientHeight/2 - 90 + scrollTop;
+				// const left = clientWidth/2 - 270 + scrollLeft;
+				style = {top: top};
+		}
+
+		return style;
 	}
 
 	render() {
+		debugger;
 		let className = 'popup-form ' + (this.props.className ? this.props.className : '');
 
 		//colorTheme = {this.props.colorTheme}
@@ -21,15 +45,7 @@ export default class PopupForm extends PureComponent {
 			className += 'popup-form_day-mode';
 		}
 
-		const scrollTop = document.documentElement.scrollTop;
-        const clientHeight = document.documentElement.clientHeight;
-
-        // const scrollLeft = document.documentElement.scrollLeft;
-        // const clientWidth = document.documentElement.clientWidth;
-
-        const top = clientHeight/2 - 90 + scrollTop;
-        // const left = clientWidth/2 - 270 + scrollLeft;
-        const style = {top: top};
+		const style = this.getStyle();
 
 		return (
 			<div className = {className} style={style}>

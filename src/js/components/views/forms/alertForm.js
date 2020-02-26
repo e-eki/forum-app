@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import PopupForm from './popupForm';
+import forumConst from '../../../constants/forumConst';
 
 // форма с оповещениями для юзера
 export default class AlertForm extends PureComponent {
@@ -61,7 +62,8 @@ export default class AlertForm extends PureComponent {
 		return (
 			<PopupForm
                 data = {data}
-                colorTheme = {this.props.colorTheme}
+				colorTheme = {this.props.colorTheme}
+				popupType = {forumConst.popupTypes.alert}
             />
 		)
 	}
