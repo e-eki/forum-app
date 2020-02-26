@@ -2,6 +2,7 @@
 
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
+import PopupForm from './popupForm';
 
 // форма с оповещениями для юзера
 export default class AlertForm extends PureComponent {
@@ -11,7 +12,7 @@ export default class AlertForm extends PureComponent {
 	}
 
 	render() {
-		const className = 'popup-form alert-form ' + (this.props.className ? this.props.className : '');
+		const className = 'alert-form ' + (this.props.className ? this.props.className : '');
 
 		let alertBlock = <div></div>;
 
@@ -20,18 +21,22 @@ export default class AlertForm extends PureComponent {
 			// дополнительная ссылка, которая выводится под основным сообщением
 			const secondaryLink = (this.props.alertData.secondaryMessage && this.props.alertData.secondaryLink)
 									?
-									<Link to = {this.props.alertData.secondaryLink}>
-										{this.props.alertData.secondaryMessage || 'something happened'}	
-									</Link>
+									<div className = 'popup-form__item'>
+										<Link to = {this.props.alertData.secondaryLink}>
+											{this.props.alertData.secondaryMessage || 'something happened'}	
+										</Link>
+									</div>
 									:
 									null;
 
 			const alertInfo = <div>
-									<div>
-										<p>{this.props.alertData.message || 'something happened'}</p>
+									<div className = 'popup-form__item'>
+										{this.props.alertData.message || 'something happened'}
+									</div>
 
-										{secondaryLink}
+									{secondaryLink}
 
+									<div className = 'popup-form__buttons-block'>
 										<button className = '' >
 											Ok
 										</button>
@@ -49,12 +54,15 @@ export default class AlertForm extends PureComponent {
 			}
 		}
 
+		const data = <div className = {className} onClick = {this.props.resetAlertData}>
+						{alertBlock}
+					</div>;
+
 		return (
-			<div className = {className} onClick = {this.props.resetAlertData}>
-
-				{alertBlock}
-
-			</div>
+			<PopupForm
+                data = {data}
+                colorTheme = {this.props.colorTheme}
+            />
 		)
 	}
 }

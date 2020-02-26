@@ -6,6 +6,7 @@ import ModifyForm from './modifyForm';
 import MovingForm from './movingForm';
 import forumConst from '../../../constants/forumConst';
 import * as baseUtils from '../../../utils/baseUtils';
+import PopupForm from './popupForm';
 
 // форма для просмотра информации и управления элементом
 export default class InfoForm extends PureComponent {
@@ -30,14 +31,14 @@ export default class InfoForm extends PureComponent {
 
                 // у сообщения доступен только текст
                 case forumConst.itemTypes.message:
-                    itemInfo = <div>
+                    itemInfo = <div className = 'popup-form__item'>
                                     <div>{this.props.currentInfoItem.text}</div>
                                 </div>;
                     break;
                     
                 // у всех остальных элементов (раздел/подраздел/чат) доступно название и описание
                 default:
-                    itemInfo = <div>
+                    itemInfo = <div className = 'popup-form__item'>
                                     <div>{this.props.currentInfoItem.name}</div>
                                     <div>{this.props.currentInfoItem.description}</div>
                                 </div>;
@@ -49,8 +50,20 @@ export default class InfoForm extends PureComponent {
         return itemInfo;
     }
 
-    // отмена просмотра информации элемента
+    // закрыть форму с информацией элемента
     resetInfoItem() {
+        debugger;
+
+        // закрываем форму редактирования, если она открыта
+        if (this.props.modifiableItem) {
+            this.props.setModifiableItem(null);
+        }
+
+        // закрываем форму перемещения элемента, если она открыта
+        if (this.props.movingItem) {
+            this.props.setMovingItem(null);
+        }
+
         this.props.setCurrentInfoItem(null);
     }
 
@@ -84,7 +97,7 @@ export default class InfoForm extends PureComponent {
     }
 
     render() {
-        const className = 'popup-form info-form ' + (this.props.className ? this.props.className : '');
+        const className = 'info-form ' + (this.props.className ? this.props.className : '');
 
         let modifyingBlock = null;
         let movingBlock = null;
@@ -98,6 +111,8 @@ export default class InfoForm extends PureComponent {
                                 setModifiableItem = {this.props.setModifiableItem}
                                 modifyItem = {this.props.modifyItem}
                                 type = {this.props.type}
+
+                                colorTheme = {this.props.colorTheme}
                             />;
         }
         // если элемент был назначен перемещаемым и есть права на его перемещение
@@ -106,7 +121,7 @@ export default class InfoForm extends PureComponent {
             movingBlock = <MovingForm
                                 movingItem = {this.props.movingItem}
                                 setMovingItem = {this.props.setMovingItem}
-                                resetInfoItem = {this.resetInfoItem}
+                                setCurrentInfoItem = {this.props.setCurrentInfoItem}
                                 modifyItem = {this.props.modifyItem}
                                 type = {this.props.type}
                                 deletedItemAction = {this.props.deletedItemAction}
@@ -114,6 +129,8 @@ export default class InfoForm extends PureComponent {
                                 parentItemsList = {this.props.parentItemsList}
                                 resetParentItemsList = {this.props.resetParentItemsList}
                                 parentItemId = {this.props.parentItemId}
+
+                                colorTheme = {this.props.colorTheme}
                             />
         }
 
@@ -150,29 +167,43 @@ export default class InfoForm extends PureComponent {
                                 </button>;
         }
 
+        const buttonsBlock = (descriptionButtonBlock || editButtonBlock || moveButtonBlock || deleteButtonBlock)
+                                ?
+                                <div className = 'popup-form__buttons-block'>
+                                    {descriptionButtonBlock}
+
+                                    {editButtonBlock}
+
+                                    {moveButtonBlock}
+
+                                    {deleteButtonBlock}
+                                </div>
+                                :
+                                null;
+
         const itemInfo = this.initItemInfo();
+
+        const data = <div className = {className}>
+                        <div className = 'popup-form__title'>Информация</div>
+
+                        {modifyingBlock}
+
+                        {movingBlock}
+
+                        {itemInfo}
+
+                        {buttonsBlock}
+
+                        <button className = '' onClick = {this.resetInfoItem}>
+                            Закрыть
+                        </button>
+                    </div>;
         
         return (
-            <div className = {className}>
-
-                {modifyingBlock}
-
-                {movingBlock}
-
-                {itemInfo}
-
-                {descriptionButtonBlock}
-
-                {editButtonBlock}
-
-                {moveButtonBlock}
-
-                {deleteButtonBlock}
-
-                <button className = '' onClick = {this.resetInfoItem}>
-                    Закрыть
-                </button>
-            </div>
+            <PopupForm
+                data = {data}
+                colorTheme = {this.props.colorTheme}
+            />
         )
     }
 }

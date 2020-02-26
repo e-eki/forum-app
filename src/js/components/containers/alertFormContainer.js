@@ -16,6 +16,8 @@ class AlertFormContainer extends PureComponent {
         const alertForm = this.props.alertData
                             ?
                             <AlertForm
+                                colorTheme = {this.props.colorTheme}
+                                
                                 alertData = {this.props.alertData}
                                 resetAlertData = {this.props.resetAlertData}
                             />
@@ -31,6 +33,8 @@ class AlertFormContainer extends PureComponent {
 const mapStateToProps = function(store) {
     return {
         alertData: store.alertDataState.get('alertData'),
+
+        colorTheme: store.forumDesignState.get('colorTheme'),
     };
 };
 

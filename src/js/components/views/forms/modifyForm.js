@@ -5,6 +5,7 @@ import Promise from 'bluebird';
 import forumConst from '../../../constants/forumConst';
 import * as baseUtils from '../../../utils/baseUtils';
 import { getDateStringForInput } from '../../../utils/dateStringUtils';
+import PopupForm from './popupForm';
 
 // Форма для создания/редактирования элемента
 export default class ModifyForm extends Component {
@@ -92,7 +93,7 @@ export default class ModifyForm extends Component {
             switch (this.props.type) {
 
                 case forumConst.itemTypes.message:
-                    itemInputs = <div>
+                    itemInputs = <div className = 'popup-form__item'>
                                     Текст сообщения
                                     <input 
                                         name = "text"
@@ -118,7 +119,7 @@ export default class ModifyForm extends Component {
                     itemInputs = <div>
                                     {this.props.modifiableItem.canEditRole
                                         ?
-                                        <div>
+                                        <div className = 'popup-form__item'>
                                             Изменить роль пользователя 
                                             <select
                                                 name="role"
@@ -135,7 +136,7 @@ export default class ModifyForm extends Component {
 
                                     {this.props.modifiableItem.canEditBlackList
                                         ?
-                                        <div>
+                                        <div className = 'popup-form__item'>
                                             <input
                                                 name = "inBlackList"
                                                 type="checkbox"
@@ -151,7 +152,7 @@ export default class ModifyForm extends Component {
                                     {this.props.modifiableItem.isOwnInfo
                                         ?
                                         <div>
-                                            <div>
+                                            <div className = 'popup-form__item'>
                                                 Имя - фамилия
                                                 <input 
                                                     name = "name"
@@ -163,7 +164,7 @@ export default class ModifyForm extends Component {
                                                 />
                                             </div>
                                             
-                                            <div>
+                                            <div className = 'popup-form__item'>
                                                 Дата рождения
                                                 <input 
                                                     name = "birthDate"
@@ -176,7 +177,7 @@ export default class ModifyForm extends Component {
                                                 />
                                             </div>
 
-                                            <div>
+                                            <div className = 'popup-form__item'>
                                                 Город
                                                 <input 
                                                     name = "city"
@@ -188,7 +189,7 @@ export default class ModifyForm extends Component {
                                                 />
                                             </div>
 
-                                            <div>
+                                            <div className = 'popup-form__item'>
                                                 Профессия
                                                 <input 
                                                     name = "profession"
@@ -200,7 +201,7 @@ export default class ModifyForm extends Component {
                                                 />
                                             </div>
                                             
-                                            <div>
+                                            <div className = 'popup-form__item'>
                                                 Хобби
                                                 <input 
                                                     name = "hobby"
@@ -212,7 +213,7 @@ export default class ModifyForm extends Component {
                                                 />
                                             </div>
                                             
-                                            <div>
+                                            <div className = 'popup-form__item'>
                                                 Подпись под аватаром
                                                 <input 
                                                     name = "captionText"
@@ -233,7 +234,7 @@ export default class ModifyForm extends Component {
                     
                 // поля для раздела/подраздела/чата
                 default:
-                    itemInputs = <div>
+                    itemInputs = <div className = 'popup-form__item'>
                                     Название
                                     <input 
                                         name = "name"
@@ -324,7 +325,7 @@ export default class ModifyForm extends Component {
     }
 
     render() {
-        const className = 'popup-form modify-form ' + (this.props.className ? this.props.className : '');
+        const className = 'modify-form ' + (this.props.className ? this.props.className : '');
 
         debugger;
 
@@ -332,24 +333,31 @@ export default class ModifyForm extends Component {
 
         const modifyingHeader = this.props.modifiableItem.id
                                 ?
-                                <div>Редактирование</div>
+                                'Редактирование'
                                 :
-                                <div>Добавление</div>;
+                                'Добавление';
+
+        const data = <div className = {className}>
+                        <div className = 'popup-form__title'>{modifyingHeader}</div>
+
+                        {itemInputs}
+
+                        <div className = 'popup-form__buttons-block'>
+                            <button className = '' onClick = {this.modifyItem}>
+                                Ок
+                            </button>
+
+                            <button className = '' onClick = {this.resetModifiableItem}>
+                                Закрыть
+                            </button>
+                        </div>
+                    </div>;
         
         return (
-            <div className = {className}>
-                {modifyingHeader}
-
-                {itemInputs}
-
-                <button className = '' onClick = {this.modifyItem}>
-                    Ок
-                </button>
-
-                <button className = '' onClick = {this.resetModifiableItem}>
-                    Закрыть
-                </button>
-            </div>
+            <PopupForm
+                data = {data}
+                colorTheme = {this.props.colorTheme}
+            />
         )
     }
 }

@@ -1,12 +1,13 @@
 .popup-form {
     position: absolute;
     left: 16vw;
-    background: #f5fffa;
+    // background: @snowwhite;
     border: 2px solid grey;
-    box-shadow: 0 0 4px 2px grey;
-    border-radius: 5px;
+    box-shadow: 0 0 10px 5px grey;
+    border-radius: 7px;
     padding: 3vmin;
     z-index: 1;
+    min-width: 200px;
 
     @media (min-width: @screen-ll) {
         left: 23vw;
@@ -19,9 +20,33 @@
     @media (max-width: @screen-md) {
         left: 0;
     }
-    
-    background: grey;
-    padding: 3vmin;
+
+    &__title {
+        font-size: 18px;
+        font-weight: bold;
+        color: @greyblue;
+        text-align: center;
+        margin-bottom: 3vmin;
+    }
+
+    &__item {
+        margin: 1.5vmin;
+    }
+
+    &__buttons-block {
+        margin-top: 3vh;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    &_day-mode {
+        background: @snowwhite;
+    }
+
+    &_night-mode {
+        background: @darkgreyblue;
+    }
 }
 
 // position: absolute;
@@ -29,4 +54,4 @@
 //     width: 100%;
 //     height: 100%;
 //     background: grey;
-//     opacity: 0.5;
+//     opacity: 0.6;

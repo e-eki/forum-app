@@ -38,7 +38,7 @@ export default class Message extends PureComponent {
         const dateString = this.props.message.date ? getDateTimeString(this.props.message.date) : null;
 
         const senderName = this.props.message.senderName || 'NoName';
-        const userInfoBlock = <div className = 'user-info'>
+        const userInfoBlock = <div className = 'message__user-info'>
                                     <img
                                         className = 'user-info__avatar' 
                                         src = '/images/avatar.jpg' 

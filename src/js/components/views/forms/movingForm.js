@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Promise from 'bluebird';
 import forumConst from '../../../constants/forumConst';
 import * as baseUtils from '../../../utils/baseUtils';
+import PopupForm from './popupForm';
 
 // Форма для перемещения элемента внутри списка/в другой элемент верхнего уровня
 export default class MovingForm extends Component {
@@ -218,8 +219,10 @@ export default class MovingForm extends Component {
 
         return Promise.all(tasks)
             .then(result => {
+                debugger;
+                
                 this.resetMovingItem();
-                this.props.resetInfoItem();
+                this.props.setCurrentInfoItem(null);
 
                 return true;
             })
@@ -329,12 +332,12 @@ export default class MovingForm extends Component {
     }
 
     render() {
-        const className = 'popup-form moving-form ' + (this.props.className ? this.props.className : '');
+        const className = 'moving-form ' + (this.props.className ? this.props.className : '');
         debugger;
 
         const movingOutsideListBlock = (this.props.type && (this.props.type !== forumConst.itemTypes.section)) 
                                     ?
-                                    <div>
+                                    <div className = 'popup-form__item'>
                                         Переместить в элемент верхнего уровня ({this.parentItemType}) 
                                         <select
                                             name="parentItemName"
@@ -352,7 +355,7 @@ export default class MovingForm extends Component {
                                     ((this.props.type === forumConst.itemTypes.section) ||
                                     (this.props.type === forumConst.itemTypes.subSection)))
                                     ?
-                                    <div>
+                                    <div className = 'popup-form__item'>
                                         Переместить в списке на позицию 
                                         <select
                                             name="movingInListType"
@@ -371,25 +374,34 @@ export default class MovingForm extends Component {
                             'некуда перемещать'
                             :
                             null;
+
+        const data = <div className = {className}>
+                        <div className = 'popup-form__title'>
+                            Перемещение
+                        </div>
+
+                        {movingInListBlock}
+
+                        {movingOutsideListBlock}
+
+                        {noteBlock}
+
+                        <div className = 'popup-form__buttons-block'>
+                            <button className = '' onClick = {this.moveItem}>
+                                Ок
+                            </button>
+
+                            <button className = '' onClick = {this.resetMovingItem}>
+                                Закрыть
+                            </button>
+                        </div>
+                    </div>;
         
         return (
-            <div className = {className}>
-                ПЕРЕМЕЩЕНИЕ ЭЛЕМЕНТА
-
-                {movingInListBlock}
-
-                {movingOutsideListBlock}
-
-                {noteBlock}
-
-                <button className = '' onClick = {this.moveItem}>
-                    Ок
-                </button>
-
-                <button className = '' onClick = {this.resetMovingItem}>
-                    Закрыть
-                </button>
-            </div>
+            <PopupForm
+                data = {data}
+                colorTheme = {this.props.colorTheme}
+            />
         )
     }
 }

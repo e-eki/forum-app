@@ -20,11 +20,12 @@
 @import './blocks/notification-form';
 @import './blocks/breadcrumbs';
 @import './blocks/popup-form';
+@import './blocks/hiding-layer';
 @import './blocks/auth-form';
 @import './blocks/social-icon';
 
 
-.header__title, .menu, .search-bar, .auth-form {
+.header__title, .menu, .search-bar, .auth-form, .popup-form {
 	font-family: cursive;
 	
 	button {
@@ -37,6 +38,13 @@
 	button {
 		background: @blue;
 		border-color: @greyblue;
+	}
+}
+
+.auth-form, .popup-form {
+	button {
+		background: @lightyellow;
+		border-color: @orangegrey;
 	}
 }
 

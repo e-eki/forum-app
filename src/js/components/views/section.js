@@ -75,6 +75,8 @@ export default class Section extends PureComponent {
                             
                             parentItemsList = {this.props.parentItemsList}
                             resetParentItemsList = {this.props.resetParentItemsList}
+
+                            colorTheme = {this.props.colorTheme}
                         />
                     </div>;
         }

@@ -109,6 +109,8 @@ class MainContainer extends PureComponent {
 
                 parentItemsList = {this.props.parentItemsList}
                 resetParentItemsList = {this.props.resetParentItemsList}
+
+                colorTheme = {this.props.colorTheme}
             />
         );
     }
@@ -127,6 +129,8 @@ const mapStateToProps = function(store) {
 
         accessToken: store.authState.get('accessToken'),
         userRole: store.authState.get('userRole'),
+
+        colorTheme: store.forumDesignState.get('colorTheme'),
     };
 };
 

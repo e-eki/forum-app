@@ -26,6 +26,8 @@ class UserInfoFormContainer extends PureComponent {
                                     resetCurrentUserInfo = {this.props.resetCurrentUserInfo}
                                     setModifiableUserInfo = {this.props.setModifiableUserInfo}
                                     modifyUserInfo = {modifyUserInfo}
+                                    
+                                    colorTheme = {this.props.colorTheme}
                                 />
                                 :
                                 null;
@@ -40,6 +42,8 @@ const mapStateToProps = function(store) {
     return {
         currentUserInfo: store.userInfoState.get('currentUserInfo'),
         modifiableUserInfo: store.userInfoState.get('modifiableUserInfo'),
+
+        colorTheme: store.forumDesignState.get('colorTheme'),
     };
 };
 

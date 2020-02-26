@@ -93,6 +93,8 @@ export default class ListForm extends PureComponent {
                                     parentItemsList = {this.props.parentItemsList}
                                     resetParentItemsList = {this.props.resetParentItemsList}
                                     parentItemId = {this.props.parentItemId}
+
+                                    colorTheme = {this.props.colorTheme}
                                 />;
         }
         // добавление нового элемента
@@ -102,6 +104,8 @@ export default class ListForm extends PureComponent {
                                     setModifiableItem = {this.props.setModifiableItem}
                                     modifyItem = {this.props.modifyItem}
                                     type = {this.props.type}
+
+                                    colorTheme = {this.props.colorTheme}
                                 />;
         }
 

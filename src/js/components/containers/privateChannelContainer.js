@@ -220,6 +220,8 @@ class PrivateChannelContainer extends PureComponent {
 
                     setDescriptionMessage = {this.setDescriptionMessage}
                     resetDescriptionMessage = {this.resetDescriptionMessage}
+
+                    colorTheme = {this.props.colorTheme}
                 />
             </div>
         );
@@ -239,6 +241,8 @@ const mapStateToProps = function(store) {
 
         accessToken: store.authState.get('accessToken'),
         userRole: store.authState.get('userRole'),
+
+        colorTheme: store.forumDesignState.get('colorTheme'),
     };
 };
 

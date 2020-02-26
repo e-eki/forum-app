@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import appConst from '../../../constants/appConst';
 import forumConst from '../../../constants/forumConst';
 import ModifyForm from './modifyForm';
+import PopupForm from './popupForm';
 
 // форма с информацией о юзере
 export default class UserInfoForm extends PureComponent {
@@ -12,7 +13,8 @@ export default class UserInfoForm extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.editUserInfo  =this.editUserInfo.bind(this);
+        this.editUserInfo =this.editUserInfo.bind(this);
+        this.resetUserInfo = this.resetUserInfo.bind(this);
     }
 
     // открыть информацию юзера для редактирования
@@ -20,19 +22,19 @@ export default class UserInfoForm extends PureComponent {
         this.props.setModifiableUserInfo(this.props.userInfo);
     }
 
+    // закрыть информацию юзера
+    resetUserInfo() {
+        // закрываем форму редактирования, если она открыта
+        if (this.props.modifiableUserInfo) {
+            this.props.setModifiableUserInfo(null);
+        }
+
+        this.props.resetCurrentUserInfo();
+    }
+
     render() {
         debugger;
-        const className = 'popup-form user-info ' + (this.props.className ? this.props.className : '');
-
-        const scrollTop = document.documentElement.scrollTop;
-        const clientHeight = document.documentElement.clientHeight;
-
-        // const scrollLeft = document.documentElement.scrollLeft;
-        // const clientWidth = document.documentElement.clientWidth;
-
-        const top = clientHeight/2 - 90 + scrollTop;
-        // const left = clientWidth/2 - 270 + scrollLeft;
-        const style = {top: top};
+        const className = 'user-info ' + (this.props.className ? this.props.className : '');
         
         let modifyingBlock = null;
 
@@ -63,9 +65,11 @@ export default class UserInfoForm extends PureComponent {
             const privateMessageBlock = (!userInfo.isOwnInfo &&
                                         userInfo.canAddPrivateChannel)
                                             ?
-                                            <Link to={`${appConst.privateChannelsLink}/?recipientId=${this.props.userInfo.userId}`}>
-                                                <button className = ''>Написать личное сообщение</button>
-                                            </Link>
+                                            <div className = 'popup-form__item'>
+                                                <Link to={`${appConst.privateChannelsLink}/?recipientId=${this.props.userInfo.userId}`}>
+                                                    <button className = ''>Написать личное сообщение</button>
+                                                </Link>
+                                            </div>
                                             :
                                             null;
 
@@ -78,37 +82,42 @@ export default class UserInfoForm extends PureComponent {
                                     null;
 
             userInfoBlock = <div>
-                                <div>USER</div>
+                                <div className = 'popup-form__title'>{userInfo.login}</div>
 
-                                <div>{userInfo.role}</div>
+                                <div className = 'popup-form__item'>{userInfo.role}</div>
 
-                                {userInfo.inBlackList ? <div>В чёрном списке</div> : null}
-
-                                <div>{userInfo.login}</div>
-                                {userInfo.name ? <div>Имя: {userInfo.name}</div> : null}
-                                {birthDateString ? <div>Дата рождения: {birthDateString}</div> : null}
-                                {userInfo.city ? <div>Город: {userInfo.city}</div> : null}
-                                {userInfo.profession ? <div>Профессия: {userInfo.profession}</div> : null}
-                                {userInfo.hobby ? <div>Хобби: {userInfo.hobby}</div> : null}
-                                {userInfo.captionText ? <div>Подпись: {userInfo.captionText}</div> : null}
+                                {userInfo.inBlackList ? <div className = 'popup-form__item'>В чёрном списке</div> : null}
+                                
+                                {userInfo.name ? <div className = 'popup-form__item'>Имя: {userInfo.name}</div> : null}
+                                {birthDateString ? <div className = 'popup-form__item'>Дата рождения: {birthDateString}</div> : null}
+                                {userInfo.city ? <div className = 'popup-form__item'>Город: {userInfo.city}</div> : null}
+                                {userInfo.profession ? <div className = 'popup-form__item'>Профессия: {userInfo.profession}</div> : null}
+                                {userInfo.hobby ? <div className = 'popup-form__item'>Хобби: {userInfo.hobby}</div> : null}
+                                {userInfo.captionText ? <div className = 'popup-form__item'>Подпись: {userInfo.captionText}</div> : null}
                                 
                                 {privateMessageBlock}
 
-                                {editBlock}
+                                <div className = 'popup-form__buttons-block'>
+                                    {editBlock}
 
-                                <button className = '' onClick = {this.props.resetCurrentUserInfo}>
-                                    Закрыть
-                                </button>
+                                    <button className = '' onClick = {this.resetUserInfo}>
+                                        Закрыть
+                                    </button>
+                                </div>
                             </div>
         }
 
-        return (
-            <div className = {className} style={style}>
-            {/* <div className = {className}> */}
-                {modifyingBlock}
+        const data = <div className = {className}>
+                        {modifyingBlock}
 
-                {userInfoBlock}
-            </div>
+                        {userInfoBlock}
+                    </div>;
+
+        return (
+            <PopupForm
+                data = {data}
+                colorTheme = {this.props.colorTheme}
+            />
         )
     }
 }

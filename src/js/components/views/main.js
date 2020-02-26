@@ -98,6 +98,8 @@ export default class Main extends PureComponent {
 
                     parentItemsList = {this.props.parentItemsList}
                     resetParentItemsList = {this.props.resetParentItemsList}
+
+                    colorTheme = {this.props.colorTheme}
                 />
             </div>
         )

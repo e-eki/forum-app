@@ -22,6 +22,7 @@ import RegistrationFormContainer from './components/containers/RegistrationFormC
 import RecoveryPasswordFormContainer from './components/containers/RecoveryPasswordFormContainer';
 import EmailConfirmFormContainer from './components/containers/EmailConfirmFormContainer';
 import ResetPasswordFormContainer from './components/containers/ResetPasswordFormContainer';
+import HidingLayerContainer from './components/containers/HidingLayerContainer';
 import forumConst from './constants/forumConst';
 
 export default class App extends Component {
@@ -31,9 +32,17 @@ export default class App extends Component {
 
     this.history = createBrowserHistory();
 
+    // стили по умолчанию
+    this.defaultClassNames = {
+      pageClassName: 'page_day-mode',
+      // popupFormClassName: 'popup-form_day-mode',
+    }
+
     this.state = {
       // стиль оформления страницы
-      modeClassName: 'page_day-mode',
+      pageClassName: this.defaultClassNames.pageClassName,
+      // оформление всплывающего окна
+      // popupFormClassName: this.defaultClassNames.popupFormClassName,
     };
 
     this.changePageColorTheme = this.changePageColorTheme.bind(this);
@@ -47,24 +56,34 @@ export default class App extends Component {
   // изменить тему оформления
   changePageColorTheme(colorTheme) {
     debugger;
-    let modeClassName;
+    const dayModeModificator = '_day-mode';
+    const nightModeModificator = '_night-mode';
+
+    // оформление страницы
+    let pageClassName = 'page';
+    // // оформление всплывающего окна
+    // let popupFormClassName = 'popup-form';
 
     switch (colorTheme) {
       case forumConst.colorThemes.day:
-        modeClassName = 'page_day-mode';
+        pageClassName += dayModeModificator;
+        // popupFormClassName += dayModeModificator;
         break;
 
       case forumConst.colorThemes.night:
-        modeClassName = 'page_night-mode';
+        pageClassName += nightModeModificator;
+        // popupFormClassName += nightModeModificator;
         break;
 
       default:
-        modeClassName = 'page_day-mode';
+        pageClassName = this.defaultClassNames.pageClassName;
+        // popupFormClassName = this.defaultClassNames.popupFormClassName;
         break;
     }
 
     this.setState({
-      modeClassName: modeClassName,
+      pageClassName: pageClassName,
+      // popupFormClassName: popupFormClassName,
     });
   }
 
@@ -72,7 +91,7 @@ export default class App extends Component {
     debugger;
     //const history = createBrowserHistory();
 
-    const pageClassName = 'page ' + this.state.modeClassName;
+    const pageClassName = 'page ' + this.state.pageClassName;
 
     // todo: ???не переходит в ResetPasswordFormContainer по ссылке из письма со сбросом пароля.
       return (
@@ -82,10 +101,15 @@ export default class App extends Component {
 
           {/* <div className = 'content'> */}
             <Router history={this.history}>
+              <HidingLayerContainer/>
 
-              <AlertFormContainer/>
+              <AlertFormContainer
+                // className = {this.state.popupFormClassName}
+              />
 
-              <UserInfoFormContainer/>
+              <UserInfoFormContainer
+                // className = {this.state.popupFormClassName}
+              />
 
               <MenuContainer
                 changePageColorTheme = {this.changePageColorTheme}
