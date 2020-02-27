@@ -110,7 +110,7 @@ export default class Channel extends PureComponent {
                 if (this.props.channel.descriptionMessage) {
                     //const descriptionMessage = this.props.channel.descriptionMessage;
 
-                    descriptionMessage = <Message
+                    descriptionMessage = <Message className = 'channel__description-message'
                                                 message = {this.props.channel.descriptionMessage}
                                                 showUserInfoById = {this.props.showUserInfoById}
                                             />
@@ -119,7 +119,7 @@ export default class Channel extends PureComponent {
                                                             ?
                                                             <div>
                                                                 <button className = '' onClick = {this.props.resetDescriptionMessage}>
-                                                                    Открепить
+                                                                    Открепить сообщение
                                                                 </button>
                                                             </div>
                                                             :
@@ -187,7 +187,7 @@ export default class Channel extends PureComponent {
 
                         {senderNameBlock}
                         
-                        <div className = 'channel__description-message'>
+                        <div>
                             {descriptionMessage}
 
                             {resetDescriptionMessageBlock}

@@ -23,11 +23,15 @@
 @import './blocks/hiding-layer';
 @import './blocks/auth-form';
 @import './blocks/social-icon';
+@import './blocks/list-form';
+@import './blocks/alert-form';
 
 
 .header__title, .menu, .search-bar, .auth-form, .popup-form {
 	font-family: cursive;
-	
+}
+
+.header__title, .menu, .search-bar, .auth-form, .popup-form, .list-form, .forum-item {
 	button {
 		border-radius: 3px;
 		margin: 0.5vh 0;
@@ -41,10 +45,12 @@
 	}
 }
 
-.auth-form, .popup-form {
+.auth-form, .popup-form, .list-form, .forum-item {
 	button {
 		background: @lightyellow;
 		border-color: @orangegrey;
+
+		font-family: cursive;  //?
 	}
 }
 

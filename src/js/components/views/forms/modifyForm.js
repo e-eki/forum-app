@@ -93,7 +93,7 @@ export default class ModifyForm extends Component {
             switch (this.props.type) {
 
                 case forumConst.itemTypes.message:
-                    itemInputs = <div className = 'popup-form__item'>
+                    itemInputs = <div className = 'popup-form__message-input'>
                                     Текст сообщения
                                     <input 
                                         name = "text"
@@ -234,26 +234,30 @@ export default class ModifyForm extends Component {
                     
                 // поля для раздела/подраздела/чата
                 default:
-                    itemInputs = <div className = 'popup-form__item'>
-                                    Название
-                                    <input 
-                                        name = "name"
-                                        type="text" 
-                                        className = '' 
-                                        maxLength = '200'
-                                        value = {this.state.name}
-                                        onChange = {this.changeData}
-                                    />
+                    itemInputs = <div>
+                                    <div className = 'popup-form__item'>
+                                        Название
+                                        <input 
+                                            name = "name"
+                                            type="text" 
+                                            className = '' 
+                                            maxLength = '200'
+                                            value = {this.state.name}
+                                            onChange = {this.changeData}
+                                        />
+                                    </div>
 
-                                    Описание
-                                    <input 
-                                        name = "description"
-                                        type="text" 
-                                        className = '' 
-                                        maxLength = '500'
-                                        value = {this.state.description}
-                                        onChange = {this.changeData}
-                                    />
+                                    <div className = 'popup-form__item'>
+                                        Описание
+                                        <input 
+                                            name = "description"
+                                            type="text" 
+                                            className = '' 
+                                            maxLength = '500'
+                                            value = {this.state.description}
+                                            onChange = {this.changeData}
+                                        />
+                                    </div>
                                 </div>;
 
                     break;

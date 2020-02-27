@@ -65,16 +65,17 @@ export default class Message extends PureComponent {
         }
         
         return (
-            <div className = {className}>
-                
-                <div>{userInfoBlock}</div>
+            <div>
+                <div className = {className}>      
+                    <div>{userInfoBlock}</div>
 
-                <div className = 'message__text'>
-                    {this.props.message.text}
-                </div>
+                    <div className = 'message__text'>
+                        {this.props.message.text}
+                    </div>
 
-                <div className = 'message__date'>
-                    {dateString}
+                    <div className = 'message__date'>
+                        {dateString}
+                    </div>
                 </div>
 
                 {messageInfoBlock}
