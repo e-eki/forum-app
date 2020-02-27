@@ -112,9 +112,11 @@ export default class ListForm extends PureComponent {
         let addButtonBlock = null;
         // если есть права для добавления новых элементов, то показываем кнопку "Добавить"
         if (this.props.canAdd) {
-            addButtonBlock = <button className = '' onClick = {this.addItem}>
-                                Добавить {this.props.type ? this.props.type : null}
-                            </button>;
+            const buttonClassName = (this.props.type === forumConst.itemTypes.message) ? 'list-form__add-button' : '';
+
+            addButtonBlock = <button className = {buttonClassName} onClick = {this.addItem}>
+                                    Добавить {this.props.type ? this.props.type : null}
+                                </button>;
         }
 
         // список элементов
@@ -144,9 +146,18 @@ export default class ListForm extends PureComponent {
 
                 {itemInfoBlock}
 
-                {addButtonBlock}
+                {/* {addButtonBlock} */}
+                {/* <div>
+                    (this.props.type !== forumConst.itemTypes.message)
+                        ?
+                        {addButtonBlock}
+                        :
+                        null
+                </div> */}
 
                 {itemsBlock}
+
+                {addButtonBlock}
             </div>
         )
     }

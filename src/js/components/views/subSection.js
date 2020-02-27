@@ -52,9 +52,15 @@ export default class SubSection extends PureComponent {
                                     }
                                 </div>
 
-                                <div className = 'forum-item__description'>
-                                    {this.props.subSection.description}
-                                </div>
+                                {
+                                    this.props.subSection.description
+                                    ?
+                                    <div className = 'forum-item__description'>
+                                        {this.props.subSection.description}
+                                    </div>
+                                    :
+                                    null
+                                }
 
                                 {this.props.isCurrent
                                     ?

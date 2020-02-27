@@ -54,9 +54,15 @@ export default class Section extends PureComponent {
                             }
                         </div>
 
-                        <div className = 'forum-item__description'>
-                            {this.props.isCurrent ? <div>{this.props.section.description}</div> : null}
-                        </div>
+                        {
+                            (this.props.isCurrent && this.props.section.description)
+                            ?
+                            <div className = 'forum-item__description'>
+                                {this.props.section.description}
+                            </div>
+                            :
+                            null
+                        }
 
                         <ListForm
                             canAdd = {this.props.section ? this.props.section.canAdd : false}

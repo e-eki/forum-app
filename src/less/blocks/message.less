@@ -17,7 +17,11 @@
         //width: 100%;
         text-align: center;
         font-size: @message-date-font-size;
-        margin: 1vh 2vw;
+        margin: 1vmin;
+
+        @media (min-width: @screen-md) {
+            max-width: 7vw;
+        }
     }
 
     &__text {
@@ -29,6 +33,8 @@
     }
 
     &_date-preview {
+        padding: 0 2vmin;
+        
         @media (max-width: @screen-md) {
             display: none;
         }

@@ -156,9 +156,9 @@ export default class Channel extends PureComponent {
                     const senderName = this.props.channel.lastMessage.senderName || 'NoName';
 
                     lastMessageBlock = <div className = 'channel__last-message'>
-                                            <span className = 'user-info__login'>{senderName}: </span>
+                                            <span className = 'user-info__login message_preview'>{senderName}: </span>
                                             <span className = 'message__text message_preview'>{text}...</span>
-                                            <span className = 'message__date message_preview message_date-preview'>{dateString}</span>
+                                            <span className = 'message__date message_date-preview'>{dateString}</span>
                                         </div>;
                 }
 

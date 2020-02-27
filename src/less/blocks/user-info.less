@@ -5,6 +5,10 @@
         font-weight: bolder;
         text-align: center;
         width: @avatar-size;
+
+        @media (max-width: @screen-md) {
+            width: auto;
+		}
     }
 
     &__avatar {
