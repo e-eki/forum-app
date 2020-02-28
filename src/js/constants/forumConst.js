@@ -16,6 +16,15 @@ module.exports = {
 		userInfo: 'userInfo',   // информация юзера
 	},
 
+	// названия элементов форума
+	itemNames: {
+		section: 'раздел',  // раздел
+		subSection: 'подраздел',   // подраздел
+		channel: 'чат',   // чат
+		message: 'сообщение',   // сообщение
+		privateChannel: 'личный чат',   // личный чат
+	},
+
 	// типы поиска по форуму
 	searchTypes: {
 		channels: 'по темам',

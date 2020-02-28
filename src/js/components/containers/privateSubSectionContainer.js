@@ -64,7 +64,7 @@ class PrivateSubSectionContainer extends PureComponent {
     
     render() {
         debugger;
-        const className = '';
+        const className = 'list-form';
 
         const channels = [];
         let key = 0;
@@ -86,9 +86,6 @@ class PrivateSubSectionContainer extends PureComponent {
 
         return (
             <div className = {className}>
-
-                <div>---ЛИЧНЫЕ СООБЩЕНИЯ---</div>
-
                 {channels}
             </div>
         )

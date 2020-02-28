@@ -45,7 +45,7 @@ export function getEditDeleteRightsForItem(item) {
 			break;
 
 		case forumConst.itemTypes.channel:
-			if (userRole === forumConst.admin) {
+			if (userRole === forumConst.userRoles.admin) {
 				canMove = true;
 				canEdit = true;
 				canDelete = true;

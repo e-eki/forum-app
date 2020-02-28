@@ -31,16 +31,24 @@
 
     &__item {
         margin: 1.5vmin;
+        word-break: break-word;
 
         input[type="text"] {   //костыль
             margin-left: 1vmin;
         }
     }
 
-    &__message-input {   // костыль
-        width: 100%;
-        height: 20vh;
+    &__message-input {   // костыль?
+        width: 72vmin;
+        height: 30vmin;
+
+        textarea {  // костыль
+            width: 100%;
+            height: 100%;
+            font: @message-font;
+        }
     }
+
 
     &__buttons-block {
         margin-top: 3vh;

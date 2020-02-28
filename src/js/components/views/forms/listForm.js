@@ -113,9 +113,10 @@ export default class ListForm extends PureComponent {
         // если есть права для добавления новых элементов, то показываем кнопку "Добавить"
         if (this.props.canAdd) {
             const buttonClassName = (this.props.type === forumConst.itemTypes.message) ? 'list-form__add-button' : '';
+            const itemName = this.props.type ? forumConst.itemNames[this.props.type] : null
 
             addButtonBlock = <button className = {buttonClassName} onClick = {this.addItem}>
-                                    Добавить {this.props.type ? this.props.type : null}
+                                    Добавить {itemName}
                                 </button>;
         }
 
@@ -124,13 +125,17 @@ export default class ListForm extends PureComponent {
 
         if (this.props.items) {
             // если это список сообщений, то нужно найти новые
-            if (this.props.type === forumConst.itemTypes.message && this.props.newMessagesCount) {
-                const newItems = this.props.items.slice(-this.props.newMessagesCount);
-                const oldItems = this.props.items.slice(0, -this.props.newMessagesCount);
+            if (this.props.type === forumConst.itemTypes.message && !this.props.newMessagesCount) {
+                // const newItems = this.props.items.slice(-this.props.newMessagesCount);
+                // const oldItems = this.props.items.slice(0, -this.props.newMessagesCount);
+                const newItems = this.props.items.slice(-2);
+                const oldItems = this.props.items.slice(0, -2);
 
                 itemsBlock = <div>
                                 {oldItems}
-                                -----новые сообщения-----
+                                <div className = 'channel__new-messages-note'>
+                                    Новые сообщения
+                                </div>
                                 {newItems}
                             </div>;
             }

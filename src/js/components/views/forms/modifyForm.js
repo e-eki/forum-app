@@ -94,12 +94,19 @@ export default class ModifyForm extends Component {
 
                 case forumConst.itemTypes.message:
                     itemInputs = <div className = 'popup-form__message-input'>
-                                    Текст сообщения
-                                    <input 
+                                    {/* Текст сообщения */}
+                                    {/* <input 
                                         name = "text"
                                         type="text" 
                                         className = '' 
                                         maxLength = '5000'
+                                        value = {this.state.text}
+                                        onChange = {this.changeData}
+                                    /> */}
+                                    <textarea
+                                        name = "text"
+                                        className = '' 
+                                        maxLength = '10000'
                                         value = {this.state.text}
                                         onChange = {this.changeData}
                                     />

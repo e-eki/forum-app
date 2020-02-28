@@ -43,6 +43,7 @@ export function updatePrivateChannel(store, action) {
 			store.dispatch(setPrivateChannels(newPrivateChannels));
 		}
 		// если юзер на странице с этим личным чатом
+		// todo: при обновлении чата (закреплении/откреплении сообщения) - название чата пропадает.
 		else if (currentPrivateChannel &&
 			(currentPrivateChannel.id === action.privateChannelId)) {
 				const newCurrentPrivateChannel = copyUtils.copyPrivateChannel(updatedPrivateChannel);
