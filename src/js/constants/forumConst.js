@@ -4,6 +4,9 @@ module.exports = {
 	// название форума
 	forumName: 'Сферический форум в вакууме',
 
+	// имейл для обратной связи
+	forumEmail: 'snow.trekking.forum@gmail.com',
+
 	// типы элементов форума
 	itemTypes: {
 		section: 'section',  // раздел

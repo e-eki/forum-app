@@ -125,12 +125,9 @@ export default class ListForm extends PureComponent {
 
         if (this.props.items) {
             // если это список сообщений, то нужно найти новые
-            if (this.props.type === forumConst.itemTypes.message && !this.props.newMessagesCount) {
-                // const newItems = this.props.items.slice(-this.props.newMessagesCount);
-                // const oldItems = this.props.items.slice(0, -this.props.newMessagesCount);
-                const newItems = this.props.items.slice(-2);
-                const oldItems = this.props.items.slice(0, -2);
-
+            if (this.props.type === forumConst.itemTypes.message && this.props.newMessagesCount) {
+                const newItems = this.props.items.slice(-this.props.newMessagesCount);
+                const oldItems = this.props.items.slice(0, -this.props.newMessagesCount);
                 itemsBlock = <div>
                                 {oldItems}
                                 <div className = 'channel__new-messages-note'>

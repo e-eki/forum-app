@@ -24,6 +24,7 @@ import EmailConfirmFormContainer from './components/containers/EmailConfirmFormC
 import ResetPasswordFormContainer from './components/containers/ResetPasswordFormContainer';
 import HidingLayerContainer from './components/containers/HidingLayerContainer';
 import forumConst from './constants/forumConst';
+import { getBackgroundImage } from './utils/forumDesignUtils';
 
 export default class App extends Component {
 
@@ -48,10 +49,13 @@ export default class App extends Component {
     this.changePageColorTheme = this.changePageColorTheme.bind(this);
   }
 
-  // componentDidMount() {
-  //   debugger;
-  //   document.body.style.backgroundImage = "url('/images/kola_day.jpg')";  //todo!
-  // }
+  componentDidMount() {
+    debugger;
+    const backgroundImage = getBackgroundImage();
+
+    // установка фона в зависимости от времени суток
+    document.body.style.backgroundImage = backgroundImage;
+  }
 
   // изменить тему оформления
   changePageColorTheme(colorTheme) {

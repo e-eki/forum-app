@@ -36,8 +36,7 @@ export default class PopupForm extends PureComponent {
 	render() {
 		debugger;
 		let className = 'popup-form ' + (this.props.className ? this.props.className : '');
-
-		//colorTheme = {this.props.colorTheme}
+		
 		if (this.props.colorTheme === forumConst.colorThemes.night) {
 			className += 'popup-form_night-mode';
 		}

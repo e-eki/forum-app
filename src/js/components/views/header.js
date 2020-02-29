@@ -21,8 +21,12 @@ export default class Header extends PureComponent {
             <div className = {className}>
                 <Logo className = 'header__logo '/>
 
-                 <div className = "header__title">
+                <div className = "header__title">
                     <h1>{this.forumName}</h1>
+
+                    <div className = "header__note">
+                        beta - версия
+                    </div>
                 </div>
             </div>
         )
