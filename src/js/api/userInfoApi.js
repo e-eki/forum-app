@@ -38,6 +38,10 @@ export function getUserInfoById(id) {
             return response.data;
 		})
 		.catch(error => {
+			if (error.response.status === 403) {
+				error.response.data = 'Этот пользователь был удалён.';
+			}
+
 			showErrorMessage(error);
 			return false;
 		})
@@ -87,6 +91,10 @@ export function getUserInfoAndSetCurrentUserInfo(id, isOwnInfo) {
 			return response.data;
 		})
 		.catch(error => {
+			if (error.response.status === 403) {
+				error.response.data = 'Этот пользователь был удалён.';
+			}
+
 			showErrorMessage(error);
 			return false;
 		})

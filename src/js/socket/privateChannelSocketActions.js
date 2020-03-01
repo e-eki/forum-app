@@ -6,6 +6,7 @@ import { setAlertData } from '../actions/alertDataActions';
 import appConst from '../constants/appConst';
 import { getEditDeleteRightsForItem } from '../utils/rightsUtils';
 import forumConst from '../constants/forumConst';
+import {setNewPrivateMessagesCount} from '../actions/notificationActions';
 
 // получение по сокетам действий, связанных с личными чатами
 
@@ -61,6 +62,10 @@ export function deletePrivateChannel(store, action) {
 	if (action.privateChannelId) {
 		const privateChannels = store.getState().privateChannelState.get('privateChannels');
 		const currentPrivateChannel = store.getState().privateChannelState.get('currentPrivateChannel');
+
+		// сбрасываем кол-во новых личных сообщений
+		// todo: сделать, чтоб уменьшалось на кол-во новых сообщений в удаленном чате
+		store.dispatch(setNewPrivateMessagesCount(0));
 
 		// если юзер на странице со своими личными чатами
 		if (privateChannels) {

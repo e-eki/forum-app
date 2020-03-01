@@ -46,6 +46,7 @@ export function getEditDeleteRightsForItem(item) {
 
 		case forumConst.itemTypes.channel:
 			if (userRole === forumConst.userRoles.admin) {
+				// canMove = item.recipientId ? false : true;  // личный чат нельзя перемещать
 				canMove = true;
 				canEdit = true;
 				canDelete = true;
@@ -78,7 +79,8 @@ export function getEditDeleteRightsForItem(item) {
 
 		case forumConst.itemTypes.message:
 			if (userRole === forumConst.userRoles.admin) {
-				canMove = true;
+				// canMove = true;
+				canMove = item.recipientId ? false : true;  // личное сообщение нельзя перемещать
 				canEdit = true;
 				canDelete = true;
 			}

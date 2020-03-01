@@ -20,15 +20,22 @@ export default class AlertForm extends PureComponent {
 		if (this.props.alertData) {
 
 			// дополнительная ссылка, которая выводится под основным сообщением
-			const secondaryLink = (this.props.alertData.secondaryMessage && this.props.alertData.secondaryLink)
-									?
-									<div className = 'popup-form__item'>
+			let secondaryLink = null;
+			
+			if (this.props.alertData.secondaryMessage) {
+				if (this.props.alertData.secondaryLink) {
+					secondaryLink = <div className = 'popup-form__item'>
 										<Link to = {this.props.alertData.secondaryLink}>
 											{this.props.alertData.secondaryMessage || 'something happened'}	
 										</Link>
-									</div>
-									:
-									null;
+									</div>;
+				}
+				else if (this.props.alertData.secondaryHref) {
+					secondaryLink = <div className = 'popup-form__item'>
+										<a href={this.props.alertData.secondaryHref}>{this.props.alertData.secondaryMessage}</a>
+									</div>;
+				}
+			}
 
 			const alertInfo = <div>
 									<div className = 'popup-form__item'>

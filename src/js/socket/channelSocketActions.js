@@ -30,8 +30,10 @@ export function updateChannel(store, action) {
 			updatedChannel.messages = [];
 		}
 
-		// если юзер не является отправителем чата
-		if (updatedChannel.senderId !== userId) {
+		// если юзер не является отправителем (если чат был создан) или редактором (если чат был отредактирован)
+		if ((updatedChannel.editorId && updatedChannel.editorId !== userId) ||
+			(!updatedChannel.editorId && updatedChannel.senderId !== userId)) {
+
 			// если юзер просматривает информацию чата
 			if (currentInfoChannel &&
 				currentInfoChannel.id === action.channelId) {
@@ -39,9 +41,9 @@ export function updateChannel(store, action) {
 					if (updatedChannel.name !== currentInfoChannel.name ||
 						updatedChannel.description !== currentInfoChannel.description) {
 							const newChannel = copyUtils.copyChannel(updatedChannel);
-							newCurrentChannel.messages = currentChannel.messages;  //?
-							newCurrentChannel.parentSection = currentChannel.parentSection;
-							newCurrentChannel.parentSubSection = currentChannel.parentSubSection;
+							newChannel.messages = currentChannel.messages;  //?
+							newChannel.parentSection = currentChannel.parentSection;
+							newChannel.parentSubSection = currentChannel.parentSubSection;
 
 							store.dispatch(channelActions.setCurrentInfoChannel(newChannel));
 

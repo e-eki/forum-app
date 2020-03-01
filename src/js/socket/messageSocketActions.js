@@ -42,8 +42,9 @@ export function updateMessage(store, action) {
 				store.dispatch(incrementNewPrivateMessagesCount());
 		}
 
-		// если юзер не является отправителем сообщения
-		if (updatedMessage.senderId !== userId) {
+		// если юзер не является отправителем (если сообщение было создано) или редактором (если было отредактировано)
+		if ((updatedMessage.editorId && updatedMessage.editorId !== userId) ||
+			(!updatedMessage.editorId && updatedMessage.senderId !== userId)) {
 
 			// если юзер просматривает информацию сообщения
 			if (currentInfoMessage &&

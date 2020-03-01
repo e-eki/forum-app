@@ -86,6 +86,7 @@ function _copyBase(sourse) {
 
 	result.id = sourse.id;
 	result.canEdit = sourse.canEdit;
+	result.canMove = sourse.canMove;
 	result.canDelete = sourse.canDelete;
 	result.canAdd = sourse.canAdd;
 

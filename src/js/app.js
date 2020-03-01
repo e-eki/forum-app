@@ -9,7 +9,7 @@ import SubSectionContainer from './components/containers/subSectionContainer';
 import ChannelContainer from './components/containers/channelContainer';
 import PrivateChannelContainer from './components/containers/privateChannelContainer';
 import PrivateSubSectionContainer from './components/containers/PrivateSubSectionContainer';
-import Header from './components/views/header';
+import HeaderContainer from './components/containers/headerContainer';
 import MenuContainer from './components/containers/menuContainer';
 import Footer from './components/views/footer';
 import AlertFormContainer from './components/containers/alertFormContainer';
@@ -101,7 +101,7 @@ export default class App extends Component {
       return (
         <div className = {pageClassName}>
           {/* <Header className = 'content__header '/> */}
-          <Header/>
+          <HeaderContainer/>
 
           {/* <div className = 'content'> */}
             <Router history={this.history}>

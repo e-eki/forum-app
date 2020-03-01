@@ -335,10 +335,12 @@ export default class MovingForm extends Component {
         const className = 'moving-form ' + (this.props.className ? this.props.className : '');
         debugger;
 
+        const parentItemName = this.props.type ? forumConst.itemNames[this.parentItemType] : null;
+
         const movingOutsideListBlock = (this.props.type && (this.props.type !== forumConst.itemTypes.section)) 
                                     ?
                                     <div className = 'popup-form__item'>
-                                        Переместить в элемент верхнего уровня ({this.parentItemType}) 
+                                        Переместить в элемент верхнего уровня ({parentItemName}) 
                                         <select
                                             name="parentItemName"
                                             className = ''

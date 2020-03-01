@@ -32,17 +32,17 @@ export default class Menu extends PureComponent {
                                             null;
 
                 authContent = <div>
-                                    <button className = 'bar__button button button_lk' onClick = {this.props.showUserInfo}>
+                                    <button className = '' onClick = {this.props.showUserInfo}>
                                         Личный кабинет
                                     </button>
 
                                     <Link to={appConst.privateChannelsLink}>
-                                        <button className = 'bar__button button button_lk'>
+                                        <button className = 'menu__private-channels-button'>
                                             Личные сообщения {notificationBlock}
                                         </button>
                                     </Link>              
 
-                                    <button className = 'bar__button button button_lk' onClick = {this.props.doLogout}>
+                                    <button className = '' onClick = {this.props.doLogout}>
                                         Выйти
                                     </button>
                                 </div>;
@@ -51,13 +51,13 @@ export default class Menu extends PureComponent {
         else {
             authContent = <div>
                                 <Link to={appConst.loginLink}>
-                                    <button className = 'bar__button button button_login'>
+                                    <button className = ''>
                                         Вход
                                     </button>
                                 </Link>
                                 
                                 <Link to={appConst.registrationLink}>
-                                    <button className = 'bar__button button button_reg'>
+                                    <button className = ''>
                                         Регистрация
                                     </button>
                                 </Link>
@@ -67,14 +67,14 @@ export default class Menu extends PureComponent {
         return (
             <div className = {className}>
                 <Link to={appConst.defaultLink}>
-                    <button className = 'button'>
+                    <button className = ''>
                         Главная
                     </button>
                 </Link>
 
                 {authContent}
 
-                <button onClick={this.props.changeColorTheme} className = 'menu__mode-button button'>
+                <button onClick={this.props.changeColorTheme} className = 'menu__mode-button'>
                     {this.props.colorThemeTitle}
                 </button>
             </div>

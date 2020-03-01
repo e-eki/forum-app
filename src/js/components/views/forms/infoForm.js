@@ -139,6 +139,8 @@ export default class InfoForm extends PureComponent {
         let moveButtonBlock = null;
         let deleteButtonBlock = null;
 
+        const itemName = this.props.type ? forumConst.itemNames[this.props.type] : null;
+
         // если есть права редактирования чата (в сообщении), то показываем кнопку "Закрепить сообщение"
         if (this.props.currentInfoItem.canEditChannel) {
             descriptionButtonBlock = <button className = '' onClick = {this.setDescriptionMessage}>
@@ -149,21 +151,21 @@ export default class InfoForm extends PureComponent {
         // если есть права редактирования элемента. то показываем кнопку "Редактировать"
         if (this.props.currentInfoItem.canEdit) {
             editButtonBlock = <button className = '' onClick = {this.editItem}>
-                                    Редактировать {this.props.type ? this.props.type : null}
+                                    Редактировать {itemName}
                                 </button>;
         }
 
         // если есть права перемещения элемента, то показываем кнопку "Переместить"
         if (this.props.currentInfoItem.canMove) {
             moveButtonBlock = <button className = '' onClick = {this.moveItem}>
-                                    Переместить {this.props.type ? this.props.type : null}
+                                    Переместить {itemName}
                                 </button>;
         }
 
         // если есть права удаления элемента, то показываем кнопку "Удалить"
         if (this.props.currentInfoItem.canDelete) {
             deleteButtonBlock = <button className = '' onClick = {this.deleteItem}>
-                                    Удалить {this.props.type ? this.props.type : null}
+                                    Удалить {itemName}
                                 </button>;
         }
 

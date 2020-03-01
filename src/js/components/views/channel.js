@@ -98,7 +98,7 @@ export default class Channel extends PureComponent {
             // {isPrivate ? <Link to="/" onClick = {this.showUserInfo}>Отправитель</Link> : null
             const senderNameBlock = (!this.props.isCurrent && isPrivate)
                                     ?
-                                    <div className = 'user-info__login'>
+                                    <div className = 'forum-item__login'>
                                         <Link to="/" onClick = {this.showUserInfo}>Отправитель</Link>
                                     </div>
                                     :
@@ -148,15 +148,15 @@ export default class Channel extends PureComponent {
                     let text = this.props.channel.lastMessage.text;
 
                     if (text && (text.length > forumConst.lastMessageTextLength)) {
-                        text = `${text.slice(0, forumConst.lastMessageTextLength)}...`
+                        text = `${text.slice(0, forumConst.lastMessageTextLength)}`
                     }
 
                     const dateString = getDateTimeString(this.props.channel.lastMessage.date);
 
                     const senderName = this.props.channel.lastMessage.senderName || 'NoName';
 
-                    lastMessageBlock = <div className = 'channel__last-message'>
-                                            <span className = 'user-info__login message_preview'>{senderName}: </span>
+                    lastMessageBlock = <div className = 'channel__last-message message message_preview'>
+                                            <span className = 'message__login message_preview'>{senderName}: </span>
                                             <span className = 'message__text message_preview'>{text}...</span>
                                             <span className = 'message__date message_date-preview'>{dateString}</span>
                                         </div>;
