@@ -49,13 +49,13 @@ export default class App extends Component {
     this.changePageColorTheme = this.changePageColorTheme.bind(this);
   }
 
-  componentDidMount() {
-    debugger;
-    const backgroundImage = getBackgroundImage();
+  // componentDidMount() {
+  //   debugger;
+  //   const backgroundImage = getBackgroundImage();
 
-    // установка фона в зависимости от времени суток
-    document.body.style.backgroundImage = backgroundImage;
-  }
+  //   // установка фона в зависимости от времени суток
+  //   document.body.style.backgroundImage = backgroundImage;
+  // }
 
   // изменить тему оформления
   changePageColorTheme(colorTheme) {
