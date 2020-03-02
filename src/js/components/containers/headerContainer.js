@@ -20,10 +20,14 @@ class HeaderContainer extends PureComponent {
 
         const mailLink = `mailto:${forumConst.forumEmail}`
         
+        // const alertData = {
+        //     message: `Форум находится на стадии beta-тестирования. Сообщения об ошибках/багах/некорректном отображении форума на различных устройствах просьба отправлять сюда: `,
+        //     secondaryHref: mailLink,
+        //     secondaryMessage: forumConst.forumEmail,
+        // };
+
         const alertData = {
-            message: `Форум находится на стадии beta-тестирования. Сообщения об ошибках/багах/некорректном отображении форума на различных устройствах просьба отправлять сюда: `,
-            secondaryHref: mailLink,
-            secondaryMessage: forumConst.forumEmail,
+            message: `Форум находится на стадии beta-тестирования.`,
         };
 
         this.props.setAlertData(alertData);

@@ -17,9 +17,9 @@ export default class Footer extends PureComponent {
         
         return (
             <div className = {className}>
-                <div className ="footer__title">
+                {/* <div className ="footer__title">
                     <a href={mailLink}>{forumConst.forumEmail}</a>
-                </div>
+                </div> */}
 
                 <div className ="footer__title">
                     &#169; В. А. Дремина, 2020
