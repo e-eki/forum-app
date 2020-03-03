@@ -113,7 +113,7 @@ export default class LoginForm extends Component {
             loginContent = <div className = 'auth-form'>
                                 <div className = 'auth-form__title'>Вход</div>
 
-                                <div className = 'auth-form__social-icon'>
+                                {/* <div className = 'auth-form__social-icon'>
                                     <img 
                                         name = "vkontakte"
                                         className = 'social-icon' 
@@ -131,7 +131,7 @@ export default class LoginForm extends Component {
                                         title = {this.titles.googleTitle}
                                         onClick = {this.clickSocialLoginButton}>
                                     </img>
-                                </div>
+                                </div> */}
 
                                 <input 
                                     name = "email"

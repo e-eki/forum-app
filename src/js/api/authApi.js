@@ -31,7 +31,9 @@ export function socialLogin(serviceName) {
 	// TODO!!! vkontakte api не отвечает localhost (нет 'Access-Control-Allow-Origin' в заголовке)
 	const options = {
 		method: 'GET',
-		headers: { 'Access-Control-Allow-Origin': 'http://localhost:8080' },
+		// headers: { 'Access-Control-Allow-Origin': 'http://localhost:8080' },
+		headers: { 'Origin': 'https://forum-messenger.herokuapp.com' },   //?
+		// headers: { 'Access-Control-Allow-Origin': '*' },
 		url: socialLink
 	};
 	
