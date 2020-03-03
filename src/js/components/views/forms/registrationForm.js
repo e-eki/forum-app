@@ -117,7 +117,7 @@ export default class RegistrationForm extends Component {
             registrationContent = <div className = 'auth-form'>
                                         <div className = 'auth-form__title'>Регистрация</div>
 
-                                        <div className = 'auth-form__note'>Форум на стадии beta-тестирования, поэтому, на всякий случай, при регистрации не используйте пароли от своих аккаунтов на других ресурсах.</div>
+                                        {/* <div className = 'auth-form__note'>Форум на стадии beta-тестирования, поэтому, на всякий случай, при регистрации не используйте пароли от своих аккаунтов на других ресурсах.</div> */}
 
                                         <input 
                                             name = "email"
