@@ -1,7 +1,7 @@
 'use strict';
 
-const server_url = 'http://localhost:3000';
-// const server_url = 'https://forum-messenger.herokuapp.com';   // для heroku
+// const server_url = 'http://localhost:3000';
+const server_url = 'https://forum-messenger.herokuapp.com';   // для heroku
 const api_url = `${server_url}/api`;
 
 // id клиента для авторизации через вконтакте
