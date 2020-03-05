@@ -30,7 +30,7 @@ module.exports = {
 
 	// типы поиска по форуму
 	searchTypes: {
-		channels: 'по темам',
+		channels: 'по чатам',
 		messages: 'по сообщениям',
 	},
 
