@@ -96,7 +96,7 @@ class SearchResultsContainer extends PureComponent {
 
         return (
             <div className=''>
-                {items.length ? items : <div className = 'search-result__text'>'Нет результатов'</div>}
+                {items.length ? items : <div className = 'search-result__text'>Нет результатов</div>}
             </div>
         );
     }
