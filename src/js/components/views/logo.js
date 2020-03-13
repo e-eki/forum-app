@@ -23,7 +23,6 @@ export default class Logo extends PureComponent {
                     title = {forumConst.forumName}
                 >
                 </img> */}
-                Logo
             </div>
         )
     }
