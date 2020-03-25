@@ -41,7 +41,7 @@ export default class Message extends PureComponent {
         const userInfoBlock = <div className = 'message__user-info'>
                                     <img
                                         className = 'user-info__avatar' 
-                                        src = '/images/avatar.jpg' 
+                                        src = '/images/avatar.png' 
                                         alt = {senderName} 
                                         title = {senderName}
                                     >
